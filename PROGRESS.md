@@ -137,3 +137,11 @@
 - `timeLapse1938.spec.ts` on seeds 1938 and 7: the maps of 1 January 1939 and 1940 the page's own of that hour; 60.0 fps
   while it plays. The worker's build at 10/25/50 years of seed 99: 12/12/23 ms, 5.5/8.0/11.0 MB.
 - Every item of Batch 43 is ticked: the batch ends with a critic run and a release tag (PROMPT "Releases").
+
+## 2026-11-18 — critic run 76 (focused, on c2440872): one blocking issue
+
+- Scores: map 8, diplomacy 8, emergent 8, God mode 8, editor 8, stats 8, UI/UX 7, performance 8, stability 8, semantic
+  zoom 8, naval 8, tanks 8, aircraft 8, AI nukes 8. Every one at its bar (UI/UX's 7, run 75's).
+- Blocking 1: R76-B1, `diploInvariants` finds the `lift` rule broken (a puppet's revolt and a massing's end declare
+  over the sea unasked). R139's own rule missed at doors it did not cover, not ADR-829's regression exit.
+- Batch 44 (R145-R156): the blocking issue, then the 11 non-blocking ones; the critic again (focused) after.

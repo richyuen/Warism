@@ -1,6 +1,6 @@
 {
-  "commit": "e830930ec2c121f12ef5e746fa6151db5497ca48",
-  "mode": "full",
+  "commit": "c2440872430b769d4f3262cbf98b432126defdf8",
+  "mode": "focused",
   "scores": {
     "mapVisuals": 8,
     "diplomacyWarDepth": 8,
@@ -17,6 +17,13 @@
     "aircraft": 8,
     "aiNukes": 8
   },
-  "blocking": [],
-  "timestamp": "2026-11-17T09:20:00-05:00"
+  "blocking": [
+    {
+      "id": "R76-B1",
+      "title": "The lift rule (R139) is reported broken by its own checker: wars declared across the sea with nothing to lift",
+      "evidence": "npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825: 2 broken (day 943 'lift: LIT declared on GER over the sea, 0 men to lift for a room of 0', a puppet's revolt: PuppetRevolt LIT GER then WarDeclared LIT GER in hour 0; day 1415 HUN on ITA, no revolt and no massing before it); npx tsx tools/diag/diploInvariants.ts 58011 random 3650 --heroes: 3 broken (AEF on FRA d2251, NSP on SAU d2769, SOV on LEB d3591). critic/c76_diploinv_33501s.log, critic/c76_diploinv_58011rh_10y.log, critic/c76_ev_33501_lit_ger.log, critic/c76_ev_33501_hun_ita.log. 0 broken on the other 18 runs (11 new seeds).",
+      "fix": "noLift is asked only in strategicAi's firstNotOutnumbered: not at a massing's declaration (massing.ts 277, 286), a puppet's revolt (puppets.ts 214) or other doors. Keep the rule at the doors it misses, or narrow the checker's scope to the strategic AI's own choice of target with an ADR (a revolt is no choice); find the door of HUN on ITA. Seen fixed when both commands print 0 broken."
+    }
+  ],
+  "timestamp": "2026-11-18T09:55:00-05:00"
 }

@@ -78,6 +78,39 @@ Rules:
     `timeLapse1938.spec.ts`, seeds 1938 and 7: 1 January 1939 and 1940 alike cell for cell; 60.0 fps, p95 16.7 ms on the
     GPU. Built in 23 ms at 50 years (11.0 MB). `docs/evidence/R143/`.
 
+## Batch 44 — critic run 76's findings (focused, on c2440872; one blocking issue; every score at its bar, UI/UX 7)
+
+RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking one, then the critic again (focused). R76-B1
+is R139's own rule missed at other doors, not one item's fix breaking another, so not ADR-829's exit.
+- [ ] R145 **R76-B1: the `lift` rule is broken by its own checker.** A puppet's revolt (`puppets.ts`) and a massing's
+  end (`massing.ts` 277, 286) declare over the sea without asking `noLift`; Hungary on Italy's door not found. AT:
+  `diploInvariants.ts 33501 scenario 1825` and `58011 random 3650 --heroes` print 0 broken, and the report's 20 seeds
+  stay at 0; the rule kept at each door, or the checker's scope narrowed with an ADR.
+- [ ] R146 **R76-N1: the director takes the camera back from a click** (a ticker row, a war banner, a History link).
+  AT: `c76_dirHand.mjs 59955 120`, the three acts `onLater: false` or `cutsAfterAct: 0`.
+- [ ] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
+  "over 6000 km" at 1 or fewer each (ADR-1041).
+- [ ] R148 **R132's bar not held on HEAD: quiet banners behind "+n".** AT: `c76_bannerRank.mjs 57901 150`, three runs
+  each under 50 (the user's bar), under 44 for UI's 8.
+- [ ] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs
+  the game under the plate; Escape does not close it. AT: `c76_tlMore.mjs cell 59943 700` names the month's owner (or
+  none); `c76_timeLapse.mjs 59941 400 head` `ranUnderLapse` 0; Escape closes the plate.
+- [ ] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
+  c76_director.mjs 59951 100 head 120`, `seenCovered` 0, on a desk and a phone.
+- [ ] R151 **R76-N4: a save from before R143 plays only the months since its load** under a title that says "from the
+  start". AT: `c76_tlMore.mjs old critic/c75_seed7019_y20.bin 40` shows the record's first month on the plate.
+- [ ] R152 **R76-N6: two land heroes leap by the wheel in the world of 56901.** AT: `WHEEL=1 c76_heroPop.mjs` on 56901
+  430, 58905 330, 59905 300, 59907 300: 4 or fewer each.
+- [ ] R153 **On a phone the time-lapse's plate covers the ticker's second row.** AT: at 390 x 844 the plate and the
+  ticker's rows do not overlap (a spec's boxes).
+- [ ] R154 **A massing told again 50 days after its call-off** (56211, Britain on Mozambique, day 814). AT: that case
+  tells it once; `massTold` on the 15 seeds of run 75 stays 0.
+- [ ] R155 **Small worlds with no war in ten years** (54425, 54426, 55424, 59421, 59423 of two nations, 55404 of three).
+  AT: a war in ten years on each, or an ADR that a world of two or three may keep the peace.
+- [ ] R156 **Small things:** History rows that are a bare place name; the war-to-the-death title on hover only (a phone
+  never sees it); run 75's phone nits (no ticker while the banners are open; "Scroll" and "Click" in the first cue;
+  Settings' button to the title asks nothing). AT: each, a case in a spec. `slowClick` (0 of 90) stays as ADR-914.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for
