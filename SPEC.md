@@ -2123,7 +2123,9 @@ builds).
   (`showPlace`). No cut within DIRECTOR_GAP_MS (4.5 s) of the last nor DIRECTOR_HOLD_MS (2.5 s) of the camera standing;
   a strike before what waits, the rest in order, one older than DIRECTOR_STALE_MS (45 s) passed over; a shot that
   waits is seen, not flown to, when it stands DIRECTOR_INSET_PX inside a view at most DIRECTOR_SEEN_KM (3000) across.
-  The player's wheel, press on the map, double click or camera key (`CameraController.onTaken`) turns it off.
+  The player's wheel, press on the map, double click or camera key (`CameraController.onTaken`) turns it off; so does
+  each of the page's links to a place or a fight (a ticker row, a war banner, History's rows, an alert, a formation's
+  fight: the hud's `onShowPlace`, `onShowPlaceClear`, `onShowBattle`, `onShowSeaBattle`; R146).
 - **Keys:** arrows or WASD pan; E, =, numpad + zoom in, Q, −, numpad − out; space pauses, `.` and `,`
   change speed (kept, `warsim.speedLevel`, `warsim.paused`); 1–9 and 0 pick map modes; Escape closes the
   menu, the diplomacy toggle, placing, the selection, then the nearest panel; Ctrl+A selects the played

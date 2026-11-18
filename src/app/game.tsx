@@ -113,15 +113,30 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       void hud.stats.value;
       ask(last);
     });
-    hud.onShowBattle = (x, y, span, fight) => view.showBattle(x, y, span, fight);
-    hud.onShowSeaBattle = (x, y, span) => view.showSeaBattle(x, y, span);
+    // To a war's or a formation's fight: the player's act, the director's camera handed back (R146).
+    hud.onShowBattle = (x, y, span, fight) => {
+      hud.director.stop();
+      view.showBattle(x, y, span, fight);
+    };
+    hud.onShowSeaBattle = (x, y, span) => {
+      hud.director.stop();
+      view.showSeaBattle(x, y, span);
+    };
     // A sea battle's view keeps its fleets clear of the panels at the view's sides (PLAN 4.12a).
     view.sidePanels = () => [...document.querySelectorAll('aside')].map((e) => {
       const r = e.getBoundingClientRect();
       return { x: r.left, y: r.top, w: r.width, h: r.height };
     });
-    hud.onShowPlace = (x, y) => view.showPlace(x, y);
-    hud.onShowPlaceClear = (x, y) => view.showPlaceClear(x, y);
+    // The page's links to a place are the player's acts: the director hands the camera back first (R146, critic run 76's
+    // R76-N1: a ticker row, a war banner or a row of History left it on, and it flew away again).
+    hud.onShowPlace = (x, y) => {
+      hud.director.stop();
+      view.showPlace(x, y);
+    };
+    hud.onShowPlaceClear = (x, y) => {
+      hud.director.stop();
+      return view.showPlaceClear(x, y);
+    };
     // The borders' time-lapse (ROADMAP R143b): its map on the view while it is open.
     hud.onTimeLapseMap = (map, colors) => view.showTimeLapse(map, colors);
     // The director's camera (ROADMAP R142): it flies as the ticker's row does, each frame; the player's hand turns it off.

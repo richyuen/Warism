@@ -153,3 +153,9 @@
 - A revolt's war (a puppet on its overlord; a holder on a nation a revolt made or revived) is no choice of target:
   outside the checker's `lift` (Lithuania on Germany, the Soviet Union on Lebanon).
 - `diploInvariants`: 33501 and 58011 0 broken (2, 3 before); the critic's other 18 runs 0. Pin unmoved.
+
+## 2026-11-18 — R146: the page's links hand the director's camera back (R76-N1)
+
+- A ticker row, a war banner, History's rows, an alert and a formation's fight stop the director before they fly
+  (`game.tsx`: the hud's four camera hooks; the director flies by `view.showPlace` itself, not through them).
+- `c76_dirHand.mjs 59955 120`: the six acts all off, 0 cuts after. `director1938.spec.ts` clicks the three, green.

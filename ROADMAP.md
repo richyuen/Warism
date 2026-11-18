@@ -90,8 +90,10 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   AI's pick and at a massing's end; a revolt's war (a puppet's, or the holder's on a nation a revolt made) out of the
   checker. `diploInvariants` 33501 scenario 1825 and 58011 random 3650 --heroes: 0 broken; the report's other 18: 0.
   Pin unmoved (1aabdc7e).
-- [ ] R146 **R76-N1: the director takes the camera back from a click** (a ticker row, a war banner, a History link).
+- [x] R146 **R76-N1: the director takes the camera back from a click** (a ticker row, a war banner, a History link).
   AT: `c76_dirHand.mjs 59955 120`, the three acts `onLater: false` or `cutsAfterAct: 0`.
+  COMMIT: the hud's place and fight links stop the director first (`game.tsx`). `c76_dirHand.mjs 59955 120`: all six
+  acts `onLater: false`, `cutsAfterAct: 0` (ticker, banner, History 1, 1, 2 cuts before). `director1938.spec.ts` clicks the three.
 - [ ] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
   "over 6000 km" at 1 or fewer each (ADR-1041).
 - [ ] R148 **R132's bar not held on HEAD: quiet banners behind "+n".** AT: `c76_bannerRank.mjs 57901 150`, three runs
