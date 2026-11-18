@@ -5,6 +5,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1123 · 2026-11-18 · proposed, the user's decision · R143: the time-lapse record and its 5 % bar
+
+- **The bar.** R143's AT: the record of the cells that changed owner each month under 5 % of a 50-year save.
+- **Measured** (`.cache/r143_probe50.ts`, `.cache/r143_dump.ts`, `.cache/r143_enc.mjs`: 50 years of seeds 99 and 7, the
+  owner's changes month by month, encodings tried on the runs dumped). The record is kept backward from the map of now
+  (each run of changed cells with its old owner: the save holds the map, so no start map is kept); the packed save
+  at 50 years is 1,517 and 1,503 kB (6.1 MB raw). The packed record against the packed save:
+  | encoding | seed 99 | seed 7 |
+  |---|---|---|
+  | runs, varints interleaved | 9.1 % | 9.8 % |
+  | the same in columns | 7.1 % | 7.8 % |
+  | runs merged by old owner, start, end and owner from the run above (the best; not decodable as it stands) | 4.7 % | 5.1 % |
+  | the same, decodable (the index of the run above sent) | 5.0 % | 5.6 % |
+  Against the raw save the columnar record is 3.8 % and 4.0 %. Frames every 2 or 3 months instead of every month do not
+  help: the changes last (merged runs on seed 99: 59,965 monthly, 59,305 every 2 months, 58,763 every 3), 5.0 % and 5.5 %.
+- **Options.**
+  (a) The bar at 6 % of the packed save: the decodable encoding, monthly, as the item says.
+  (b) The bar against the raw save (the state's bytes, as `Sim.save` gives them): under 5 % with the plain columnar
+  encoding (3.8-4.0 %); the file grows 7-8 %.
+  (c) Keep 5 % of the packed save: a lossy record (a coarser grid, or months between years approximate), and the AT's
+  "each 1 January equals the run stopped there" kept only at the year's frames.
+- **Also found** (for whichever): the section is optional (as `history.towns`: absent at the start, loads when absent),
+  so no `STATE_FORMAT` raise and no `UPGRADABLE_SECTIONS` entry (that list is for table columns of scenario files); a
+  save made mid-month must carry the month's open diff; the hash takes the section, so the pin of seed 99 moves.
+- **Until the user decides**, R143 is not built; split when taken: R143a the record (codec, save and load, the yearly
+  equality, the size), R143b the slider and its playback at 60 fps.
+
+---
+
 ## ADR-1122 · 2026-11-18 · accepted · The director's camera (ROADMAP R142)
 
 - **Decision.** A Director switch in the bottom bar (`src/app/director.ts`). The worker sends the History rows of a new

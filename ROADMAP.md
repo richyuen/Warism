@@ -65,6 +65,9 @@ Rules:
   start to now. AT: on two seeds, the time-lapse's map at each 1 January equals the ownership of a run stopped
   there; the record under 5 % of a 50-year save; 60 fps while it plays; save and load bit-identical, the pin moved
   only if the hash takes the section (ADR).
+  Measured, not met (no code): the record of 50 years is 5.0 % (seed 99) and 5.6 % (seed 7) of the packed save in the best
+  decodable encoding of ten tried; frames every 2 or 3 months do not help. BLOCKERS "R143". Waits on ADR-1123 (proposed, the
+  user's decision); when taken, split R143a (the record) and R143b (the slider).
 
 ## Released
 

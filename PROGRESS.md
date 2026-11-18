@@ -108,3 +108,12 @@
   3000 km across. Then 90 s: 15 and 18 cuts, 97-100 %; 10 min: 135/135 and 116/116, 80 and 70 cuts, gap >= 4.52 s.
 - `director.test.ts` (6: gap and hold, a strike first, a far view, old news, the hand, the start); bench G T0 406 fps,
   T2 158.5 fps. The gate green.
+
+## 2026-11-18 — R143 measured before building: the 5 % bar not met; ADR-1123 to the user
+
+- A probe of the owner's monthly changes (`.cache/r143_probe*.ts`, 50 years of seeds 99 and 7; ~1,000-1,400 runs of
+  changed cells a year) and ten encodings tried on the dumped runs (`.cache/r143_enc.mjs`): the record kept backward
+  from the map of now, packed, is 9.1-9.8 % of the packed save plainly and 5.0 / 5.6 % at best (decodable). Every 2 or
+  3 months: the same (the changes last). Against the raw save the plain columnar record is 3.8-4.0 %.
+- Nothing built: the item waits on ADR-1123, as R140 and R144 on ADR-1120. Every open item of Batch 43 now waits on
+  the user.
