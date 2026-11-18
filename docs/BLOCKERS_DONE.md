@@ -1569,3 +1569,10 @@ PLAN 1.42 did not decide are under PLAN 7.3.
   took the pointer over its own box, between the banners and beside a short last row, where the tags may stand: the
   row takes none now, its banners do. `tests/e2e/tagsOnMap1938.spec.ts`: red before on seeds 39915, 1 and 11 (11, 16
   and 11 points of tags and pointers under a box), none after.
+
+### R143: the time-lapse record over its 5 % bar (2026-11-18)
+- **The bar** (ROADMAP R143): the record of the cells that changed owner each month under 5 % of a 50-year save.
+- **What moved:** ten encodings on 50 years of seeds 99 and 7 (ADR-1123's table): 9.1-9.8 % plainly, 5.0 and 5.6 % at
+  best and decodable (runs merged by old owner; start, end and old owner from the run above). Fewer frames do not help.
+- **Left:** ADR-1123 (proposed, the user's decision): the bar at 6 %, against the raw save, or a lossy record.
+- **Resolved** 2026-11-18: the user allowed 7 % (ADR-1123).

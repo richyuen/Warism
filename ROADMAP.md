@@ -63,11 +63,11 @@ Rules:
 - [ ] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
   saved (a new section, in `UPGRADABLE_SECTIONS`), and a slider in History or Charts that plays the map from the
   start to now. AT: on two seeds, the time-lapse's map at each 1 January equals the ownership of a run stopped
-  there; the record under 5 % of a 50-year save; 60 fps while it plays; save and load bit-identical, the pin moved
+  there; the record under 7 % of a 50-year save, packed (ADR-1123, the user's decision); 60 fps while it plays; save and load bit-identical, the pin moved
   only if the hash takes the section (ADR).
-  Measured, not met (no code): the record of 50 years is 5.0 % (seed 99) and 5.6 % (seed 7) of the packed save in the best
-  decodable encoding of ten tried; frames every 2 or 3 months do not help. BLOCKERS "R143". Waits on ADR-1123 (proposed, the
-  user's decision); when taken, split R143a (the record) and R143b (the slider).
+  Measured before building: the record of 50 years is 5.0 % (seed 99) and 5.6 % (seed 7) of the packed save in the best
+  decodable encoding of ten tried (ADR-1123); the bar raised to 7 % by the user. To split R143a (the record) and R143b
+  (the slider).
 
 ## Released
 

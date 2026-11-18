@@ -5,7 +5,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1123 · 2026-11-18 · proposed, the user's decision · R143: the time-lapse record and its 5 % bar
+## ADR-1123 · 2026-11-18 · accepted (the user's decision: "let's allow 7%") · R143: the time-lapse record and its bar, 7 %
 
 - **The bar.** R143's AT: the record of the cells that changed owner each month under 5 % of a 50-year save.
 - **Measured** (`.cache/r143_probe50.ts`, `.cache/r143_dump.ts`, `.cache/r143_enc.mjs`: 50 years of seeds 99 and 7, the
@@ -29,7 +29,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Also found** (for whichever): the section is optional (as `history.towns`: absent at the start, loads when absent),
   so no `STATE_FORMAT` raise and no `UPGRADABLE_SECTIONS` entry (that list is for table columns of scenario files); a
   save made mid-month must carry the month's open diff; the hash takes the section, so the pin of seed 99 moves.
-- **Until the user decides**, R143 is not built; split when taken: R143a the record (codec, save and load, the yearly
+- **The user's decision** (2026-11-18): "let's allow 7%": the bar is 7 % of the packed 50-year save, monthly frames as
+  the item says. The decodable encoding (5.0 and 5.6 %) is under it; the plain columnar one (7.1 and 7.8 %) is not.
+- **When taken**, split: R143a the record (codec, save and load, the yearly
   equality, the size), R143b the slider and its playback at 60 fps.
 
 ---

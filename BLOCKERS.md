@@ -65,12 +65,6 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
   piles; a round trip carries 4–8 divisions. No decision of the user's waits on it; the loop takes it after
   PLAN 7.80b.
 
-### R143: the time-lapse record over its 5 % bar (2026-11-18)
-- **The bar** (ROADMAP R143): the record of the cells that changed owner each month under 5 % of a 50-year save.
-- **What moved:** ten encodings on 50 years of seeds 99 and 7 (ADR-1123's table): 9.1-9.8 % plainly, 5.0 and 5.6 % at
-  best and decodable (runs merged by old owner; start, end and old owner from the run above). Fewer frames do not help.
-- **Left:** ADR-1123 (proposed, the user's decision): the bar at 6 %, against the raw save, or a lossy record.
-
 ### R140: the same five largest for 20 years or more on 2 of 10 seeds of HEAD (2026-11-18; first on 701–710, 2026-10-18, PLAN 7.18g)
 - **The bar** (ROADMAP R140): a 10 × 50 sweep on seeds no tuning has seen, the same five largest nations by land (as a
   set) for 20 years or more on none of the 10. Reported, not judged, by the sweep since ADR-750 ("a stable top is a
