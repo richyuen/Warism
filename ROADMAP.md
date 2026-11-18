@@ -188,6 +188,25 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   129a6305: a side's allies are "& 2" (its title "Portugal and 2 more"); `warToDeath1938`'s case: each allies mark
   "& n", no banner with two plus numbers.
 
+## Batch 46 — critic run 78's findings (focused, on d7b981dd; no blocking issue; every score at its bar)
+
+RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocking issues fixed, then the full run.
+- [ ] R163 **R78-N2 (R77-N3, ADR-1130): with R147 the attacker has no man near more often on new seeds.** `c78_woAB.sh`
+  on 66211, 66213, 66215: HEAD 13 of 69 (18.8 %), defender ahead 17.4 %; R147 off 9.4 %, 14.1 %; bare openings the same
+  (10.9 %, 10.4 %). AT: ADR-1130's nine seeds with run 78's three, by `node critic/scripts/c77_woCount.mjs`, give the
+  attacker bar under 15 % with R147; or ADR-1130 amended with the pooled figures, for the user's review.
+- [ ] R164 **R78-N1: the track rows' residue.** "Italy occupies Rome" (4 June 1944; the Allies took it), "the Second
+  Vienna Award to Hungary" with a small first letter, "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania" (a
+  semicolon passes the bare test), nine "… joins the alliance" naming no alliance. AT: `npx tsx
+  critic/scripts/c78_trackTexts.ts` tells none of these; `ROWS=Rome node critic/scripts/c78_trackRows.mjs 1943 600` shows
+  Rome's row with its taker or as written; cases in `trackText.test.ts`.
+- [ ] R165 **The time-lapse:** a nation gone now is named exactly as a living one; at the first month the plate reads
+  "from January 1938" beside "January 1938". AT: the tooltip on a dead nation marks it gone (`c77_tlDead.mjs` on 7019);
+  the first month's plate names the month once; cases in `timeLapse1938.spec.ts`.
+- [ ] R166 **Small:** a short war's opened banner stands as tall as a neighbour with the death line, half empty
+  (`critic/shots/c78dt_7019_400_1400x800.png`). AT: an opened banner's height is its own content's; a case in
+  `warToDeath1938.spec.ts`. `slowClick` 0 of 90 stays as ADR-914, not filed.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

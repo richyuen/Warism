@@ -1,0 +1,9 @@
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c78_seed7019_y20.bin > critic/c78_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c78_seed32019_y20.bin > critic/c78_seed32019_save.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 63001 scenario 1825 > critic/c78_diploinv_63001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 63003 random 1825 > critic/c78_diploinv_63003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 63005 scenario 1825 --heroes > critic/c78_diploinv_63005sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 63051 1825 > critic/c78_wi_63051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 63053 1825 --heroes > critic/c78_wi_63053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 63055 1825 --world random > critic/c78_wi_63055rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c78_diploinv_33501s.log 2>&1

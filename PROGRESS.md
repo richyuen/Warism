@@ -249,3 +249,8 @@
 - The quiet banner-days with a war in battle behind "+n" were wars fought in their ten days but still for days. A war
   with no battle for three days now gives its place: 57901 8, 16, 10 (bar each under 44); 58901 9, 62901 12.
 - With it, R156's death line kept to its banner's width (it stood the opened banners three rows deep; `warBannerRows1938`).
+
+## 2026-11-18 — critic run 78 (focused, on d7b981dd)
+
+- No blocking issue; every score at its bar (8 each; UI/UX 7 → 8). R77-B1, R77-N1, R77-N2 and R132's bar fixed.
+- Four non-blocking issues filed as Batch 46 (R163–R166); then the full run (ADR-1016).

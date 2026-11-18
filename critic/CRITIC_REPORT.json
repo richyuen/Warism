@@ -1,29 +1,22 @@
 {
-  "commit": "7066d800140c6f5a6dd6c22b8ae8df3844b10f0a",
-  "mode": "focused",
-  "scores": {
-    "mapVisuals": 8,
-    "diplomacyWarDepth": 8,
-    "emergentDynamics": 8,
-    "godMode": 8,
-    "editorScenarios": 8,
-    "statsHistory": 8,
-    "uiUxPolish": 7,
-    "performance": 8,
-    "stability": 8,
-    "semanticZoom": 8,
-    "naval": 8,
-    "tanks": 8,
-    "aircraft": 8,
-    "aiNukes": 8
-  },
-  "blocking": [
-    {
-      "id": "R77-B1",
-      "title": "The time-lapse does not name the month's owner when that nation is dead now: SPEC (R149) claims the tooltip and a click name it",
-      "evidence": "node critic/scripts/c77_tlDead.mjs critic/c76_seed7019_y20.bin (and ... 390 844): run 76's 7019 world loaded on HEAD, the time-lapse at January 1938; on Sweden (dead by 1957) tooltip '', click selected 32 with no panel and the first Escape spent clearing it; Germany and Norway (dead now) no tooltip, Denmark (alive) 'Denmark'; 35 of the 1938 map's nations dead in that world. critic/c77tld_1600x900.json, critic/c77tld_390x844.json, critic/c77tld_c76build_1600x900.json (run 76's build named the owner of now), critic/shots/c77tld_1600x900_hover.png",
-      "fix": "Name a nation that is not living from its last name (the record or the dead nation's own row); a click on one opens nothing (selected 0) or a 'gone since' line. Seen fixed when the probe's tooltip says 'Sweden' and click.selected is 0 or a panel opens, at both sizes, with tlMore cell 59943 still 'Norway'."
-    }
-  ],
-  "timestamp": "2026-11-18T15:45:00-05:00"
+ "commit": "d7b981dd4aecef70c0ec4876c361b9fc6b2d8adb",
+ "mode": "focused",
+ "scores": {
+  "mapVisuals": 8,
+  "diplomacyWarDepth": 8,
+  "emergentDynamics": 8,
+  "godMode": 8,
+  "editorScenarios": 8,
+  "statsHistory": 8,
+  "uiUxPolish": 8,
+  "performance": 8,
+  "stability": 8,
+  "semanticZoom": 8,
+  "naval": 8,
+  "tanks": 8,
+  "aircraft": 8,
+  "aiNukes": 8
+ },
+ "blocking": [],
+ "timestamp": "2026-11-18T17:55:00-05:00"
 }
