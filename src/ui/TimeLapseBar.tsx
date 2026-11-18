@@ -53,7 +53,9 @@ export function TimeLapseBar({ player, step, startDay, playing, setPlaying, onSe
       <button type="button" class="bar-btn" data-testid="time-lapse-play" aria-pressed={playing} onClick={() => setPlaying(!playing)}>
         {playing ? t('timeLapse.pause') : t('timeLapse.play')}
       </button>
-      <span class="time-lapse-from" data-testid="time-lapse-from" title={t('timeLapse.fromHint')}>
+      {/* At the first month the date says it (R165, critic run 78: "from January 1938" beside "January 1938"); kept in its
+          place so the slider does not move. */}
+      <span class="time-lapse-from" data-testid="time-lapse-from" title={t('timeLapse.fromHint')} style={step === 0 ? { visibility: 'hidden' } : undefined} aria-hidden={step === 0}>
         {t('timeLapse.from', { date: `${t(`month.${first.month}` as MessageKey)} ${first.year}` })}
       </span>
       <input

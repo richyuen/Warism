@@ -968,6 +968,7 @@
   "formation.status.holding": "Holding",
   "tooltip.bySea": "Your selected forces go by sea: they board transports at a port and land at the marked place",
   "tooltip.tapAgain": "Tap again to send them",
+  "tooltip.gone": "Gone by now: nothing to select",
   "formation.aiBack": "Done with your orders: the AI commands it again",
   "landing.bar": "Your landings",
   "landing.title": "{target} from {port}",

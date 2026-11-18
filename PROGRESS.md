@@ -264,3 +264,8 @@
 
 - A note with a semicolon is kept as written; a told row starts with a capital; an alliance joined is named ("Romania
   joins the Anti-Comintern Pact"); Rome's 1944 note says the Allies took it.
+
+## 2026-11-18 — R165: the time-lapse says a nation is gone; the first month named once
+
+- The tooltip on a nation gone by now says so and why a click picks nothing; the plate's "from" is hidden at its first
+  month.

@@ -29,7 +29,7 @@ function place(x: number, y: number): Record<string, string> {
 /** The room below the mouse the tooltip needs, else it stands above (R39c): its tallest, a city with notes. */
 const FLIP_PX = 180;
 
-export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing, tapAgain }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null>; tapAgain?: ReadonlySignal<boolean> }) {
+export function MapTooltip({ hover: signal, nameOf, goneOf, unrestOf, bySea, seaNeutral, seaOpen, seaAshore, seaPlain, landing, tapAgain }: { hover: ReadonlySignal<MapHover | null>; nameOf: (id: number) => string | null; goneOf?: (id: number) => boolean; unrestOf: (province: number) => number | null; bySea?: ReadonlySignal<number>; seaNeutral?: ReadonlySignal<boolean>; seaOpen?: ReadonlySignal<boolean>; seaAshore?: ReadonlySignal<boolean>; seaPlain?: ReadonlySignal<boolean>; landing?: ReadonlySignal<SeaHint | null>; tapAgain?: ReadonlySignal<boolean> }) {
   const hover = signal.value;
   const sea = bySea !== undefined && hover !== null && hover.cell >= 0 && bySea.value === hover.cell;
   if (!hover) return null;
@@ -49,6 +49,12 @@ export function MapTooltip({ hover: signal, nameOf, unrestOf, bySea, seaNeutral,
         </div>
       ) : null}
       {name ? <div class={hover.city ? 'map-tooltip-nation' : 'map-tooltip-name'}>{displayName(name)}</div> : null}
+      {/* A nation gone by now, on the time-lapse's map (R165, critic run 78): said so, and why a click picks nothing. */}
+      {name && goneOf?.(owner ? hover.owner : hover.holder) ? (
+        <div class="map-tooltip-note" data-testid="tooltip-gone">
+          {t('tooltip.gone')}
+        </div>
+      ) : null}
       {owner && holder && hover.holder !== hover.owner ? <div class="map-tooltip-note">{t('tooltip.occupiedBy', { name: displayName(holder) })}</div> : null}
       {unrest !== null ? <div class="map-tooltip-nation" data-testid="tooltip-unrest">{t('tooltip.unrest', { n: Math.round(unrest) })}</div> : null}
       {open ? (

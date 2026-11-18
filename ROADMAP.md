@@ -207,12 +207,18 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   alliance's name; Rome's note is "Rome falls to the Allies". `c78_trackTexts.ts` with the alliance passed
   (`.cache/r164_trackTexts.ts`): none of the four; `trackText.test.ts`: a case, and every told note starts with a
   capital and names its alliance.
-- [ ] R165 **The time-lapse:** a nation gone now is named exactly as a living one; at the first month the plate reads
+- [x] R165 **The time-lapse:** a nation gone now is named exactly as a living one; at the first month the plate reads
   "from January 1938" beside "January 1938". AT: the tooltip on a dead nation marks it gone (`c77_tlDead.mjs` on 7019);
   the first month's plate names the month once; cases in `timeLapse1938.spec.ts`.
-- [ ] R166 **Small:** a short war's opened banner stands as tall as a neighbour with the death line, half empty
+  COMMIT165: the tooltip on a nation gone by now adds "Gone by now: nothing to select"; at the first month the plate's
+  "from" is hidden (kept in its place, the slider does not move). `c77_tlDead.mjs` on 7019: "Sweden / Gone by now:
+  nothing to select", Norway the same, `selected` 0, at 1600 × 900 and 390 × 844; the spec's case (red without).
+- [x] R166 **Small:** a short war's opened banner stands as tall as a neighbour with the death line, half empty
   (`critic/shots/c78dt_7019_400_1400x800.png`). AT: an opened banner's height is its own content's; a case in
   `warToDeath1938.spec.ts`. `slowClick` 0 of 90 stays as ADR-914, not filed.
+  COMMIT166: opened, the banners stand at their row's head, each its own height. `warToDeath1938`'s case: Poland's banner
+  shorter than one with a death line on its row, at 1400 × 800 and 390 × 844 (red without: 78 against 73 px). The
+  banner specs (13 files and the tooltip's) green on both projects.
 
 ## Released
 

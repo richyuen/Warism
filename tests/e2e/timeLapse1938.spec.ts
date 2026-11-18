@@ -42,6 +42,7 @@ for (const seed of [1938, 7]) {
     await expect(page.getByTestId('war-banners')).toBeHidden();
     // Where the record begins (R151): this game's first month.
     await expect(page.getByTestId('time-lapse-from')).toHaveText(/^from \w+ 1938$/);
+    await expect(page.getByTestId('time-lapse-from')).toBeVisible();
 
     // At each 1 January the map is the one the page had then.
     for (const [i, t] of jan1.entries()) {
@@ -189,6 +190,10 @@ test('the time-lapse names an owner dead now; Resume closes it', async ({ page }
   await page.mouse.move(801, 450);
   expect(await page.evaluate(() => window.__warsim!.view!.nationAt(801, 450)), 'Sweden under the mouse').toBe(SWE);
   await expect(page.locator('.map-tooltip')).toContainText('Sweden', { timeout: 10_000 });
+  // R165 (critic run 78): said to be gone, and why a click picks nothing; the first month named once on the plate.
+  await expect(page.getByTestId('tooltip-gone')).toHaveText('Gone by now: nothing to select');
+  await expect(page.getByTestId('time-lapse-from')).toBeHidden();
+  await expect(page.getByTestId('time-lapse-date')).toHaveText('January 1938');
   // A click picks nothing: no panel, and Escape is left for the plate.
   await page.mouse.click(801, 450);
   await page.waitForTimeout(300);
