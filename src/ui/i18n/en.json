@@ -868,6 +868,8 @@
   "act.forceWar": "Force war",
   "menu.goTo": "Go to country",
   "bar.diplomacy": "Diplomacy",
+  "bar.director": "Director",
+  "bar.directorHint": "The camera goes by itself to new wars, great battles, capitals taken and strikes; move the map to take it back",
   "bar.diplomacyHint": "Then tap a nation: its menu (war, peace, alliance)",
   "peace.refused.death": "They fight to the death: no peace while they do.",
   "peace.refused.lead": "They refuse: lead the war score by {need} (now {lead}), or wear them out (war weariness {worn}, over {bar} needed).",

@@ -201,6 +201,14 @@ export function historyPlace(r: Pick<HistoryRow, 'kind' | 'x' | 'y'>): [number, 
   return HISTORY_PLACED.has(r.kind) && r.x !== null && r.y !== null && Number.isFinite(r.x) && Number.isFinite(r.y) ? [r.x, r.y] : null;
 }
 
+/**
+ * What the director's camera goes to (ROADMAP R142): a new war (at the ticker's place, the capital of the nation it was
+ * declared on), a Major Battle, a capital taken, a nuclear strike. The worker sends the rows of these kinds since its last
+ * message (`directorRows`), DIRECTOR_ROWS at most, the newest.
+ */
+export const DIRECTOR_KINDS: ReadonlySet<number> = new Set<number>([EventKind.WarDeclared, EventKind.MajorBattleStarted, EventKind.CapitalCaptured, EventKind.NukeCasualties]);
+export const DIRECTOR_ROWS = 40;
+
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
 export function kindName(kind: number): string {
   for (const [k, v] of Object.entries(EventKind)) if (v === kind) return k;

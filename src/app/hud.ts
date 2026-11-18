@@ -4,6 +4,7 @@
  * and are applied to the sim worker on start. Keyboard: Space toggles pause, `,` / `.` change speed
  * (+/− already zoom the camera).
  */
+import { Director } from './director';
 import { effect, signal } from '@preact/signals';
 import { dateOfTick } from '../shared/calendar';
 import { MAP_MODES, type MapMode } from '../shared/mapModes';
@@ -126,6 +127,8 @@ export class Hud {
   onShowPlace: (x: number, y: number) => void = () => {};
   /** A row of History's place (ROADMAP R141): in the view where the page shows the map; false when it shows none (`MapView.showPlaceClear`). */
   onShowPlaceClear: (x: number, y: number) => boolean = () => false;
+  /** The director's camera (ROADMAP R142); main wires it to the map view. */
+  readonly director = new Director();
   /** The sea battles going on (PLAN 4.10b): the ticker lists them, a click flies to both fleets. */
   readonly seaBattles = signal<SeaBattleView[]>([]);
   /** A carrier's strikes out of a sea battle (PLAN 7.154a), for the ticker. */
@@ -270,6 +273,7 @@ export class Hud {
     this.mapMode.value = (MAP_MODES as readonly string[]).includes(mode ?? '') ? (mode as MapMode) : 'political';
     sim.onStats((m) => {
       this.stats.value = m;
+      this.director.add(m.director);
       // A nation that has died is not selected any more (PLAN 2.17e3): its panel is gone, and the
       // legend, the diplomacy colours and the brush were its still. By the statistics that list it
       // dead, not when a Kill is sent: a Kill that is refused keeps its nation and its words.

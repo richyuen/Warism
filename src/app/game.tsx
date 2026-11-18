@@ -122,6 +122,13 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     });
     hud.onShowPlace = (x, y) => view.showPlace(x, y);
     hud.onShowPlaceClear = (x, y) => view.showPlaceClear(x, y);
+    // The director's camera (ROADMAP R142): it flies as the ticker's row does, each frame; the player's hand turns it off.
+    hud.director.go = (x, y) => view.showPlace(x, y);
+    hud.director.inView = (x, y, inset) => view.inView(x, y, inset);
+    hud.director.moving = () => view.controller.animating;
+    hud.director.kmAcross = () => (view.metresPerPx * window.innerWidth) / 1000;
+    view.onFrame = (now) => hud.director.update(now);
+    view.controller.onTaken = () => hud.director.stop();
     // The sea battles going on, for the ticker (PLAN 4.10b).
     view.onSeaBattles = (b) => (hud.seaBattles.value = b);
     view.onCarrierRaids = (r) => (hud.carrierRaids.value = r);

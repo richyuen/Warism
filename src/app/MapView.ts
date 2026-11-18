@@ -1760,6 +1760,19 @@ export class MapView {
    */
   sidePanels: () => { x: number; y: number; w: number; h: number }[] = () => [];
 
+  /** Called each turn of the view's loop after the camera moved (the director's camera, ROADMAP R142). */
+  onFrame: ((now: number) => void) | null = null;
+
+  /** Whether the world point (x, y) is in the view, `inset` CSS px inside its edges (the nearer way round a looping map). */
+  inView(x: number, y: number, inset = 0): boolean {
+    const c = this.controller.cam;
+    const [vw, vh] = [this.canvas.clientWidth, this.canvas.clientHeight];
+    let dx = x - c.cx;
+    if (this.geo.wrapX) dx -= this.geo.w * Math.round(dx / this.geo.w);
+    const [sx, sy] = [dx * c.scale + vw / 2, (y - c.cy) * c.scale + vh / 2];
+    return sx >= inset && sy >= inset && sx <= vw - inset && sy <= vh - inset;
+  }
+
   /**
    * A sea battle's view (PLAN 4.12a): its fleets' box (`span` cells across, about (x, y)) in the
    * band of the view between the panels at its sides, the band's middle over the box's; as far
@@ -3228,6 +3241,7 @@ export class MapView {
     const dt = this.lastFrame < 0 ? 0 : Math.min(0.1, (now - this.lastFrame) / 1000);
     this.lastFrame = now;
     this.controller.update(dt);
+    this.onFrame?.(now);
     this.maybeSubscribe(now);
     // Redraw only when something can have changed: a new snapshot, camera motion, a resize,
     // or units still interpolating toward the latest tick. An idle map costs nothing.

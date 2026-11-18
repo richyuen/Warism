@@ -35,7 +35,7 @@
  * Albania ended: Albania is now a puppet of Italy").
  */
 import { EventKind, JoinedBy, PEACE_BY_TRACK_END, TrackEnd } from '../shared/events';
-import { HISTORY_ROLES, nukeStrike, nukeToll, seaSide, TICKER_HOURS, TICKER_KINDS, TICKER_ONE_AN_HOUR, TICKER_ROWS, type HistoryAs, type HistoryRole, type HistoryRow, type TickerRow } from '../shared/history';
+import { DIRECTOR_KINDS, DIRECTOR_ROWS, HISTORY_ROLES, nukeStrike, nukeToll, seaSide, TICKER_HOURS, TICKER_KINDS, TICKER_ONE_AN_HOUR, TICKER_ROWS, type HistoryAs, type HistoryRole, type HistoryRow, type TickerRow } from '../shared/history';
 import { HISTORY_STRIDE } from '../sim/history';
 import { toldByNote } from '../sim/track';
 import type { World } from '../sim/world';
@@ -410,6 +410,15 @@ export function strikeRows(world: World, from: number, nationName: (id: number) 
   const out: TickerRow[] = [];
   for (let i = Math.max(0, from) * HISTORY_STRIDE; i < rows.length; i += HISTORY_STRIDE) if (rows[i + 1] === EventKind.NukeCasualties) out.push(tickerRowAt(world, i, nation, cityName, defName));
   return out;
+}
+
+/** The director's rows (ROADMAP R142): those of DIRECTOR_KINDS from row `from` of the log, as the ticker has them, the last DIRECTOR_ROWS. */
+export function directorRows(world: World, from: number, nationName: (id: number) => string, cityName: (row: number) => string = () => '', defName: (def: number) => string = () => ''): TickerRow[] {
+  const rows = world.history.rows;
+  const nation = (v: number): string => (v !== 0 && world.nations.has(v) ? nationName(v) : '');
+  const at: number[] = [];
+  for (let i = Math.max(0, from) * HISTORY_STRIDE; i < rows.length; i += HISTORY_STRIDE) if (DIRECTOR_KINDS.has(rows[i + 1]!)) at.push(i);
+  return at.slice(-DIRECTOR_ROWS).map((i) => tickerRowAt(world, i, nation, cityName, defName));
 }
 
 /** Whether the log's rows from row `from` hold a nuclear strike (PLAN 7.109a: the worker stops its step there). */

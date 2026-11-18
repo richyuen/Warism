@@ -45,6 +45,8 @@ export interface BottomBarProps {
   onCancel?: (() => void) | null;
   /** The phone's Diplomacy toggle (PLAN 7.175d), while a nation is played at a phone's size: lit when on. */
   diplomacy?: { on: boolean; onToggle: () => void } | null;
+  /** The director's switch (ROADMAP R142): the camera goes by itself to what happens. */
+  director?: { on: boolean; onToggle: () => void } | null;
 }
 
 /**
@@ -68,7 +70,7 @@ function speedLabels(): string {
  * (ROADMAP R94c, ADR-1086, the user's choice of ADR-1073) Pause, the speed and the date are a plate
  * of their own at the top's middle, the clock; the bar keeps the rest in that order.
  */
-export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy }: BottomBarProps) {
+export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, onSpeed, mapMode, onMapMode, showStats, onToggleStats, godMode, onToggleGod, showHistory, onToggleHistory, showRelations, onToggleRelations, showEditor, onToggleEditor, showSettings, onToggleSettings, godTools, onCancel, diplomacy, director }: BottomBarProps) {
   const isMax = SPEED_LEVELS[speedLevel] === 'max';
   const phone = usePhone();
   // How far the bar's top is from the view's bottom, for what stands above it (PLAN 7.4f25): the
@@ -154,6 +156,11 @@ export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, 
         </button>
       ) : null}
       <MapModeMenu mode={mapMode} onMode={onMapMode} />
+      {director ? (
+        <button type="button" class={director.on ? 'bar-btn bar-director active' : 'bar-btn bar-director'} data-testid="director-btn" aria-pressed={director.on} title={t('bar.directorHint')} onClick={director.onToggle}>
+          {t('bar.director')}
+        </button>
+      ) : null}
       {onToggleStats ? (
         <button type="button" class="bar-btn" data-testid="stats-btn" aria-pressed={showStats} onClick={onToggleStats}>
           {t('bar.statistics')}

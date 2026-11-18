@@ -68,6 +68,8 @@ export class CameraController {
   private followed: (() => [number, number] | null) | null = null;
   /** Told when a follow ends by the user's hand or for want of a point (not by `follow(null)`). */
   onFollowEnd: (() => void) | null = null;
+  /** Told as the user's hand takes the camera: a wheel, a press on the map, a camera key (the director gives way, ROADMAP R142). */
+  onTaken: (() => void) | null = null;
 
   constructor(
     private readonly el: HTMLElement,
@@ -89,6 +91,7 @@ export class CameraController {
     // A double click zooms in twice over about the place clicked (PLAN 7.4f1, the critic's N7).
     this.listen(el, 'dblclick', (e) => {
       e.preventDefault();
+      this.onTaken?.();
       this.zoomTo(this.targetScale * DOUBLE_CLICK_ZOOM, this.local(e as MouseEvent));
     });
     el.style.touchAction = 'none';
@@ -236,6 +239,7 @@ export class CameraController {
 
   private onWheel(e: WheelEvent): void {
     e.preventDefault();
+    this.onTaken?.();
     this.land();
     const px = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
     this.targetScale *= Math.pow(WHEEL_ZOOM_PER_100, -px / 100);
@@ -243,6 +247,7 @@ export class CameraController {
   }
 
   private onPointerDown(e: PointerEvent): void {
+    this.onTaken?.();
     if (e.pointerType === 'touch') {
       this.land();
       this.touches.set(e.pointerId, this.local(e));
@@ -319,6 +324,7 @@ export class CameraController {
     // With Ctrl, Cmd or Alt it is a shortcut (Ctrl+A selects all, Ctrl+S, Ctrl+E ...), not the camera's.
     if (down && (e.ctrlKey || e.metaKey || e.altKey)) return;
     if (down) {
+      this.onTaken?.();
       this.keys.add(e.code);
       e.preventDefault();
     } else this.keys.delete(e.code);

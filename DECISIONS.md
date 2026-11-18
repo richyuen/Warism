@@ -5,6 +5,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1122 · 2026-11-18 · accepted · The director's camera (ROADMAP R142)
+
+- **Decision.** A Director switch in the bottom bar (`src/app/director.ts`). The worker sends the History rows of a new
+  war, a Major Battle, a capital taken and a nuclear strike since its last stats message (`DIRECTOR_KINDS`,
+  `directorRows`, the last 40, places as the ticker's: a war at the capital of the nation it was declared on); the
+  director flies to each as the ticker's row does (`showPlace`), no cut within 4.5 s of the last nor 2.5 s of the camera
+  standing, a strike first, the rest in order, one waiting over 45 s passed over. A row whose place stands 40 px
+  inside a view at most 3000 km across while the camera stands is seen there, not flown to. `CameraController.onTaken`
+  (a wheel, a press on the map, a double click, a camera key) turns it off.
+- **Why.** Goal 1: a world that moves, shown without the player's hand. Major Battles reach the page in no row of the
+  ticker, so the worker sends the director's own; a war has no front at its declaration, so the ticker's place.
+  Measured on 600 days of seeds 1938 and 7 (headless): 36 and 27 wars, 66 and 61 Major Battles, 35 and 29 capitals,
+  no strike: one every 4.6 s at 1 day/s, about the gap; the shots near the one shown are seen with it.
+- **Measured** (`director1938.spec.ts`, `DIRECTOR_MINUTES=10`, 1600 x 900): seed 1938 135 of 135 rows seen, 80 cuts,
+  seed 7 116 of 116, 70 cuts; the shortest gap 4.52 s; 600 days in 600 s; a wheel turned it off within a frame and no
+  cut followed. A first count that took the whole world's view as seeing everything (0 cuts, 100 %) is why a view must
+  be 3000 km across at most. `npm run bench -- G`: T0 406 fps, T2 158.5 fps (budgets 60 and 30). No sim rule, no pin.
+- **Consequences.** The stats message carries up to 40 more rows a second, only where such events happen. The gate
+  runs the spec for 1.5 minutes; the 10-minute run is by hand.
+
+---
+
 ## ADR-1121 · 2026-11-18 · accepted · A row of History flies to its place (ROADMAP R141)
 
 - **Decision.** A History row whose kind is in `HISTORY_PLACED` (`src/shared/history.ts`) and that has both numbers is a

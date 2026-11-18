@@ -99,3 +99,12 @@
   track's first year, every place on the map); `historyPlace1938.spec.ts` green on chromium and swiftshader; the History
   and ticker specs green; the gate green. No sim change, no pin move; the click's cost is a scan of the view's points
   on the click alone, nothing per frame.
+
+## 2026-11-18 — R142: the director's camera (ADR-1122)
+
+- Sized first (headless, 600 days of seeds 1938 and 7): 63 and 56 wars and capitals, 66 and 61 Major Battles, no
+  strike; one every 4.6 s at 1 day/s. Major Battles are in no ticker row: the worker sends the director's rows.
+- A first spec run said 100 % seen with 0 cuts (the whole world in view at the start): seen now asks a view at most
+  3000 km across. Then 90 s: 15 and 18 cuts, 97-100 %; 10 min: 135/135 and 116/116, 80 and 70 cuts, gap >= 4.52 s.
+- `director.test.ts` (6: gap and hold, a strike first, a far view, old news, the hand, the start); bench G T0 406 fps,
+  T2 158.5 fps. The gate green.

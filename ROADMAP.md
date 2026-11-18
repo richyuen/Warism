@@ -51,12 +51,15 @@ Rules:
   annexation at its target's capital), `MapView.showPlaceClear`. `historyPlace1938.spec.ts`, seeds 1938 and 7, at 1600 x 900
   and 390 x 844: a battle, an annexation, a strike, a capital taken and a revolt each under the map's canvas after the
   click, the whole list too (the panel closing on the phone); no link on a war declared; `docs/evidence/R141/`.
-- [ ] R142 **The director: a camera that goes to what happens** (goal 1; an idea, unmeasured). A switch in the bottom
+- [x] R142 **The director: a camera that goes to what happens** (goal 1; an idea, unmeasured). A switch in the bottom
   bar: the camera flies to a new war's front, a Major Battle, a nuclear strike or a capital taken (the ticker's and
   `battleView`'s places), stays some seconds, and goes on; the player's pan, zoom or click hands the camera back.
   The page's alone, no sim rule. AT: 10 min at 1 day/s on two seeds: at least 80 % of the ticker's war and battle
   rows visited, no cut within 4 s of the last, a manual pan or zoom stops it within a frame; 60 fps held (`npm run
   bench -- G`).
+  COMMIT (ADR-1122): `src/app/director.ts`, the worker's `directorRows`, `CameraController.onTaken`. `director1938.spec.ts`
+  with `DIRECTOR_MINUTES=10` at 1 day/s: seed 1938 135 of 135 rows seen (80 cuts), seed 7 116 of 116 (70); the shortest
+  gap 4.52 s; a wheel turns it off within a frame, no cut after. `npm run bench -- G`: T0 406 fps, T2 158.5 fps.
 - [ ] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
   saved (a new section, in `UPGRADABLE_SECTIONS`), and a slider in History or Charts that plays the map from the
   start to now. AT: on two seeds, the time-lapse's map at each 1 January equals the ownership of a run stopped

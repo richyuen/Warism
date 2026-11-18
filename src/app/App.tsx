@@ -211,6 +211,7 @@ export function App({
         onToggleEditor={stats ? () => hud.toggleEditor() : undefined}
         onCancel={cancel}
         diplomacy={phone && player ? { on: player.diplomacy.value, onToggle: () => player.toggleDiplomacy() } : null}
+        director={stats ? { on: hud.director.on.value, onToggle: () => hud.director.toggle(stats.ticker) } : null}
       />
       {stats ? (
         <LandingsBar

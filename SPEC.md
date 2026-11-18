@@ -2115,8 +2115,15 @@ builds).
 - **Top bar** (`src/ui/TopBar.tsx`): the title, or "Playing X · n selected" opening its panel.
 - **Bottom bar** (`src/ui/BottomBar.tsx`): Cancel (when something can be), Diplomacy (on a phone while
   playing), pause, slower, speed, faster, God Mode (and its tool row, §9.4), Map (the map mode menu),
-  Statistics, History, Relations, Editor, the date, Settings. The centre panels (History, Relations,
+  Director, Statistics, History, Relations, Editor, the date, Settings. The centre panels (History, Relations,
   Charts, Settings, Editor) close each other.
+- **Director** (`src/app/director.ts`, R142 [ADR-1122]): a switch; on, the camera goes by itself to a new war (the
+  ticker's place: the capital of the nation it was declared on), a Major Battle, a capital taken and a nuclear strike
+  (`DIRECTOR_KINDS`, the worker's `nationStats.director` rows since its last message), as the ticker's row flies
+  (`showPlace`). No cut within DIRECTOR_GAP_MS (4.5 s) of the last nor DIRECTOR_HOLD_MS (2.5 s) of the camera standing;
+  a strike before what waits, the rest in order, one older than DIRECTOR_STALE_MS (45 s) passed over; a shot that
+  waits is seen, not flown to, when it stands DIRECTOR_INSET_PX inside a view at most DIRECTOR_SEEN_KM (3000) across.
+  The player's wheel, press on the map, double click or camera key (`CameraController.onTaken`) turns it off.
 - **Keys:** arrows or WASD pan; E, =, numpad + zoom in, Q, −, numpad − out; space pauses, `.` and `,`
   change speed (kept, `warsim.speedLevel`, `warsim.paused`); 1–9 and 0 pick map modes; Escape closes the
   menu, the diplomacy toggle, placing, the selection, then the nearest panel; Ctrl+A selects the played

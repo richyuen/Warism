@@ -20,7 +20,7 @@ import { frameOf, symbolOf, Weapon, weaponOf, wreckOf } from '../shared/unitLook
 import { Terrain, TERRAIN_IDS } from '../shared/terrain';
 import { wayLine } from '../shared/wayLine';
 import { encodeRuns } from '../shared/mapImport';
-import { historyRows, nearestCity, strikeRows, struckSince, tickerNews, tickerRows } from './historyRows';
+import { directorRows, historyRows, nearestCity, strikeRows, struckSince, tickerNews, tickerRows } from './historyRows';
 import { Lives } from './lives';
 import { WarsFought } from './warsFought';
 import { fileOffsets } from './files';
@@ -869,8 +869,10 @@ export class SimServer {
     });
     const news = this.newsFrom < 0 ? [] : tickerNews(world, this.newsFrom);
     const strikes = this.newsFrom < 0 ? [] : strikeRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
+    // The director's rows since the message before (ROADMAP R142).
+    const director = this.newsFrom < 0 ? [] : directorRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
     this.newsFrom = world.history.length;
-    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ...(this.undoHeld ? { godUndo: this.undoHeld.tick } : {}), ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
+    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ...(this.undoHeld ? { godUndo: this.undoHeld.tick } : {}), ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, director, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
   }
 
   /**
