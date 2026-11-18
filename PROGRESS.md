@@ -165,3 +165,9 @@
 - Japan, refused Siam by R139, went down its list to Iraq, Iran or Finland, whose allies touch its side by land.
 - `c76_firstdecl.ts 60`: 0 of 49, 0 of 55 over 6,000 km (2, 4 before). On twelve seeds the wars with nothing held at
   day 30 rose 6.1 % -> 10.3 % (R139's five 4.8 % -> 8.9 %, its bar 10 %), in wars the rule does not touch; every bar holds.
+
+## 2026-11-18 — R148: a held banner gone quiet yields to a war fought (ADR-1127)
+
+- `heldRow`: R132's hold no longer keeps a war with no battle in its days on the row while a fought war waits.
+- `bannerRank 57901 150`: 42, 45, 42 (59, 55, 63, 48 on HEAD); churn 7 and 1 a minute (bars 10 and 3). A banner's click
+  stops the director before it asks for the battle (R146's case, a quiet war first).

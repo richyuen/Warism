@@ -99,8 +99,10 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   f5dfc115 (ADR-1126): after a target across the sea is refused for want of a lift, none across the sea. `c76_firstdecl`
   0 of 49 and 0 of 55. R139's bars held on twelve seeds (its AT five 8.9 %, bar 10 %; ADR-1094's 12.3 % and 13.0 %,
   bar 15 %), though over R147's own off arm (4.8 %). `seaLift1938.test.ts`: Japan's Siam then Iraq.
-- [ ] R148 **R132's bar not held on HEAD: quiet banners behind "+n".** AT: `c76_bannerRank.mjs 57901 150`, three runs
+- [x] R148 **R132's bar not held on HEAD: quiet banners behind "+n".** AT: `c76_bannerRank.mjs 57901 150`, three runs
   each under 50 (the user's bar), under 44 for UI's 8.
+  COMMIT (ADR-1127): a held war gone quiet yields to a fought one. `bannerRank 57901 150` 42, 45, 42 (under 50; two
+  under 44); `bannerFlip` 7 and 1 on 57901, 4 and 0 on 58901 (bars 10, 3). `warsFought.test.ts`; 12 banner specs green.
 - [ ] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs
   the game under the plate; Escape does not close it. AT: `c76_tlMore.mjs cell 59943 700` names the month's owner (or
   none); `c76_timeLapse.mjs 59941 400 head` `ranUnderLapse` 0; Escape closes the plate.

@@ -77,6 +77,17 @@ describe('heldRow: a place kept for some days once taken (ROADMAP R132)', () => 
     expect(ids(heldRow([a, b, c, d], 3, HOLD_TICKS + 1, row, 0))).toEqual([1, 2, 4]);
   });
 
+  it('a held war gone quiet gives its place to a fought war at once, in its slot; held against a quiet one (R148)', () => {
+    let row = heldRow([a, b, c, d], 3, 0, [], 0);
+    const quietC = { ...c, battle: false, fought: false };
+    const quietD = { ...d, battle: false, fought: false };
+    // c gone quiet, d fought: d takes c's slot at once.
+    expect(ids(heldRow([a, b, d, quietC], 3, 10, row, 0)), 'd fought, c quiet').toEqual([1, 2, 4]);
+    // Both quiet, d larger: c held, as R132.
+    row = heldRow([a, b, quietD, quietC], 3, 10, row, 0);
+    expect(ids(row), 'both quiet: c held').toEqual([1, 2, 3]);
+  });
+
   it("each war in the slot it had (the banner under a resting cursor stays its war's); a newcomer in a slot one left", () => {
     const row = heldRow([a, b, c, d], 3, 0, [], 0);
     expect(ids(heldRow([c, b, a, d], 3, 3 * HOLD_TICKS, row, 0))).toEqual([1, 2, 3]);

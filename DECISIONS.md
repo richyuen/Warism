@@ -5,6 +5,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1127 · 2026-11-18 · accepted · A held banner gone quiet yields to a war fought (ROADMAP R148)
+
+- **The case** (critic run 76, R132's bar on HEAD): `c76_bannerRank.mjs 57901 150` gave 59, 55, 63 and 48 quiet
+  banner-days behind "+n" (ADR-1114's bar under 50; under 44 for UI/UX's 8); the banner code unchanged, the world of
+  57901 moved with R139. A war held its place HOLD_TICKS though its battles had stopped and a fought war waited.
+- **Decision.** `heldRow`: a held war that is not `fought` keeps no place from a war the order wants that is fought and
+  off the row. The hold stays against a war that outranks by its men alone (R132).
+- **Measured** (a preview of the build): `bannerRank 57901 150` 42, 45 and 42 (58901: 27); `bannerFlip 57901 150` the
+  row changed 7 times a minute, the banner under a resting cursor 1 (HEAD 4 and 4 by the critic; R132's 3 and 1);
+  `58901 200` 4 and 0. ADR-1114's bars (10, 3, under 50) hold; two runs of three under 44.
+- **Also** (R146): the first banner can now be a war with no battle, whose click flies nowhere; `toBattle` stops the
+  director at the click, before it asks for the battle.
+
+---
+
 ## ADR-1126 · 2026-11-18 · accepted · No target across the sea after one refused for want of a lift (ROADMAP R147)
 
 - **The case** (critic run 76, R76-N5): first-60-day declarations over 6,000 km, 2 of 50 on 39821-39839 and 4 of 58 on

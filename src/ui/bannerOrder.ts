@@ -31,7 +31,7 @@ export interface Held {
  * The row of `shown` banners at `tick` from the order (`bannerOrder`) and the row before (`prev`). Every war on it while
  * they are no more than `shown`: by the order. Else those of the order's first `shown`; but a war that took its place
  * while there were more (`contested`) less than HOLD_TICKS ago keeps it, unless the played nation's wars need it (they
- * are first at once, ROADMAP R121). A war over leaves at once. On the row: the played nation's wars, then each war in
+ * are first at once, ROADMAP R121), or it has gone quiet while a war fought waits for a place (R148). A war over leaves at once. On the row: the played nation's wars, then each war in
  * the slot it had while contested, a newcomer in a slot one left (by the order), the rest after: re-sorted by the order,
  * a war that fell behind slid down the row and the banner under a resting cursor became another's. A place taken while
  * all were on the row is neither held nor kept in its slot (R121: a great war declared on a row with room is first).
@@ -48,7 +48,11 @@ export function heldRow(ranked: readonly WarStat[], shown: number, tick: number,
   for (const w of want) if (isMine(w, player)) row.add(w.id);
   // On the row before: those the order still wants, then those that took their place lately.
   for (const w of want) if (since.has(w.id) && row.size < shown) row.add(w.id);
-  const young = [...since].filter(([id, at]) => !row.has(id) && tick - at < HOLD_TICKS).sort((a, b) => rank.get(a[0])! - rank.get(b[0])!);
+  // A held war gone quiet (no battle in its days, `fought` false) does not keep its place from a war fought that the
+  // order wants (R148, critic run 76: on HEAD's 57901, 48-63 banner-days of quiet wars on the row while a war with
+  // battles stood behind "+n"). The hold is against a war that outranks by size, not by its battles.
+  const foughtWaits = want.some((w) => w.fought && !row.has(w.id));
+  const young = [...since].filter(([id, at]) => !row.has(id) && tick - at < HOLD_TICKS && (!foughtWaits || ranked[rank.get(id)!]!.fought)).sort((a, b) => rank.get(a[0])! - rank.get(b[0])!);
   for (const [id] of young) if (row.size < shown) row.add(id);
   for (const w of ranked) if (row.size < shown) row.add(w.id);
   const byRank = (x: number, y: number): number => rank.get(x)! - rank.get(y)!;

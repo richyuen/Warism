@@ -144,6 +144,8 @@ export class Hud {
 
   /** To the largest battle of war `war` (a click on its banner, PLAN 2.14e). A war with no formations in contact leaves the camera where it is. */
   toBattle(war: number): void {
+    // The player's act, a battle found or none: the director's camera handed back at the click (R146).
+    this.director.stop();
     void this.sim
       .warBattle(war)
       .then((b) => {
