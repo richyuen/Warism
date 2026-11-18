@@ -25,6 +25,14 @@ describe("a track row whose note is a bare place says what happened there (ROADM
     expect(trackText(row('join', 'Romania', 'Romania'))).toBe('Romania joins the war');
   });
 
+  it('critic run 78 (R164): the alliance by its name, a capital at the start, a semicolon kept as written', () => {
+    expect(trackText({ ...row('allianceJoin', 'Romania', 'Romania'), trackAlliance: 'alliance.anti_comintern' })).toBe('Romania joins the Anti-Comintern Pact');
+    expect(trackText({ ...row('allianceJoin', 'France', 'France'), trackAlliance: 'alliance.nato' })).toBe('France joins the North Atlantic Treaty');
+    expect(trackText(row('transfer', 'The Second Vienna Award', 'Hungary'))).toBe('The Second Vienna Award to Hungary');
+    expect(trackText(row('occupy', 'Bagration and Lvov-Sandomierz; Romania', 'Soviet Union'))).toBe('Bagration and Lvov-Sandomierz; Romania');
+    expect(trackText(row('occupy', 'Rome falls to the Allies', 'Italy'))).toBe('Rome falls to the Allies');
+  });
+
   it('a sentence, a name with a colon, a direction, or another kind: the note as it is', () => {
     for (const [kind, note] of [
       ['occupy', 'Kerch retaken'],
@@ -59,15 +67,19 @@ describe("a track row whose note is a bare place says what happened there (ROADM
       if (!note) continue;
       const kind = String(e['kind']);
       const name = nameOf(e[actor[kind] ?? 'nation']);
-      const out = trackText(row(kind, note, name));
+      const alliance = typeof e['nameKey'] === 'string' ? { trackAlliance: e['nameKey'] } : {};
+      const out = trackText({ ...row(kind, note, name), ...alliance });
+      expect(out, `${kind}: "${note}" names its alliance (R164)`).not.toMatch(/joins the alliance/);
       if (!bareNote(note)) {
         expect(out, `${kind}: "${note}" is a sentence, kept`).toBe(note);
         continue;
       }
       if (out === note) continue;
       told++;
+      expect(out.charAt(0), `"${out}" starts with a capital (R164)`).toMatch(/\p{Lu}/u);
       // A told row has its place whole, and no capital "The" inside it.
-      expect(out, `${kind}: "${note}"`).toContain(note.replace(/^The /, 'the '));
+      // "The" small inside the row, a capital at its start (R164).
+      expect(out.startsWith(note) || out.includes(note.replace(/^The /, 'the ')), `${kind}: "${note}" whole in "${out}"`).toBe(true);
       expect(out.slice(1), `${kind}: "${note}" told as "${out}"`).not.toMatch(/\bThe\b/);
     }
     expect(told, 'bare notes told').toBeGreaterThan(50);

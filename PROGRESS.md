@@ -259,3 +259,8 @@
 
 - The critic's three seeds put the attacker with no man near at 18.8 % with R147. Pooled with ADR-1130's nine: 13.2 %
   with it, 12.1 % without, under ADR-1094's 15 %. No code; for the user's review with ADR-1130.
+
+## 2026-11-18 — R164: the track rows' residue
+
+- A note with a semicolon is kept as written; a told row starts with a capital; an alliance joined is named ("Romania
+  joins the Anti-Comintern Pact"); Rome's 1944 note says the Allies took it.

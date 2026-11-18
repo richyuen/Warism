@@ -234,6 +234,7 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
       const e = world.track?.events[a - 1];
       row.note = e?.note ?? '';
       if (e) row.trackKind = e.kind;
+      if (e?.kind === 'allianceJoin' && e.nameKey) row.trackAlliance = e.nameKey;
     }
     // An annexation the timeline tells by its note (R64d).
     const told = kind === EventKind.NationAnnexed ? annexNote(world, rows[i]!, a, b) : '';
@@ -395,6 +396,7 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
     const e = world.track?.events[a - 1];
     row.note = e?.note ?? '';
     if (e) row.trackKind = e.kind;
+    if (e?.kind === 'allianceJoin' && e.nameKey) row.trackAlliance = e.nameKey;
   }
   const told = kind === EventKind.NationAnnexed ? annexNote(world, tick, a, b) : '';
   if (told) [row.as, row.note] = ['track', told];

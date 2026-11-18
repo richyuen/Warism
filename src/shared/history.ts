@@ -246,6 +246,8 @@ export interface HistoryRow {
   note?: string;
   /** Its timeline's kind (`occupy`, `objective`…): a note that is a bare place is told by it (ROADMAP R156). */
   trackKind?: string;
+  /** An `allianceJoin`'s alliance name key ("alliance.nato"): the row names the alliance joined (ROADMAP R164). */
+  trackAlliance?: string;
   /**
    * What a nuclear strike destroyed of the forces there (PLAN 7.32b): its `NukeToll`, the row after
    * it in the log. Absent in a game saved before: its sentence then has the dead alone.

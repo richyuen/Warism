@@ -197,11 +197,16 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   attacker bar under 15 % with R147; or ADR-1130 amended with the pooled figures, for the user's review.
   1431c0d8 (ADR-1132, no code): pooled over the twelve seeds, the attacker with no man near 34 of 257 (13.2 %) with R147,
   32 of 265 (12.1 %) without; the defender ahead 15.2 % and 13.6 % (a measure, no bar). ADR-1130's line corrected.
-- [ ] R164 **R78-N1: the track rows' residue.** "Italy occupies Rome" (4 June 1944; the Allies took it), "the Second
+- [x] R164 **R78-N1: the track rows' residue.** "Italy occupies Rome" (4 June 1944; the Allies took it), "the Second
   Vienna Award to Hungary" with a small first letter, "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania" (a
   semicolon passes the bare test), nine "… joins the alliance" naming no alliance. AT: `npx tsx
   critic/scripts/c78_trackTexts.ts` tells none of these; `ROWS=Rome node critic/scripts/c78_trackRows.mjs 1943 600` shows
   Rome's row with its taker or as written; cases in `trackText.test.ts`.
+  COMMIT: a note with a semicolon is kept as written; a told row starts with a capital ("The Second Vienna Award to
+  Hungary"); "… joins the Anti-Comintern Pact" (the Eastern Bloc, the North Atlantic Treaty): the row carries its
+  alliance's name; Rome's note is "Rome falls to the Allies". `c78_trackTexts.ts` with the alliance passed
+  (`.cache/r164_trackTexts.ts`): none of the four; `trackText.test.ts`: a case, and every told note starts with a
+  capital and names its alliance.
 - [ ] R165 **The time-lapse:** a nation gone now is named exactly as a living one; at the first month the plate reads
   "from January 1938" beside "January 1938". AT: the tooltip on a dead nation marks it gone (`c77_tlDead.mjs` on 7019);
   the first month's plate names the month once; cases in `timeLapse1938.spec.ts`.
