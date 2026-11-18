@@ -129,7 +129,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   case: no ticker row or banner under the plate at 390 x 844 (a row under it without the rule).
 - [x] R154 **A massing told again 50 days after its call-off** (56211, Britain on Mozambique, day 814). AT: that case
   tells it once; `massTold` on the 15 seeds of run 75 stays 0.
-  COMMIT (ADR-1128): a told massing called off bars its target MASS_BAR_DAYS. On HEAD the case is 57613 (a day's
+  f72b1dea (ADR-1128): a told massing called off bars its target MASS_BAR_DAYS. On HEAD the case is 57613 (a day's
   Overrun); `c76_massTold.ts 3` on 13 seeds: told again 0 (1), twice 0. `massCalledOffBar1938.test.ts`. Pin -> f311b292.
 - [ ] R155 **Small worlds with no war in ten years** (54425, 54426, 55424, 59421, 59423 of two nations, 55404 of three).
   AT: a war in ten years on each, or an ADR that a world of two or three may keep the peace.
