@@ -111,7 +111,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   (96), Escape `lapseOn` false. `timeLapse1938.spec.ts` the three.
 - [x] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
   c76_director.mjs 59951 100 head 120`, `seenCovered` 0, on a desk and a phone.
-  COMMIT: the director flies clear of the panels (`showPlaceClear`) and sees a place only uncovered. The probe: desk 45
+  de213ebd: the director flies clear of the panels (`showPlaceClear`) and sees a place only uncovered. The probe: desk 45
   of 45 seen, `seenCovered` 0 (53 of 56 covered before); phone `seenCovered` 0, 1 of 45 seen (History covers the phone).
   `director1938.spec.ts`'s case.
 - [ ] R151 **R76-N4: a save from before R143 plays only the months since its load** under a title that says "from the
