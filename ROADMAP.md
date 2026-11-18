@@ -152,12 +152,12 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   (the first Escape spent on it). AT: `node critic/scripts/c77_tlDead.mjs critic/c76_seed7019_y20.bin` (and `… 390 844`)
   gives the tooltip "Sweden" and `click.selected` 0 or a panel at both sizes; `tlMore cell 59943` still "Norway"; a case
   in `timeLapse1938.spec.ts`.
-  COMMIT: the tooltip names a nation dead now from the stats' dead list; on the time-lapse a click on one selects
+  d58a116a: the tooltip names a nation dead now from the stats' dead list; on the time-lapse a click on one selects
   nothing. Probe: "Sweden", `click.selected` 0, at 1600 × 900 and 390 × 844 (Norway, Germany named too). The spec's
   case annexes Sweden by God and hovers it on the first month's map (red without the fix: no tooltip).
 - [x] R158 **R77-N1: the bar's Resume runs the game under the time-lapse.** 96 hours ran with the plate on January 1938
   and the ticker hidden (R153). AT: the probe's `resume.ranHours` is 0, or resuming closes the plate; a case in the spec.
-  COMMIT: resuming closes the plate (`togglePause`); probe `after.open` false at both sizes; the spec's case clicks
+  d58a116a: resuming closes the plate (`togglePause`); probe `after.open` false at both sizes; the spec's case clicks
   the bar's Resume.
 - [ ] R159 **R77-N2: R156's track rows told wrongly.** "{nation} occupies" goes before notes that are already sentences
   ("Kerch retaken", "The line of 1941-12-01"), and occupy's `by` is not always the note's actor; still bare: "Crete",
