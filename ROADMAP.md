@@ -106,7 +106,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
 - [x] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs
   the game under the plate; Escape does not close it. AT: `c76_tlMore.mjs cell 59943 700` names the month's owner (or
   none); `c76_timeLapse.mjs 59941 400 head` `ranUnderLapse` 0; Escape closes the plate.
-  COMMIT: hover and pick read the month's map; Space is the time-lapse's while open (`hud.lapsePlaying`); Escape
+  ca5bd35d: hover and pick read the month's map; Space is the time-lapse's while open (`hud.lapsePlaying`); Escape
   closes it last. `c76_tlMore cell 59943 700`: the panel Norway's; `c76_timeLapse 59941 400 head`: `ranUnderLapse` 0
   (96), Escape `lapseOn` false. `timeLapse1938.spec.ts` the three.
 - [ ] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
