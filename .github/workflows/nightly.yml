@@ -46,9 +46,9 @@ jobs:
       - run: npm run build
 
   # ROADMAP R138: one job ran 53 min and was cancelled at 60 on three nights; the historical track's
-  # six files are half of it (~15 min each on the runner's 3 workers). Split three ways, ~16-22 min
-  # a job. `rest` takes every file but the track's, and `track-b` every track file but Seed1-3, so a
-  # new file lands in a job without an edit here.
+  # six files are half of it (~15-27 min each on the runner's 3 workers, which vary 1.6x night to
+  # night). Split four ways: the first takes every file the others do not name, and the last every
+  # track file but Seed1-3, so a new file lands in a job without an edit here.
   ten-year:
     name: The ten-year tests (${{ matrix.part.name }})
     if: github.event.schedule != '17 5 * * 0'
@@ -58,7 +58,8 @@ jobs:
       fail-fast: false
       matrix:
         part:
-          - { name: 'the pin, save and load, allies never at war, no bankruptcy in peace', args: "--exclude 'tests/sweep/historyTrack1938h*'" }
+          - { name: 'the pin, save and load, allies never at war, no bankruptcy in peace', args: "--exclude 'tests/sweep/historyTrack1938h*' --exclude 'tests/sweep/historyMatch1938h*' --exclude 'tests/sweep/freeYears1938h*' --exclude 'tests/sweep/freeWorld1938h*'" }
+          - { name: 'the 1938 history matched, then played free', args: 'historyMatch1938h freeYears1938h freeWorld1938h' }
           - { name: 'the historical track, seeds 1-3', args: 'historyTrack1938hSeed1 historyTrack1938hSeed2 historyTrack1938hSeed3' }
           - { name: 'the historical track, its own seed and seeds 4-5', args: "historyTrack1938h --exclude 'tests/sweep/historyTrack1938hSeed[123].*'" }
     steps:
