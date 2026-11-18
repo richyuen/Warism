@@ -129,3 +129,11 @@
   2.95): the switch is a drawn camera and the bar's buttons 0.5rem at their sides, 2.92 % (ADR-1122 amended).
 - `snapshot-perf` timed out in both gates' whole unit runs, green alone at 45 s with and without the cut: the watch list.
 - The gate green; `npm run test:sweep` 23 of 23 by hand.
+
+## 2026-11-18 — R143b: the time-lapse's slider (ADR-1124); R143 done
+
+- History's "Time-lapse": the game paused, a plate of play, a slider over the months, the month and close; the map of
+  the step as owner and controller, nothing of now drawn over it (units, flags, marches, fronts, names, war banners).
+- `timeLapse1938.spec.ts` on seeds 1938 and 7: the maps of 1 January 1939 and 1940 the page's own of that hour; 60.0 fps
+  while it plays. The worker's build at 10/25/50 years of seed 99: 12/12/23 ms, 5.5/8.0/11.0 MB.
+- Every item of Batch 43 is ticked: the batch ends with a critic run and a release tag (PROMPT "Releases").

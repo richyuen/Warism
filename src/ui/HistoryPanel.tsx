@@ -17,6 +17,8 @@ export interface HistoryPanelProps {
   nations: { id: number; name: string }[];
   /** The nation played (0 = none): "My wars only" is offered for it (ROADMAP R53f). */
   player?: number;
+  /** The borders' time-lapse opened (ROADMAP R143b). */
+  onTimeLapse?: () => void;
   /** A row's place clicked (ROADMAP R141): the camera goes there. */
   onPlace?: (x: number, y: number) => void;
   onClose: () => void;
@@ -37,7 +39,7 @@ function download(name: string, type: string, text: string): void {
  * History log (PLAN 1.34a): every historic event, newest first, filterable by type, nation and
  * years; the filtered rows export to CSV or JSON. Refetched from the worker while open.
  */
-export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, onPlace, onClose }: HistoryPanelProps) {
+export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, onPlace, onTimeLapse, onClose }: HistoryPanelProps) {
   const [rows, setRows] = useState<HistoryRow[]>([]);
   const [f, setF] = useState<HistoryFilter>(NO_FILTER);
   useEffect(() => {
@@ -94,6 +96,11 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, 
         <button type="button" class="god-btn" data-testid="history-csv" onClick={() => download('warism-history.csv', 'text/csv', toCsv(exported()))}>
           {t('history.exportCsv')}
         </button>
+        {onTimeLapse ? (
+          <button type="button" class="god-btn" data-testid="history-timelapse" title={t('timeLapse.hint')} onClick={onTimeLapse}>
+            {t('timeLapse.title')}
+          </button>
+        ) : null}
         <button type="button" class="god-btn" data-testid="history-json" onClick={() => download('warism-history.json', 'application/json', JSON.stringify(exported(), null, 2))}>
           {t('history.exportJson')}
         </button>

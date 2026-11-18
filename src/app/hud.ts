@@ -4,6 +4,7 @@
  * and are applied to the sim worker on start. Keyboard: Space toggles pause, `,` / `.` change speed
  * (+/− already zoom the camera).
  */
+import { TimeLapsePlayer } from '../shared/timeLapse';
 import { Director } from './director';
 import { effect, signal } from '@preact/signals';
 import { dateOfTick } from '../shared/calendar';
@@ -549,6 +550,39 @@ export class Hud {
   toggleHistory(): void {
     if (!this.showHistory.value) this.closeCentre('history');
     this.showHistory.value = !this.showHistory.value;
+  }
+
+  /**
+   * The borders' time-lapse (ROADMAP R143b): its player while open, null otherwise; `lapseStep` the step on show (a
+   * signal for the bar). Opened from History: the game pauses, History closes, the map plays the record.
+   */
+  readonly timeLapse = signal<TimeLapsePlayer | null>(null);
+  readonly lapseStep = signal(0);
+  /** Shows a time-lapse's map on the view, or the game's again (null); main wires it to the map view. */
+  onTimeLapseMap: (map: Uint16Array | null, colors?: Uint32Array) => void = () => {};
+
+  async openTimeLapse(): Promise<void> {
+    if (!this.paused.value) this.togglePause();
+    if (this.showHistory.value) this.showHistory.value = false;
+    const player = new TimeLapsePlayer(await this.sim.timeLapse());
+    player.seek(player.steps);
+    this.timeLapse.value = player;
+    this.lapseStep.value = player.step;
+    this.onTimeLapseMap(player.map, player.data.colors);
+  }
+
+  /** To step `i` of the open time-lapse (0 the start). */
+  seekTimeLapse(i: number): void {
+    const p = this.timeLapse.value;
+    if (!p || !p.seek(i)) return;
+    this.lapseStep.value = p.step;
+    this.onTimeLapseMap(p.map);
+  }
+
+  closeTimeLapse(): void {
+    if (!this.timeLapse.value) return;
+    this.timeLapse.value = null;
+    this.onTimeLapseMap(null);
   }
 
   /** The relations graph (ROADMAP R1, ADR-806). */

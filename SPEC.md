@@ -2288,6 +2288,12 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   backward from the map of now: `ownerAt(t)` undoes the open changes and the later frames. Saved as `borders.log` and
   `borders.open` (the changes since the last cut, for a save in mid-month), absent at the start and loaded when absent;
   hashed; dropped from an exported scenario. Under 7 % of a packed 50-year save (`tools/diag/borderLog.ts`).
+- **Time-lapse** (R143b [ADR-1124]): History's "Time-lapse" pauses the game, closes History and opens a plate above
+  the bottom bar: play and pause, a slider over the months from the record's start to now, the month on show, close.
+  The worker builds it from the record (`src/worker/timeLapse.ts`: the map at the first cut and each step's cells with
+  their owner before and after, the open changes the last step; every nation's own colour). The view shows the step's
+  map as owner and controller (`MapView.showTimeLapse`, a whole upload a step), no fronts, units, flags, marches or
+  nation names, the war banners hidden; play is LAPSE_STEP_MS (100) a month. Closing puts back the game's map.
 
 ---
 

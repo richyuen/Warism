@@ -2854,3 +2854,35 @@ button.unit-icon.on {
   font-size: 0.8rem;
   color: var(--ui-muted);
 }
+
+/* The borders' time-lapse (ROADMAP R143b): a plate above the bottom bar, at the middle. */
+.time-lapse {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--bar-top, 2.8rem) + 0.6rem);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: min(40rem, calc(100% - 2rem));
+  padding: 0.35rem 0.6rem;
+  background: rgba(20, 24, 32, 0.92);
+  border: 1px solid var(--frame-edge, #8a6d3b);
+  border-radius: 7px;
+  color: var(--ui-text, #f3e3b5);
+  pointer-events: auto;
+}
+.time-lapse-slider {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.time-lapse-date {
+  flex: none;
+  min-width: 7.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+/* The war banners of now stand where the time-lapse's plate is: hidden while it is open. */
+#ui:has(.time-lapse) .war-banners {
+  display: none;
+}

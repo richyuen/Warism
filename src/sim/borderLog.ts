@@ -288,6 +288,11 @@ export class BorderLog implements Stateful {
     return this.then ? diffRuns(this.then, this.owner(), this.width()) : new Int32Array(0);
   }
 
+  /** Whether the record has begun (its first cut taken). */
+  get begun(): boolean {
+    return this.then !== null;
+  }
+
   /** The hour of the first cut (0 before it). */
   get firstCut(): number {
     return this.firstTick;

@@ -7,6 +7,7 @@ import { allyWhy, standingOf } from '../ui/standing';
 import { peaceVerdict } from '../shared/peace';
 import { FormationPanel } from '../ui/FormationPanel';
 import { HistoryPanel } from '../ui/HistoryPanel';
+import { TimeLapseBar } from '../ui/TimeLapseBar';
 import { RelationsPanel } from '../ui/RelationsPanel';
 import { StatsChart } from '../ui/StatsChart';
 import { EditorPanel } from '../ui/EditorPanel';
@@ -383,9 +384,11 @@ export function App({
             hud.toggleHistory();
             hud.onShowPlace(x, y);
           }}
+          onTimeLapse={() => void hud.openTimeLapse()}
           onClose={() => hud.toggleHistory()}
         />
       ) : null}
+      {hud.timeLapse.value ? <TimeLapseBar player={hud.timeLapse.value} step={hud.lapseStep.value} startDay={hud.startDay} onSeek={(i) => hud.seekTimeLapse(i)} onClose={() => hud.closeTimeLapse()} /> : null}
       {stats && hud.showRelations.value ? (
         <RelationsPanel
           nations={stats.nations}

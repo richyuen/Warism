@@ -5,6 +5,7 @@
  * only after main has had a frame to consume the previous one, and the snapshot's buffers
  * are transferred back for reuse.
  */
+import { unpackTimeLapse, type TimeLapse } from '../shared/timeLapse';
 import type { Command } from '../shared/commands';
 import type { HistoryRow } from '../shared/history';
 import type { LandMask } from '../shared/landMask';
@@ -454,6 +455,13 @@ export class SimClient {
     const r = await this.status({ type: 'stats' });
     if (!r.bytes) throw new Error('stats reply without bytes');
     return new Float32Array(r.bytes.slice().buffer); // own, aligned copy
+  }
+
+  /** The borders' time-lapse (ROADMAP R143b). */
+  async timeLapse(): Promise<TimeLapse> {
+    const r = await this.status({ type: 'timeLapse' });
+    if (!r.bytes) throw new Error('time-lapse reply without bytes');
+    return unpackTimeLapse(r.bytes);
   }
 
   /** The history log (PLAN 1.34a). */

@@ -683,7 +683,8 @@ export class MapView {
       const t = s.tiles.ids[k]!;
       const tx = t % s.tiles.tilesX;
       const ty = (t - tx) / s.tiles.tilesX;
-      this.map.updateTile(tx, ty, T, s.tiles.owner, s.tiles.controller, k * T * T);
+      // While a time-lapse plays its own map (ROADMAP R143b), the grids are kept and the textures left to it.
+      if (!this.lapse) this.map.updateTile(tx, ty, T, s.tiles.owner, s.tiles.controller, k * T * T);
       // CPU copy of control for picking (click → nation).
       for (let r = 0; r < T; r++) {
         const y = ty * T + r;
@@ -707,7 +708,8 @@ export class MapView {
       this.warPairs.add(a < b ? a * 65536 + b : b * 65536 + a);
     }
     // The fronts (ROADMAP R90a): the borders between what two nations at war hold.
-    if (this.map.setWars(s.wars)) this.dirty = true;
+    this.lastWars = Array.from(s.wars);
+    if (!this.lapse && this.map.setWars(s.wars)) this.dirty = true;
     // What the view knows of each nation is what this snapshot says, and of no other nation: a
     // snapshot has a row for every nation of its world. A world loaded into a running game can
     // have fewer (PLAN 2.7q): the flag of a nation made by a revolt stayed over its capital after
@@ -981,6 +983,8 @@ export class MapView {
   }
 
   private applyPalette(): void {
+    // A time-lapse's colours are each nation's own, those gone since too (ROADMAP R143b): restored when it closes.
+    if (this.lapse) return;
     const overlords = new Set(this.overlordOf.values());
     const colorOf = (id: number): number | null => (id !== 0 ? (this.ownColor.get(id) ?? null) : null);
     let maxIncome = 0;
@@ -1828,6 +1832,41 @@ export class MapView {
     this.controller.flyTo({ cx: x - (p[0] - vw / 2) / scale, cy: y - (p[1] - vh / 2) / scale, scale });
     this.dirty = true;
     return true;
+  }
+
+  /** A time-lapse's map on show (ROADMAP R143b), or null: the game's. */
+  private lapse: Uint16Array | null = null;
+  /** The wars of the last snapshot, for the fronts when a time-lapse closes. */
+  private lastWars: number[] = [];
+
+  /**
+   * Shows `map` (row-major owners) as the map (ROADMAP R143b): owner and controller alike, no fronts, each nation in its own
+   * colour (`colors` by id, the nations gone since among them), the units and their marks not drawn. Null: the game's
+   * map, colours and fronts again.
+   */
+  showTimeLapse(map: Uint16Array | null, colors?: Uint32Array): void {
+    if (map) {
+      if (!this.lapse && colors) for (let id = 1; id < colors.length; id++) if (colors[id]) this.map.setColor(id, colors[id]!);
+      this.lapse = map;
+      this.map.setGrid(map, map);
+      this.map.setWars([]);
+    } else if (this.lapse) {
+      this.lapse = null;
+      this.map.setGrid(this.ownerGrid, this.controlGrid);
+      this.applyPalette();
+      this.map.setWars(this.lastWars);
+    }
+    this.dirty = true;
+  }
+
+  /** Whether a time-lapse is on show. */
+  get timeLapseOn(): boolean {
+    return this.lapse !== null;
+  }
+
+  /** A copy of the owners the view has (the test's measure of a time-lapse, ROADMAP R143b). */
+  ownerCopy(): Uint16Array {
+    return Uint16Array.from(this.ownerGrid);
   }
 
   /** Metres per CSS pixel at the current zoom. */
@@ -3297,15 +3336,20 @@ export class MapView {
     const vw = this.canvas.clientWidth;
     const vh = this.canvas.clientHeight;
     this.nukeFx.draw(this.overlay.getContext('2d')!, cam, this.geo, vw, vh, now, 'ground');
-    this.drawUnitMarkers(cam, now);
-    this.drawCloseOrders(cam, now);
-    this.drawFormationTags(cam);
-    this.drawFx(cam, now);
-    this.drawFlags(cam, now);
-    this.drawCityLayer(cam, dpr, now);
-    this.drawSelection(cam);
-    this.drawWingMark(cam, now);
-    this.drawBox();
+    // A time-lapse (ROADMAP R143b) is the borders alone: none of the units of now, their orders or the capitals' flags.
+    if (!this.lapse) {
+      this.drawUnitMarkers(cam, now);
+      this.drawCloseOrders(cam, now);
+      this.drawFormationTags(cam);
+      this.drawFx(cam, now);
+      this.drawFlags(cam, now);
+    }
+    this.drawCityLayer(cam, dpr, now, !this.lapse);
+    if (!this.lapse) {
+      this.drawSelection(cam);
+      this.drawWingMark(cam, now);
+      this.drawBox();
+    }
     // A nuclear burst's flash and the cloud's cap (PLAN 6.6b): over all of the overlay, the formations' tags too, at
     // every tier (ADR-389).
     this.nukeFx.draw(this.overlay.getContext('2d')!, cam, this.geo, vw, vh, now, 'air');
@@ -3330,6 +3374,7 @@ export class MapView {
       this.onGroundShown?.(close);
     }
     this.map.draw(cam, dpr, this.groundShare);
+    if (this.lapse) return;
     this.drawGroundThings(cam, dpr);
     this.drawSprites(cam, now);
   }
@@ -3388,7 +3433,8 @@ export class MapView {
       if (arrows) this.flashes.draw(ctx, cam, this.geo, this.canvas.clientWidth, this.canvas.clientHeight, now, itemOffsets(cam, this.geo, this.canvas.clientWidth));
       if (arrows) this.drawArrows(ctx, cam, now);
       else this.moveArrows = [];
-      drawNationLabels(ctx, this.nationLabels, LABEL_FONT, (id) => this.ownColor.get(id), this.glyphSprites);
+      // Not on a time-lapse's map (ROADMAP R143b): the names are laid out on the borders of now.
+      if (!this.lapse) drawNationLabels(ctx, this.nationLabels, LABEL_FONT, (id) => this.ownColor.get(id), this.glyphSprites);
     });
   }
 

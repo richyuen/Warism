@@ -5,6 +5,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1124 · 2026-11-18 · accepted · The borders' time-lapse on the page (ROADMAP R143b)
+
+- **Decision.** A "Time-lapse" button in History (the item: "a slider in History or Charts") opens a plate above the
+  bottom bar and closes History, whose panel would stand over the map it plays; the game pauses. The worker sends the
+  map at the record's first cut and each step's changed cells with their owner before and after (`packTimeLapse`, one
+  transferred buffer), so the page plays either way without the codec; every nation's colour comes with it, those gone
+  since among them. The map of a step is shown as owner and controller alike (no hatching: the record is of owners),
+  uploaded whole (`setGrid`); the units, their orders, flags, marches, fronts and the nations' names, all of now, are
+  not drawn, and the war banners are hidden. Ten months a second: fifty years in a minute.
+- **Measured** (`timeLapse1938.spec.ts`, seeds 1938 and 7, 1600 x 900, the GPU): the map at 1 January 1939 and 1940 is
+  the page's own map of that hour, cell for cell; playing, 60.0 fps, the 95th frame 16.7 ms.
+- **Consequences.** Snapshots that come while it is open keep the page's grids but leave the textures; closing uploads
+  the grids, the palette and the fronts again. Opening costs the worker's build and a buffer of the map and the cells
+  that changed: on seed 99 built in 12, 12 and 23 ms at 10, 25 and 50 years, 5.5, 8.0 and 11.0 MB (853,037 cells at 50).
+
+---
+
 ## ADR-1123 · 2026-11-18 · accepted (the user's decision: "let's allow 7%") · R143: the time-lapse record and its bar, 7 %
 
 - **The bar.** R143's AT: the record of the cells that changed owner each month under 5 % of a 50-year save.

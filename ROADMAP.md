@@ -58,7 +58,7 @@ Rules:
   734c0305 (ADR-1122): `src/app/director.ts`, the worker's `directorRows`, `CameraController.onTaken`. `director1938.spec.ts`
   with `DIRECTOR_MINUTES=10` at 1 day/s: seed 1938 135 of 135 rows seen (80 cuts), seed 7 116 of 116 (70); the shortest
   gap 4.52 s; a wheel turns it off within a frame, no cut after. `npm run bench -- G`: T0 406 fps, T2 158.5 fps.
-- [ ] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
+- [x] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
   saved (a new section, in `UPGRADABLE_SECTIONS`), and a slider in History or Charts that plays the map from the
   start to now. AT: on two seeds, the time-lapse's map at each 1 January equals the ownership of a run stopped
   there; the record under 7 % of a 50-year save, packed (ADR-1123, the user's decision); 60 fps while it plays; save and load bit-identical, the pin moved
@@ -72,8 +72,11 @@ Rules:
     035b2ab7 (ADR-1123): `tools/diag/borderLog.ts`, 50 years: seed 99 50 of 50 maps of 1 January alike, 5.34 % of the packed
     save; seed 7 50 of 50, 5.92 %; a cut 3.0 ms median. `borderLog.test.ts` (5: the codec, two seeds' 1 January, a save in
     mid-month, none at a start or in a scenario). Pin f6d6ab13 -> 1aabdc7e. The gate, `npm run test:sweep` green.
-  - [ ] R143b The slider: History or Charts plays the map from the start to now by the month. AT: the map at each
+  - [x] R143b The slider: History or Charts plays the map from the start to now by the month. AT: the map at each
     1 January of the slider equals the record's on two seeds; 60 fps while it plays.
+    COMMIT (ADR-1124): History's "Time-lapse", `TimeLapseBar`, `src/worker/timeLapse.ts`, `MapView.showTimeLapse`.
+    `timeLapse1938.spec.ts`, seeds 1938 and 7: 1 January 1939 and 1940 alike cell for cell; 60.0 fps, p95 16.7 ms on the
+    GPU. Built in 23 ms at 50 years (11.0 MB). `docs/evidence/R143/`.
 
 ## Released
 

@@ -85,6 +85,8 @@ export type ToWorker =
   | { type: 'inspect'; reqId: number; full?: boolean }
   /** PLAN 1.34a: the history log as JSON `HistoryRow[]` in the reply bytes. */
   | { type: 'history'; reqId: number }
+  /** The borders' time-lapse (ROADMAP R143b): `packTimeLapse` bytes. */
+  | { type: 'timeLapse'; reqId: number }
   /**
    * PLAN 2.14b: one formation as JSON `FormationDetail` in the reply bytes (`null` when it is gone).
    * With `generation` (that of an earlier reply): that formation and no other, so `null` too

@@ -5,6 +5,8 @@
  *
  * Subscriptions only change what is *sent*; the sim never sees them (invariant I4).
  */
+import { packTimeLapse } from '../shared/timeLapse';
+import { timeLapseOf } from './timeLapse';
 import { LABEL_STRIDE } from '../shared/nationLabels';
 import { ECONOMY_TABLES_1938, TEMPLATES_1938, UNIT_IDS_1938 } from '../sim/scenario1938';
 import { NATIONS_1938H } from '../sim/scenario1938h';
@@ -487,6 +489,9 @@ export class SimServer {
         break;
       case 'history':
         this.reply(msg.reqId, this.historyRows(), false);
+        break;
+      case 'timeLapse':
+        this.reply(msg.reqId, packTimeLapse(timeLapseOf(this.requireSim().world)), false);
         break;
       case 'formation':
         this.reply(msg.reqId, new TextEncoder().encode(JSON.stringify(this.formationInfo(msg.id, msg.generation))), false);
