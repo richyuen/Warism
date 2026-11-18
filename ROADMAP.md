@@ -92,7 +92,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   Pin unmoved (1aabdc7e).
 - [x] R146 **R76-N1: the director takes the camera back from a click** (a ticker row, a war banner, a History link).
   AT: `c76_dirHand.mjs 59955 120`, the three acts `onLater: false` or `cutsAfterAct: 0`.
-  COMMIT: the hud's place and fight links stop the director first (`game.tsx`). `c76_dirHand.mjs 59955 120`: all six
+  b299ab6d: the hud's place and fight links stop the director first (`game.tsx`). `c76_dirHand.mjs 59955 120`: all six
   acts `onLater: false`, `cutsAfterAct: 0` (ticker, banner, History 1, 1, 2 cuts before). `director1938.spec.ts` clicks the three.
 - [ ] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
   "over 6000 km" at 1 or fewer each (ADR-1041).
