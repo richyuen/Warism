@@ -207,3 +207,9 @@
 - Britain's massing on Mozambique (57613 on HEAD) ended by a day's refusal and was told again 50 days on. A told
   massing called off before its time now bars its target MASS_BAR_DAYS, as one given up does.
 - `c76_massTold.ts 3` on 13 seeds: told again after a call-off 0 (1). Pin 1aabdc7e -> f311b292.
+
+## 2026-11-18 — R155: the small worlds at peace, traced (ADR-1129)
+
+- 54425, 54426, 55424, 59421 (near-equal pairs: best utility 0.30-0.49 against 0.5 after ten years), 59423 (R139's lift:
+  its army cannot reach its transports), 55404 (its target across the sea, dearer than its margin). Kept by ADR, as the
+  AT allows; RESTLESS's cap and transports moved to a port the army reaches are named as items if wanted.

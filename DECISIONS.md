@@ -5,6 +5,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1129 · 2026-11-18 · accepted · A world of two or three of near-equal strength may keep the peace (ROADMAP R155)
+
+- **The case** (critic run 76, emergent dynamics "not 9"): random worlds of two nations 54425, 54426, 55424, 59421, 59423
+  and of three 55404 have no war in ten years (`fewNationWars.ts`), on HEAD as on the critic's build.
+- **Traced** (`.cache/r155_probe.ts`: each nation's `warUtility` on each other, its neighbours, lift and bars):
+  - 54425, 55424, 59421, 54426: the two are home neighbours, sides touching, nothing barred. The stronger is 1.0 to 2.0
+    times the other at aggression 18 to 57: its strength term 0.0 to 0.19; with RESTLESS's 0.3, reached at ten years of
+    peace, its best is 0.30 to 0.49, under DECLARE_AT (0.5). The weaker scores under 0.1.
+  - 59423: the stronger scores 0.65 on the other by year 3, across the sea, and its army cannot march to its transports
+    (`seaLift` 0 men for a room of 25,200): R139's lift refuses it (ADR-1119 names this consequence).
+  - 55404: the one with a target above the bar has it across the sea, its cost (`seaWarCost`) over the margin; the rest
+    are weaker or far.
+- **Decision.** Kept as the rules have it: the strategic AI makes war on a weaker nation (the strength term), and two of
+  near-equal strength with no third do not go to war in ten years. Each world above has a reason that holds in plain 1938
+  too, where it gives the wars the sweeps measure.
+- **Not taken:** RESTLESS's cap past DECLARE_AT less the strength term (every long peace in every world would end
+  sooner: the war rates of 1938 move, a sweep's question); a navy's transports sent to a port its army can reach (R139's
+  open consequence, the naval AI's). Either is an item of its own if wanted.
+
+---
+
 ## ADR-1128 · 2026-11-18 · accepted · A massing told and called off bars its target a year (ROADMAP R154)
 
 - **The case** (critic run 76's small issue 9, logged under 56211; on HEAD it is 57613): Britain's massing on Mozambique,
