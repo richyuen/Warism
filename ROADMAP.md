@@ -116,7 +116,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   `director1938.spec.ts`'s case.
 - [x] R151 **R76-N4: a save from before R143 plays only the months since its load** under a title that says "from the
   start". AT: `c76_tlMore.mjs old critic/c75_seed7019_y20.bin 40` shows the record's first month on the plate.
-  COMMIT: the plate's "from <month year>" and History's hint "from the first month recorded". The probe's plate: "from
+  c443ed90: the plate's "from <month year>" and History's hint "from the first month recorded". The probe's plate: "from
   January 1958" (`critic/shots/c76tm_old_*_step0.png`); `timeLapse1938.spec.ts` "from … 1938".
 - [ ] R152 **R76-N6: two land heroes leap by the wheel in the world of 56901.** AT: `WHEEL=1 c76_heroPop.mjs` on 56901
   430, 58905 330, 59905 300, 59907 300: 4 or fewer each.
