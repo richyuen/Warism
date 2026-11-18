@@ -1,0 +1,135 @@
+npx tsx critic/scripts/c77_massTold.ts 3 56211 57611 57613 > critic/c77_massTold_a.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 57615 57617 57619 > critic/c77_massTold_b.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 58611 58613 58615 > critic/c77_massTold_n1.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 58617 58619 58621 > critic/c77_massTold_n2.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 10 --random 3 55406 53401 > critic/c77_massTold_r3.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 --saveload 57621 58623 > critic/c77_massTold_sl.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58001 scenario 1825 > critic/c77_diploinv_58001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58003 random 1825 > critic/c77_diploinv_58003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58005 scenario 1825 --heroes > critic/c77_diploinv_58005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58007 random 1825 --world random > critic/c77_diploinv_58007rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58051 1825 > critic/c77_wi_58051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58053 1825 --heroes > critic/c77_wi_58053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58055 1825 --world random > critic/c77_wi_58055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58057 1825 --diplomacy random > critic/c77_wi_58057dr.log 2>&1
+npm run sim -- --scenario 1938 --seed 7019 --years 20 --save critic/c77_seed7019_y20.bin > critic/c77_seed7019_save.log 2>&1
+npm run sim -- --scenario 1938 --seed 32019 --years 20 --save critic/c77_seed32019_y20.bin > critic/c77_seed32019_save.log 2>&1
+npx tsx critic/scripts/c77_heroRun.ts 7019 20 critic/c77_hseed7019_y20.bin > critic/c77_hero_7019_20.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c77_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 27037 15101 120 27037 30,90 2 > critic/c77_li_27037_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 51101 3517 120 51101 30,90 1 > critic/c77_li_51101_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 53125 15101 120 53125 30,90 2 > critic/c77_li_53125_15101_g2.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 55401 6 10 > critic/c77_few3_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 55421 6 10 > critic/c77_few2_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 54421 6 10 > critic/c77_few2_54.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 53401 6 10 > critic/c77_few3_53.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 60 55431 3 5 > critic/c77_few60_55.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 58401 6 10 > critic/c77_few3_58.log 2>&1
+npx tsx critic/scripts/c77_farConquests.ts 0 6161,41161,41163,41165,41167 730 > critic/c77_farc_0_a.log 2>&1
+npx tsx critic/scripts/c77_farConquests.ts 0 53161,53163,53165,53167,53169 730 > critic/c77_farc_0_c.log 2>&1
+npx tsx critic/scripts/c77_firstdecl.ts 60 39821 39823 39825 39827 39829 39831 39833 39835 39837 39839 > critic/c77_firstdecl.log 2>&1
+npx tsx critic/scripts/c77_firstdecl.ts 60 55821 55823 55825 55827 55829 55831 55833 55835 55837 55839 > critic/c77_firstdecl_55.log 2>&1
+npx tsx critic/scripts/c77_piles.ts 365 --plain 39139 39141 39143 39145 39147 > critic/c77_piles_p39.log 2>&1
+npx tsx critic/scripts/c77_piles.ts 365 --plain 51139 51141 51143 51145 51147 > critic/c77_piles_p51.log 2>&1
+npx tsx critic/scripts/c77_piles.ts 365 55139 55141 55143 55145 55147 > critic/c77_piles_h55.log 2>&1
+npx tsx tools/diag/pileSides.ts 365 51141 51143 51145 --all > critic/c77_pileSides_51.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 54059 4380 24 critic/c77_wd_54059.json > critic/c77_wd_54059.log 2>&1
+npx tsx tools/diag/workerDeterminism.ts 58059 4380 24 critic/c77_wd_58059.json > critic/c77_wd_58059.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c77_lrows_all.json > critic/c77_lrows_all.log 2>&1
+npx tsx tools/diag/seaBattles.ts 58061 scenario --years 3 --out critic/c77_sb_58061.json > critic/c77_sb_58061.log 2>&1
+npx tsx critic/scripts/c77_repulse.ts 55071 ENG GER 1023.5,275.5 1072.5,259.5 3 critic/c77_repulse_55071.json 500 12 > critic/c77_repulse_55071.log 2>&1
+npx tsx critic/scripts/c77_repulse.ts 58073 JAP CHI 1818.5,385.5 1715.5,413.5 3 critic/c77_repulse_58073.json 400 12 > critic/c77_repulse_58073.log 2>&1
+npx tsx tools/diag/nukeIntercepts.ts 53501 22 > critic/c77_nukeIntercepts_53501.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 55503 22 > critic/c77_nc_55503.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 58501 22 > critic/c77_nc_58501.log 2>&1
+npx tsx tools/diag/heroBattle.ts 58081 3 > critic/c77_heroBattle_58081.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58009 scenario 3650 --heroes > critic/c77_diploinv_58009sh_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58065 3650 --heroes > critic/c77_wi_58065h_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 33501 scenario 1825 > critic/c77_diploinv_33501s.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 36009 1825 > critic/c77_wi_36009.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c77_warOpening.json --years 3 58211 58213 58215 > critic/c77_warOpening.log 2>&1
+npx tsx tools/diag/pragueFall.ts 58201 > critic/c77_prague_58201.log 2>&1
+npx tsx tools/diag/pragueFall.ts 58203 > critic/c77_prague_58203.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 58205 GER,POL 60 > critic/c77_fa_58205.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 58207 JAP,CHI 60 > critic/c77_fa_58207.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c77_warOpening_56.json --years 3 56211 56213 56215 > critic/c77_warOpening_56.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 58421 6 10 > critic/c77_few2_58.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c77_warOpening_57.json --years 3 57211 57213 57215 > critic/c77_warOpening_57.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 57401 6 10 > critic/c77_few3_57.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 57001 scenario 1825 > critic/c77_diploinv_57001s.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 57051 1825 > critic/c77_wi_57051.log 2>&1
+npm run sim -- --scenario 1938 --seed 58505 --years 13 --save critic/c77_seed58505_y13.bin > critic/c77_seed58505_save.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 58503 22 > critic/c77_nc_58503.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 58507 22 > critic/c77_nc_58507.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 55501 22 > critic/c77_nc_55501.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 55507 22 > critic/c77_nc_55507.log 2>&1
+npx tsx critic/scripts/c77_heroRun.ts 58019 20 critic/c77_hseed58019_y20.bin > critic/c77_hero_58019_20.log 2>&1
+npx tsx critic/scripts/c77_heroRun.ts 58021 12 - > critic/c77_hero_58021_12.log 2>&1
+npx tsx critic/scripts/c77_topArea.ts 58097 25 critic/c77_toparea_58097.json > critic/c77_toparea_58097.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58011 random 3650 --heroes > critic/c77_diploinv_58011rh_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 58013 scenario 1825 --heroes > critic/c77_diploinv_58013sh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 58063 1825 --heroes > critic/c77_wi_58063h.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 51401 6 10 > critic/c77_few3_51.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 58311 > critic/c77_heldAtEnd_58311.log 2>&1
+npx tsx tools/diag/heroBattle.ts 7019 3 > critic/c77_heroBattle_7019.log 2>&1
+npx tsx tools/diag/seaBattles.ts 58067 random --years 2 --out critic/c77_sb_58067r.json > critic/c77_sb_58067r.log 2>&1
+npx tsx tools/diag/seaBattles.ts 39061 scenario --years 3 --out critic/c77_sb_39061.json > critic/c77_sb_39061.log 2>&1
+npx tsx tools/diag/trackFronts.ts 1938 > critic/c77_tf_1938.log 2>&1
+npx tsx tools/diag/trackFronts.ts 58701 > critic/c77_tf_58701.log 2>&1
+npx tsx critic/scripts/c77_dday.ts 1938 > critic/c77_dday_1938.log 2>&1
+npx tsx critic/scripts/c77_census.ts 1938 > critic/c77_census_1938.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c77_track_1938.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58181 3 > critic/c77_heroCeiling3_58181.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58182 3 > critic/c77_heroCeiling3_58182.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58183 3 > critic/c77_heroCeiling3_58183.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58184 3 > critic/c77_heroCeiling3_58184.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58185 3 > critic/c77_heroCeiling3_58185.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58186 3 > critic/c77_heroCeiling3_58186.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58187 3 > critic/c77_heroCeiling3_58187.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58188 3 > critic/c77_heroCeiling3_58188.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58189 3 > critic/c77_heroCeiling3_58189.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 58190 3 > critic/c77_heroCeiling3_58190.log 2>&1
+npx tsx critic/scripts/c77_interceptTold.ts > critic/c77_interceptTold.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59001 scenario 1825 > critic/c77_diploinv_59001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59003 random 1825 > critic/c77_diploinv_59003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59005 scenario 1825 --heroes > critic/c77_diploinv_59005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59007 random 1825 --world random > critic/c77_diploinv_59007rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59009 scenario 3650 --heroes > critic/c77_diploinv_59009sh_10y.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 59051 1825 > critic/c77_wi_59051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 59053 1825 --heroes > critic/c77_wi_59053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 59055 1825 --world random > critic/c77_wi_59055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 59057 1825 --diplomacy random > critic/c77_wi_59057dr.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c77_warOpening_59.json --years 3 59211 59213 59215 > critic/c77_warOpening_59.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 59611 59613 59615 > critic/c77_massTold_n3.log 2>&1
+npx tsx tools/diag/borderLog.ts --seed 59097 --years 20 > critic/c77_borderLog_59097.log 2>&1
+npx tsx tools/diag/seaBattles.ts 59061 scenario --years 3 --out critic/c77_sb_59061.json > critic/c77_sb_59061.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 59421 6 10 > critic/c77_few2_59.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 59501 22 > critic/c77_nc_59501.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62001 scenario 1825 > critic/c77_diploinv_62001s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62003 random 1825 > critic/c77_diploinv_62003r.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62005 scenario 1825 --heroes > critic/c77_diploinv_62005sh.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62007 random 1825 --world random > critic/c77_diploinv_62007rw.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62009 scenario 3650 --heroes > critic/c77_diploinv_62009sh_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62011 random 3650 --heroes > critic/c77_diploinv_62011rh_10y.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62013 scenario 1825 > critic/c77_diploinv_62013s.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 62015 random 1825 --heroes > critic/c77_diploinv_62015rh.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 62051 1825 > critic/c77_wi_62051.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 62053 1825 --heroes > critic/c77_wi_62053h.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 62055 1825 --world random > critic/c77_wi_62055rw.log 2>&1
+npx tsx tools/diag/worldInvariants.ts 62057 1825 --diplomacy random > critic/c77_wi_62057dr.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c77_warOpening_62.json --years 3 62211 62213 62215 > critic/c77_warOpening_62.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 62611 62613 62615 > critic/c77_massTold_n4.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 57613 > critic/c77_massTold_57613.log 2>&1
+npx tsx critic/scripts/c77_firstdecl.ts 60 62821 62823 62825 62827 62829 62831 62833 62835 62837 62839 > critic/c77_firstdecl_62.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 62421 6 10 > critic/c77_few2_62.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 62401 6 10 > critic/c77_few3_62.log 2>&1
+npx tsx tools/diag/seaBattles.ts 62061 scenario --years 3 --out critic/c77_sb_62061.json > critic/c77_sb_62061.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 62501 22 > critic/c77_nc_62501.log 2>&1
+npx tsx critic/scripts/c77_topArea.ts 62097 25 critic/c77_toparea_62097.json > critic/c77_toparea_62097.log 2>&1
+npx tsx critic/scripts/c77_heroRun.ts 62019 20 critic/c77_hseed62019_y20.bin > critic/c77_hero_62019_20.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59013 scenario 1825 > critic/c77_diploinv_lift_59013.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59015 scenario 1825 > critic/c77_diploinv_lift_59015.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59017 scenario 1825 --heroes > critic/c77_diploinv_lift_59017.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59019 random 1825 > critic/c77_diploinv_lift_59019.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59021 random 1825 --heroes > critic/c77_diploinv_lift_59021.log 2>&1
+npx tsx tools/diag/diploInvariants.ts 59023 scenario 1825 > critic/c77_diploinv_lift_59023.log 2>&1

@@ -221,3 +221,8 @@
 - On a phone the ticker stands above the opened banners (R126 hid it); the first cue says tap and pinch; Settings'
   main menu asks first. Each a case in a spec (37 of the specs touched green on both projects).
 - `npm run test:sweep` after R154: 23 of 23.
+
+## 2026-11-18 — critic run 77 (focused, on 7066d800)
+
+- One blocking issue (R77-B1: the time-lapse names no owner dead now); every score at its bar but UI/UX 7. Its findings
+  filed as Batch 45 (R157–R162).

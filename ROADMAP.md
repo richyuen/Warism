@@ -144,6 +144,29 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   phone the ticker stands above the opened banners, not hidden (`reviewBatch1938`, no row under a banner); the first
   cue says tap and pinch on a phone (`reviewBatch1938`); Settings' main menu asks, Stay or Leave (`title.spec.ts`).
 
+## Batch 45 — critic run 77's findings (focused, on 7066d800; one blocking issue; every score at its bar, UI/UX 7)
+
+RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking one, then the critic again (focused).
+- [ ] R157 **R77-B1: the time-lapse names no owner that is dead now.** On run 76's 7019 world at January 1938, 35 of the
+  map's nations are dead by 1957 (Sweden, Germany, Norway): no tooltip, and a click selects the dead nation with no panel
+  (the first Escape spent on it). AT: `node critic/scripts/c77_tlDead.mjs critic/c76_seed7019_y20.bin` (and `… 390 844`)
+  gives the tooltip "Sweden" and `click.selected` 0 or a panel at both sizes; `tlMore cell 59943` still "Norway"; a case
+  in `timeLapse1938.spec.ts`.
+- [ ] R158 **R77-N1: the bar's Resume runs the game under the time-lapse.** 96 hours ran with the plate on January 1938
+  and the ticker hidden (R153). AT: the probe's `resume.ranHours` is 0, or resuming closes the plate; a case in the spec.
+- [ ] R159 **R77-N2: R156's track rows told wrongly.** "{nation} occupies" goes before notes that are already sentences
+  ("Kerch retaken", "The line of 1941-12-01"), and occupy's `by` is not always the note's actor; still bare: "Crete",
+  "Salonika", "↳ Dalmatia", "Italy's zone", "Egypt clear". AT: `npx tsx critic/scripts/c77_trackTexts.ts` lists no row
+  of `critic/c77_trackTexts_odd.txt`'s kinds; the 1941 page shows no "The line of 1941-…"; a unit test runs every
+  timeline note through `trackText`.
+- [ ] R160 **R77-N3: R147 brings back war openings with nothing taken.** `c77_woAB.sh`: HEAD 14 of 88 with no cell
+  held at day 30 (defender ahead 20.3 %), `--lift-far` 7 of 96 (15.5 %). AT: on run 76's nine seeds HEAD is back near
+  14 of 276 (under 6 %), with `c77_firstdecl.ts 60` still 0 over 6,000 km; or the trade kept by an ADR for the user.
+- [ ] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
+- [ ] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
+  side, both with a plus). AT: a case in a spec. `slowClick` (0 of 90) stays as ADR-914; `dirHand`'s phone History act
+  not judged by the critic, not filed.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for
