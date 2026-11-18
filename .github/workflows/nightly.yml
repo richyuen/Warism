@@ -45,11 +45,22 @@ jobs:
       - run: npx tsx tools/ci/unit.ts
       - run: npm run build
 
+  # ROADMAP R138: one job ran 53 min and was cancelled at 60 on three nights; the historical track's
+  # six files are half of it (~15 min each on the runner's 3 workers). Split three ways, ~16-22 min
+  # a job. `rest` takes every file but the track's, and `track-b` every track file but Seed1-3, so a
+  # new file lands in a job without an edit here.
   ten-year:
-    name: The ten-year tests (the pin, save and load, allies never at war, no bankruptcy in peace)
+    name: The ten-year tests (${{ matrix.part.name }})
     if: github.event.schedule != '17 5 * * 0'
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        part:
+          - { name: 'the pin, save and load, allies never at war, no bankruptcy in peace', args: "--exclude 'tests/sweep/historyTrack1938h*'" }
+          - { name: 'the historical track, seeds 1-3', args: 'historyTrack1938hSeed1 historyTrack1938hSeed2 historyTrack1938hSeed3' }
+          - { name: 'the historical track, its own seed and seeds 4-5', args: "historyTrack1938h --exclude 'tests/sweep/historyTrack1938hSeed[123].*'" }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -57,7 +68,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run test:sweep
+      - run: npm run test:sweep -- ${{ matrix.part.args }}
 
   soak:
     name: Soak (1938, 30 min, saves and loads, twins compared)

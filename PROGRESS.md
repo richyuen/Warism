@@ -3,3 +3,14 @@
 > The log before the last release tag is in `docs/history/`: `PROGRESS-<YYYY-MM>.md` (October) and
 > `PROGRESS-<release tag>.md` from November on (ADR-805, ADR-918). Search them; they are not read. The last
 > entry before this file: `release-2026-11-17`.
+
+## 2026-11-17 — R138: the nightly's ten-year tests in three jobs (ADR-1118)
+
+- The cancels (43412792679, 43705787921, 44077095528): one job of 23 files, 53-54 min on the nights it ended. On
+  43855142847 its files summed 9,547 s on the runner's 3 workers; the historical track's six files 5,650 s (892-969 s
+  each). Split into a matrix of three (`rest`, track seeds 1-3, track's own seed and 4-5); file lists checked with
+  `npx vitest list --config vitest.sweep.config.ts --filesOnly` (17 + 3 + 3 = 23).
+- The 11-16 red (43855142847, on 1eec8c40): `specRefs` §8 cited a bare `chromeCover1938` (R94a, b64c242a), no code word;
+  a2b5dca0 (R95) wrote it as `tests/e2e/chromeCover1938.spec.ts`, so 11-17 was green. `snapshot-perf` timed out at
+  90 s in the whole run (a full sync of 113 s under load) and passed alone (68 s); it is on `tools/ci/runnerRed.json`,
+  a warning, not the red.
