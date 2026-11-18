@@ -45,3 +45,24 @@
 - Japan on Siam, 58211, hour by hour (`.cache/r139/japan2.ts`): its landing turn runs on the day of the declaration
   (the table's tracer missed it) and sends formation 374 to Shanghai's port from 64 cells off; at about 1.5 cells a
   day it is still marching on day 21, and the turns after find no one else ("noArmy").
+
+## 2026-11-18 — R139: a war across the sea only with a lift (ADR-1119)
+
+- The cause, with the tracer mended (a war's first-day turns, the lift read before the declaring step, the sides'
+  contact): of 131 wars between leaders with no land border, 57 had sides touching by land (1 held nothing at day 30),
+  74 did not (51). In 33 of those 51 the attacker had under a transport group's room of free men that might march to
+  its transports. Scored as a bar before it was written: 33 of the 52 barred, 8 wars that held land barred.
+- The rule (`src/sim/ai/seaLift.ts`, `firstNotOutnumbered`'s refusal): `warOpening.ts`, three years, `--no-lift` the
+  rule off: the AT's five (58211, 58213, 58215; 61009, 61011 not seen) 24 of 180 (13.3 %) -> 8 of 167 (4.8 %); the ten
+  looked at 55 of 348 -> 19 of 322 (5.9 %). ADR-1094's no man near 11.7 % -> 7.0 % (five), 11.1 % -> 9.0 % (ten); the
+  defender ahead 14.4 % -> 14.0 %, 10.1 % -> 8.5 %; on 61009 and 61011 alone the defender ahead 16.4 % without, 21.3 %
+  with (9 and 10 wars). Wars begun on the ten 496 -> 468. Random worlds of two and three nations (55401, 55404, 57404,
+  53401; 55421, 54421, 55424, 58422): the same wars in ten years with and without.
+- Checker: `lift` in `tests/helpers/diploInvariants.ts` (the AI's scope: a target no land neighbour of its home); the
+  six cases green; with the rule off, 2207 and 3739 red (Japan on Siam, Italy on Norway: 0 men to lift).
+- Tests: `seaLift1938.test.ts` (new); `warOverSea1938`, `landlessPowers`, `massing1938`, `pileRefused1938` green before
+  and after (ADR-670, R78b, R74h, ADR-1068, ADR-1042, ADR-1089). `heroes.test.ts`' count of German hero losses read as
+  Germany dies (a second loss of seed 99's in the months of the wait). Pin 3374082b -> f6d6ab13.
+- Tick, seed 99 a year (`--profile`, run one after the other): mean 2.737 -> 2.746 ms; strategicAi 0.196 -> 0.240 ms.
+- Gate: green (the browser specs of the moved pin), `shipMarks1938`'s T3 on knownRed (b8174401: red at 16.5 px on HEAD
+  without the rule too).

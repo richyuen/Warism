@@ -5,6 +5,37 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1119 · 2026-11-18 · accepted · A war across the sea is declared only with a lift (ROADMAP R139)
+
+- **Decision.** The strategic AI does not declare on a target that is no land neighbour of its home (a target across
+  the sea, `seaTargets`, or by a colony only) when the sides `declareWar` would call touch nowhere by land and its free
+  men that may march to a port where a transport group of its stands are fewer than its largest such group holds
+  (`src/sim/ai/seaLift.ts`: `noLift`, `seaLift`, `sidesTouch`). Free as the landings ship them (standing, not within
+  DEPLOY_RANGE_CELLS of its own front on their land; PLAN 7.26c3a); the way to the port by `mayReach`. Such a target is
+  refused as `outnumbered` refuses one (ADR-1042, `firstNotOutnumbered`): its next best is taken, or none. The checker:
+  `lift` in `tests/helpers/diploInvariants.ts`.
+- **Why.** Critic run 75's non-blocking 5: 20 of 103 wars with no cell held by either side at day 30. On ten seeds of
+  HEAD (348 wars that ran a month) 55, 52 between leaders with no land border. Of the 131 wars between such leaders,
+  the 57 whose sides touched by land held nothing in 1; the 74 that touched nowhere, in 51. In 33 of those 51 the
+  attacker had, as it declared, under a group's room of free men that might march to its transports: Japan on Siam on
+  every seed (its army on its front in China; its day-0 landing sent a division 64 cells to Shanghai's port), Italy on
+  South Africa, Saudi Arabia, Yemen and Sweden (its one group at Mogadishu, on the land of its army in Italy, which
+  cannot march there), Germany on Saudi Arabia and Spain (its army on its fronts). R139a (a free-army share in a war,
+  `.cache/r139/r139a.patch`) was tried first and not kept: it took Japan on Siam away and moved nothing else.
+- **Measured** (`tools/diag/warOpening.ts`, three years; `--no-lift` the rule off): on the AT's five (58211, 58213,
+  58215 and 61009, 61011, not seen before) 24 of 180 (13.3 %) -> 8 of 167 (4.8 %); on the ten looked at 55 of 348
+  (15.8 %) -> 19 of 322 (5.9 %). ADR-1094's bar, the attacker with no man near its border (15 %): 11.7 % -> 7.0 % on the
+  five, 11.1 % -> 9.0 % on the ten; R97b's defender ahead in land at day 30 (15 %): 14.4 % -> 14.0 %, 10.1 % -> 8.5 %. The
+  wars that began: 496 -> 468 on the ten (-6 %). Two- and three-nation random worlds of critic run 73-75's small cases:
+  the same wars with the rule as without.
+- **Stands on** ADR-670 (the nation across the sea "it could land on"), R78b, R74h (`warOverSea1938`), ADR-1068
+  (`landlessPowers`), ADR-1042 (`pileRefused1938`), ADR-1089 (`massing1938`): green before and after.
+- **Consequences.** A nation whose army is on its fronts, or whose transports stand where its army cannot march, makes
+  no war across the sea until it has both. The pin of seed 99 moves 3374082b -> f6d6ab13 (a war of its year declared
+  otherwise); `heroes.test.ts`' row count of German hero losses is read as Germany dies (a second loss in the wait).
+
+---
+
 ## ADR-1118 · 2026-11-17 · accepted · The nightly's ten-year tests in three jobs (ROADMAP R138)
 
 - **Decision.** `.github/workflows/nightly.yml`'s `ten-year` job is a matrix of four: the sweep tests the others

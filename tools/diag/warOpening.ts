@@ -10,6 +10,7 @@
  * Usage: npx tsx tools/diag/warOpening.ts <out.json> [--years N = 3] [--force GER,POL] [--neighbours] [--no-massing] <seed> [...]
  * `--no-massing`: wars declared as before ROADMAP R97b (no army brought to the border first), for the comparison.
  * `--no-answer`: the target of a massing does nothing of it, as before ROADMAP R103.
+ * `--no-lift`: a war across the sea is declared with no army to lift for it, as before ROADMAP R139.
  * `--neighbours`: only the wars whose two leaders share a land border as the war begins (a war over a sea has no front
  * to move over in a month). One line a war, a summary a seed, then `done:`. Each war also with the two leaders' men
  * within 300 km of their border as it begins, and the land of each leader the other holds (a side's colonies apart).
@@ -17,6 +18,7 @@
 import { writeFileSync } from 'node:fs';
 import { MASS_DAYS, MASS_PROBE } from '../../src/sim/ai/massing';
 import { SHIFT_PROBE } from '../../src/sim/ai/operational';
+import { LIFT_PROBE } from '../../src/sim/ai/seaLift';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
@@ -33,6 +35,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (argv[i] === '--neighbours') neighbours = true;
   else if (argv[i] === '--no-massing') MASS_PROBE.off = true;
   else if (argv[i] === '--no-answer') MASS_PROBE.noAnswer = true;
+  else if (argv[i] === '--no-lift') LIFT_PROBE.off = true;
   else if (argv[i] === '--invaded') SHIFT_PROBE.weight = Number(argv[++i]);
   else if (argv[i] === '--mass-days') MASS_PROBE.days = Number(argv[++i]);
   else if (argv[i] === '--mass-second') MASS_PROBE.second = Number(argv[++i]);

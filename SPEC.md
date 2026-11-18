@@ -1638,7 +1638,10 @@ production and research. `src/sim/ai/`.
   transport group as a landing's want does (`landlessPowers`, R85e). It declares on the best with probability
   `DECLARE_P` (0.25) × aggression ÷ 100, unless the side `declareWar` would call against it (`callSides`) has over
   `PILE_REALMS` (4) realms (nations that are no puppet) for each of its own: then on its next best so judged, or none
-  (R82f, ADR-1042).
+  (R82f, ADR-1042). So too a target no land neighbour of its home (across the sea, or by a colony) when those sides
+  touch nowhere by land (`sidesTouch`) and fewer of its free men (standing, beyond `DEPLOY_RANGE_CELLS` of its own
+  fronts) may march to a port where its transports stand than its largest group there holds (`noLift`, `seaLift`;
+  R139, ADR-1119).
 - **Mass, then declare** (R97b, ADR-1089; `ai/massing.ts`): a nation in no war that so chooses a war on a neighbour
   of its home does not declare at once. It brings `MASS_SHARE` (0.7) of its land formations on the border's land to
   within `MASS_NEAR_CELLS` (15) of the border and declares when `MASS_READY` (0.5) of its men there stand so, if it

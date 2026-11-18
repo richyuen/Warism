@@ -49,6 +49,7 @@ import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 import { beginMassing, massStep, unprepared } from './massing';
+import { noLift } from './seaLift';
 
 export const STAGGER = 7;
 /** Nations below this aggression never start wars (they still defend, ally and make peace). */
@@ -518,11 +519,13 @@ export function outnumbered(world: World, n: number, t: number): boolean {
  * The target `n` declares on (R82f): `pick`'s (`warTarget`'s), or, while it is one `n` would fight `outnumbered`, its
  * pick with those refused; 0 for none. Asked once a declaration is to be made (the sides' rules are the dearest part of
  * the turn: asked of every candidate over the bar, the tick of seed 99 was 37 % slower).
+ * R139: one across the sea (`overSea(t)`: no land neighbour at home) is refused too while `n` has no lift for it
+ * (`noLift`: the two sides do not touch by land, and fewer of its free men may march to its transports than they hold).
  */
-export function firstNotOutnumbered(world: World, n: number, pick: (refused: ReadonlySet<number>) => number): number {
+export function firstNotOutnumbered(world: World, n: number, pick: (refused: ReadonlySet<number>) => number, overSea: (t: number) => boolean = () => false): number {
   const refused = new Set<number>();
   let t = pick(refused);
-  while (t !== 0 && !PILE_PROBE.off && outnumbered(world, n, t)) {
+  while (t !== 0 && ((!PILE_PROBE.off && outnumbered(world, n, t)) || (overSea(t) && noLift(world, n, callSides(world, n, t))))) {
     refused.add(t);
     t = pick(refused);
   }
@@ -694,7 +697,8 @@ export function strategicAi(world: World): void {
       const best = target(new Set());
       if (best !== 0) {
         // Not one it would fight outnumbered over PILE_REALMS realms to 1 (R82f, ADR-1042): its next best, if any.
-        const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)));
+        // Nor one across the sea it has no lift for (R139, `noLift`).
+        const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)), (x) => !neighbours.includes(x) || !atHome(x));
         // A nation at peace with a border to its target brings its army there first (R97b, `beginMassing`).
         if (t !== 0 && !beginMassing(world, n, t, day, atHome(t))) declareWar(world, n, t);
       }

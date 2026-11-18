@@ -232,11 +232,14 @@ describe('heroes heal and come back (PLAN 7.184a2)', () => {
     while (w.tick <= due) sim.step(1, quiet);
     const back = heroOf(w, 'hero_bismarck');
     expect(rows(EventKind.HeroReturned)).toEqual([[due, ger, row, w.formations.cols.x[back]!, w.formations.cols.y[back]!]]);
-    // Germany's death: its heroes go, untold by rows of their own.
+    // Germany's death: its heroes go, untold by rows of their own. Counted as it dies: in the months of the wait a hero
+    // may be lost in the AI's wars (after R139's rule, one more of seed 99's).
+    const lost = rows(EventKind.HeroLost).length;
+    expect(lost).toBeGreaterThanOrEqual(1);
     sim.command({ kind: 'collapseNation', nation: ger });
     sim.step(1, quiet);
     expect(w.nations.cols.living[ger]).toBe(0);
-    expect(rows(EventKind.HeroLost).length, 'still the one loss').toBe(1);
+    expect(rows(EventKind.HeroLost).length, 'no loss of its own with the death').toBe(lost);
   });
 
   // ROADMAP R10 (critic run 29, R29-B3; ADR-813): a sea hero came back only at a naval base its

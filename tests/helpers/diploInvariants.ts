@@ -2,10 +2,12 @@ import { isMonthStart } from '../../src/shared/calendar';
 import { Refusal } from '../../src/shared/commands';
 import { EventKind } from '../../src/shared/events';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
-import { blocsOf, PILE_REALMS, strengths } from '../../src/sim/ai/strategic';
+import { blocsOf, homeNeighbours, neighbourMap, PILE_REALMS, strengths } from '../../src/sim/ai/strategic';
 import { Sim } from '../../src/sim/sim';
 import { FREE_ABOVE, PROTEST_FROM, puppetSystem, REVOLT_LOYALTY } from '../../src/sim/systems/puppets';
 import { declareWar, forceWar, whyNotWar } from '../../src/sim/systems/war';
+import { seaLift, sidesTouch } from '../../src/sim/ai/seaLift';
+import { transportGroupsAtPort } from '../../src/sim/systems/amphibious';
 import type { World } from '../../src/sim/world';
 import { assets1938 } from './earth';
 import { realmWars } from './realmWars';
@@ -25,6 +27,10 @@ import { realmWars } from './realmWars';
 //           ends in that hour (ROADMAP R2, ADR-807).
 //   pile    no war the sim declares in its own hours (the AI's; God's and a player's are acts) sets over PILE_REALMS
 //           realms (nations that are no puppet) against each of the declarer's (ROADMAP R82f, ADR-1042).
+//   lift    no war the sim declares in its own hours on a nation that is no land neighbour of the declarer's home (by the
+//           provinces, `neighbourMap`, `homeNeighbours`), between sides that touch nowhere by land, unless the declarer had,
+//           at the end of the hour before, as many free men that may march to its transports as its largest group at a
+//           port holds (`seaLift`; ROADMAP R139).
 //   bloc    where the blocs are (`blocsOf`), at most two; once an `allianceEnd` has been applied, at most one, and none
 //           led by a leader whose bloc ended; no `BlocAid` in an hour with fewer than two blocs (ROADMAP R80b, ADR-1045).
 
@@ -189,7 +195,37 @@ export function pileBreaks(w: World, events: number[]): string[] {
   return out;
 }
 
-/** Steps `s` by `ticks` hours, checking `exit`, `rise` and `pile` every hour and `held` and `realm` each day. */
+/**
+ * The wars declared in the hour's `events` (`WarDeclared`) on a nation that is no land neighbour of the declarer's home
+ * (the strategic AI's test: `neighbourMap`, `homeNeighbours`), between sides that touch nowhere by land, whose declarer had,
+ * by `before` (its `seaLift` at the end of the hour before), fewer free men that may march to its transports than its
+ * largest group at a port holds (R139). A declarer not in `before` had no transport group at a port then.
+ */
+export function liftBreaks(w: World, events: number[], before: ReadonlyMap<number, { men: number; room: number }>): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < events.length; i += 6) {
+    if (events[i + 1] !== EventKind.WarDeclared) continue;
+    const [a, d] = [events[i + 2]!, events[i + 3]!];
+    const war = w.wars.list.find((x) => x.sides[0][0] === a && x.sides[1][0] === d);
+    if (!war || sidesTouch(w, war.sides[0], war.sides[1])) continue;
+    const home = homeNeighbours(w, a);
+    if (neighbourMap(w).get(a)?.has(d) && (home === null || home.has(d))) continue;
+    const l = before.get(a) ?? { men: 0, room: 0 };
+    if (l.room === 0 || l.men < l.room) out.push(`lift: ${tag(a)} declared on ${tag(d)} over the sea, ${l.men} men to lift for a room of ${l.room}`);
+  }
+  return out;
+}
+
+/** The `seaLift` of each living nation with a transport group at a port. */
+function liftsOf(w: World): Map<number, { men: number; room: number }> {
+  const out = new Map<number, { men: number; room: number }>();
+  w.nations.forEach((n) => {
+    if (w.nations.cols.living[n] === 1 && transportGroupsAtPort(w, n).length > 0) out.set(n, seaLift(w, n));
+  });
+  return out;
+}
+
+/** Steps `s` by `ticks` hours, checking `exit`, `rise`, `pile` and `lift` every hour and `held` and `realm` each day. */
 /**
  * A massing called off (`MassingCalledOff`, ROADMAP R129) in the hour's `events` whose nation is at war with its target
  * at the hour's end, or one of the two dead (R134; critic run 75, R75-N3: France's call-off on Germany and its war with
@@ -210,13 +246,20 @@ export function massOffBreaks(w: World, events: number[]): string[] {
 function stepChecked(s: Sim, ticks: number, breaks: Breaks, label: string): void {
   let before = membersOf(s.world);
   let bonds = bondsOf(s.world);
+  // The lifts before a day's first hour, when the strategic AI declares; none known before the run's first hour.
+  let lifts = new Map<number, { men: number; room: number }>();
+  if (s.world.tick % 24 === 0) lifts = liftsOf(s.world);
   s.step(ticks, (w) => {
     const where = `${label} day ${Math.floor(w.tick / 24)}`;
     breaks.add(where, silentExits(w, before, bonds.overlord, w.out.events));
     breaks.add(where, riseBreaks(w, bonds, w.out.events));
     breaks.add(where, pileBreaks(w, w.out.events));
     breaks.add(where, massOffBreaks(w, w.out.events));
-    if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w));
+    if (w.tick % 24 === 1) breaks.add(where, liftBreaks(w, w.out.events, lifts));
+    if (w.tick % 24 === 0) {
+      breaks.add(where, worldBreaks(w));
+      lifts = liftsOf(w);
+    }
     w.out.events.length = 0;
     w.out.fires.length = 0;
     before = membersOf(w);

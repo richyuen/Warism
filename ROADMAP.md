@@ -25,11 +25,15 @@ Rules:
   76551f98, 160bbb19 (ADR-1118): the job a matrix of four. Runs 44206444954 (three-way), 44213292258, 44221126695 green
   in full; the longest ten-year job 38.6, 29.2, 22.9 min; a fourth, 44228789987, green, 29.4 min. The 11-16 red: `specRefs` §8's bare `chromeCover1938` (b64c242a),
   mended by a2b5dca0.
-- [ ] R139 **Wars in which nothing is taken** (run 75's non-blocking 5: 20 of 103 wars with no cell held by either
+- [x] R139 **Wars in which nothing is taken** (run 75's non-blocking 5: 20 of 103 wars with no cell held by either
   side at day 30; BLOCKERS' France's far end and the USA's lift stand near it). Find the cause first on the critic's
   seeds; one cause a commit. AT: `npx tsx tools/diag/warOpening.ts` on 58211, 58213, 58215 (and two seeds no tuning
   has seen): wars with no cell held at day 30 under 10 % (19 % now), the opening bars of ADR-1094 kept. Checker:
   the rule it changes, in diploInvariants or its kin.
+  R139 commit (ADR-1119): a war across the sea, its sides touching nowhere by land, only with a group-room of free men
+  that may march to the transports (`seaLift.ts`). `warOpening.ts` on 58211, 58213, 58215, 61009, 61011 (the last two
+  unseen): 13.3 % -> 4.8 %; ADR-1094's no man near 11.7 % -> 7.0 %, the defender ahead 14.4 % -> 14.0 %. Checker:
+  `lift` in diploInvariants (red with the rule off: Japan on Siam, 0 men to lift). Pin 3374082b -> f6d6ab13.
 - [ ] R140 **The same great powers for decades** (BLOCKERS "Sweep on seeds 701–710: no stasis on 7 of 10",
   2026-10-18: the same five largest nations 20–22 years running on 702, 704, 706). Measure on HEAD first (a sweep
   on seeds no tuning has seen); if it holds, the cause found is an item of its own. AT: a 10 × 50 sweep, the same
