@@ -206,7 +206,8 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   Hungary"); "… joins the Anti-Comintern Pact" (the Eastern Bloc, the North Atlantic Treaty): the row carries its
   alliance's name; Rome's note is "Rome falls to the Allies". `c78_trackTexts.ts` with the alliance passed
   (`.cache/r164_trackTexts.ts`): none of the four; `trackText.test.ts`: a case, and every told note starts with a
-  capital and names its alliance.
+  capital and names its alliance. With the starts rebuilt, `ROWS=Rome c78_trackRows.mjs 1943 600`: "4 June 1944 Rome
+  falls to the Allies".
 - [x] R165 **The time-lapse:** a nation gone now is named exactly as a living one; at the first month the plate reads
   "from January 1938" beside "January 1938". AT: the tooltip on a dead nation marks it gone (`c77_tlDead.mjs` on 7019);
   the first month's plate names the month once; cases in `timeLapse1938.spec.ts`.
