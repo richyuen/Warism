@@ -31,6 +31,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
   save made mid-month must carry the month's open diff; the hash takes the section, so the pin of seed 99 moves.
 - **The user's decision** (2026-11-18): "let's allow 7%": the bar is 7 % of the packed 50-year save, monthly frames as
   the item says. The decodable encoding (5.0 and 5.6 %) is under it; the plain columnar one (7.1 and 7.8 %) is not.
+- **Built** (R143a): `src/sim/borderLog.ts`, the decodable encoding, cut in `step` after the month's first hour's
+  systems. `tools/diag/borderLog.ts`, 50 years: seed 99 600 frames, 60,441 runs, 50 of 50 maps of 1 January alike, the
+  packed save 1,506 kB without the record and 1,586 kB with it (5.34 %); seed 7 65,224 runs, 50 of 50, 1,495 / 1,583 kB
+  (5.92 %). A cut 3.0 ms median, 7.4 ms at most, once a month. The pin of seed 99 moves f6d6ab13 -> 1aabdc7e (the two
+  sections in the hash; no rule moved).
 - **When taken**, split: R143a the record (codec, save and load, the yearly
   equality, the size), R143b the slider and its playback at 60 fps.
 
@@ -55,6 +60,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   be 3000 km across at most. `npm run bench -- G`: T0 406 fps, T2 158.5 fps (budgets 60 and 30). No sim rule, no pin.
 - **Consequences.** The stats message carries up to 40 more rows a second, only where such events happen. The gate
   runs the spec for 1.5 minutes; the 10-minute run is by hand.
+- **Amended at R143a's gate** (the first whole browser run after R142): the word "Director" took the bars' cover at
+  1600 x 900 to 3.10 % against `chromeCover1938`'s 2.95 % (ADR-1086: the two bars no more than the one bar was). The
+  switch is a drawn camera (named "Director" for a reader and in its title) and the bar's buttons have 0.5rem at their
+  sides (0.6 before): 1.12 + 1.80 = 2.92 %.
 
 ---
 

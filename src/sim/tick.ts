@@ -3,6 +3,7 @@
  * and reads no wall-clock time, render state or subscriptions.
  */
 import { endTrack, runTrack } from './track';
+import { isMonthStart } from '../shared/calendar';
 import { applyGameOptions } from './gameOptions';
 
 /**
@@ -526,6 +527,8 @@ export function step(world: World, systems: readonly System[]): void {
   // The historical track's events due by this hour (ROADMAP R62b): after the hour's commands, as they are.
   if (world.track) runTrack(world);
   for (const s of systems) s(world);
+  // The borders' record (ROADMAP R143a): at a month's first hour, after its systems, the month's changes of owner.
+  if (isMonthStart(world.startDay, world.tick)) world.borders.cut(world.tick);
   tellMeansLost(world, held);
   // A massing called off in the tick, told if its nation is not at war with the target by its end (ROADMAP R134).
   tellMassingsOff(world);

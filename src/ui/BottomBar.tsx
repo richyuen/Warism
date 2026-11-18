@@ -157,8 +157,12 @@ export function BottomBar({ date, trackNext, speedLevel, paused, onTogglePause, 
       ) : null}
       <MapModeMenu mode={mapMode} onMode={onMapMode} />
       {director ? (
-        <button type="button" class={director.on ? 'bar-btn bar-director active' : 'bar-btn bar-director'} data-testid="director-btn" aria-pressed={director.on} title={t('bar.directorHint')} onClick={director.onToggle}>
-          {t('bar.director')}
+        // An icon, named for a reader and in its title: the bars' cover at 1600 x 900 is held (chromeCover1938, ADR-1086).
+        <button type="button" class={director.on ? 'bar-btn bar-director active' : 'bar-btn bar-director'} data-testid="director-btn" aria-pressed={director.on} aria-label={t('bar.director')} title={`${t('bar.director')}: ${t('bar.directorHint')}`} onClick={director.onToggle}>
+          <svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true" fill="currentColor">
+            <rect x="0.5" y="2.5" width="12" height="9" rx="1.5" />
+            <path d="M13.5 6 L19.5 3 L19.5 11 L13.5 8 Z" />
+          </svg>
         </button>
       ) : null}
       {onToggleStats ? (

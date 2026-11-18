@@ -2,6 +2,7 @@
  * The authoritative world state (SPEC §3). Everything here is serialized and hashed;
  * nothing outside this object influences a tick except queued commands.
  */
+import { BorderLog } from './borderLog';
 import { makeNavGrid, type NavGrid } from './nav/grid';
 import { buildLaneGraph, portWaters, seaBasins, type LaneGraph, type SeaBasins, type SeaPassage } from './nav/lanes';
 import { adjacent8, buildProvinceGraph, type CorridorRefusal, type ProvinceGraph } from './nav/provinceGraph';
@@ -1011,6 +1012,11 @@ export class World {
   history = new History();
   /** Monthly statistics series (PLAN 1.34b). */
   stats = new StatSeries();
+  /** The borders' record (ROADMAP R143a): the cells that changed owner each month, backward from the map of now. */
+  borders = new BorderLog(
+    () => this.cells.owner,
+    () => this.cells.w,
+  );
   /** Custom 36×24 pixel flags by nation (PLAN 1.37b), saved in the names section. */
   flags = new Map<number, Uint32Array>();
   /** Derived: bumped when flags change (the UI re-fetches them). */
@@ -1842,7 +1848,7 @@ export class World {
 
   /** Authoritative parts in a fixed order (the save/hash layout). */
   parts(): Stateful[] {
-    return [this.core, this.cells, this.nations, this.formations, this.cities, this.production, this.research, this.elements, this.wars, this.alliances, this.provinces, this.buffs, this.battles, this.history, this.stats, this.edits];
+    return [this.core, this.cells, this.nations, this.formations, this.cities, this.production, this.research, this.elements, this.wars, this.alliances, this.provinces, this.buffs, this.battles, this.history, this.stats, this.edits, this.borders];
   }
 
   cellIndex(x: number, y: number): number {

@@ -5,6 +5,10 @@ Suspicions and intermittent reds not worth an open entry; searched, not read (AD
 - **2026-11-17: `nukeAlertTwo1938` "at Max with the pause off"** red in a whole browser run twice (R137's gate, the
   release's check:review), green alone each time. Back to BLOCKERS if it is red alone.
 
+- **2026-11-18: `snapshot-perf` "stays within 2 ms for a steady-state snapshot" timed out at 90 s** in the whole unit
+  run of two gates (R143a's), green alone (45 s, with and without the month's cut alike). Load at 8 workers. Back to
+  BLOCKERS if it is red alone.
+
 - **2026-11-18, from BLOCKERS: the same five largest 20 years or more** (R140: 2 of 10 on 72001-72010, 72006 22 years and
   72007 20; 3 of 10 on 701-710, 0 on 1581-1590). A stable top is a valid world (ADR-750; ADR-1120 (b), the user's
   decision): reported by the sweep, not judged. The cause read: the United States and Australia at war on few days of

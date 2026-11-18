@@ -64,8 +64,16 @@ Rules:
   there; the record under 7 % of a 50-year save, packed (ADR-1123, the user's decision); 60 fps while it plays; save and load bit-identical, the pin moved
   only if the hash takes the section (ADR).
   Measured before building: the record of 50 years is 5.0 % (seed 99) and 5.6 % (seed 7) of the packed save in the best
-  decodable encoding of ten tried (ADR-1123); the bar raised to 7 % by the user. To split R143a (the record) and R143b
-  (the slider).
+  decodable encoding of ten tried (ADR-1123); the bar raised to 7 % by the user. Split 2026-11-18:
+  - [x] R143a The record: the cells that changed owner each month, backward from the map of now (`src/sim/borderLog.ts`),
+    saved as optional sections, the hash taking them. AT: on seeds 99 and 7 for 50 years, the record's map at each
+    1 January equals the map of a run stopped there, the record under 7 % of the packed save; a save made in mid-month
+    loads to the same record and game; the pin moved (ADR).
+    COMMIT (ADR-1123): `tools/diag/borderLog.ts`, 50 years: seed 99 50 of 50 maps of 1 January alike, 5.34 % of the packed
+    save; seed 7 50 of 50, 5.92 %; a cut 3.0 ms median. `borderLog.test.ts` (5: the codec, two seeds' 1 January, a save in
+    mid-month, none at a start or in a scenario). Pin f6d6ab13 -> 1aabdc7e. The gate, `npm run test:sweep` green.
+  - [ ] R143b The slider: History or Charts plays the map from the start to now by the month. AT: the map at each
+    1 January of the slider equals the record's on two seeds; 60 fps while it plays.
 
 ## Released
 

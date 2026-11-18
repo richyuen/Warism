@@ -14,6 +14,8 @@ By hand, for the items that need them (moved out of CLAUDE.md, ADR-918). The eve
   sank them, not the nation that lost them (R78c).
 - `npx tsx tools/diag/landingRows.ts [grid|far|page|all]`: the landings bar's rows against the divisions' panels and
   their order news, hour by hour, on the critic's landing cases (ADR-856, ADR-879).
+- `npx tsx tools/diag/borderLog.ts --seed 99 --years 50`: the borders' record (R143a, ADR-1123): each 1 January's map
+  against the record's, the record's share of the packed save (bar 7 %), the time of a month's cut.
 - `npx tsx tools/diag/diploInvariants.ts <seed> [scenario|random] [--heroes] [--world random]`: the
   rules of war and peace on one run, as `tests/unit/diploInvariants*.test.ts` check them (ADR-803).
 - `npx tsx tools/diag/trackFronts.ts [seed] [from] [to] [out.json]`: 1938h's `occupy` and `transfer` stages in the

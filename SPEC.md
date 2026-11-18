@@ -2117,7 +2117,7 @@ builds).
   playing), pause, slower, speed, faster, God Mode (and its tool row, §9.4), Map (the map mode menu),
   Director, Statistics, History, Relations, Editor, the date, Settings. The centre panels (History, Relations,
   Charts, Settings, Editor) close each other.
-- **Director** (`src/app/director.ts`, R142 [ADR-1122]): a switch; on, the camera goes by itself to a new war (the
+- **Director** (`src/app/director.ts`, R142 [ADR-1122]): a switch drawn as a camera; on, the camera goes by itself to a new war (the
   ticker's place: the capital of the nation it was declared on), a Major Battle, a capital taken and a nuclear strike
   (`DIRECTOR_KINDS`, the worker's `nationStats.director` rows since its last message), as the ticker's row flies
   (`showPlace`). No cut within DIRECTOR_GAP_MS (4.5 s) of the last nor DIRECTOR_HOLD_MS (2.5 s) of the camera standing;
@@ -2282,6 +2282,12 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   flies there, PLACE_VIEW_KM across, to the point of the view nearest its middle where the map is clear of the page's
   panels and bars by PLACE_CLEAR_PX (`MapView.showPlaceClear`); with no such point (a phone's view) the panel closes and
   the place is in the middle (R141 [ADR-1121]). A row with no place (a war, a peace, an alliance) is plain text.
+- **Borders' record** (`src/sim/borderLog.ts`, R143a [ADR-1123]): at each month's first hour, after its systems
+  (`step`), the cells whose owner changed since the last cut become a frame: runs of a row with one old owner each,
+  encoded in six varint streams (a run under one of the row above told by its ends and owner against that run). Kept
+  backward from the map of now: `ownerAt(t)` undoes the open changes and the later frames. Saved as `borders.log` and
+  `borders.open` (the changes since the last cut, for a save in mid-month), absent at the start and loaded when absent;
+  hashed; dropped from an exported scenario. Under 7 % of a packed 50-year save (`tools/diag/borderLog.ts`).
 
 ---
 

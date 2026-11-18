@@ -2,6 +2,7 @@
  * Sim facade: the one entry point used by the worker, Node tools and tests (ADR-2), so
  * every host runs exactly the same code path.
  */
+import { BorderLog } from './borderLog';
 import type { Command } from '../shared/commands';
 import type { ScenarioId, SimInit } from '../shared/protocol';
 import { loadBytes, saveBytes, stateHash } from './core/state';
@@ -200,7 +201,11 @@ export class Sim {
    */
   exportScenario(): { bytes: Uint8Array; hash: number } {
     const w = this.world;
-    const keep = { log: w.commandLog, pending: w.pending, history: w.history.rows, towns: w.history.towns, stats: w.stats.rows, air: w.stats.air, nuke: w.stats.nuke, undo: w.edits.undo, redo: w.edits.redo };
+    const keep = { log: w.commandLog, pending: w.pending, history: w.history.rows, towns: w.history.towns, stats: w.stats.rows, air: w.stats.air, nuke: w.stats.nuke, undo: w.edits.undo, redo: w.edits.redo, borders: w.borders };
+    w.borders = new BorderLog(
+      () => w.cells.owner,
+      () => w.cells.w,
+    );
     w.commandLog = [];
     w.pending = [];
     w.history.rows = [];
@@ -222,6 +227,7 @@ export class Sim {
       w.stats.nuke = keep.nuke;
       w.edits.undo = keep.undo;
       w.edits.redo = keep.redo;
+      w.borders = keep.borders;
     }
   }
 

@@ -210,10 +210,23 @@ textarea,
   flex-shrink: 0;
 }
 
+/* The director's switch (ROADMAP R142): a camera drawn, no word, the bars' cover kept (ADR-1086). */
+.bar-director {
+  min-width: 0;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.bar-director svg {
+  display: block;
+}
 .bar-btn {
   white-space: nowrap;
   min-width: 2rem;
-  padding: 0.2rem 0.6rem;
+  /* 0.5rem at the sides (0.6 until R142's switch: the bars' cover at 1600 x 900 held, ADR-1122). */
+  padding: 0.2rem 0.5rem;
   color: #f3e3b5;
   background: #3a2f22;
   border: 1px solid #8a6d3b;

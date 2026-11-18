@@ -117,3 +117,15 @@
   3 months: the same (the changes last). Against the raw save the plain columnar record is 3.8-4.0 %.
 - Nothing built: the item waits on ADR-1123, as R140 and R144 on ADR-1120. Every open item of Batch 43 now waits on
   the user.
+
+## 2026-11-18 — R143a: the borders' record (ADR-1123, the bar 7 % by the user's decision)
+
+- `src/sim/borderLog.ts`: each month's changes of owner, backward from the map of now, the decodable encoding of the
+  offline trials; cut in `step` after the month's first hour's systems; `borders.log` and `borders.open` (a save in
+  mid-month), optional sections, hashed, dropped from an exported scenario.
+- `tools/diag/borderLog.ts`, 50 years: 50 of 50 maps of 1 January alike on seeds 99 and 7; 5.34 % and 5.92 % of the
+  packed save; a cut 3.0 ms median, 7.4 ms most, once a month. Pin f6d6ab13 -> 1aabdc7e.
+- The first whole browser run since R142 found its word "Director" over `chromeCover1938`'s bars' cover (3.10 % >
+  2.95): the switch is a drawn camera and the bar's buttons 0.5rem at their sides, 2.92 % (ADR-1122 amended).
+- `snapshot-perf` timed out in both gates' whole unit runs, green alone at 45 s with and without the cut: the watch list.
+- The gate green; `npm run test:sweep` 23 of 23 by hand.
