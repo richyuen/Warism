@@ -46,4 +46,21 @@ test('a war banner says which side fights to the death and why the war goes on (
   expect(lines).toHaveLength(2);
   expect(lines.join(' | ')).toContain(`China fights to the death: ${ENDS}`);
   for (const line of await page.getByTestId('war-death-line').all()) await expect(line).toBeVisible();
+
+  // R166 (critic run 78): opened, a war's banner with no death line stood as tall as its neighbour with one, half empty.
+  // Each banner is its own content's height: Poland's, on a row with a banner to the death, is the shorter.
+  for (const [w, h] of [[390, 844], [1400, 800]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(300);
+    const boxes = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>('[data-testid="war-banner"]')].map((b) => {
+        const r = b.getBoundingClientRect();
+        return { death: b.dataset['death'] === '1', poland: (b.getAttribute('title') ?? '').includes('Poland'), top: r.top, bottom: r.bottom, h: r.height };
+      }),
+    );
+    const poland = boxes.find((b) => b.poland)!;
+    const beside = boxes.filter((b) => b.death && b.top < poland.bottom && poland.top < b.bottom);
+    if (w === 1400) expect(beside.length, 'a banner to the death on Poland\'s row at 1400 × 800').toBeGreaterThan(0);
+    for (const b of beside) expect(poland.h, `${w} × ${h}: Poland's banner beside one with its death line`).toBeLessThan(b.h - 5);
+  }
 });

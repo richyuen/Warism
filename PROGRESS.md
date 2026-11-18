@@ -269,3 +269,8 @@
 
 - The tooltip on a nation gone by now says so and why a click picks nothing; the plate's "from" is hidden at its first
   month.
+
+## 2026-11-18 — R166: an opened banner is its own height
+
+- Opened, the war banners stand at their row's head, each its own height: one with no death line is no longer half
+  empty beside one with it. Batch 46 done; next, the full critic run (ADR-1016).

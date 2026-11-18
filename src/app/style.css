@@ -831,6 +831,11 @@ textarea,
 .war-banners:not(.opened) {
   flex-wrap: nowrap;
 }
+/* Opened, each banner its own height, at its row's head (R166, critic run 78: one with no death line stood as tall as
+   its neighbour with one, half empty). */
+.war-banners.opened {
+  align-items: flex-start;
+}
 .war-score-fill {
   display: block;
   height: 100%;
