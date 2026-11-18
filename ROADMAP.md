@@ -164,7 +164,7 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   "Salonika", "↳ Dalmatia", "Italy's zone", "Egypt clear". AT: `npx tsx critic/scripts/c77_trackTexts.ts` lists no row
   of `critic/c77_trackTexts_odd.txt`'s kinds; the 1941 page shows no "The line of 1941-…"; a unit test runs every
   timeline note through `trackText`.
-  COMMIT: only a note that is a bare place (every word a capital's but "and"/"of", no colon, not "To …") is told,
+  129a6305: only a note that is a bare place (every word a capital's but "and"/"of", no colon, not "To …") is told,
   each kind its own way ("Dalmatia to Italy", "Romania joins the war"), "The" small inside; a note in the nation's
   own name as it is. Five notes written: "Uranus and Little Saturn: the Red Army's advance", the four "The line of
   1941-…" as "Barbarossa: the German front". `c77_trackTexts.ts`: none of the 41 odd rows told; `trackText.test.ts`
@@ -176,7 +176,7 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
 - [x] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
   side, both with a plus). AT: a case in a spec. `slowClick` (0 of 90) stays as ADR-914; `dirHand`'s phone History act
   not judged by the critic, not filed.
-  COMMIT: a side's allies are "& 2" (its title "Portugal and 2 more"); `warToDeath1938`'s case: each allies mark
+  129a6305: a side's allies are "& 2" (its title "Portugal and 2 more"); `warToDeath1938`'s case: each allies mark
   "& n", no banner with two plus numbers.
 
 ## Released
