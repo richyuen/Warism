@@ -2,6 +2,10 @@
  "about": "Tests that fail on this machine and not because of the code (ADR-297): a run of npm run check:review is green when every test red twice is listed here. Each entry says why and where BLOCKERS has it. A test leaves the list when it is fixed or passes here; never add a test to make a run green without a BLOCKERS entry for it.",
  "tests": [
   {
+   "id": "tests/e2e/shipMarks1938.spec.ts › T3: at 20 m/px every class of ship is drawn long and broad enough to read (PLAN 7.35c)",
+   "why": "The destroyers' median hull at 20 m/px read 16.5 px against 17 in the gate of R139 and again alone; on 8fe68e51 (HEAD, without R139) red in 1 of 2 alone, 16.5 px, the same fleets; 17.5-18.5 in 7 runs by hand. The measure moves with the frames' timing, as on 2026-11-02. BLOCKERS: shipMarks1938's T3 test, again."
+  },
+  {
    "id": "tests/e2e/cityNames1938.spec.ts › city names are not under the T0 counters or the capital flags, and are not simply left out",
    "why": "Fails alone in a cloud container with a software GPU (frames and ticks counted against wall time); green on the machine the budgets were set on. BLOCKERS: the browser suite at PLAN 4.2f, 4.7 and 4.8."
   },

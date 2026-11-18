@@ -5,6 +5,16 @@ resolved is marked **RESOLVED** with the date and fix and moved to `docs/BLOCKER
 
 ## Open
 
+### shipMarks1938's T3 test, again: red at 16.5 px against 17 in a gate and on HEAD (2026-11-18); on `tools/gate/knownRed.json`
+- **The bar:** at 20 m/px on the fleets of seed 2251's first Italy-UK sea battle, a destroyer's median hull length over
+  17 px (`shipMarks1938.spec.ts`, PLAN 7.35c; about 19 by the rule). Resolved once on 2026-11-03 (`docs/BLOCKERS_DONE.md`).
+- **What was read:** red in R139's gate and again alone, 16.5 px (7 destroyers). By hand on the R139 code 7 of 7 green
+  (17.5-18.5); on 8fe68e51 without R139, 1 of 2 red at 16.5, the same fleets at (1074.8, 329.3) and (1071.9, 330.5),
+  per ship 15.5-17.5 in the red run and 15.5-20 in the green. The world is the same each run; the frames' timing moves
+  the measure, as on 2026-11-02. No drawing of ships changed.
+- **Left:** a measure that does not hang on one frame (the median over several draws, or ships at rest); the test is not
+  changed here. It leaves the list when it passes in a review.
+
 ### R81h: the critic's 52.5-55.8 "fps" at 120 m/px is the view's draws, not its frames; the bar read as written missed (2026-11-14)
 - **The bar:** on 7019's year-20 world at Max, the minimum of the critic's samples at 120 m/px at least 57 fps, the
   other zooms kept; or the cause answered with numbers here.
