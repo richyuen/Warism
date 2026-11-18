@@ -176,7 +176,7 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   declared the same with R147 off (`.cache/r160_ab.ts`); on nine new seeds 10.6 % with it, 9.2 % without (the
   defender ahead 14.4 %, 13.4 %), neither under 6 %. The rise on run 76's seeds is the world's course, not the rule.
 - [x] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
-  COMMIT (ADR-1131): a war with no battle for 3 days yields its place to one in battle now behind "+n" (its last
+  c781bb4b (ADR-1131): a war with no battle for 3 days yields its place to one in battle now behind "+n" (its last
   battle sent by the worker). `bannerRank 57901 150` (a copy reading `fought`, `.cache/r161_br.mjs`): 8, 16, 10;
   58901 9, 62901 12; the row's set changes as before. `warsFought.test.ts`: a case, red without the rule.
   With it, a fix of R156 the gate missed (no spec of it changed): its death line widened an opened banner to a row,
