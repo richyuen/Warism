@@ -74,7 +74,7 @@ Rules:
     mid-month, none at a start or in a scenario). Pin f6d6ab13 -> 1aabdc7e. The gate, `npm run test:sweep` green.
   - [x] R143b The slider: History or Charts plays the map from the start to now by the month. AT: the map at each
     1 January of the slider equals the record's on two seeds; 60 fps while it plays.
-    COMMIT (ADR-1124): History's "Time-lapse", `TimeLapseBar`, `src/worker/timeLapse.ts`, `MapView.showTimeLapse`.
+    a0e99e32 (ADR-1124): History's "Time-lapse", `TimeLapseBar`, `src/worker/timeLapse.ts`, `MapView.showTimeLapse`.
     `timeLapse1938.spec.ts`, seeds 1938 and 7: 1 January 1939 and 1940 alike cell for cell; 60.0 fps, p95 16.7 ms on the
     GPU. Built in 23 ms at 50 years (11.0 MB). `docs/evidence/R143/`.
 
