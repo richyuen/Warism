@@ -2888,7 +2888,9 @@ button.unit-icon.on {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-/* The war banners of now stand where the time-lapse's plate is: hidden while it is open. */
-#ui:has(.time-lapse) .war-banners {
+/* The war banners and the ticker tell of now, and stand where the time-lapse's plate is (on a phone the ticker's second
+   row under it, R153): hidden while it is open. */
+#ui:has(.time-lapse) .war-banners,
+#ui:has(.time-lapse) .ticker {
   display: none;
 }

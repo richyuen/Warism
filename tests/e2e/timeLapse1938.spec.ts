@@ -36,6 +36,9 @@ for (const seed of [1938, 7]) {
     const steps = Number(await bar.getAttribute('data-steps'));
     expect(Number(await bar.getAttribute('data-step'))).toBe(steps);
     expect(await page.evaluate(() => window.__warsim!.view!.timeLapseOn)).toBe(true);
+    // The ticker and the war banners, of now, hidden under the plate (R153).
+    await expect(page.getByTestId('ticker')).toBeHidden();
+    await expect(page.getByTestId('war-banners')).toBeHidden();
     // Where the record begins (R151): this game's first month.
     await expect(page.getByTestId('time-lapse-from')).toHaveText(/^from \w+ 1938$/);
 
@@ -115,7 +118,36 @@ for (const seed of [1938, 7]) {
     await expect(bar).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(bar).toHaveCount(0);
+    await expect(page.getByTestId('ticker')).toBeVisible();
     await page.keyboard.press('Space');
     expect(await page.evaluate(() => window.__warsim!.hud.paused.value)).toBe(false);
   });
 }
+
+// R153 (critic run 76): on a phone the plate stood over the ticker's second row. The plate and every row of the page's
+// lower left left showing do not overlap.
+test('the time-lapse on a phone covers no ticker row', async ({ page }) => {
+  test.setTimeout(200_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.sim.step(24 * 60));
+  // Two rows on the ticker, as in the critic's picture: a day at a time until there are.
+  for (let d = 0; d < 120 && (await page.getByTestId('ticker-row').count()) < 2; d++) {
+    await page.evaluate(() => window.__warsim!.sim.step(24));
+    await page.waitForTimeout(150);
+  }
+  expect(await page.getByTestId('ticker-row').count(), 'two rows on the ticker').toBeGreaterThanOrEqual(2);
+  await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+  await page.getByTestId('history-timelapse').click();
+  const plate = await page.getByTestId('time-lapse').boundingBox();
+  expect(plate).not.toBeNull();
+  const rows = await page.evaluate(() =>
+    [...document.querySelectorAll('[data-testid=ticker-row], [data-testid=war-banner]')]
+      .map((e) => e.getBoundingClientRect())
+      .filter((r) => r.width > 0 && r.height > 0)
+      .map((r) => ({ x: r.x, y: r.y, w: r.width, h: r.height })),
+  );
+  const over = rows.filter((r) => r.x < plate!.x + plate!.width && plate!.x < r.x + r.w && r.y < plate!.y + plate!.height && plate!.y < r.y + r.h);
+  expect(over, 'rows of the ticker or banners under the plate').toEqual([]);
+});

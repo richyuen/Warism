@@ -123,8 +123,10 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   fc9136d8: a hero counter's offset from its place (its step and `clearOf`'s beside a panel) eased at R131's pace in
   both axes. `WHEEL=1 c76_heroPop`: 0, 0, 0, 0 (11, 8, 5, 6 on HEAD). `heroes1938.spec.ts` R152: 12 px at most a frame
   (257 without the rule); the 9 hero specs green.
-- [ ] R153 **On a phone the time-lapse's plate covers the ticker's second row.** AT: at 390 x 844 the plate and the
+- [x] R153 **On a phone the time-lapse's plate covers the ticker's second row.** AT: at 390 x 844 the plate and the
   ticker's rows do not overlap (a spec's boxes).
+  COMMIT: the ticker hidden while the plate is open, as the war banners are (both of now). `timeLapse1938.spec.ts`' phone
+  case: no ticker row or banner under the plate at 390 x 844 (a row under it without the rule).
 - [ ] R154 **A massing told again 50 days after its call-off** (56211, Britain on Mozambique, day 814). AT: that case
   tells it once; `massTold` on the 15 seeds of run 75 stays 0.
 - [ ] R155 **Small worlds with no war in ten years** (54425, 54426, 55424, 59421, 59423 of two nations, 55404 of three).

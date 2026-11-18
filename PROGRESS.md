@@ -196,3 +196,8 @@
   Its offset now goes to its place at R131's pace, across and down.
 - `WHEEL=1 c76_heroPop`: 0 leaps on 56901, 58905, 59905, 59907 (11, 8, 5, 6). `heroes1938.spec.ts`' R152 case: 12 px a
   frame at most (257 without the rule).
+
+## 2026-11-18 — R153: the ticker hidden under the time-lapse's plate
+
+- The ticker, like the war banners, tells of now: hidden while the plate is open. On a phone its second row stood under
+  the plate. The spec's phone case: no row under it (one without the rule).
