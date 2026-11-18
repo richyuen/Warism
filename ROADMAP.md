@@ -30,7 +30,7 @@ Rules:
   seeds; one cause a commit. AT: `npx tsx tools/diag/warOpening.ts` on 58211, 58213, 58215 (and two seeds no tuning
   has seen): wars with no cell held at day 30 under 10 % (19 % now), the opening bars of ADR-1094 kept. Checker:
   the rule it changes, in diploInvariants or its kin.
-  R139 commit (ADR-1119): a war across the sea, its sides touching nowhere by land, only with a group-room of free men
+  40938ff7 (ADR-1119): a war across the sea, its sides touching nowhere by land, only with a group-room of free men
   that may march to the transports (`seaLift.ts`). `warOpening.ts` on 58211, 58213, 58215, 61009, 61011 (the last two
   unseen): 13.3 % -> 4.8 %; ADR-1094's no man near 11.7 % -> 7.0 %, the defender ahead 14.4 % -> 14.0 %. Checker:
   `lift` in diploInvariants (red with the rule off: Japan on Siam, 0 men to lift). Pin 3374082b -> f6d6ab13.
