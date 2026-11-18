@@ -16,12 +16,15 @@ Rules:
 
 ## Batch 43 — the user's decision of 2026-11-17 ("Let's do 1-6" of the recommendations after release-2026-11-17)
 
-- [ ] R138 **The nightly's ten-year tests run out of time** (`.github/workflows/nightly.yml`, job `ten-year`,
+- [x] R138 **The nightly's ten-year tests run out of time** (`.github/workflows/nightly.yml`, job `ten-year`,
   `timeout-minutes: 60`): cancelled at 60 min on 2026-11-13, 11-15 and 11-17 (runs 43412792679, 43705787921,
   44077095528); 53–54 min on the nights it ended. Also the 11-16 red (43855142847): `specRefs` §8 and
   `snapshot-perf` in the unit job; green on 11-17, the cause named in the item's evidence. AT: three nightly runs in a
   row green, the ten-year job's longest under 45 min (split over jobs or made cheaper; a longer limit alone is an ADR,
   the user's decision).
+  76551f98, 160bbb19 (ADR-1118): the job a matrix of four. Runs 44206444954 (three-way), 44213292258, 44221126695 green
+  in full; the longest ten-year job 38.6, 29.2, 22.9 min. The 11-16 red: `specRefs` §8's bare `chromeCover1938` (b64c242a),
+  mended by a2b5dca0.
 - [ ] R139 **Wars in which nothing is taken** (run 75's non-blocking 5: 20 of 103 wars with no cell held by either
   side at day 30; BLOCKERS' France's far end and the USA's lift stand near it). Find the cause first on the critic's
   seeds; one cause a commit. AT: `npx tsx tools/diag/warOpening.ts` on 58211, 58213, 58215 (and two seeds no tuning
