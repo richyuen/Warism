@@ -188,3 +188,11 @@
 
 - The plate shows "from <month year>", the record's first month; History's hint no longer says "from the start". On a
   save made before R143 (`critic/c75_seed7019_y20.bin`) the plate reads "from January 1958".
+
+## 2026-11-18 — R152: a hero counter eases to its place beside its formation (R76-N6)
+
+- T0's hero counter chose its step and its place beside a panel anew each frame: two heroes near each other leapt a
+  step as the wheel moved (P.100 Ercole and Char 2C, 56901), and one at a panel's edge leapt 380 px (Richelieu, 58905).
+  Its offset now goes to its place at R131's pace, across and down.
+- `WHEEL=1 c76_heroPop`: 0 leaps on 56901, 58905, 59905, 59907 (11, 8, 5, 6). `heroes1938.spec.ts`' R152 case: 12 px a
+  frame at most (257 without the rule).

@@ -15,7 +15,7 @@ import { UNIT_FONT } from '../labels/fonts';
 import { progress, running } from '../timing';
 import { Ball2dCache, drawBall2dCached } from './ball2d';
 import { HERO_SCALE } from './ballShader';
-import { strengthText } from './markers';
+import { HeroLifts, strengthText } from './markers';
 import { worldToScreen, itemOffsets, type Camera, type MapGeometry } from '../camera';
 import { clearOf, type ScreenRect } from './clearOf';
 
@@ -339,8 +339,18 @@ export class CounterLayer {
 
   /** True while a split/merge or a fold animation runs (the view keeps redrawing). */
   animating(now: number): boolean {
-    return (this.trans !== null && running(now, this.trans.start, SPLIT_MS)) || running(now, this.foldStart, FOLD_MS);
+    return (this.trans !== null && running(now, this.trans.start, SPLIT_MS)) || running(now, this.foldStart, FOLD_MS) || this.heroX.animating() || this.heroY.animating();
   }
+
+  /**
+   * Where each hero's counter stands from its place, from frame to frame (R152, critic run 76's R76-N6). Chosen anew each
+   * frame, its step flipped as the wheel moved two heroes' counters together and apart (P.100 Ercole and Char 2C, 56901:
+   * 11 leaps of 13-42 px), and a counter set beside a panel (`clearOf`) leapt 380 px as its box came over the panel's edge
+   * and off it (Richelieu, 58905). Each goes to where it stands at R131's HERO_LIFT_PX_MS, across and down, as T1's
+   * markers do.
+   */
+  private readonly heroX = new HeroLifts();
+  private readonly heroY = new HeroLifts();
 
   /**
    * Declutters `items` (already laid out, in cells) at `scale` px per cell and returns what to
@@ -587,7 +597,11 @@ export class CounterLayer {
        * in a pile at its edge): one moved beside a panel over one of them is not drawn while the panel covers its place.
        */
       const placed: [number, number, number, number][] = [];
+      this.heroX.begin();
+      this.heroY.begin();
       for (const g of groups) {
+        // The offset drawn, eased, from the first copy's place; the other copies the same.
+        let eased: [number, number] | null = null;
         const name = g.members.length > 1 ? `${g.lead.name} +${g.members.length - 1}` : g.lead.name;
         const w = widthOf(name) + 18 + COUNTER_STRIPE;
         let box: [number, number] | null = null;
@@ -605,8 +619,9 @@ export class CounterLayer {
           // Under a panel floating over the map's middle: not drawn while it covers it (R87d).
           if (covered.some((r) => r.hides && over([r.x, r.y, r.w, r.h], ox, oy, w * hs, h * hs))) continue;
           const at = clearOf({ x: ox, y: oy, w: w * hs, h: h * hs }, covered, vw, vh);
-          const [bx, by] = [at.x, at.y];
-          if (bx !== ox || by !== oy) {
+          eased ??= [this.heroX.lift(g.lead.id, at.x - sx, now), this.heroY.lift(g.lead.id, at.y - sy0, now)];
+          const [bx, by] = [sx + eased[0], sy0 + eased[1]];
+          if (Math.abs(bx - ox) > 0.5 || Math.abs(by - oy) > 0.5) {
             if (placed.some((b) => over(b, bx, by, w * hs, h * hs))) continue;
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = colorOf(g.lead.nation);
@@ -624,6 +639,8 @@ export class CounterLayer {
         }
         if (box) this.drawn.push({ key: `hero:${g.lead.id}`, nation: g.lead.nation, naval: g.lead.naval, wx: g.lead.x, wy: g.lead.y, alpha, strength: 0, text: name, others: g.members.length - 1, folded: false, x: box[0], y: box[1], w: w * hs, h: h * hs, hero: g.lead.id, heroes: g.members });
       }
+      this.heroX.end();
+      this.heroY.end();
     }
     ctx.restore();
   }

@@ -118,8 +118,11 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   start". AT: `c76_tlMore.mjs old critic/c75_seed7019_y20.bin 40` shows the record's first month on the plate.
   c443ed90: the plate's "from <month year>" and History's hint "from the first month recorded". The probe's plate: "from
   January 1958" (`critic/shots/c76tm_old_*_step0.png`); `timeLapse1938.spec.ts` "from … 1938".
-- [ ] R152 **R76-N6: two land heroes leap by the wheel in the world of 56901.** AT: `WHEEL=1 c76_heroPop.mjs` on 56901
+- [x] R152 **R76-N6: two land heroes leap by the wheel in the world of 56901.** AT: `WHEEL=1 c76_heroPop.mjs` on 56901
   430, 58905 330, 59905 300, 59907 300: 4 or fewer each.
+  COMMIT: a hero counter's offset from its place (its step and `clearOf`'s beside a panel) eased at R131's pace in
+  both axes. `WHEEL=1 c76_heroPop`: 0, 0, 0, 0 (11, 8, 5, 6 on HEAD). `heroes1938.spec.ts` R152: 12 px at most a frame
+  (257 without the rule); the 9 hero specs green.
 - [ ] R153 **On a phone the time-lapse's plate covers the ticker's second row.** AT: at 390 x 844 the plate and the
   ticker's rows do not overlap (a spec's boxes).
 - [ ] R154 **A massing told again 50 days after its call-off** (56211, Britain on Mozambique, day 814). AT: that case

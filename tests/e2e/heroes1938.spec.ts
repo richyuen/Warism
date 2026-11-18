@@ -263,6 +263,45 @@ test('R40d: with the whole world in view a hero counter is its nation’s size',
   for (const h of r.own) expect(r.hero / h, `Maus ${r.hero.toFixed(1)} px against ${h.toFixed(1)} px`).toBeCloseTo(1, 1);
 });
 
+// ROADMAP R152 (critic run 76, R76-N6): a hero counter's place beside its formation chosen anew each frame leapt as the
+// wheel moved (P.100 Ercole and Char 2C, 56901: 13-42 px steps; Richelieu beside a panel, 58905: 380 px). It now goes there
+// at R131's pace: through a zoom over Europe from 9,000 to 4,000 m/px, one frame drawn at each of 100 steps, no hero
+// counter's offset from its place moves over 12 px (the critic's leap) from a frame to the next.
+test('R152: a hero counter does not leap from frame to frame as the zoom goes', async ({ page }) => {
+  test.setTimeout(240_000);
+  await openWithHeroes(page);
+  const id = await heroId(page, 'P.100 Ercole');
+  await lookAt(page, id, 9000);
+  await page.waitForTimeout(800);
+  const worst = await page.evaluate(async () => {
+    const v = window.__warsim!.view!;
+    const frame = (): Promise<void> => new Promise((done) => requestAnimationFrame(() => done()));
+    const offsets = (): Map<string, [number, number]> => {
+      const c = v.controller.cam;
+      const out = new Map<string, [number, number]>();
+      for (const d of v.counters.drawn) if (d.hero !== undefined) out.set(d.key, [d.x - ((d.wx - c.cx) * c.scale + innerWidth / 2), d.y - ((d.wy - c.cy) * c.scale + innerHeight / 2)]);
+      return out;
+    };
+    let prev = offsets();
+    let most = { px: 0, key: '' };
+    const [m0, m1] = [9000, 4000];
+    for (let i = 1; i <= 100; i++) {
+      const m = m0 * (m1 / m0) ** (i / 100);
+      const c = v.controller.cam;
+      v.controller.set({ cx: c.cx, cy: c.cy, scale: (v.metresPerPx * c.scale) / m });
+      await frame();
+      const now = offsets();
+      for (const [k, [x, y]] of now) {
+        const p = prev.get(k);
+        if (p && Math.hypot(x - p[0], y - p[1]) > most.px) most = { px: Math.hypot(x - p[0], y - p[1]), key: k };
+      }
+      prev = now;
+    }
+    return most;
+  });
+  expect(worst.px, `the most a hero counter moved from its place between two frames (${worst.key})`).toBeLessThanOrEqual(12);
+});
+
 // ROADMAP R42c (critic run 49, R49-N1): from 1× to 2× between 10,001 and 9,999 m/px, a jump at one step of the wheel,
 // and 2× at a Europe view; on a phone "P.100 Ercole" 38 % of the screen. Now blended by zoom level from 1× at 10,000
 // to 2× at 5,000 (7.184b3's T0), and no wider than a quarter of the screen while above the others' size.
