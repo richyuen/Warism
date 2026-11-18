@@ -66,7 +66,15 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   hud.installKeys(window);
   if (view) {
     hud.onMapMode = (m) => view.setMapMode(m);
-    view.onSelect = (id) => (hud.selected.value = id);
+    view.onSelect = (id) => {
+      // On the time-lapse a month's owner that is dead now has no panel to open: picked, nothing is (R157, critic run 77:
+      // the dead nation selected with no panel, and the next Escape spent on it).
+      if (id !== 0 && hud.timeLapse.value && !(hud.stats.value?.nations ?? []).some((n) => n.id === id)) {
+        view.select(0);
+        return;
+      }
+      hud.selected.value = id;
+    };
     hud.onSelectNation = (id) => view.select(id);
     view.onGroundShown = (shown) => (hud.groundShown.value = shown);
     // Over land across the sea with land formations selected, the tooltip says the order goes by

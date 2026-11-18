@@ -89,6 +89,8 @@ export function App({
   const stats = hud.stats.value;
   const byId = new Map((stats?.nations ?? []).map((n) => [n.id, n]));
   const nation = byId.get(hud.selected.value) ?? null;
+  // A nation dead now, named on the time-lapse's map of a month it held (R157, critic run 77: no tooltip on Sweden).
+  const deadName = (id: number): string | null => stats?.dead.find((d) => d.id === id)?.name ?? null;
   // The formation panel (PLAN 2.14b) stands in the nation panel's place while a formation is picked.
   const formationTitle = view && hud.formation.value !== 0 ? view.formationTitle(hud.formation.value) : null;
   // What became of the player's orders (PLAN 4.9c), in words, with the formation's name as its tag has it.
@@ -557,7 +559,7 @@ export function App({
       {player && player.menuNotice.value ? (
         <NationMenuNotice name={byId.get(player.menuNotice.value.nation)?.name ?? `#${player.menuNotice.value.nation}`} x={player.menuNotice.value.x} y={player.menuNotice.value.y} reason={player.menuNotice.value.reason} />
       ) : null}
-      <MapTooltip hover={hud.hover} nameOf={(id) => byId.get(id)?.name ?? null} unrestOf={(p) => hud.sim.unrest?.[p] ?? null} bySea={hud.hoverBySea} seaNeutral={hud.hoverSeaNeutral} seaOpen={hud.hoverSeaOpen} seaAshore={hud.hoverSeaAshore} seaPlain={hud.hoverSeaPlain} landing={hud.hoverLanding} tapAgain={hud.tapAgain} />
+      <MapTooltip hover={hud.hover} nameOf={(id) => byId.get(id)?.name ?? deadName(id)} unrestOf={(p) => hud.sim.unrest?.[p] ?? null} bySea={hud.hoverBySea} seaNeutral={hud.hoverSeaNeutral} seaOpen={hud.hoverSeaOpen} seaAshore={hud.hoverSeaAshore} seaPlain={hud.hoverSeaPlain} landing={hud.hoverLanding} tapAgain={hud.tapAgain} />
       <MapLegend
         mode={hud.mapMode.value}
         phone={phone}

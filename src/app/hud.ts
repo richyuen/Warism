@@ -816,6 +816,9 @@ export class Hud {
   }
 
   togglePause(): void {
+    // Resumed under the time-lapse, the plate closes: the game ran beneath a past month's map with its news hidden (R158,
+    // critic run 77: 96 hours in 4 s).
+    if (this.paused.value && this.timeLapse.value) this.closeTimeLapse();
     this.paused.value = !this.paused.value;
     store(KEY_PAUSED, this.paused.value ? '1' : '0');
     this.sim.setPaused(this.paused.value);

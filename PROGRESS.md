@@ -226,3 +226,8 @@
 
 - One blocking issue (R77-B1: the time-lapse names no owner dead now); every score at its bar but UI/UX 7. Its findings
   filed as Batch 45 (R157–R162).
+
+## 2026-11-18 — R157, R158: the time-lapse's dead owners and its Resume
+
+- A month's owner dead now is named in the tooltip (from the stats' dead list); a click on it picks nothing. Resuming
+  closes the plate. The critic's probe green at both sizes; a case in `timeLapse1938.spec.ts`, red without the fix.

@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import type {} from '../../src/app/testApi';
+import { NATIONS_1938 } from '../../src/sim/scenario1938';
 
 // ROADMAP R143b AT: the borders' time-lapse, opened from History. On two seeds its map at each 1 January equals the map
 // the page had at that hour (R143a's record played on the page); 60 fps while it plays (frames timed on the GPU).
@@ -150,4 +151,51 @@ test('the time-lapse on a phone covers no ticker row', async ({ page }) => {
   );
   const over = rows.filter((r) => r.x < plate!.x + plate!.width && plate!.x < r.x + r.w && r.y < plate!.y + plate!.height && plate!.y < r.y + r.h);
   expect(over, 'rows of the ticker or banners under the plate').toEqual([]);
+});
+
+// R157 (critic run 77, R77-B1): a month's owner that is dead now had no tooltip, and a click selected it with no panel.
+// R158 (R77-N1): the bar's Resume ran the game under the plate, its news hidden.
+test('the time-lapse names an owner dead now; Resume closes it', async ({ page }) => {
+  test.setTimeout(200_000);
+  const id = (tag: string): number => NATIONS_1938.findIndex((n) => n.tag === tag) + 1;
+  const [GER, SWE] = [id('GER'), id('SWE')];
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  // Sweden annexed by God after the record's first months, then the game on a day.
+  await stepTo(page, 24 * 70);
+  await page.evaluate(({ a, t }) => window.__warsim!.sim.command({ kind: 'annexNation', annexer: a, target: t }, true), { a: GER, t: SWE });
+  await stepTo(page, 24 * 71);
+  await page.waitForFunction((t) => !window.__warsim!.hud.stats.value!.nations.some((n) => n.id === t), SWE, { timeout: 30_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+  await page.getByTestId('history-timelapse').click();
+  await expect(page.getByTestId('time-lapse')).toBeVisible();
+  // At the start, a cell of Sweden's in the middle of the screen.
+  const k = await page.evaluate((swe) => {
+    const hud = window.__warsim!.hud;
+    hud.seekTimeLapse(0);
+    const p = hud.timeLapse.value!;
+    const ks: number[] = [];
+    for (let k = 0; k < p.map.length; k++) if (p.map[k] === swe) ks.push(k);
+    return ks[Math.floor(ks.length / 2)] ?? -1;
+  }, SWE);
+  expect(k, "a cell of Sweden's on the first month's map").toBeGreaterThanOrEqual(0);
+  await page.evaluate((k) => {
+    const v = window.__warsim!.view!;
+    v.showPlace((k % v.geo.w) + 0.5, Math.floor(k / v.geo.w) + 0.5);
+  }, k);
+  await page.waitForTimeout(2000);
+  await page.mouse.move(800, 450);
+  await page.mouse.move(801, 450);
+  expect(await page.evaluate(() => window.__warsim!.view!.nationAt(801, 450)), 'Sweden under the mouse').toBe(SWE);
+  await expect(page.locator('.map-tooltip')).toContainText('Sweden', { timeout: 10_000 });
+  // A click picks nothing: no panel, and Escape is left for the plate.
+  await page.mouse.click(801, 450);
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(0);
+  await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+  // Resumed from the bar: the plate closes, the game runs on its own map.
+  await page.getByTestId('pause-btn').click();
+  await expect(page.getByTestId('time-lapse')).toHaveCount(0);
+  expect(await page.evaluate(() => [window.__warsim!.hud.paused.value, window.__warsim!.view!.timeLapseOn])).toEqual([false, false]);
 });
