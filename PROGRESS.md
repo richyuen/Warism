@@ -254,3 +254,8 @@
 
 - No blocking issue; every score at its bar (8 each; UI/UX 7 → 8). R77-B1, R77-N1, R77-N2 and R132's bar fixed.
 - Four non-blocking issues filed as Batch 46 (R163–R166); then the full run (ADR-1016).
+
+## 2026-11-18 — R163: R147's figures pooled on twelve seeds (ADR-1132)
+
+- The critic's three seeds put the attacker with no man near at 18.8 % with R147. Pooled with ADR-1130's nine: 13.2 %
+  with it, 12.1 % without, under ADR-1094's 15 %. No code; for the user's review with ADR-1130.

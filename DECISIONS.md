@@ -5,6 +5,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1132 · 2026-11-18 · accepted (for the user's review, with ADR-1130) · R147's pooled figures on twelve new seeds (ROADMAP R163)
+
+- **The case** (critic run 78, R78-N2): on three new seeds (66211–66215, `critic/scripts/c78_woAB.sh`) HEAD's attacker
+  with no man near is 13 of 69 (18.8 %), over ADR-1094's 15 %; R147 off 9.4 %. ADR-1130 said the bar held on its nine.
+- **Pooled** (`node critic/scripts/c77_woCount.mjs` over `.cache/r160/on_*.json` and `critic/c78_wo_66.json`; the same
+  with `far_*` and `c78_woFar_66.json`), twelve seeds, three years, wars with a border that ran 30 days:
+
+  | measure | R147 (HEAD) | R147 off |
+  |---|---|---|
+  | attacker with no man near (ADR-1094's bar 15 %) | **34 of 257 (13.2 %)** | 32 of 265 (12.1 %) |
+  | defender ahead in land at day 30 (no bar) | 39 of 257 (15.2 %) | 36 of 265 (13.6 %) |
+  | no cell held at day 30 (of the wars that ran 30 days) | 38 of 355 (10.7 %) | 37 of 388 (9.5 %) |
+
+- **Decision:** ADR-1094's bar holds pooled, with R147; the three seeds alone are over it, as single sets have been
+  either way (6.5 % to 18.8 % a set). R147 costs about a point on each measure. ADR-1130's line "ADR-1094's bars hold on
+  the new seeds" reads, from here, "ADR-1094's bar holds pooled": the defender ahead (15.2 %) is a measure, not a bar.
+- **For the user:** with ADR-1130, whether that point is worth R147 (no first declaration over 6,000 km).
+
 ## ADR-1131 · 2026-11-18 · accepted · A banner still for three days yields to a war in battle (ROADMAP R161)
 
 - **The case** (critic run 77, R132's bar): `bannerRank 57901 150`, banner-days of a war with no battle on the row while
