@@ -2270,7 +2270,11 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   as events are emitted, names resolved by `HISTORY_ROLES` (`src/worker/historyRows.ts`), God's acts and
   towns too. The panel (`src/ui/HistoryPanel.tsx`): the newest hour first, each hour cause first (ADR-865), a row that
   follows one of its hour naming a nation of it marked under it (`followsAbove`, R60e [ADR-922]); the last `SHOWN` (400)
-  by kind, nation (living or dead) and years; exported as CSV and JSON.
+  by kind, nation (living or dead) and years; exported as CSV and JSON. A row with a place (`historyPlace`: a kind of
+  `HISTORY_PLACED` with its x and y; an annexation at its target's capital, as the ticker's) is a link to it: the camera
+  flies there, PLACE_VIEW_KM across, to the point of the view nearest its middle where the map is clear of the page's
+  panels and bars by PLACE_CLEAR_PX (`MapView.showPlaceClear`); with no such point (a phone's view) the panel closes and
+  the place is in the middle (R141 [ADR-1121]). A row with no place (a war, a peace, an alliance) is plain text.
 
 ---
 

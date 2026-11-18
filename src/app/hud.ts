@@ -124,6 +124,8 @@ export class Hud {
 
   /** Brings the place of an event into view (a click on a row of the ticker, PLAN 3.12c); main wires it to the map view. */
   onShowPlace: (x: number, y: number) => void = () => {};
+  /** A row of History's place (ROADMAP R141): in the view where the page shows the map; false when it shows none (`MapView.showPlaceClear`). */
+  onShowPlaceClear: (x: number, y: number) => boolean = () => false;
   /** The sea battles going on (PLAN 4.10b): the ticker lists them, a click flies to both fleets. */
   readonly seaBattles = signal<SeaBattleView[]>([]);
   /** A carrier's strikes out of a sea battle (PLAN 7.154a), for the ticker. */

@@ -160,6 +160,9 @@ const ELEMENT_FRAME_MIN_PX: readonly number[] = Array.from({ length: ATLAS_FRAME
 const BALL_FRAME_MIN_PX: readonly number[] = ELEMENT_FRAME_MIN_PX.map((v, f) => (f === Frame.turretLight || f === Frame.turretMedium || f === Frame.turretHeavy ? TANK_ELEMENT_MIN_PX : v));
 /** Where the camera goes for an event of the ticker (`showPlace`, PLAN 3.12c): this many km across the view, a country and its neighbours. */
 const PLACE_VIEW_KM = 1500;
+/** A row of History's place (`showPlaceClear`, ROADMAP R141): this many CSS px of map about it, on each side; the points tried this far apart. */
+const PLACE_CLEAR_PX = 60;
+const PLACE_CLEAR_STEP = 20;
 /** T3 (PLAN 2.6): a figure is at least this many px, so that a block reads at 30 m/px. */
 const FIGURE_MIN_PX = 2.5;
 /** Below this many m/px the last element section is kept for building the figures (twice T3's limit: a wheel step away). */
@@ -1788,6 +1791,30 @@ export class MapView {
   showPlace(x: number, y: number): void {
     this.controller.flyTo({ cx: x, cy: y, scale: (Math.max(1, this.canvas.clientWidth) * this.geo.kmPerCell) / PLACE_VIEW_KM });
     this.dirty = true;
+  }
+
+  /**
+   * A row of History's place (ROADMAP R141): as `showPlace`, but at the point of the view nearest its middle where the
+   * map is what the page shows, PLACE_CLEAR_PX about it too (`elementFromPoint`: the History panel, the bars, the ticker
+   * and the side panels stand over the map, and do not move with the camera). False, the camera left as it is, when the
+   * page leaves no such point (a phone's view under the panel): the caller closes the panel and calls `showPlace`.
+   */
+  showPlaceClear(x: number, y: number): boolean {
+    const el = this.canvas;
+    const at = el.getBoundingClientRect();
+    const [vw, vh] = [el.clientWidth, el.clientHeight];
+    const open = (px: number, py: number): boolean => px >= 0 && py >= 0 && px < vw && py < vh && document.elementFromPoint(at.left + px, at.top + py) === el;
+    const m = PLACE_CLEAR_PX;
+    const clear = (px: number, py: number): boolean => open(px, py) && open(px - m, py) && open(px + m, py) && open(px, py - m) && open(px, py + m);
+    const points: [number, number][] = [];
+    for (let py = m; py < vh - m; py += PLACE_CLEAR_STEP) for (let px = m; px < vw - m; px += PLACE_CLEAR_STEP) points.push([px, py]);
+    points.sort((p, q) => Math.hypot(p[0] - vw / 2, p[1] - vh / 2) - Math.hypot(q[0] - vw / 2, q[1] - vh / 2));
+    const p = points.find(([px, py]) => clear(px, py));
+    if (!p) return false;
+    const scale = (Math.max(1, vw) * this.geo.kmPerCell) / PLACE_VIEW_KM;
+    this.controller.flyTo({ cx: x - (p[0] - vw / 2) / scale, cy: y - (p[1] - vh / 2) / scale, scale });
+    this.dirty = true;
+    return true;
   }
 
   /** Metres per CSS pixel at the current zoom. */

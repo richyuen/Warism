@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
-import { filterHistory, followsAbove, kindName, newestHourFirst, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
+import { filterHistory, followsAbove, historyPlace, kindName, newestHourFirst, NO_FILTER, toCsv, toExport, type HistoryFilter, type HistoryRow } from '../shared/history';
 import { t, type MessageKey } from './i18n';
 import { historyText } from './historyText';
 import { displayName } from './NationPanel';
@@ -17,6 +17,8 @@ export interface HistoryPanelProps {
   nations: { id: number; name: string }[];
   /** The nation played (0 = none): "My wars only" is offered for it (ROADMAP R53f). */
   player?: number;
+  /** A row's place clicked (ROADMAP R141): the camera goes there. */
+  onPlace?: (x: number, y: number) => void;
   onClose: () => void;
 }
 
@@ -35,7 +37,7 @@ function download(name: string, type: string, text: string): void {
  * History log (PLAN 1.34a): every historic event, newest first, filterable by type, nation and
  * years; the filtered rows export to CSV or JSON. Refetched from the worker while open.
  */
-export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, onClose }: HistoryPanelProps) {
+export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, onPlace, onClose }: HistoryPanelProps) {
   const [rows, setRows] = useState<HistoryRow[]>([]);
   const [f, setF] = useState<HistoryFilter>(NO_FILTER);
   useEffect(() => {
@@ -104,8 +106,19 @@ export function HistoryPanel({ load, refreshKey, startDay, nations, player = 0, 
           return order.map((r, i) => {
             const d = dateOfTick(startDay, r.tick);
             return (
-              <li key={`${r.tick}:${i}`} class={then[i] ? 'history-then' : undefined} data-testid="history-row" data-kind={r.kind} data-then={then[i] ? '1' : undefined} title={then[i] ? t('history.then') : undefined}>
-                <span class="history-date">{then[i] ? <span aria-hidden="true">{'↳'}</span> : t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span> <span class="history-text">{historyText(r)}</span>
+              <li key={`${r.tick}:${i}`} class={then[i] ? 'history-then' : undefined} data-testid="history-row" data-kind={r.kind} data-kind-name={kindName(r.kind)} data-then={then[i] ? '1' : undefined} title={then[i] ? t('history.then') : undefined}>
+                <span class="history-date">{then[i] ? <span aria-hidden="true">{'↳'}</span> : t('date.format', { day: d.day, month: t(`month.${d.month}` as MessageKey), year: d.year })}</span>{' '}
+                {(() => {
+                  // A row with a place is a link to it (ROADMAP R141); one with none is plain text.
+                  const p = onPlace ? historyPlace(r) : null;
+                  return p ? (
+                    <button type="button" class="history-text history-go" data-testid="history-go" data-x={p[0]} data-y={p[1]} title={t('ticker.toPlace')} onClick={() => onPlace!(p[0], p[1])}>
+                      {historyText(r)}
+                    </button>
+                  ) : (
+                    <span class="history-text">{historyText(r)}</span>
+                  );
+                })()}
               </li>
             );
           });

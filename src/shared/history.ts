@@ -133,6 +133,74 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.MassingCalledOff]: ['nation', 'nation'],
 };
 
+/**
+ * The kinds whose row of History has a place, which a click on the row flies to (ROADMAP R141): the log's x and y are a
+ * point of the map (a battle's, a strike's, a city's, the middle of land that went over or rose) or, for an annexation,
+ * the worker's (`historyRows`: the target's capital, as the ticker has it). HISTORY_UNPLACED are the others: no place
+ * in the log (a war, a peace, an alliance, a puppet's change of bond), or numbers of another meaning there (the bonds a
+ * forced war broke, why a nation joined, why the track passed an event over). Each kind of the log is in one of the two
+ * (`historyPlace.test.ts`).
+ */
+export const HISTORY_PLACED: ReadonlySet<number> = new Set<number>([
+  EventKind.CapitalCaptured,
+  EventKind.RevoltSpawned,
+  EventKind.NationRevived,
+  EventKind.MajorBattleStarted,
+  EventKind.MajorBattleEnded,
+  EventKind.NationAnnexed,
+  EventKind.LandCeded,
+  EventKind.SeaBattle,
+  EventKind.ConvoyRaided,
+  EventKind.AirWar,
+  EventKind.AirRaids,
+  EventKind.NukeCasualties,
+  EventKind.NukeDecided,
+  EventKind.NukeToll,
+  EventKind.NukeIntercepted,
+  EventKind.NationSpawned,
+  EventKind.CitySpawned,
+  EventKind.CityRazed,
+  EventKind.GodBreakthrough,
+  EventKind.NukeMeansLost,
+  EventKind.NuclearPower,
+  EventKind.HeroLost,
+  EventKind.HeroReturned,
+  EventKind.FormationsSentHome,
+  EventKind.NationBorn,
+  EventKind.MassingSeen,
+  EventKind.MassingCalledOff,
+  EventKind.TrackEvent,
+]);
+export const HISTORY_UNPLACED: ReadonlySet<number> = new Set<number>([
+  EventKind.Bankruptcy,
+  EventKind.NationEliminated,
+  EventKind.WarDeclared,
+  EventKind.PeaceSigned,
+  EventKind.AllianceLeft,
+  EventKind.AllianceDissolved,
+  EventKind.UnionFormed,
+  EventKind.AllianceJoined,
+  EventKind.PuppetCreated,
+  EventKind.PuppetReleased,
+  EventKind.PuppetRevolt,
+  EventKind.PuppetIntegrated,
+  EventKind.NationCollapsed,
+  EventKind.FormationsDisbanded,
+  EventKind.WarEnded,
+  EventKind.BondsBroken,
+  EventKind.GuaranteeLapsed,
+  EventKind.WarJoined,
+  EventKind.WarLeft,
+  EventKind.NationDefaulted,
+  EventKind.TrackSkipped,
+  EventKind.TrackEnded,
+]);
+
+/** A row of History's place (ROADMAP R141), or null: a kind of HISTORY_PLACED whose row has both numbers. */
+export function historyPlace(r: Pick<HistoryRow, 'kind' | 'x' | 'y'>): [number, number] | null {
+  return HISTORY_PLACED.has(r.kind) && r.x !== null && r.y !== null && Number.isFinite(r.x) && Number.isFinite(r.y) ? [r.x, r.y] : null;
+}
+
 /** Stable English type name of a kind (filters, CSV/JSON `type`). */
 export function kindName(kind: number): string {
   for (const [k, v] of Object.entries(EventKind)) if (v === kind) return k;

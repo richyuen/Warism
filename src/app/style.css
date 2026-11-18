@@ -1142,6 +1142,23 @@ textarea,
   min-width: 0;
   overflow-wrap: anywhere;
 }
+/* A row with a place (ROADMAP R141): its text a link to it, as the ticker's rows are. */
+.history-list button.history-go {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.history-list button.history-go:hover,
+.history-list button.history-go:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
+  text-underline-offset: 0.15em;
+}
 
 /* Statistics charts (PLAN 1.34b). */
 .stats-chart .chart-svg {

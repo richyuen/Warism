@@ -43,10 +43,14 @@ Rules:
 - [ ] R144 **The United States and Australia at peace for decades** (R140's cause: one or both in the held top five on
   every seed of three sweeps, at war on few days of decades). Waits on ADR-1120; the fix is its option (a). AT: R140's,
   a 10 × 50 sweep on new seeds, the same five largest for 20 years or more on none of the 10.
-- [ ] R141 **A row of History flies to its place** (run 75's small things: "a row of History cannot be clicked to
+- [x] R141 **A row of History flies to its place** (run 75's small things: "a row of History cannot be clicked to
   its place"; the ticker's rows do, `PLACE_VIEW_KM`). AT: a Playwright spec, every History kind with a place (a
   battle, an annexation, a strike, a capital, a revolt) on two seeds, at 1600 × 900 and 390 × 844: a click puts the
   place in the view; a row with no place is not offered as a link.
+  COMMIT (ADR-1121): `historyPlace` over `HISTORY_PLACED` (each kind of the log placed or not, `historyPlace.test.ts`; an
+  annexation at its target's capital), `MapView.showPlaceClear`. `historyPlace1938.spec.ts`, seeds 1938 and 7, at 1600 x 900
+  and 390 x 844: a battle, an annexation, a strike, a capital taken and a revolt each under the map's canvas after the
+  click, the whole list too (the panel closing on the phone); no link on a war declared; `docs/evidence/R141/`.
 - [ ] R142 **The director: a camera that goes to what happens** (goal 1; an idea, unmeasured). A switch in the bottom
   bar: the camera flies to a new war's front, a Major Battle, a nuclear strike or a capital taken (the ticker's and
   `battleView`'s places), stays some seconds, and goes on; the player's pan, zoom or click hands the camera back.

@@ -376,6 +376,12 @@ export function App({
           startDay={hud.startDay}
           nations={[...stats.nations.map((n) => ({ id: n.id, name: n.name })), ...stats.dead]}
           player={stats.player}
+          onPlace={(x, y) => {
+            // Where the page shows the map; with none clear of the panel (a phone's view), the panel closes (ROADMAP R141).
+            if (hud.onShowPlaceClear(x, y)) return;
+            hud.toggleHistory();
+            hud.onShowPlace(x, y);
+          }}
           onClose={() => hud.toggleHistory()}
         />
       ) : null}

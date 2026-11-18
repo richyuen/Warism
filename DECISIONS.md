@@ -5,6 +5,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1121 · 2026-11-18 · accepted · A row of History flies to its place (ROADMAP R141)
+
+- **Decision.** A History row whose kind is in `HISTORY_PLACED` (`src/shared/history.ts`) and that has both numbers is a
+  link (`historyPlace`): a battle, a capital taken, a revolt, land that went over, a strike and its kin, an air or sea
+  battle, a raid, a hero lost, a massing, God's acts on a place, an event of the track. `HISTORY_UNPLACED` has the
+  rest, whose log has no place (wars, peaces, alliances, puppets' bonds, a death) or other numbers in x and y (the bonds
+  a forced war broke, why a nation joined, why the track passed over an event); each kind of the log is in one of the
+  two (`historyPlace.test.ts`). An annexation logs no place: the worker gives it the target's capital, as the ticker's
+  row has it. A click flies the camera, PLACE_VIEW_KM across as the ticker's, to the point nearest the view's middle
+  where `elementFromPoint` finds the map's canvas, it and PLACE_CLEAR_PX (60) about it (`MapView.showPlaceClear`); with
+  none (390 x 844, the panel at its tallest), the panel closes and the place is at the middle (`showPlace`).
+- **Why.** Run 75's small things: "a row of History cannot be clicked to its place". The panel stands in the middle
+  of the view, over where the ticker's flight puts its place; the page's other overlays (bars, ticker, side panels, an
+  alert) stand at many places, so the free point is asked of the page, not drawn from their boxes.
+- **Consequences.** No sim change, no pin move. A dead nation keeps its capital's columns, so an annexation's place is
+  where its capital was; a nation revived since is placed at its new capital. A place in a game saved before is as the
+  log had it then.
+
+---
+
 ## ADR-1120 · 2026-11-18 · proposed, the user's decision · R140: a top five held 20 years, the bar or ADR-750
 
 - **The conflict.** R140's AT (Batch 43, the user's decision of 2026-11-17) asks that no seed of a 10 × 50 sweep keep

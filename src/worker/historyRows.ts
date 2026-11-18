@@ -212,6 +212,12 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     const founding = kind === EventKind.AllianceJoined && !named.has(alId) && a === al?.founder;
     if (alId !== 0) named.add(alId);
     const row: HistoryRow = { tick, kind, a, b, x: Number.isNaN(x) || kind === EventKind.PeaceSigned ? null : x, y: Number.isNaN(y) ? null : y, an: ra === 'town' ? townName(world, i, kind, a, defName) : name(ra, a), bn: name(rb, b), of: al ? nation(al.founder) : '' };
+    // An annexation's place (ROADMAP R141): the log has none; the target's capital, as the ticker's row has it (a dead
+    // nation keeps its capital's columns; one revived since has its new capital's).
+    if (kind === EventKind.NationAnnexed && row.x === null) {
+      const [cx, cy] = [world.nations.cols.capitalX[a] ?? 0, world.nations.cols.capitalY[a] ?? 0];
+      if (cx !== 0 || cy !== 0) [row.x, row.y] = [cx, cy];
+    }
     if (kind === EventKind.NationEliminated) risen.delete(a);
     if (kind === EventKind.NationSpawned) risen.add(a);
     const as = kind === EventKind.RevoltSpawned ? revoltAs(tick, a) : kind === EventKind.LandCeded && died.has(tick * NATION_KEY + b) ? 'left' : founding ? 'founded' : undefined;

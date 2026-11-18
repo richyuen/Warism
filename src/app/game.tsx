@@ -121,6 +121,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       return { x: r.left, y: r.top, w: r.width, h: r.height };
     });
     hud.onShowPlace = (x, y) => view.showPlace(x, y);
+    hud.onShowPlaceClear = (x, y) => view.showPlaceClear(x, y);
     // The sea battles going on, for the ticker (PLAN 4.10b).
     view.onSeaBattles = (b) => (hud.seaBattles.value = b);
     view.onCarrierRaids = (r) => (hud.carrierRaids.value = r);

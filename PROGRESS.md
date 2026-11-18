@@ -86,3 +86,16 @@
   game from its save, by the month, five years at most, until the first is founded, and checks the copy's nation and
   its revolt rows; the ten years' checks as before. aiSweep1-3 green; the gate green.
 - The `lift` checker on eight fresh seeds, two in each of the nightly's four modes (4201-4204, 4301-4304): 0 broken.
+
+## 2026-11-18 — R141: a row of History flies to its place (ADR-1121)
+
+- The log's x and y, by kind (every `emit` of a kind of HISTORY_KINDS read): a place for battles, capitals, revolts,
+  land that went over, strikes, air and sea, heroes, massing, God's acts on a place and the track's events; none for
+  wars, peaces, alliances, puppets, a death; other numbers for BondsBroken, WarJoined and TrackSkipped (y) and a
+  track-end PeaceSigned (x). An annexation has none: the worker gives it the target's capital, as the ticker does.
+- The History panel stands in the middle of the view: the place goes to the point nearest the middle where
+  `elementFromPoint` finds the map, 60 px about it too; on a phone with the whole list open, none, so the panel closes.
+- `historyPlace.test.ts` (5: the two lists cover the log; no-place rows; the annexation; 3 years of seed 11 and the
+  track's first year, every place on the map); `historyPlace1938.spec.ts` green on chromium and swiftshader; the History
+  and ticker specs green; the gate green. No sim change, no pin move; the click's cost is a scan of the view's points
+  on the click alone, nothing per frame.
