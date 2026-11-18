@@ -57,7 +57,7 @@ Rules:
   The page's alone, no sim rule. AT: 10 min at 1 day/s on two seeds: at least 80 % of the ticker's war and battle
   rows visited, no cut within 4 s of the last, a manual pan or zoom stops it within a frame; 60 fps held (`npm run
   bench -- G`).
-  COMMIT (ADR-1122): `src/app/director.ts`, the worker's `directorRows`, `CameraController.onTaken`. `director1938.spec.ts`
+  734c0305 (ADR-1122): `src/app/director.ts`, the worker's `directorRows`, `CameraController.onTaken`. `director1938.spec.ts`
   with `DIRECTOR_MINUTES=10` at 1 day/s: seed 1938 135 of 135 rows seen (80 cuts), seed 7 116 of 116 (70); the shortest
   gap 4.52 s; a wheel turns it off within a frame, no cut after. `npm run bench -- G`: T0 406 fps, T2 158.5 fps.
 - [ ] R143 **The borders' time-lapse** (goals 1 and 2; an idea, unmeasured). The cells that changed owner each month,
