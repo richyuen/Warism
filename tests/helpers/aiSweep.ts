@@ -238,10 +238,27 @@ export function aiSweep(seed: number): void {
   // And after ten years no number of the state is a NaN out of arithmetic (see `strayNaN`).
   expect(strayNaN(s.world), `seed ${seed}: NaN in the state after ten years`).toEqual([]);
   // The nations the game founded (PLAN 2.15): each has a name and a flag. The flag is the one the
-  // view draws: a function of the id and the colour (ADR-101).
-  const nc = s.world.nations.cols;
+  // view draws: a function of the id and the colour (ADR-101). Asked of a founded nation, so with none in ten years a copy
+  // of the game (loaded from its save, the checks of the ten years below left as they are) goes on by the month until
+  // one is, five years at most (since R139, ADR-1119, seed 1 founds its first 19 months after year 10; the founded of ten
+  // years on seeds 1-13 were 100 before the rule and 112 after, seed by seed -11 to +20).
+  let f = s;
+  let more = 0;
+  if (s.world.nations.highWater <= NATIONS_1938.length + 1) {
+    f = new Sim({ scenario: '1938', seed, assets: assets1938(SIZE_1938.w) });
+    f.load(s.save());
+    while (f.world.nations.highWater <= NATIONS_1938.length + 1 && more < 60) {
+      f.step(24 * 30, (w) => {
+        w.out.events.length = 0;
+        w.out.fires.length = 0;
+      });
+      more++;
+    }
+    process.stderr.write(`seed ${seed}: the first nation founded ${more} months after year 10\n`);
+  }
+  const nc = f.world.nations.cols;
   let founded = 0;
-  for (let id = NATIONS_1938.length + 1; id < s.world.nations.highWater; id++) {
+  for (let id = NATIONS_1938.length + 1; id < f.world.nations.highWater; id++) {
     founded++;
     const origin = nc.origin[id]!;
     expect(origin, `seed ${seed}, nation ${id}: an origin`).toBeGreaterThan(0);
@@ -252,7 +269,7 @@ export function aiSweep(seed: number): void {
     expect(colours.length, `seed ${seed}, nation ${id}: the colours of its flag`).toBeGreaterThanOrEqual(2);
     expect(colours, `seed ${seed}, nation ${id}: its colour on its flag`).toContain(nc.color[id]!);
   }
-  expect(founded, `seed ${seed}: nations founded in ten years`).toBeGreaterThan(0);
+  expect(founded, `seed ${seed}: nations founded in ten years and up to five more`).toBeGreaterThan(0);
   process.stderr.write(`seed ${seed}: ${namesakeDays} days with living nations called after one province (${namesakesMost} more nations than provinces at most), each with a name of its own
 `);
   expect(revoltsSeen, `seed ${seed}: months whose revolts were measured`).toBeGreaterThan(0);
@@ -321,7 +338,17 @@ export function aiSweep(seed: number): void {
   const of = (as: string): number => revoltsAs.filter((l) => l.endsWith(as)).length;
   // A rising may found a state on every seed; since PLAN 7.3c (ADR-430) it joins only rebels of its
   // people at war with its holder, and a seed can have none in ten years (seed 2): joins are counted, not asked for.
-  expect(of('founded'), `seed ${seed}: revolts founded`).toBeGreaterThan(0);
+  // With none founded in ten years, the copy's (above): its revolts' rows after year 10, a founding "broke away" there too.
+  let foundedLater = 0;
+  if (f !== s) {
+    const end = s.world.tick;
+    for (const r of historyRows(f.world, (id) => NATIONS_1938[id - 1]?.nameKey ?? `=${nameOf(id)}`, (c) => `City ${String.fromCharCode(65 + (c % 26))}`)) {
+      if (r.kind !== EventKind.RevoltSpawned || r.tick <= end) continue;
+      expect(/ broke away from /.test(historyText(r)), `seed ${seed}, tick ${r.tick}: "${historyText(r)}" (${r.as ?? 'founded'})`).toBe(r.as === undefined);
+      if (r.as === undefined) foundedLater++;
+    }
+  }
+  expect(of('founded') + foundedLater, `seed ${seed}: revolts founded (in ten years and up to five more)`).toBeGreaterThan(0);
   console.log(`seed ${seed}: ${revoltRows.length} revolts: ${of('founded')} founded, ${of('joined')} joined, ${of('revived')} revived`);
   console.log(`seed ${seed}: ${rows.length} history rows, ${allianceRows} of alliances (${rows.filter((r) => r.kind === EventKind.AllianceDissolved).length} dissolved), none with an id`);
   // PLAN 3.12b2: each row of land that went over is of what the state showed, an hour's rows of

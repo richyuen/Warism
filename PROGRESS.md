@@ -75,3 +75,14 @@
 - The cause read (`.cache/r140/top.ts` on 72006 and 72007, `.cache/r140/tally.mjs` on three sweeps): the United States in
   every held set (30 of 30), Australia in most; the two at war on few days of decades. Filed as R144; the bar against
   ADR-750 is the user's (ADR-1120). R140 and R144 wait; the loop goes on to R141.
+
+## 2026-11-18 — R139 follow-up: the whole ten-year suite, `aiSweep1` red, the test's guard stepped on
+
+- `npm run test:sweep` on 40938ff7 (the gate's sweep stage ran only the pin): 28 of 29 green, `aiSweep1` red, seed 1
+  founding no nation in ten years. Founded in ten years, rule off -> on, seeds 1-13: 100 -> 112, seed by seed -11 to +20
+  (7 of 13 fell): no measurable effect; seed 1's first comes 19 months after year 10.
+- `founded > 0` and `revolts founded > 0` guard the name-and-flag and "broke away" checks (PLAN 2.15's and 3.12b's ATs:
+  every founded nation has a flag; only a founding breaks away), not a rate. `aiSweep` now goes on with a copy of the
+  game from its save, by the month, five years at most, until the first is founded, and checks the copy's nation and
+  its revolt rows; the ten years' checks as before. aiSweep1-3 green; the gate green.
+- The `lift` checker on eight fresh seeds, two in each of the nightly's four modes (4201-4204, 4301-4304): 0 broken.

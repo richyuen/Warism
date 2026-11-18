@@ -53,6 +53,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences.** A nation whose army is on its fronts, or whose transports stand where its army cannot march, makes
   no war across the sea until it has both. The pin of seed 99 moves 3374082b -> f6d6ab13 (a war of its year declared
   otherwise); `heroes.test.ts`' row count of German hero losses is read as Germany dies (a second loss in the wait).
+  Found after the commit by the whole ten-year suite (the gate's sweep stage runs only the pin): `aiSweep1` red, seed 1
+  founding no nation in ten years (its first in year 12). Nations founded in ten years, rule off -> on, seeds 1-13: 6->0,
+  4->1, 12->11, 10->10, 5->1, 10->18, 22->11, 6->5, 13->33, 4->5, 2->5, 1->10, 5->2 (100 -> 112; 7 of 13 fell, the paired
+  mean +0.9, -11 to +20): no measurable effect. The test's `founded > 0` guards its name-and-flag checks (PLAN 2.15's AT,
+  every nation founded has a flag), so `aiSweep` steps on by the month until the first is founded, five years at most.
 
 ---
 
