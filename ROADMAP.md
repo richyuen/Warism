@@ -195,7 +195,7 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   on 66211, 66213, 66215: HEAD 13 of 69 (18.8 %), defender ahead 17.4 %; R147 off 9.4 %, 14.1 %; bare openings the same
   (10.9 %, 10.4 %). AT: ADR-1130's nine seeds with run 78's three, by `node critic/scripts/c77_woCount.mjs`, give the
   attacker bar under 15 % with R147; or ADR-1130 amended with the pooled figures, for the user's review.
-  COMMIT (ADR-1132, no code): pooled over the twelve seeds, the attacker with no man near 34 of 257 (13.2 %) with R147,
+  1431c0d8 (ADR-1132, no code): pooled over the twelve seeds, the attacker with no man near 34 of 257 (13.2 %) with R147,
   32 of 265 (12.1 %) without; the defender ahead 15.2 % and 13.6 % (a measure, no bar). ADR-1130's line corrected.
 - [ ] R164 **R78-N1: the track rows' residue.** "Italy occupies Rome" (4 June 1944; the Allies took it), "the Second
   Vienna Award to Hungary" with a small first letter, "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania" (a
