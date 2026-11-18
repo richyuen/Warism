@@ -202,7 +202,7 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   semicolon passes the bare test), nine "… joins the alliance" naming no alliance. AT: `npx tsx
   critic/scripts/c78_trackTexts.ts` tells none of these; `ROWS=Rome node critic/scripts/c78_trackRows.mjs 1943 600` shows
   Rome's row with its taker or as written; cases in `trackText.test.ts`.
-  COMMIT: a note with a semicolon is kept as written; a told row starts with a capital ("The Second Vienna Award to
+  f1bbc8a5: a note with a semicolon is kept as written; a told row starts with a capital ("The Second Vienna Award to
   Hungary"); "… joins the Anti-Comintern Pact" (the Eastern Bloc, the North Atlantic Treaty): the row carries its
   alliance's name; Rome's note is "Rome falls to the Allies". `c78_trackTexts.ts` with the alliance passed
   (`.cache/r164_trackTexts.ts`): none of the four; `trackText.test.ts`: a case, and every told note starts with a
