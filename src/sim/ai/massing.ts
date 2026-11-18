@@ -24,7 +24,8 @@
  * - Else MASS_SHARE of its formations are to be at the border or on the march to a point: the nearest of the others
  *   are ordered to their nearest point (`askMove`), one refused left where it is.
  *
- * A massing given up after MASS_DAYS bars its target to that nation for MASS_BAR_DAYS (`World.massBarred`): a border
+ * A massing given up after MASS_DAYS bars its target to that nation for MASS_BAR_DAYS (`World.massBarred`), and so does one
+ * told and called off before then (R154): a border
  * its army does not come to (Brazil's with Colombia, over the Amazon) is not tried again each week.
  * A nation in a war prepares none, and declares a second war on a land neighbour only where MASS_SECOND of its men
  * already stand at that border (`unprepared`): its army is on its fronts, and a war begun where none of it stands
@@ -67,7 +68,7 @@ export const MASS_SECOND = 0.15;
 export const MASS_SEEN = 0.25;
 
 /** A probe's switch (`tools/diag/warOpening.ts --no-massing`; a test): off, wars are declared as before R97b; `noAnswer`, the target does nothing of a massing, as before R103. Never set by the game. */
-export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean; alone?: boolean } = { off: false };
+export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean; alone?: boolean; againOff?: boolean } = { off: false };
 
 /** Whether `n` is in a war. */
 function inWar(world: World, n: number): boolean {
@@ -277,6 +278,10 @@ export function massStep(world: World, day: number, still: (n: number, t: number
         if (MASS_PROBE.alone !== false && alone(n, t) && still(n, t)) declareWar(world, n, t);
         else world.massBarred.set(n * 65536 + t, day + MASS_BAR_DAYS);
       }
+      // One told and called off before its time is barred as long (R154, critic run 76: Britain's on Mozambique, 57613,
+      // ended by a day's refusal (Overrun) on day 764, was told again on day 814): it was called off in the ticker, and
+      // one taken up again within weeks was told as a second false alarm.
+      else if (ended && !MASS_PROBE.againOff && world.massTold.has(n) && nc.living[n] === 1 && nc.living[t] === 1 && !world.wars.atWar(n, t)) world.massBarred.set(n * 65536 + t, day + MASS_BAR_DAYS);
       over(n, t);
       continue;
     }

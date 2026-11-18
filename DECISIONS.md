@@ -5,6 +5,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1128 · 2026-11-18 · accepted · A massing told and called off bars its target a year (ROADMAP R154)
+
+- **The case** (critic run 76's small issue 9, logged under 56211; on HEAD it is 57613): Britain's massing on Mozambique,
+  told on day 720, ended on day 764 by a refusal of one day (`Refusal.Overrun`, Portugal's land three quarters held for
+  a day) and told called off, was taken up again on day 813 and told again on day 814: a second alarm within two months.
+  Only a massing given up after MASS_DAYS barred its target (`World.massBarred`); one ended before then barred nothing.
+- **Decision.** A massing told (`World.massTold`) and ended before its time, its two living and not at war with each
+  other, bars its target to that nation for MASS_BAR_DAYS (365), as one given up does. One never told is not barred
+  (no one heard of it); one ended by the war it massed for is not. `MASS_PROBE.againOff`: as before.
+- **Measured.** `c76_massTold.ts 3` on 56211, 57611-57621 and 58611-58621 (R134's fifteen but two): told again after a
+  call-off 0 (57613: 1 before); told twice 0; no "CALLED OFF BUT AT WAR". `diploInvariants` 57613 and 58619 scenario
+  1825: 0 broken. Pin 1aabdc7e -> f311b292.
+
+---
+
 ## ADR-1127 · 2026-11-18 · accepted · A held banner gone quiet yields to a war fought (ROADMAP R148)
 
 - **The case** (critic run 76, R132's bar on HEAD): `c76_bannerRank.mjs 57901 150` gave 59, 55, 63 and 48 quiet

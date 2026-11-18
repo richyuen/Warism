@@ -201,3 +201,9 @@
 
 - The ticker, like the war banners, tells of now: hidden while the plate is open. On a phone its second row stood under
   the plate. The spec's phone case: no row under it (one without the rule).
+
+## 2026-11-18 — R154: a massing told and called off bars its target a year (ADR-1128)
+
+- Britain's massing on Mozambique (57613 on HEAD) ended by a day's refusal and was told again 50 days on. A told
+  massing called off before its time now bars its target MASS_BAR_DAYS, as one given up does.
+- `c76_massTold.ts 3` on 13 seeds: told again after a call-off 0 (1). Pin 1aabdc7e -> f311b292.
