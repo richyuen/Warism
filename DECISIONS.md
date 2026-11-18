@@ -5,6 +5,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1130 · 2026-11-18 · accepted (for the user's review) · R147 kept: its bare openings are the course of the world, not its choice (ROADMAP R160)
+
+- **The case** (critic run 77, R77-N3): on run 76's nine warOpening seeds, three years, HEAD has 25 openings of 256 with
+  no cell held at day 30 against 14 of 277 with R147 off (`--lift-far`); the defender ahead 20.3 % against 15.5 % on the
+  57 set. The AT: back near 14 of 276 (under 6 %), or the trade kept by an ADR.
+- **Traced, one saved state** (`.cache/r160_ab.ts`: HEAD to two days before each bare opening, saved, then four days
+  with R147 on and off): all 22 of HEAD's bare openings on the six seeds that have them (56211, 57211, 57213, 57215,
+  58211, 58215) are declared the same, the same day, with R147 off. The rule picks none of them; it changes which wars
+  are fought earlier (Japan's far ones), and the world goes another way.
+- **Nine new seeds** (63211–65215, three years, `warOpening.ts`, counted by `critic/scripts/c77_woCount.mjs`): no cell
+  held at day 30 28 of 263 (10.6 %) with R147, 27 of 292 (9.2 %) without; the defender ahead 14.4 % and 13.4 %; the
+  attacker with no man near 11.2 % and 12.9 %. A point and a half, within the seeds' spread (5–14 % a set either way).
+  R147 off does not reach under 6 % on them either: run 76's figure on its nine was those seeds' own.
+- **Decision:** R147 stays (the first declarations over 6,000 km stay at 0, `c77_firstdecl.ts 60`). The bare openings
+  themselves (Italy on Yemen, Germany on Sweden, Italy on Denmark: over the sea, nothing taken in a month) are as many
+  with or without it, and ADR-1094's bars hold on the new seeds.
+- **For the user:** the critic judged this trade at the edge of diplomacy's 8. If the bare openings across the sea are to
+  go below ~9 %, it is its own item: what a war across the sea must have ready before it is declared, not R147.
+
 ## ADR-1129 · 2026-11-18 · accepted · A world of two or three of near-equal strength may keep the peace (ROADMAP R155)
 
 - **The case** (critic run 76, emergent dynamics "not 9"): random worlds of two nations 54425, 54426, 55424, 59421, 59423

@@ -238,3 +238,8 @@
   unit test runs every note of the timeline; five notes written ("Barbarossa: the German front" for "The line of
   1941-…"). None of the critic's 41 odd rows told.
 - A banner's allies read "& 2", not "+2" beside the score's "+32".
+
+## 2026-11-18 — R160: R147's bare openings traced; kept by ADR-1130
+
+- From one saved state every bare opening of HEAD is declared the same with R147 off; on nine new seeds the bare share
+  is 10.6 % with it and 9.2 % without. Kept, for the user's review: bare wars across the sea are their own item if wanted.

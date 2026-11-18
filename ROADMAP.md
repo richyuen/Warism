@@ -169,9 +169,12 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   own name as it is. Five notes written: "Uranus and Little Saturn: the Red Army's advance", the four "The line of
   1941-…" as "Barbarossa: the German front". `c77_trackTexts.ts`: none of the 41 odd rows told; `trackText.test.ts`
   runs all 1,207 notes (a sentence kept as written; 69 told). The 1941 page: no "occupies The", no "line of 1941".
-- [ ] R160 **R77-N3: R147 brings back war openings with nothing taken.** `c77_woAB.sh`: HEAD 14 of 88 with no cell
+- [x] R160 **R77-N3: R147 brings back war openings with nothing taken.** `c77_woAB.sh`: HEAD 14 of 88 with no cell
   held at day 30 (defender ahead 20.3 %), `--lift-far` 7 of 96 (15.5 %). AT: on run 76's nine seeds HEAD is back near
   14 of 276 (under 6 %), with `c77_firstdecl.ts 60` still 0 over 6,000 km; or the trade kept by an ADR for the user.
+  COMMIT (ADR-1130, no code; for the user's review): kept. From one saved state all 22 of HEAD's bare openings are
+  declared the same with R147 off (`.cache/r160_ab.ts`); on nine new seeds 10.6 % with it, 9.2 % without (the
+  defender ahead 14.4 %, 13.4 %), neither under 6 %. The rise on run 76's seeds is the world's course, not the rule.
 - [ ] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
 - [x] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
   side, both with a plus). AT: a case in a spec. `slowClick` (0 of 90) stays as ADR-914; `dirHand`'s phone History act
