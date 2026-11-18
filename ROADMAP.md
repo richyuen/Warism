@@ -172,7 +172,7 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
 - [x] R160 **R77-N3: R147 brings back war openings with nothing taken.** `c77_woAB.sh`: HEAD 14 of 88 with no cell
   held at day 30 (defender ahead 20.3 %), `--lift-far` 7 of 96 (15.5 %). AT: on run 76's nine seeds HEAD is back near
   14 of 276 (under 6 %), with `c77_firstdecl.ts 60` still 0 over 6,000 km; or the trade kept by an ADR for the user.
-  COMMIT (ADR-1130, no code; for the user's review): kept. From one saved state all 22 of HEAD's bare openings are
+  f11b6406 (ADR-1130, no code; for the user's review): kept. From one saved state all 22 of HEAD's bare openings are
   declared the same with R147 off (`.cache/r160_ab.ts`); on nine new seeds 10.6 % with it, 9.2 % without (the
   defender ahead 14.4 %, 13.4 %), neither under 6 %. The rise on run 76's seeds is the world's course, not the rule.
 - [ ] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
