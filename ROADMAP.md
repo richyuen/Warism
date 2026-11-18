@@ -125,7 +125,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   (257 without the rule); the 9 hero specs green.
 - [x] R153 **On a phone the time-lapse's plate covers the ticker's second row.** AT: at 390 x 844 the plate and the
   ticker's rows do not overlap (a spec's boxes).
-  COMMIT: the ticker hidden while the plate is open, as the war banners are (both of now). `timeLapse1938.spec.ts`' phone
+  283de6e5: the ticker hidden while the plate is open, as the war banners are (both of now). `timeLapse1938.spec.ts`' phone
   case: no ticker row or banner under the plate at 390 x 844 (a row under it without the rule).
 - [ ] R154 **A massing told again 50 days after its call-off** (56211, Britain on Mozambique, day 814). AT: that case
   tells it once; `massTold` on the 15 seeds of run 75 stays 0.
