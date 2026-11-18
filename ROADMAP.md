@@ -38,6 +38,11 @@ Rules:
   2026-10-18: the same five largest nations 20–22 years running on 702, 704, 706). Measure on HEAD first (a sweep
   on seeds no tuning has seen); if it holds, the cause found is an item of its own. AT: a 10 × 50 sweep, the same
   five largest for 20 years or more on none of the 10; or the entry closed with HEAD's figures.
+  Measured, not met: `docs/sweeps/2026-11-18-sweep-r140.md` (72001–72010) 2 of 10, 72006 22 years and 72007 20; BLOCKERS
+  "R140". Waits on ADR-1120 (proposed, the user's decision), as does R144.
+- [ ] R144 **The United States and Australia at peace for decades** (R140's cause: one or both in the held top five on
+  every seed of three sweeps, at war on few days of decades). Waits on ADR-1120; the fix is its option (a). AT: R140's,
+  a 10 × 50 sweep on new seeds, the same five largest for 20 years or more on none of the 10.
 - [ ] R141 **A row of History flies to its place** (run 75's small things: "a row of History cannot be clicked to
   its place"; the ticker's rows do, `PLACE_VIEW_KM`). AT: a Playwright spec, every History kind with a place (a
   battle, an annexation, a strike, a capital, a revolt) on two seeds, at 1600 × 900 and 390 × 844: a click puts the

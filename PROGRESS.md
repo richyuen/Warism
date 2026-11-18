@@ -66,3 +66,12 @@
 - Tick, seed 99 a year (`--profile`, run one after the other): mean 2.737 -> 2.746 ms; strategicAi 0.196 -> 0.240 ms.
 - Gate: green (the browser specs of the moved pin), `shipMarks1938`'s T3 on knownRed (b8174401: red at 16.5 px on HEAD
   without the rule too).
+
+## 2026-11-18 — R140 measured: the bar not met; ADR-1120 to the user
+
+- `npm run sweep -- --first 72001 --seeds 10 --years 50 --tag r140` on 40938ff7 (33 min, 6 processes): limits 10 of 10,
+  riser and faller 10 of 10, no break-up 10 of 10; the same five largest 20 years or more on 2 of 10 (72006 22, 72007
+  20). Release79's 1581–1590 none (14 at most); 701–710 three.
+- The cause read (`.cache/r140/top.ts` on 72006 and 72007, `.cache/r140/tally.mjs` on three sweeps): the United States in
+  every held set (30 of 30), Australia in most; the two at war on few days of decades. Filed as R144; the bar against
+  ADR-750 is the user's (ADR-1120). R140 and R144 wait; the loop goes on to R141.

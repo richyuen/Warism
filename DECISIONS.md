@@ -5,6 +5,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1120 · 2026-11-18 · proposed, the user's decision · R140: a top five held 20 years, the bar or ADR-750
+
+- **The conflict.** R140's AT (Batch 43, the user's decision of 2026-11-17) asks that no seed of a 10 × 50 sweep keep
+  the same five largest nations for 20 years or more. ADR-750 (the user's decision) has it that a stable top is a valid
+  world: the sweep reports stasis and does not judge it.
+- **Measured on HEAD** (40938ff7, 72001–72010, `docs/sweeps/2026-11-18-sweep-r140.md`): 2 of 10 (22 and 20 years), the
+  other eight 7–17. The cause read (BLOCKERS, R140): the United States is in the held set on all 30 seeds of the last
+  three sweeps, Australia on most, and the two are at war on few days of decades (Australia 0 in years 9–27 of 72006,
+  the United States 0 in 22 of 32), so the set holds while the Soviet Union, Britain and Brazil keep their places.
+- **Options.**
+  (a) Keep the bar, and make the two at peace for decades part of the world's wars: a war on them that the AI would
+  take (across the sea, with a lift: ADR-1119), or wars of their own (their aggression, the United States'
+  isolation). R144, its AT R140's bar on new seeds.
+  (b) Keep ADR-750: R140 closed with HEAD's figures (2 of 10), the entry to the watch list; R144 dropped.
+  (c) Judge another measure of the top's movement (realms rather than nations, or the top three, or the largest's
+  share), with its bar.
+- **Until the user decides**, R140 and R144 are not taken; the loop goes on to R141.
+
+---
+
 ## ADR-1119 · 2026-11-18 · accepted · A war across the sea is declared only with a lift (ROADMAP R139)
 
 - **Decision.** The strategic AI does not declare on a target that is no land neighbour of its home (a target across
