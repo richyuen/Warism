@@ -30,7 +30,9 @@ import { realmWars } from './realmWars';
 //   lift    no war the sim declares in its own hours on a nation that is no land neighbour of the declarer's home (by the
 //           provinces, `neighbourMap`, `homeNeighbours`), between sides that touch nowhere by land, unless the declarer had,
 //           at the end of the hour before, as many free men that may march to its transports as its largest group at a
-//           port holds (`seaLift`; ROADMAP R139).
+//           port holds (`seaLift`; ROADMAP R139). Not a revolt's war (a `PuppetRevolt` of the two in the hour, or the
+//           holder's on a nation a revolt made or revived, `RevoltSpawned`, `NationRevived`): no choice of target
+//           (ROADMAP R145, ADR-1125).
 //   bloc    where the blocs are (`blocsOf`), at most two; once an `allianceEnd` has been applied, at most one, and none
 //           led by a leader whose bloc ended; no `BlocAid` in an hour with fewer than two blocs (ROADMAP R80b, ADR-1045).
 
@@ -203,9 +205,17 @@ export function pileBreaks(w: World, events: number[]): string[] {
  */
 export function liftBreaks(w: World, events: number[], before: ReadonlyMap<number, { men: number; room: number }>): string[] {
   const out: string[] = [];
+  const revolts = new Set<number>();
+  for (let i = 0; i < events.length; i += 6) {
+    const k = events[i + 1];
+    if (k === EventKind.PuppetRevolt) revolts.add(events[i + 2]! * 65536 + events[i + 3]!);
+    // The revolt's nation, then its holder: the holder's war of independence on it.
+    else if (k === EventKind.RevoltSpawned || k === EventKind.NationRevived) revolts.add(events[i + 3]! * 65536 + events[i + 2]!);
+  }
   for (let i = 0; i < events.length; i += 6) {
     if (events[i + 1] !== EventKind.WarDeclared) continue;
     const [a, d] = [events[i + 2]!, events[i + 3]!];
+    if (revolts.has(a * 65536 + d)) continue;
     const war = w.wars.list.find((x) => x.sides[0][0] === a && x.sides[1][0] === d);
     if (!war || sidesTouch(w, war.sides[0], war.sides[1])) continue;
     const home = homeNeighbours(w, a);

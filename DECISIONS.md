@@ -5,6 +5,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1125 · 2026-11-18 · accepted · The lift asked of the war's defender; a puppet's revolt out of its checker (ROADMAP R145)
+
+- **The case** (critic run 76, R76-B1): `diploInvariants` broke `lift` on 33501 (Hungary on Italy, Lithuania on Germany)
+  and 58011 (three). Traced (`.cache/r145_probe.ts`): on day 1415 Hungary's strategic AI picked Yugoslavia, a neighbour
+  at home and Italy's puppet, so asked no lift; `declareWar` made the war Italy's (the overlord the defender), on sides
+  that touch nowhere by land, with no transport at a port (0 men, room 0).
+- **Decision.**
+  - The strategic AI's over-the-sea test is of the war's defender (`overlord || target`), the nation the checker judges.
+  - A massing's end (`stillDeclares`, both its declarations) asks the same: the defender no neighbour at home and
+    `noLift` of the sides it would call, and it does not declare.
+  - A puppet's revolt (`puppets.ts`, `declareWar(…, true)`) is no choice of target: a puppet under its bar rises
+    against its overlord wherever it is (ADR-807). The checker's `lift` skips a war whose two had a `PuppetRevolt` in
+    the hour. Lithuania on Germany was one. So is a revolt's war of independence (`revolts.ts`, the holder on the
+    nation a revolt made or revived, `RevoltSpawned` or `NationRevived` in the hour): the Soviet Union on Lebanon, 58011
+    day 3591, was one.
+- **Measured:** `diploInvariants` 33501 scenario 1825 and 58011 random 3650 --heroes, 0 broken (2 and 3 before); the
+  critic's other 18 runs, 0. The pin of seed 99 does not move (the rule is not met in its first year).
+
+---
+
 ## ADR-1124 · 2026-11-18 · accepted · The borders' time-lapse on the page (ROADMAP R143b)
 
 - **Decision.** A "Time-lapse" button in History (the item: "a slider in History or Charts") opens a plate above the

@@ -630,6 +630,11 @@ export function stillDeclares(world: World, n: number, t: number, blocs: Readonl
   const nc = world.nations.cols;
   if (nc.gold[n]! < 0 || nc.bankrupt[n] === 1) return false;
   if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) return false;
+  // Nor across the sea with no lift for it (R145, critic run 76's R76-B1): a massing's target may be a puppet whose
+  // overlord, the war's defender, is no neighbour at home.
+  const d = nc.overlord[t] || t;
+  const home = homeNeighbours(world, n);
+  if ((!neighbourMap(world).get(n)?.has(d) || (home !== null && !home.has(d))) && noLift(world, n, callSides(world, n, t))) return false;
   return PILE_PROBE.off === true || !outnumbered(world, n, t);
 }
 
@@ -698,7 +703,13 @@ export function strategicAi(world: World): void {
       if (best !== 0) {
         // Not one it would fight outnumbered over PILE_REALMS realms to 1 (R82f, ADR-1042): its next best, if any.
         // Nor one across the sea it has no lift for (R139, `noLift`).
-        const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)), (x) => !neighbours.includes(x) || !atHome(x));
+        // Over the sea is asked of the war's defender (R145, R76-B1): a puppet beside `n` brings its overlord, from
+        // across the sea, as the war's head (`declareWar`).
+        const overSea = (x: number): boolean => {
+          const d = nc.overlord[x] || x;
+          return !neighbours.includes(d) || !atHome(d);
+        };
+        const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)), overSea);
         // A nation at peace with a border to its target brings its army there first (R97b, `beginMassing`).
         if (t !== 0 && !beginMassing(world, n, t, day, atHome(t))) declareWar(world, n, t);
       }

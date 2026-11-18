@@ -145,3 +145,11 @@
 - Blocking 1: R76-B1, `diploInvariants` finds the `lift` rule broken (a puppet's revolt and a massing's end declare
   over the sea unasked). R139's own rule missed at doors it did not cover, not ADR-829's regression exit.
 - Batch 44 (R145-R156): the blocking issue, then the 11 non-blocking ones; the critic again (focused) after.
+
+## 2026-11-18 — R145: the lift asked of the war's defender (ADR-1125; R76-B1)
+
+- Hungary chose Yugoslavia, Italy's puppet beside it, and so asked no lift; `declareWar` made the war Italy's, over the
+  sea, with no transport. The AI's over-the-sea test and a massing's end now ask it of the defender.
+- A revolt's war (a puppet on its overlord; a holder on a nation a revolt made or revived) is no choice of target:
+  outside the checker's `lift` (Lithuania on Germany, the Soviet Union on Lebanon).
+- `diploInvariants`: 33501 and 58011 0 broken (2, 3 before); the critic's other 18 runs 0. Pin unmoved.

@@ -82,10 +82,14 @@ Rules:
 
 RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking one, then the critic again (focused). R76-B1
 is R139's own rule missed at other doors, not one item's fix breaking another, so not ADR-829's exit.
-- [ ] R145 **R76-B1: the `lift` rule is broken by its own checker.** A puppet's revolt (`puppets.ts`) and a massing's
+- [x] R145 **R76-B1: the `lift` rule is broken by its own checker.** A puppet's revolt (`puppets.ts`) and a massing's
   end (`massing.ts` 277, 286) declare over the sea without asking `noLift`; Hungary on Italy's door not found. AT:
   `diploInvariants.ts 33501 scenario 1825` and `58011 random 3650 --heroes` print 0 broken, and the report's 20 seeds
   stay at 0; the rule kept at each door, or the checker's scope narrowed with an ADR.
+  COMMIT (ADR-1125): the lift asked of the war's defender (a puppet beside brings its overlord from over the sea), in the
+  AI's pick and at a massing's end; a revolt's war (a puppet's, or the holder's on a nation a revolt made) out of the
+  checker. `diploInvariants` 33501 scenario 1825 and 58011 random 3650 --heroes: 0 broken; the report's other 18: 0.
+  Pin unmoved (1aabdc7e).
 - [ ] R146 **R76-N1: the director takes the camera back from a click** (a ticker row, a war banner, a History link).
   AT: `c76_dirHand.mjs 59955 120`, the three acts `onLater: false` or `cutsAfterAct: 0`.
 - [ ] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
