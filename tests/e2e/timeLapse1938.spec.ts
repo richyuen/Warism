@@ -56,6 +56,32 @@ for (const seed of [1938, 7]) {
       await expect(page.getByTestId('time-lapse-date')).toHaveText(`January ${1939 + i}`);
     }
 
+    // R149 (critic run 76, R76-N2): on 1 January 1940's map, a cell whose owner is not today's is named for its owner then,
+    // by the click's pick and the tooltip.
+    const cell = await page.evaluate(() => {
+      const v = window.__warsim!.view!;
+      const p = window.__warsim!.hud.timeLapse.value!;
+      const now = v.ownerCopy();
+      for (let k = 0; k < now.length; k++) if (p.map[k] !== 0 && now[k] !== 0 && p.map[k] !== now[k]) return { k, then: p.map[k]!, now: now[k]! };
+      return null;
+    });
+    expect(cell, 'a cell that changed owner since 1 January 1940').not.toBeNull();
+    await page.evaluate((k) => {
+      const v = window.__warsim!.view!;
+      v.showPlace((k % v.geo.w) + 0.5, Math.floor(k / v.geo.w) + 0.5);
+    }, cell!.k);
+    await page.waitForTimeout(2000);
+    await page.mouse.move(800, 450);
+    await page.mouse.move(801, 450);
+    await page.waitForFunction(() => window.__warsim!.hud.hover.value !== null, null, { timeout: 10_000 });
+    const named = await page.evaluate(() => ({ picked: window.__warsim!.view!.nationAt(800, 450), hover: window.__warsim!.hud.hover.value!.owner }));
+    expect(named, `the cell's owner on 1 January 1940 (${cell!.then}), not today's (${cell!.now})`).toEqual({ picked: cell!.then, hover: cell!.then });
+    // Space plays and pauses the time-lapse, not the game; Escape closes the plate.
+    await page.keyboard.press('Space');
+    expect(await page.evaluate(() => [window.__warsim!.hud.lapsePlaying.value, window.__warsim!.hud.paused.value])).toEqual([true, true]);
+    await page.keyboard.press('Space');
+    expect(await page.evaluate(() => [window.__warsim!.hud.lapsePlaying.value, window.__warsim!.hud.paused.value])).toEqual([false, true]);
+
     // Played from the start: the frames timed as the months go by.
     await page.evaluate(() => window.__warsim!.hud.seekTimeLapse(0));
     await page.getByTestId('time-lapse-play').click();
@@ -81,5 +107,13 @@ for (const seed of [1938, 7]) {
     await page.getByTestId('time-lapse-close').click();
     await expect(bar).toHaveCount(0);
     expect(await page.evaluate(() => window.__warsim!.view!.timeLapseOn)).toBe(false);
+    // Escape closes it too (R149), and Space is the game's again.
+    await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+    await page.getByTestId('history-timelapse').click();
+    await expect(bar).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(bar).toHaveCount(0);
+    await page.keyboard.press('Space');
+    expect(await page.evaluate(() => window.__warsim!.hud.paused.value)).toBe(false);
   });
 }

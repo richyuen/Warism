@@ -388,7 +388,7 @@ export function App({
           onClose={() => hud.toggleHistory()}
         />
       ) : null}
-      {hud.timeLapse.value ? <TimeLapseBar player={hud.timeLapse.value} step={hud.lapseStep.value} startDay={hud.startDay} onSeek={(i) => hud.seekTimeLapse(i)} onClose={() => hud.closeTimeLapse()} /> : null}
+      {hud.timeLapse.value ? <TimeLapseBar player={hud.timeLapse.value} step={hud.lapseStep.value} startDay={hud.startDay} playing={hud.lapsePlaying.value} setPlaying={(on) => (hud.lapsePlaying.value = on)} onSeek={(i) => hud.seekTimeLapse(i)} onClose={() => hud.closeTimeLapse()} /> : null}
       {stats && hud.showRelations.value ? (
         <RelationsPanel
           nations={stats.nations}

@@ -376,7 +376,7 @@ export class Hud {
 
   /**
    * Escape (PLAN 7.4f1, the critic's N7): closes one thing a press, the nearest first: an armed God
-   * tool, a top-centre panel, the nuclear alert, the formation's panel, the nation's panel.
+   * tool, a top-centre panel, the nuclear alert, the formation's panel, the nation's panel, the time-lapse.
    * False when nothing was open.
    */
   escape(): boolean {
@@ -387,6 +387,8 @@ export class Hud {
     } else if (this.nukeAlerts.value.length > 0) this.nukeAlerts.value = this.nukeAlerts.value.slice(0, -1);
     else if (this.formation.value !== 0) this.selectFormation(0);
     else if (this.selected.value !== 0) this.onSelectNation(0);
+    // The time-lapse's plate (R149, critic run 76's R76-N2), after what was opened over it.
+    else if (this.timeLapse.value) this.closeTimeLapse();
     else return false;
     return true;
   }
@@ -560,6 +562,8 @@ export class Hud {
    */
   readonly timeLapse = signal<TimeLapsePlayer | null>(null);
   readonly lapseStep = signal(0);
+  /** Whether the open time-lapse plays (its button and Space, R149). */
+  readonly lapsePlaying = signal(false);
   /** Shows a time-lapse's map on the view, or the game's again (null); main wires it to the map view. */
   onTimeLapseMap: (map: Uint16Array | null, colors?: Uint32Array) => void = () => {};
 
@@ -584,6 +588,7 @@ export class Hud {
   closeTimeLapse(): void {
     if (!this.timeLapse.value) return;
     this.timeLapse.value = null;
+    this.lapsePlaying.value = false;
     this.onTimeLapseMap(null);
   }
 
@@ -823,7 +828,9 @@ export class Hud {
       if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA')) return;
       if (e.code === 'Space') {
         e.preventDefault();
-        this.togglePause();
+        // While the time-lapse is open, Space plays and pauses it, not the game under it (R149, R76-N2).
+        if (this.timeLapse.value) this.lapsePlaying.value = !this.lapsePlaying.value;
+        else this.togglePause();
       } else if (e.code === 'Period') this.setSpeedLevel(this.speedLevel.value + 1);
       else if (e.code === 'Comma') this.setSpeedLevel(this.speedLevel.value - 1);
     });

@@ -103,9 +103,12 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   each under 50 (the user's bar), under 44 for UI's 8.
   0c065446 (ADR-1127): a held war gone quiet yields to a fought one. `bannerRank 57901 150` 42, 45, 42 (under 50; two
   under 44); `bannerFlip` 7 and 1 on 57901, 4 and 0 on 58901 (bars 10, 3). `warsFought.test.ts`; 12 banner specs green.
-- [ ] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs
+- [x] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs
   the game under the plate; Escape does not close it. AT: `c76_tlMore.mjs cell 59943 700` names the month's owner (or
   none); `c76_timeLapse.mjs 59941 400 head` `ranUnderLapse` 0; Escape closes the plate.
+  COMMIT: hover and pick read the month's map; Space is the time-lapse's while open (`hud.lapsePlaying`); Escape
+  closes it last. `c76_tlMore cell 59943 700`: the panel Norway's; `c76_timeLapse 59941 400 head`: `ranUnderLapse` 0
+  (96), Escape `lapseOn` false. `timeLapse1938.spec.ts` the three.
 - [ ] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
   c76_director.mjs 59951 100 head 120`, `seenCovered` 0, on a desk and a phone.
 - [ ] R151 **R76-N4: a save from before R143 plays only the months since its load** under a title that says "from the

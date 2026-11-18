@@ -171,3 +171,9 @@
 - `heldRow`: R132's hold no longer keeps a war with no battle in its days on the row while a fought war waits.
 - `bannerRank 57901 150`: 42, 45, 42 (59, 55, 63, 48 on HEAD); churn 7 and 1 a minute (bars 10 and 3). A banner's click
   stops the director before it asks for the battle (R146's case, a quiet war first).
+
+## 2026-11-18 — R149: the time-lapse is the month it shows (R76-N2)
+
+- The tooltip and a click name the owner of the month on show; Space plays and pauses the time-lapse, not the game
+  under it; Escape closes the plate, after a panel opened over it. The critic's probes: Norway's panel, 0 hours run
+  (96), the plate closed by Escape.

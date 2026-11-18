@@ -3197,8 +3197,9 @@ export class MapView {
       const [sx, sy] = [m.x - r.left, m.y - r.top];
       const cell = this.cellAt(sx, sy);
       const k = cell ? cell[1] * this.geo.w + cell[0] : -1;
-      const owner = k >= 0 ? (this.ownerGrid[k] ?? 0) : 0;
-      const holder = k >= 0 ? (this.controlGrid[k] ?? 0) : 0;
+      // On a time-lapse's map, the month's owner (R149, R76-N2): the tooltip named the owner of now.
+      const owner = k >= 0 ? ((this.lapse ?? this.ownerGrid)[k] ?? 0) : 0;
+      const holder = k >= 0 ? ((this.lapse ?? this.controlGrid)[k] ?? 0) : 0;
       const c = this.cityLabels.dotAt(sx, sy);
       const city = c ? { name: c.name, capital: c.capital, size: c.size } : null;
       const province = cell ? this.provinceAt(cell[0], cell[1]) : 0;
@@ -3218,7 +3219,7 @@ export class MapView {
 
   nationAt(sx: number, sy: number): number {
     const cell = this.cellAt(sx, sy);
-    return cell ? (this.controlGrid[cell[1] * this.geo.w + cell[0]] ?? 0) : 0;
+    return cell ? ((this.lapse ?? this.controlGrid)[cell[1] * this.geo.w + cell[0]] ?? 0) : 0;
   }
 
   /**

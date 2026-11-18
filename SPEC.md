@@ -2295,7 +2295,9 @@ God's commands apply at once (`applyNow`), refused like any command (`inRange`, 
   The worker builds it from the record (`src/worker/timeLapse.ts`: the map at the first cut and each step's cells with
   their owner before and after, the open changes the last step; every nation's own colour). The view shows the step's
   map as owner and controller (`MapView.showTimeLapse`, a whole upload a step), no fronts, units, flags, marches or
-  nation names, the war banners hidden; play is LAPSE_STEP_MS (100) a month. Closing puts back the game's map.
+  nation names, the war banners hidden; play is LAPSE_STEP_MS (100) a month. Closing puts back the game's map. The
+  tooltip and a click name the month's owner (R149); Space plays and pauses it, not the game; Escape closes it, after
+  what was opened over it.
 
 ---
 

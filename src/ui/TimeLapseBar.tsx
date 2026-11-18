@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import { dateOfTick } from '../shared/calendar';
 import type { TimeLapsePlayer } from '../shared/timeLapse';
 import { t, type MessageKey } from './i18n';
@@ -11,6 +11,9 @@ export interface TimeLapseBarProps {
   /** The step on show (the hud's signal). */
   step: number;
   startDay: number;
+  /** Whether it plays (the hud's, so Space plays and pauses it too, R149). */
+  playing: boolean;
+  setPlaying: (on: boolean) => void;
   onSeek: (i: number) => void;
   onClose: () => void;
 }
@@ -19,8 +22,7 @@ export interface TimeLapseBarProps {
  * The borders' time-lapse (ROADMAP R143b): play and pause, a slider over its months from the record's start to now, the
  * month on show, and close. Played from the start when played at the end.
  */
-export function TimeLapseBar({ player, step, startDay, onSeek, onClose }: TimeLapseBarProps) {
-  const [playing, setPlaying] = useState(false);
+export function TimeLapseBar({ player, step, startDay, playing, setPlaying, onSeek, onClose }: TimeLapseBarProps) {
   useEffect(() => {
     if (!playing) return;
     let last = performance.now();
