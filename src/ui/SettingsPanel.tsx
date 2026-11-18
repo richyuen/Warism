@@ -1,3 +1,4 @@
+import { useState } from 'preact/hooks';
 import { t } from './i18n';
 import { NewGameForm } from './NewGameForm';
 import type { GameOptions } from '../shared/gameOptions';
@@ -53,6 +54,8 @@ export interface SettingsPanelProps {
  */
 export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitScales, volume, volumes, muted, nukePause, unitLook, seed, options, nationsRange, sizes, defaultSize, diplomacy, heroes, fixedSeed, onUiScale, onUnitScale, onVolume, onMuted, onNukePause, onUnitLook, onScreenshot, onNewGame, onMenu, onClose }: SettingsPanelProps) {
   const pct = (v: number): string => `${Math.round(v * 100)}%`;
+  // The main menu asks first (R156, critic runs 75-76: one tap on a phone left the game).
+  const [leaving, setLeaving] = useState(false);
   return (
     <aside class="history-panel settings-panel" data-testid="settings-panel">
       <header class="ranking-head">
@@ -115,10 +118,21 @@ export function SettingsPanel({ uiScale, unitScale, uiScales, uiOffered, unitSca
         <button type="button" class="god-btn" data-testid="settings-screenshot" onClick={onScreenshot}>
           {t('settings.screenshot')}
         </button>
-        <button type="button" class="god-btn" data-testid="settings-menu" onClick={onMenu}>
+        <button type="button" class="god-btn" data-testid="settings-menu" aria-expanded={leaving} onClick={() => setLeaving(!leaving)}>
           {t('settings.menu')}
         </button>
       </div>
+      {leaving ? (
+        <div class="form-row settings-leave" data-testid="settings-leave">
+          <span class="form-name">{t('settings.menuAsk')}</span>
+          <button type="button" class="god-btn" data-testid="settings-menu-yes" onClick={onMenu}>
+            {t('settings.menuYes')}
+          </button>
+          <button type="button" class="god-btn" data-testid="settings-menu-no" onClick={() => setLeaving(false)}>
+            {t('settings.menuNo')}
+          </button>
+        </div>
+      ) : null}
       <div class="panel-sub settings-part settings-part-new">{t('settings.newGame')}</div>
       <div class="form-row">
         <span class="form-name" data-testid="settings-current-seed">

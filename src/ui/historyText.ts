@@ -132,10 +132,24 @@ export function historyText(r: HistoryRow): string {
   const hero = r.kind === EventKind.HeroLost || r.kind === EventKind.HeroReturned ? { near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '' } : {};
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
   // An event of the historical track: its name (ROADMAP R62j1).
-  if (r.kind === EventKind.TrackEvent || r.as === 'track') return t('history.TrackEvent', { note: r.note ?? '' });
+  if (r.kind === EventKind.TrackEvent || r.as === 'track') return trackText(r);
   const chosen = offshore ? `${key}.offshore` : !r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key;
   // A name that takes a plural verb (R84j; critic run 69: "Contras was annexed by Nicaragua"): the message's `.plural`.
   const plural = ra === 'nation' && pluralName(r.an) && `${chosen}.plural` in en ? `${chosen}.plural` : chosen;
   const s = t(plural as MessageKey, { a: part(ra, r.a, r.an), b: part(rb, r.b, r.bn), c: r.cn ? displayName(r.cn) : '', ...ships, ...strike, ...lost, ...decided, ...hero, ...means, ...power, ...broke, gold: gold(took) });
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
+}
+
+/** The kinds of the timeline whose note may be a bare place or name (ROADMAP R156): told with what happened there. */
+const BARE_KINDS = new Set(['occupy', 'objective', 'nuke', 'allianceJoin']);
+
+/**
+ * A row of the historical track: its note (ROADMAP R62j1). A note that is a bare place ("Northern Malaya", "Warsaw"; critic
+ * run 76) is told by its kind and its nation (R156): one that says itself (a colon in it, or the nation named) as it is.
+ */
+export function trackText(r: Pick<HistoryRow, 'note' | 'trackKind' | 'bn' | 'kind'>): string {
+  const note = r.note ?? '';
+  const nation = r.bn ? displayName(r.bn) : '';
+  if (r.kind !== EventKind.TrackEvent || !r.trackKind || !BARE_KINDS.has(r.trackKind) || !note || note.includes(':') || (nation && note.includes(nation)) || (!nation && r.trackKind !== 'allianceJoin')) return t('history.TrackEvent', { note });
+  return t(`history.track.${r.trackKind}` as MessageKey, { nation, note });
 }

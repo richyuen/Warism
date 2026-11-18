@@ -230,7 +230,11 @@ export function historyRows(world: World, nationName: (id: number) => string, ci
     if (toll) row.toll = toll;
     if (kind === EventKind.BondsBroken) [row.bonds, row.y] = [y, null];
     // An event of the historical track by its name (ROADMAP R62j1).
-    if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
+    if (kind === EventKind.TrackEvent) {
+      const e = world.track?.events[a - 1];
+      row.note = e?.note ?? '';
+      if (e) row.trackKind = e.kind;
+    }
     // An annexation the timeline tells by its note (R64d).
     const told = kind === EventKind.NationAnnexed ? annexNote(world, rows[i]!, a, b) : '';
     if (told) [row.as, row.note] = ['track', told];
@@ -387,7 +391,11 @@ function tickerRowAt(world: World, i: number, nation: (v: number) => string, cit
   const toll = kind === EventKind.NukeCasualties ? tollAfter(rows, i) : undefined;
   if (toll) row.toll = toll;
   if (kind === EventKind.BondsBroken) row.bonds = y;
-  if (kind === EventKind.TrackEvent) row.note = world.track?.events[a - 1]?.note ?? '';
+  if (kind === EventKind.TrackEvent) {
+    const e = world.track?.events[a - 1];
+    row.note = e?.note ?? '';
+    if (e) row.trackKind = e.kind;
+  }
   const told = kind === EventKind.NationAnnexed ? annexNote(world, tick, a, b) : '';
   if (told) [row.as, row.note] = ['track', told];
   if (kind === EventKind.PeaceSigned && endPeace(rows, i)) row.as = 'trackEnd';

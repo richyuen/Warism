@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import type { NationStat, WarStat } from '../shared/protocol';
 import { bannerOrder, heldRow, type Held } from './bannerOrder';
 import { t } from './i18n';
@@ -26,6 +26,18 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
  */
 export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, player = 0, tick = 0, world = 0 }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean; /** The nation played, 0 for none: its wars are the first banners (ROADMAP R121). */ player?: number; /** The stats' tick: how long a banner has held its place (ROADMAP R132). */ tick?: number; /** The stats' world number (a new game, a load). */ world?: number }) {
   const [opened, setOpened] = useState(false);
+  // Their height, for the ticker to stand above them while they are opened on a phone (R156; R126 had it give way).
+  const root = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = root.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ui = el.parentElement;
+    const set = (): void => ui?.style.setProperty('--banners-h', `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   /**
    * The row last drawn for each world and nation played, 0 for none (ROADMAP R132: a place kept for some days once
    * taken). Each its own: a nation released, the row is the one before it was taken (R121); a new world's wars reuse ids.
@@ -73,7 +85,7 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return '';
   };
   return (
-    <div class={opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
+    <div ref={root} class={opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
       {newest.map((w) => (
         <button key={w.id} class={w.battle ? 'war-banner' : 'war-banner war-quiet'} data-testid="war-banner" data-war={w.id} data-battle={w.battle ? '1' : '0'} data-death={w.toDeath[0] || w.toDeath[1] ? '1' : '0'} title={`${t('wars.who', { a: sideName(w.attackers), d: sideName(w.defenders) })}
 ${t(w.score > 0 ? 'wars.scoreAttackers' : w.score < 0 ? 'wars.scoreDefenders' : 'wars.scoreEven', { n: Math.abs(Math.round(w.score)) })}
@@ -88,7 +100,18 @@ ${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}${deathLine(w)}`}
             <span class="war-swords">{'⚔'}</span>
             {side(w.defenders)}
             <span class="war-score-n" data-testid="war-score-n">{Math.round(w.score) > 0 ? `+${Math.round(w.score)}` : String(Math.round(w.score))}</span>
+            {/* A war to the death marked where a phone sees it, not in the title alone (R156, critic run 76). */}
+            {w.toDeath[0] || w.toDeath[1] ? (
+              <span class="war-death" data-testid="war-death" aria-label={deathLine(w).trim()}>
+                {'☠'}
+              </span>
+            ) : null}
           </span>
+          {opened && (w.toDeath[0] || w.toDeath[1]) ? (
+            <span class="war-death-line" data-testid="war-death-line">
+              {deathLine(w).trim()}
+            </span>
+          ) : null}
           <span class="war-score">
             <span class="war-score-fill" style={{ width: `${Math.max(0, Math.min(100, 50 + w.score / 2))}%` }} />
             <span class="war-score-mid" />

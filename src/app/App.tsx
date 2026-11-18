@@ -161,7 +161,7 @@ export function App({
             : null
         }
       />
-      <FirstCue paused={hud.paused.value} />
+      <FirstCue paused={hud.paused.value} phone={phone} />
       {/* The world built in the worker (R65c; critic run 63: a grey map, no nations, for 2 s at a start, a file's or
           plain 1938's): said over the map until its first stats. The toy world has none. */}
       {!stats && scenarioIdOf(base) !== 'toy' ? (

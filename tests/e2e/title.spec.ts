@@ -166,7 +166,14 @@ test('the title screen starts the 1938 world with the chosen seed and options; M
   await page.getByTestId('settings-btn').click();
   await expect(page.getByTestId('settings-current-seed')).toContainText('4242');
   await page.screenshot({ path: path.join(evidence(info), 'settings-panel.png') });
-  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu').click()]);
+  // The main menu asks first (R156, critic runs 75-76: one tap left the game): Stay keeps the game, Leave goes.
+  await page.getByTestId('settings-menu').click();
+  await expect(page.getByTestId('settings-leave')).toContainText('Save this game and leave for the main menu?');
+  await page.getByTestId('settings-menu-no').click();
+  await expect(page.getByTestId('settings-leave')).toHaveCount(0);
+  expect(new URL(page.url()).search).not.toBe('');
+  await page.getByTestId('settings-menu').click();
+  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu-yes').click()]);
   await expect(page.getByTestId('title-screen')).toBeVisible();
   const saved = await page.evaluate(
     () =>
@@ -213,7 +220,9 @@ test('Continue resumes the autosave with the seed and options of its game', asyn
   await ready(page);
   const left = await page.evaluate(() => window.__warsim!.sim.step(72));
   await page.getByTestId('settings-btn').click();
-  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu').click()]);
+  // The main menu asks first (R156).
+  await page.getByTestId('settings-menu').click();
+  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu-yes').click()]);
 
   // The title screen offers it, with its scenario and its date.
   await expect(page.getByTestId('title-screen')).toHaveAttribute('data-save', 'found');
@@ -452,7 +461,9 @@ test('the title screen starts a random world with the chosen number of nations, 
   const left = await page.evaluate(() => window.__warsim!.sim.step(48));
   await page.getByTestId('settings-btn').click();
   await expect(page.getByTestId('settings-nations')).toHaveValue('24');
-  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu').click()]);
+  // The main menu asks first (R156).
+  await page.getByTestId('settings-menu').click();
+  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu-yes').click()]);
   await expect(page.getByTestId('title-save')).toContainText('Random world');
   await Promise.all([page.waitForURL(/continue=1/), page.getByTestId('title-continue').click()]);
   for (const p of ['scenario=random', 'seed=7', 'nations=24']) expect(page.url()).toContain(p);

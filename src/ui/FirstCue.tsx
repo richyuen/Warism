@@ -28,7 +28,7 @@ function wanted(): boolean {
  * of counters with nothing to say what can be done. Three lines under the clock, once: closed by its button or by
  * the first Resume, and not shown again. It takes no click but on its button: the map under it is the map.
  */
-export function FirstCue({ paused }: { paused: boolean }) {
+export function FirstCue({ paused, phone = false }: { paused: boolean; /** A phone's words: tap and pinch, not click and scroll (R156). */ phone?: boolean }) {
   const [shown, setShown] = useState(wanted);
   const close = (): void => {
     setShown(false);
@@ -48,8 +48,8 @@ export function FirstCue({ paused }: { paused: boolean }) {
     <aside class="first-cue" data-testid="first-cue" role="note">
       <ul>
         <li>{t('cue.resume')}</li>
-        <li>{t('cue.nation')}</li>
-        <li>{t('cue.zoom')}</li>
+        <li>{t(phone ? 'cue.nation.touch' : 'cue.nation')}</li>
+        <li>{t(phone ? 'cue.zoom.touch' : 'cue.zoom')}</li>
       </ul>
       <button type="button" class="first-cue-close" data-testid="first-cue-close" title={t('cue.close')} onClick={close}>
         {t('cue.gotIt')}

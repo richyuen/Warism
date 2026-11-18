@@ -2102,7 +2102,8 @@ builds).
 - **Settings** (`src/ui/SettingsPanel.tsx`, `src/app/settings.ts`, kept in `localStorage`): UI size
   (`UI_SCALES` 85–130 %), unit size (`UNIT_SCALES` 50–200 %), unit look (balls or classic, §8.2), volume
   (`VOLUMES`, 0.5) and mute, pause on a nuclear burst (on); Screenshot (or F2: the map with its overlays,
-  a PNG); Main menu (autosaves, then `/`); the seed and the new-game form.
+  a PNG); Main menu (asks "Save this game and leave for the main menu?", Leave or Stay, R156; then autosaves and goes
+  to `/`); the seed and the new-game form.
 - **The least view:** the game is laid out for `LEAST_VIEW_REM` (64 rem); a UI size the view is too narrow
   for is disabled and the largest that fits is used (`appliedUiScale`, again on resize), the choice kept;
   85 % below that. The bottom bar wraps what does not fit; the History and Relations panels take

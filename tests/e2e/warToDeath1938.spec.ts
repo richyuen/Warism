@@ -27,4 +27,19 @@ test('a war banner says which side fights to the death and why the war goes on (
   const poland = await titleOf('Poland');
   expect(poland).not.toContain('to the death');
   await expect(page.locator('[data-testid="war-banner"][data-death="1"]')).toHaveCount(2);
+
+  // R156 (critic run 76): on a phone there is no hover. The two are marked on their banners; opened, each says it in words.
+  await page.setViewportSize({ width: 390, height: 844 });
+  // Closed, the row shows two and "+n" (one may be behind it): each to the death on the row has its mark.
+  await page.waitForTimeout(500);
+  const onRow = await page.locator('[data-testid="war-banner"][data-death="1"]').count();
+  expect(onRow).toBeGreaterThan(0);
+  await expect(page.locator('[data-testid="war-banner"][data-death="1"] [data-testid="war-death"]')).toHaveCount(onRow);
+  await expect(page.getByTestId('war-death-line')).toHaveCount(0);
+  await page.getByTestId('war-more').click();
+  await expect(page.getByTestId('war-death')).toHaveCount(2);
+  const lines = await page.getByTestId('war-death-line').allInnerTexts();
+  expect(lines).toHaveLength(2);
+  expect(lines.join(' | ')).toContain(`China fights to the death: ${ENDS}`);
+  for (const line of await page.getByTestId('war-death-line').all()) await expect(line).toBeVisible();
 });

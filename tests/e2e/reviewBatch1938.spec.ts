@@ -179,6 +179,11 @@ test('a phone: the ticker gives way to the opened banners; the first cue stands 
     const b = (await page.getByTestId(toggle).boundingBox())!;
     expect(cue.y, `the cue under ${toggle}`).toBeGreaterThanOrEqual(b.y + b.height);
   }
+  // A phone's words (R156, critic run 75-76's phone nits): tap and pinch, not click and scroll.
+  const words = await page.getByTestId('first-cue').innerText();
+  expect(words).toContain('Tap a nation');
+  expect(words).toContain('Pinch to zoom');
+  expect(words).not.toMatch(/\bClick\b|\bScroll\b/);
   await page.getByTestId('first-cue-close').click();
   const pairs = [['GER', 'POL'], ['ITA', 'YUG'], ['BUL', 'ALB'], ['SOV', 'FIN']].map(([a, d]) => [id(a!), id(d!)] as const);
   await page.evaluate((pairs) => {
@@ -188,7 +193,18 @@ test('a phone: the ticker gives way to the opened banners; the first cue stands 
   await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId('ticker')).toBeVisible();
   await page.getByTestId('war-more').click();
-  await expect(page.getByTestId('ticker')).toBeHidden();
+  // Opened, the banners stand on none of the ticker's rows (R73-N6): R126 hid the ticker; R156 (critic run 76: the news
+  // gone while they were open) stands it above them.
+  await expect(page.getByTestId('ticker')).toBeVisible();
+  await page.waitForTimeout(300);
+  const boxes = async (id: string): Promise<{ x: number; y: number; w: number; h: number }[]> =>
+    page.evaluate((id) => [...document.querySelectorAll(`[data-testid=${id}]`)].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0).map((r) => ({ x: r.x, y: r.y, w: r.width, h: r.height })), id);
+  const rows = await boxes('ticker-row');
+  const banners = await boxes('war-banner');
+  expect(banners.length).toBeGreaterThan(2);
+  const over = rows.filter((r) => banners.some((b) => r.x < b.x + b.w && b.x < r.x + r.w && r.y < b.y + b.h && b.y < r.y + r.h));
+  expect(over, 'ticker rows under the opened banners').toEqual([]);
+  for (const r of rows) expect(r.y, 'a ticker row on the screen').toBeGreaterThanOrEqual(0);
   await page.getByTestId('war-more').click();
   await expect(page.getByTestId('ticker')).toBeVisible();
 });

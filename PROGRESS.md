@@ -213,3 +213,11 @@
 - 54425, 54426, 55424, 59421 (near-equal pairs: best utility 0.30-0.49 against 0.5 after ten years), 59423 (R139's lift:
   its army cannot reach its transports), 55404 (its target across the sea, dearer than its margin). Kept by ADR, as the
   AT allows; RESTLESS's cap and transports moved to a port the army reaches are named as items if wanted.
+
+## 2026-11-18 — R156: the small things of run 76
+
+- A track row whose note is a bare place says what happened ("Japan occupies Northern Malaya").
+- A war to the death has ☠ on its banner and, opened, its line in words: a phone has no hover.
+- On a phone the ticker stands above the opened banners (R126 hid it); the first cue says tap and pinch; Settings'
+  main menu asks first. Each a case in a spec (37 of the specs touched green on both projects).
+- `npm run test:sweep` after R154: 23 of 23.

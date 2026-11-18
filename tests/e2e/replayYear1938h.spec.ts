@@ -61,7 +61,9 @@ test('a start that cannot be loaded is told by its year, and the saved game keep
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.worker.value !== null, null, { timeout: 60_000 });
   await page.evaluate(() => window.__warsim!.sim.step(24));
   await page.getByTestId('settings-btn').click();
-  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu').click()]);
+  // The main menu asks first (R156).
+  await page.getByTestId('settings-menu').click();
+  await Promise.all([page.waitForURL((u) => u.search === ''), page.getByTestId('settings-menu-yes').click()]);
   await expect(page.getByTestId('title-continue')).toBeVisible();
   // 1960 in the index, its file missing (a 404).
   await page.route('**/data/scenarios/1938h/start/years.json', (r) =>
