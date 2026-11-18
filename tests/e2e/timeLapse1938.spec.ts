@@ -36,6 +36,8 @@ for (const seed of [1938, 7]) {
     const steps = Number(await bar.getAttribute('data-steps'));
     expect(Number(await bar.getAttribute('data-step'))).toBe(steps);
     expect(await page.evaluate(() => window.__warsim!.view!.timeLapseOn)).toBe(true);
+    // Where the record begins (R151): this game's first month.
+    await expect(page.getByTestId('time-lapse-from')).toHaveText(/^from \w+ 1938$/);
 
     // At each 1 January the map is the one the page had then.
     for (const [i, t] of jan1.entries()) {

@@ -183,3 +183,8 @@
 - `director.go` flies as History's rows do (`showPlaceClear`); a place is seen only where no panel covers it.
 - `c76_director.mjs 59951 100` under History: desk 45 of 45 seen, none covered (53 of 56 covered); phone none covered,
   1 of 45 seen: the panel leaves the phone almost no map, and the director no longer calls a hidden place seen.
+
+## 2026-11-18 — R151: the time-lapse says where its record begins (R76-N4)
+
+- The plate shows "from <month year>", the record's first month; History's hint no longer says "from the start". On a
+  save made before R143 (`critic/c75_seed7019_y20.bin`) the plate reads "from January 1958".

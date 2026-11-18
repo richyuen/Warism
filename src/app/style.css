@@ -2872,6 +2872,12 @@ button.unit-icon.on {
   color: var(--ui-text, #f3e3b5);
   pointer-events: auto;
 }
+.time-lapse-from {
+  flex: none;
+  font-size: 0.8em;
+  opacity: 0.8;
+  white-space: nowrap;
+}
 .time-lapse-slider {
   flex: 1 1 auto;
   min-width: 0;

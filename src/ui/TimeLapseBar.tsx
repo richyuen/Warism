@@ -46,11 +46,16 @@ export function TimeLapseBar({ player, step, startDay, playing, setPlaying, onSe
     return () => cancelAnimationFrame(raf);
   }, [playing]);
   const d = dateOfTick(startDay, player.data.ticks[step] ?? 0);
+  // Where the record begins (R151, critic run 76's R76-N4): the game's start, or the load of a save made before R143.
+  const first = dateOfTick(startDay, player.data.ticks[0] ?? 0);
   return (
     <div class="time-lapse" data-testid="time-lapse" data-step={step} data-steps={player.steps}>
       <button type="button" class="bar-btn" data-testid="time-lapse-play" aria-pressed={playing} onClick={() => setPlaying(!playing)}>
         {playing ? t('timeLapse.pause') : t('timeLapse.play')}
       </button>
+      <span class="time-lapse-from" data-testid="time-lapse-from" title={t('timeLapse.fromHint')}>
+        {t('timeLapse.from', { date: `${t(`month.${first.month}` as MessageKey)} ${first.year}` })}
+      </span>
       <input
         type="range"
         class="time-lapse-slider"
