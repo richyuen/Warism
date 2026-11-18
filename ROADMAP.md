@@ -47,7 +47,7 @@ Rules:
   its place"; the ticker's rows do, `PLACE_VIEW_KM`). AT: a Playwright spec, every History kind with a place (a
   battle, an annexation, a strike, a capital, a revolt) on two seeds, at 1600 × 900 and 390 × 844: a click puts the
   place in the view; a row with no place is not offered as a link.
-  COMMIT (ADR-1121): `historyPlace` over `HISTORY_PLACED` (each kind of the log placed or not, `historyPlace.test.ts`; an
+  eb8b0030 (ADR-1121): `historyPlace` over `HISTORY_PLACED` (each kind of the log placed or not, `historyPlace.test.ts`; an
   annexation at its target's capital), `MapView.showPlaceClear`. `historyPlace1938.spec.ts`, seeds 1938 and 7, at 1600 x 900
   and 390 x 844: a battle, an annexation, a strike, a capital taken and a revolt each under the map's canvas after the
   click, the whole list too (the panel closing on the phone); no link on a war declared; `docs/evidence/R141/`.
