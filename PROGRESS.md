@@ -243,3 +243,9 @@
 
 - From one saved state every bare opening of HEAD is declared the same with R147 off; on nine new seeds the bare share
   is 10.6 % with it and 9.2 % without. Kept, for the user's review: bare wars across the sea are their own item if wanted.
+
+## 2026-11-18 — R161: a still banner yields to a war in battle (ADR-1131)
+
+- The quiet banner-days with a war in battle behind "+n" were wars fought in their ten days but still for days. A war
+  with no battle for three days now gives its place: 57901 8, 16, 10 (bar each under 44); 58901 9, 62901 12.
+- With it, R156's death line kept to its banner's width (it stood the opened banners three rows deep; `warBannerRows1938`).

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { NationStat, WarStat } from '../../src/shared/protocol';
-import { bannerOrder, heldRow, HOLD_TICKS } from '../../src/ui/bannerOrder';
+import { bannerOrder, heldRow, HOLD_TICKS, STILL_TICKS } from '../../src/ui/bannerOrder';
 import type { World } from '../../src/sim/world';
 import { FOUGHT_TICKS, WarsFought } from '../../src/worker/warsFought';
 
@@ -86,6 +86,23 @@ describe('heldRow: a place kept for some days once taken (ROADMAP R132)', () => 
     // Both quiet, d larger: c held, as R132.
     row = heldRow([a, b, quietD, quietC], 3, 10, row, 0);
     expect(ids(row), 'both quiet: c held').toEqual([1, 2, 3]);
+  });
+
+  it('a war fought in its ten days but still for three gives its place to one fighting now; not before, nor the played nation\'s (R161)', () => {
+    const row = heldRow([a, b, c, d], 3, 0, [], 0);
+    const t = 5 * 24;
+    // c fought (its battle 4 days ago), not fighting now; d fighting behind "+n".
+    const stillC = { ...c, battle: false, fought: true, lastBattle: t - STILL_TICKS - 1 };
+    const fightD = { ...d, lastBattle: t };
+    expect(ids(heldRow([a, b, stillC, fightD], 3, t, row, 0)), 'c still: d in its slot').toEqual([1, 2, 4]);
+    // c's battle 2 days ago: held, as R132.
+    expect(ids(heldRow([a, b, { ...stillC, lastBattle: t - STILL_TICKS + 1 }, fightD], 3, t, row, 0)), 'c lately fought: held').toEqual([1, 2, 3]);
+    // d not fighting now: c held.
+    expect(ids(heldRow([a, b, stillC, { ...fightD, battle: false }], 3, t, row, 0)), 'none fighting behind: c held').toEqual([1, 2, 3]);
+    // The played nation's war is not given up.
+    const m = { ...war(6, true), battle: false, lastBattle: 0 };
+    const mine = heldRow([m, a, b, d], 3, 0, [], 99);
+    expect(ids(heldRow([m, a, b, fightD], 3, t, mine, 99)), "the played nation's still war kept").toContain(6);
   });
 
   it("each war in the slot it had (the banner under a resting cursor stays its war's); a newcomer in a slot one left", () => {

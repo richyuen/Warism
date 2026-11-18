@@ -37,4 +37,9 @@ export class WarsFought {
     }
     return out;
   }
+
+  /** The tick `id` was last seen with a battle, or undefined (R161). */
+  lastOf(id: number): number | undefined {
+    return this.last.get(id);
+  }
 }

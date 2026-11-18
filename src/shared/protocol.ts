@@ -885,6 +885,8 @@ export interface WarStat {
    * banners' order (ROADMAP R132, `WarsFought`).
    */
   fought: boolean;
+  /** The tick of its last battle the worker saw (R161), absent for none: a still war on the row yields to one fighting. */
+  lastBattle?: number;
   /** Whether each side fights to the death (PLAN 7.4f15: God Mode's toggle shows it). */
   toDeath: [boolean, boolean];
   /** Each side's exhaustion (PLAN 7.175c: whether an offer of peace would be accepted, `peaceVerdict`). */

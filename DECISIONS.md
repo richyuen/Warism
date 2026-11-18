@@ -5,6 +5,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1131 · 2026-11-18 · accepted · A banner still for three days yields to a war in battle (ROADMAP R161)
+
+- **The case** (critic run 77, R132's bar): `bannerRank 57901 150`, banner-days of a war with no battle on the row while
+  one with a battle stood behind "+n": 51, 33, 42 (the bar each under 44). A copy of the probe that reads `fought`
+  (`.cache/r161_br.mjs`): all 33 of a run were wars fought in their ten days but not that hour; R148 yields only a
+  war not fought at all, and the order among the fought is by size.
+- **Decision:** the worker sends each war's last battle (`WarStat.lastBattle`, from `WarsFought`); in `heldRow` a war
+  on the row with no battle for `STILL_TICKS` (3 days), not the played nation's, gives its place to one in battle now
+  behind "+n" (the lowest still first, the waiting by the order, in its slot), held or not. Three days: a war that
+  fights in bursts a day or two apart keeps its place.
+- **Measured:** 57901 three runs 8, 16, 10; 58901 9 (run 77: 45); 62901 12 (33). The days the row's set changed 15–16
+  of 149 on 57901 (16 before), 10 on 58901: no more churn.
+
 ## ADR-1130 · 2026-11-18 · accepted (for the user's review) · R147 kept: its bare openings are the course of the world, not its choice (ROADMAP R160)
 
 - **The case** (critic run 77, R77-N3): on run 76's nine warOpening seeds, three years, HEAD has 25 openings of 256 with

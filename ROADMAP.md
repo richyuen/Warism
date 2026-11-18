@@ -175,7 +175,13 @@ RELEASES step 2 (ADR-1005): the blocking issue first, then every non-blocking on
   f11b6406 (ADR-1130, no code; for the user's review): kept. From one saved state all 22 of HEAD's bare openings are
   declared the same with R147 off (`.cache/r160_ab.ts`); on nine new seeds 10.6 % with it, 9.2 % without (the
   defender ahead 14.4 %, 13.4 %), neither under 6 %. The rise on run 76's seeds is the world's course, not the rule.
-- [ ] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
+- [x] R161 **R132's bar on 57901.** `bannerRank 57901 150`: 51, 33, 42. AT: three runs each under 44.
+  COMMIT (ADR-1131): a war with no battle for 3 days yields its place to one in battle now behind "+n" (its last
+  battle sent by the worker). `bannerRank 57901 150` (a copy reading `fought`, `.cache/r161_br.mjs`): 8, 16, 10;
+  58901 9, 62901 12; the row's set changes as before. `warsFought.test.ts`: a case, red without the rule.
+  With it, a fix of R156 the gate missed (no spec of it changed): its death line widened an opened banner to a row,
+  three rows deep at 1400 × 800 (`warBannerRows1938` red); the line is now as wide as its banner. The 13 specs that
+  read the banners green on both projects.
 - [x] R162 **Small things:** a banner "Nationalist Spain ⚔ Portugal +2 +32 ☠" (the allies' count and the score side by
   side, both with a plus). AT: a case in a spec. `slowClick` (0 of 90) stays as ADR-914; `dirHand`'s phone History act
   not judged by the critic, not filed.

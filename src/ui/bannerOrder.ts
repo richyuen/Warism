@@ -20,6 +20,13 @@ const isMine = (w: WarStat, player: number): number => (player !== 0 && (w.attac
  */
 export const HOLD_TICKS = 20 * 24;
 
+/**
+ * Three days of hours: a war on the row with no battle in them, not the played nation's, gives its place to a war with a
+ * battle now behind "+n", held or not (R161, critic run 77: on 57901 33–51 banner-days of wars fought in their ten days
+ * but still for days, while one fighting waited).
+ */
+export const STILL_TICKS = 3 * 24;
+
 /** A war on the row, and the tick it took its place; `contested` while there were more wars than the row shows. */
 export interface Held {
   id: number;
@@ -55,6 +62,16 @@ export function heldRow(ranked: readonly WarStat[], shown: number, tick: number,
   const young = [...since].filter(([id, at]) => !row.has(id) && tick - at < HOLD_TICKS && (!foughtWaits || ranked[rank.get(id)!]!.fought)).sort((a, b) => rank.get(a[0])! - rank.get(b[0])!);
   for (const [id] of young) if (row.size < shown) row.add(id);
   for (const w of ranked) if (row.size < shown) row.add(w.id);
+  // A still war gives way to one fighting now (R161): the lowest of the still first, the waiting by the order.
+  const waiting = ranked.filter((w) => w.battle && !row.has(w.id));
+  const isStill = (w: WarStat): boolean => !w.battle && !isMine(w, player) && (w.lastBattle === undefined || tick - w.lastBattle > STILL_TICKS);
+  const still = [...row].filter((id) => isStill(ranked[rank.get(id)!]!)).sort((x, y) => rank.get(y)! - rank.get(x)!);
+  for (const id of still) {
+    const w = waiting.shift();
+    if (!w) break;
+    row.delete(id);
+    row.add(w.id);
+  }
   const byRank = (x: number, y: number): number => rank.get(x)! - rank.get(y)!;
   const mine = [...row].filter((id) => isMine(ranked[rank.get(id)!]!, player)).sort(byRank);
   const fresh = [...row].filter((id) => !mine.includes(id) && !since.has(id)).sort(byRank);

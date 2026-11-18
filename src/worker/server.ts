@@ -1043,7 +1043,7 @@ export class SimServer {
     const fighting = warsWithBattle(world);
     const fought = this.warsFought.of(world, world.wars.list.map((w) => w.id), fighting);
     for (const war of world.wars.list) {
-      wars.push({ id: war.id, attackers: [...war.sides[0]], defenders: [...war.sides[1]], score: war.score, startTick: war.startTick, battle: fighting.has(war.id), fought: fought.has(war.id), toDeath: [war.fightToDeath[0], war.fightToDeath[1]], exhaustion: [war.exhaustion[0], war.exhaustion[1]] });
+      wars.push({ id: war.id, attackers: [...war.sides[0]], defenders: [...war.sides[1]], score: war.score, startTick: war.startTick, battle: fighting.has(war.id), fought: fought.has(war.id), ...lastBattleOf(this.warsFought, war.id), toDeath: [war.fightToDeath[0], war.fightToDeath[1]], exhaustion: [war.exhaustion[0], war.exhaustion[1]] });
       for (const [a, b] of [[war.sides[0], war.sides[1]], [war.sides[1], war.sides[0]]] as const) {
         for (const x of a) {
           const set = enemies.get(x) ?? new Set<number>();
@@ -2400,4 +2400,10 @@ function trackNext(world: World): { trackNext?: TrackNext } {
   }
   const [first, ...ahead] = named;
   return first ? { trackNext: { ...first, ahead } } : {};
+}
+
+/** A war's last battle for its stats (R161), the field absent when none was seen. */
+function lastBattleOf(f: WarsFought, id: number): { lastBattle?: number } {
+  const at = f.lastOf(id);
+  return at === undefined ? {} : { lastBattle: at };
 }

@@ -2903,6 +2903,10 @@ button.unit-icon.on {
 }
 .war-death-line {
   display: block;
+  /* As wide as the banner, not wider: the line wraps under its names (a banner a row wide stood the opened banners
+     three rows deep, warBannerRows1938). */
+  width: 0;
+  min-width: 100%;
   font-size: 0.75em;
   line-height: 1.25;
   white-space: normal;
