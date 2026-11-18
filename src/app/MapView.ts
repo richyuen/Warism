@@ -1768,13 +1768,17 @@ export class MapView {
   onFrame: ((now: number) => void) | null = null;
 
   /** Whether the world point (x, y) is in the view, `inset` CSS px inside its edges (the nearer way round a looping map). */
-  inView(x: number, y: number, inset = 0): boolean {
+  inView(x: number, y: number, inset = 0, uncovered = false): boolean {
     const c = this.controller.cam;
     const [vw, vh] = [this.canvas.clientWidth, this.canvas.clientHeight];
     let dx = x - c.cx;
     if (this.geo.wrapX) dx -= this.geo.w * Math.round(dx / this.geo.w);
     const [sx, sy] = [dx * c.scale + vw / 2, (y - c.cy) * c.scale + vh / 2];
-    return sx >= inset && sy >= inset && sx <= vw - inset && sy <= vh - inset;
+    if (!(sx >= inset && sy >= inset && sx <= vw - inset && sy <= vh - inset)) return false;
+    // `uncovered`: no panel over the place (R150, critic run 76's R76-N3: the director counted seen what History hid).
+    if (!uncovered) return true;
+    const at = this.canvas.getBoundingClientRect();
+    return document.elementFromPoint(at.left + sx, at.top + sy) === this.canvas;
   }
 
   /**

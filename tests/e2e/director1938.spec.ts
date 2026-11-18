@@ -90,5 +90,25 @@ for (const seed of [1938, 7]) {
       await click();
       await expect(director, `off after a ${name}`).toHaveAttribute('aria-pressed', 'false');
     }
+
+    // R150 (critic run 76, R76-N3): with History open, the director's camera puts its place clear of the panel, and a place
+    // under the panel is not in view for it.
+    await page.evaluate(() => {
+      if (!window.__warsim!.hud.showHistory.value) window.__warsim!.hud.toggleHistory();
+    });
+    await expect(page.getByTestId('history-panel')).toBeVisible();
+    const [px, py] = [1100, 330]; // western Russia
+    await page.evaluate(([x, y]) => window.__warsim!.hud.director.go(x!, y!), [px, py]);
+    await page.waitForTimeout(2500);
+    const clear = await page.evaluate(([x, y]) => {
+      const v = window.__warsim!.view!;
+      const panel = document.querySelector('[data-testid=history-panel]')!.getBoundingClientRect();
+      const canvas = ([...document.querySelectorAll('canvas')].find((e) => e.clientWidth === window.innerWidth) ?? document.querySelector('canvas')!).getBoundingClientRect();
+      // A point under the panel, as the view has it.
+      const under = v.camera;
+      const [ux, uy] = [under.cx + (panel.left + panel.width / 2 - canvas.left - canvas.width / 2) / under.scale, under.cy + (panel.top + panel.height / 2 - canvas.top - canvas.height / 2) / under.scale];
+      return { flown: v.inView(x!, y!, 8, true), under: [v.inView(ux, uy, 0), v.inView(ux, uy, 0, true)] };
+    }, [px, py]);
+    expect(clear, 'the place flown to clear of History; one under it in view but covered').toEqual({ flown: true, under: [true, false] });
   });
 }

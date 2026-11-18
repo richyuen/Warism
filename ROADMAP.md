@@ -109,8 +109,11 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   ca5bd35d: hover and pick read the month's map; Space is the time-lapse's while open (`hud.lapsePlaying`); Escape
   closes it last. `c76_tlMore cell 59943 700`: the panel Norway's; `c76_timeLapse 59941 400 head`: `ranUnderLapse` 0
   (96), Escape `lapseOn` false. `timeLapse1938.spec.ts` the three.
-- [ ] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
+- [x] R150 **R76-N3: the director flies under an open panel and counts it seen.** AT: `PANEL=history
   c76_director.mjs 59951 100 head 120`, `seenCovered` 0, on a desk and a phone.
+  COMMIT: the director flies clear of the panels (`showPlaceClear`) and sees a place only uncovered. The probe: desk 45
+  of 45 seen, `seenCovered` 0 (53 of 56 covered before); phone `seenCovered` 0, 1 of 45 seen (History covers the phone).
+  `director1938.spec.ts`'s case.
 - [ ] R151 **R76-N4: a save from before R143 plays only the months since its load** under a title that says "from the
   start". AT: `c76_tlMore.mjs old critic/c75_seed7019_y20.bin 40` shows the record's first month on the plate.
 - [ ] R152 **R76-N6: two land heroes leap by the wheel in the world of 56901.** AT: `WHEEL=1 c76_heroPop.mjs` on 56901

@@ -2120,9 +2120,10 @@ builds).
 - **Director** (`src/app/director.ts`, R142 [ADR-1122]): a switch drawn as a camera; on, the camera goes by itself to a new war (the
   ticker's place: the capital of the nation it was declared on), a Major Battle, a capital taken and a nuclear strike
   (`DIRECTOR_KINDS`, the worker's `nationStats.director` rows since its last message), as the ticker's row flies
-  (`showPlace`). No cut within DIRECTOR_GAP_MS (4.5 s) of the last nor DIRECTOR_HOLD_MS (2.5 s) of the camera standing;
+  (`showPlaceClear`, clear of the panels open, as History's rows fly; `showPlace` when none is clear; R150). No cut within DIRECTOR_GAP_MS (4.5 s) of the last nor DIRECTOR_HOLD_MS (2.5 s) of the camera standing;
   a strike before what waits, the rest in order, one older than DIRECTOR_STALE_MS (45 s) passed over; a shot that
-  waits is seen, not flown to, when it stands DIRECTOR_INSET_PX inside a view at most DIRECTOR_SEEN_KM (3000) across.
+  waits is seen, not flown to, when it stands DIRECTOR_INSET_PX inside a view at most DIRECTOR_SEEN_KM (3000) across,
+  no panel over it (`inView`'s `uncovered`, R150).
   The player's wheel, press on the map, double click or camera key (`CameraController.onTaken`) turns it off; so does
   each of the page's links to a place or a fight (a ticker row, a war banner, History's rows, an alert, a formation's
   fight: the hud's `onShowPlace`, `onShowPlaceClear`, `onShowBattle`, `onShowSeaBattle`; R146).

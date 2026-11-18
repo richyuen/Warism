@@ -177,3 +177,9 @@
 - The tooltip and a click name the owner of the month on show; Space plays and pauses the time-lapse, not the game
   under it; Escape closes the plate, after a panel opened over it. The critic's probes: Norway's panel, 0 hours run
   (96), the plate closed by Escape.
+
+## 2026-11-18 — R150: the director flies clear of an open panel and counts only what it shows (R76-N3)
+
+- `director.go` flies as History's rows do (`showPlaceClear`); a place is seen only where no panel covers it.
+- `c76_director.mjs 59951 100` under History: desk 45 of 45 seen, none covered (53 of 56 covered); phone none covered,
+  1 of 45 seen: the panel leaves the phone almost no map, and the director no longer calls a hidden place seen.

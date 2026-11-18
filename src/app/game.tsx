@@ -140,8 +140,11 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     // The borders' time-lapse (ROADMAP R143b): its map on the view while it is open.
     hud.onTimeLapseMap = (map, colors) => view.showTimeLapse(map, colors);
     // The director's camera (ROADMAP R142): it flies as the ticker's row does, each frame; the player's hand turns it off.
-    hud.director.go = (x, y) => view.showPlace(x, y);
-    hud.director.inView = (x, y, inset) => view.inView(x, y, inset);
+    // Clear of the panels open, as History's rows fly (R141); seen only where no panel covers it (R150, R76-N3).
+    hud.director.go = (x, y) => {
+      if (!view.showPlaceClear(x, y)) view.showPlace(x, y);
+    };
+    hud.director.inView = (x, y, inset) => view.inView(x, y, inset, true);
     hud.director.moving = () => view.controller.animating;
     hud.director.kmAcross = () => (view.metresPerPx * window.innerWidth) / 1000;
     view.onFrame = (now) => hud.director.update(now);
