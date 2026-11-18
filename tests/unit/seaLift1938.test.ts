@@ -56,6 +56,15 @@ describe('a war across the sea needs a lift (ROADMAP R139)', () => {
     LIFT_PROBE.off = true;
     expect(firstNotOutnumbered(w, JAP, pick, across)).toBe(SIA);
     LIFT_PROBE.off = false;
+    // R147 (critic run 76, R76-N5): Siam refused, its next across the sea is refused too, though its sides would touch
+    // Japan's by land through their allies (Iraq, 9,700 km away); as before R147 (`far`), it was taken.
+    const IRQ = id('IRQ');
+    expect(noLift(w, JAP, callSides(w, JAP, IRQ))).toBe(false);
+    const next = (refused: ReadonlySet<number>): number => (!refused.has(SIA) ? SIA : refused.has(IRQ) ? 0 : IRQ);
+    expect(firstNotOutnumbered(w, JAP, next, across)).toBe(0);
+    LIFT_PROBE.far = true;
+    expect(firstNotOutnumbered(w, JAP, next, across)).toBe(IRQ);
+    LIFT_PROBE.far = false;
 
     // Formations at Tokyo, on the home islands where its transports stand at port, under way: not free.
     const [tx, ty] = [nc.capitalX[JAP]!, nc.capitalY[JAP]!];

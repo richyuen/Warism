@@ -5,6 +5,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1126 · 2026-11-18 · accepted · No target across the sea after one refused for want of a lift (ROADMAP R147)
+
+- **The case** (critic run 76, R76-N5): first-60-day declarations over 6,000 km, 2 of 50 on 39821-39839 and 4 of 58 on
+  55821-55839 (0 and 0 in run 75): Japan on Iraq, Iran and Finland. With R139's lift off Japan's first war on 39829,
+  55821 and 39837 is Siam; R139 refuses it (its army on its front), and `firstNotOutnumbered` went down Japan's list to
+  a target whose sides touch Japan's somewhere by land through their allies, so asked no lift.
+- **Decision.** Once a target across the sea is refused for want of a lift, every later target across the sea of that
+  pick is refused too; a land neighbour at home may still be taken. `LIFT_PROBE.far` (`warOpening --lift-far`): as
+  before.
+- **Measured.** `c76_firstdecl.ts 60`: 0 of 49 and 0 of 55 over 6,000 km (the bar 1). `warOpening.ts` three years on
+  twelve seeds (58211-58221, 61001-61011), the rule on and off: wars that began 572 and 558; with no cell held at day
+  30, 40 of 388 (10.3 %) and 24 of 393 (6.1 %), on R139's AT five 8.9 % and 4.8 % (its bar 10 %); ADR-1094's no man
+  near 12.3 % and 8.1 % (bar 15 %), the defender ahead 13.0 % and 10.8 % (bar 15 %). The rise is +1.3 bare wars a seed
+  (paired se 0.5), in wars the rule does not touch (Italy on Yemen, Nationalist Spain, Saudi Arabia): Japan's far wars
+  were fought on land against their allies (58211: Japan held 372 cells of the war on Iraq by day 30), and other wars
+  follow from Japan's. Every bar holds; the rise is the critic's to judge. Pin unmoved (1aabdc7e).
+
+---
+
 ## ADR-1125 · 2026-11-18 · accepted · The lift asked of the war's defender; a puppet's revolt out of its checker (ROADMAP R145)
 
 - **The case** (critic run 76, R76-B1): `diploInvariants` broke `lift` on 33501 (Hungary on Italy, Lithuania on Germany)

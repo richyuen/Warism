@@ -49,7 +49,7 @@ import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 import { beginMassing, massStep, unprepared } from './massing';
-import { noLift } from './seaLift';
+import { LIFT_PROBE, noLift } from './seaLift';
 
 export const STAGGER = 7;
 /** Nations below this aggression never start wars (they still defend, ally and make peace). */
@@ -524,8 +524,20 @@ export function outnumbered(world: World, n: number, t: number): boolean {
  */
 export function firstNotOutnumbered(world: World, n: number, pick: (refused: ReadonlySet<number>) => number, overSea: (t: number) => boolean = () => false): number {
   const refused = new Set<number>();
+  // R147 (critic run 76, R76-N5): once a target across the sea is refused for want of a lift, so is every one after it
+  // across the sea. Japan, refused Siam, went down its list to Iraq, Iran or Finland, whose sides touched its own
+  // somewhere by land through their allies, 9,000 km away.
+  let liftless = false;
+  const refuse = (t: number): boolean => {
+    if (!PILE_PROBE.off && outnumbered(world, n, t)) return true;
+    if (!overSea(t)) return false;
+    if (liftless && !LIFT_PROBE.far) return true;
+    const no = noLift(world, n, callSides(world, n, t));
+    liftless ||= no;
+    return no;
+  };
   let t = pick(refused);
-  while (t !== 0 && ((!PILE_PROBE.off && outnumbered(world, n, t)) || (overSea(t) && noLift(world, n, callSides(world, n, t))))) {
+  while (t !== 0 && refuse(t)) {
     refused.add(t);
     t = pick(refused);
   }

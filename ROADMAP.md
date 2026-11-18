@@ -94,8 +94,11 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   AT: `c76_dirHand.mjs 59955 120`, the three acts `onLater: false` or `cutsAfterAct: 0`.
   b299ab6d: the hud's place and fight links stop the director first (`game.tsx`). `c76_dirHand.mjs 59955 120`: all six
   acts `onLater: false`, `cutsAfterAct: 0` (ticker, banner, History 1, 1, 2 cuts before). `director1938.spec.ts` clicks the three.
-- [ ] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
+- [x] R147 **R76-N5: Japan's first wars 9,000 km away again.** AT: `c76_firstdecl.ts 60` on 39821–39839 and 55821–55839,
   "over 6000 km" at 1 or fewer each (ADR-1041).
+  COMMIT (ADR-1126): after a target across the sea is refused for want of a lift, none across the sea. `c76_firstdecl`
+  0 of 49 and 0 of 55. R139's bars held on twelve seeds (its AT five 8.9 %, bar 10 %; ADR-1094's 12.3 % and 13.0 %,
+  bar 15 %), though over R147's own off arm (4.8 %). `seaLift1938.test.ts`: Japan's Siam then Iraq.
 - [ ] R148 **R132's bar not held on HEAD: quiet banners behind "+n".** AT: `c76_bannerRank.mjs 57901 150`, three runs
   each under 50 (the user's bar), under 44 for UI's 8.
 - [ ] R149 **R76-N2: the time-lapse is not the month it shows.** The tooltip and click name the owner of now; Space runs

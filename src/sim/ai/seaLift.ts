@@ -25,7 +25,8 @@ import { playerHeld } from './layers';
 import { DEPLOY_RANGE_CELLS } from './operational';
 
 /** A probe's switch (`tools/diag/warOpening.ts --no-lift`): off, a war across the sea is declared as before R139. Never set by the game. */
-export const LIFT_PROBE: { off: boolean } = { off: false };
+/** `off`: no lift asked (R139's A/B); `far`: a target across the sea asked its own lift after one refused (R147's A/B). */
+export const LIFT_PROBE: { off: boolean; far?: boolean } = { off: false };
 
 /**
  * The free men of `n` that may march to a port where a transport group of its stands (the head of the file), and the

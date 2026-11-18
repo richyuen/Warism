@@ -159,3 +159,9 @@
 - A ticker row, a war banner, History's rows, an alert and a formation's fight stop the director before they fly
   (`game.tsx`: the hud's four camera hooks; the director flies by `view.showPlace` itself, not through them).
 - `c76_dirHand.mjs 59955 120`: the six acts all off, 0 cuts after. `director1938.spec.ts` clicks the three, green.
+
+## 2026-11-18 — R147: no target across the sea after one refused for want of a lift (ADR-1126; R76-N5)
+
+- Japan, refused Siam by R139, went down its list to Iraq, Iran or Finland, whose allies touch its side by land.
+- `c76_firstdecl.ts 60`: 0 of 49, 0 of 55 over 6,000 km (2, 4 before). On twelve seeds the wars with nothing held at
+  day 30 rose 6.1 % -> 10.3 % (R139's five 4.8 % -> 8.9 %, its bar 10 %), in wars the rule does not touch; every bar holds.
