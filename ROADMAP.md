@@ -86,7 +86,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
   end (`massing.ts` 277, 286) declare over the sea without asking `noLift`; Hungary on Italy's door not found. AT:
   `diploInvariants.ts 33501 scenario 1825` and `58011 random 3650 --heroes` print 0 broken, and the report's 20 seeds
   stay at 0; the rule kept at each door, or the checker's scope narrowed with an ADR.
-  COMMIT (ADR-1125): the lift asked of the war's defender (a puppet beside brings its overlord from over the sea), in the
+  21958d70 (ADR-1125): the lift asked of the war's defender (a puppet beside brings its overlord from over the sea), in the
   AI's pick and at a massing's end; a revolt's war (a puppet's, or the holder's on a nation a revolt made) out of the
   checker. `diploInvariants` 33501 scenario 1825 and 58011 random 3650 --heroes: 0 broken; the report's other 18: 0.
   Pin unmoved (1aabdc7e).
