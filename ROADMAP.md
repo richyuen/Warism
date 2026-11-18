@@ -139,7 +139,7 @@ is R139's own rule missed at other doors, not one item's fix breaking another, s
 - [x] R156 **Small things:** History rows that are a bare place name; the war-to-the-death title on hover only (a phone
   never sees it); run 75's phone nits (no ticker while the banners are open; "Scroll" and "Click" in the first cue;
   Settings' button to the title asks nothing). AT: each, a case in a spec. `slowClick` (0 of 90) stays as ADR-914.
-  COMMIT: a track row's bare note told by its kind ("Japan occupies Northern Malaya"; `trackText.test.ts`); a war to the
+  f59be4b2: a track row's bare note told by its kind ("Japan occupies Northern Malaya"; `trackText.test.ts`); a war to the
   death marked ☠ on its banner, its line in words when the banners are opened (`warToDeath1938`'s phone case); on a
   phone the ticker stands above the opened banners, not hidden (`reviewBatch1938`, no row under a banner); the first
   cue says tap and pinch on a phone (`reviewBatch1938`); Settings' main menu asks, Stay or Leave (`title.spec.ts`).
