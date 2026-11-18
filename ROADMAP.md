@@ -23,7 +23,7 @@ Rules:
   row green, the ten-year job's longest under 45 min (split over jobs or made cheaper; a longer limit alone is an ADR,
   the user's decision).
   76551f98, 160bbb19 (ADR-1118): the job a matrix of four. Runs 44206444954 (three-way), 44213292258, 44221126695 green
-  in full; the longest ten-year job 38.6, 29.2, 22.9 min. The 11-16 red: `specRefs` §8's bare `chromeCover1938` (b64c242a),
+  in full; the longest ten-year job 38.6, 29.2, 22.9 min; a fourth, 44228789987, green, 29.4 min. The 11-16 red: `specRefs` §8's bare `chromeCover1938` (b64c242a),
   mended by a2b5dca0.
 - [ ] R139 **Wars in which nothing is taken** (run 75's non-blocking 5: 20 of 103 wars with no cell held by either
   side at day 30; BLOCKERS' France's far end and the USA's lift stand near it). Find the cause first on the critic's

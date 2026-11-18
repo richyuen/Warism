@@ -20,3 +20,18 @@
 - Three dispatched runs green in full: 44206444954 (three-way; ten-year jobs 23.0, 28.5, 38.6 min, unit 62 min),
   44213292258 (four-way; 17.3, 18.3, 29.1, 29.2 min), 44221126695 (four-way; 18.7, 20.5, 20.1, 22.9 min; unit 40 min).
   R138 done.
+- A fourth on the four-way split, 44228789987: green, the ten-year jobs 13.3, 18.0, 20.5, 29.4 min.
+
+## 2026-11-18 — R139 read first: the wars with nothing held at day 30 (no commit of a rule)
+
+- The critic's measure (`warOpening.ts`, a war that ran 30 days with no cell held by either side) read off its own
+  `critic/c75_warOpening.json`: 20 of 103, 19 of them between leaders with no land border. On HEAD (8fe68e51), ten
+  seeds (58211, 58213, 58215, 58217, 58219, 58221, 61001, 61003, 61005, 61007; `.cache/r139/base_*`, all seen now):
+  55 of 348 (15.8 %), every one a war across the sea; the opening bars (ADR-1094) 11.1 % with no man near, 10.1 %
+  the defender ahead.
+- Japan on Siam (days 10-73 on five seeds): its army all on its front in China, its landing turns "noArmy" until day
+  28-37. Tried, not kept (R139a, `.cache/r139/r139a.patch`): in a war, a war across the sea only with MASS_SECOND of
+  its men beyond DEPLOY_RANGE_CELLS of its fronts. Japan on Siam gone; on the ten seeds 50 of 327 (15.3 %), on the five
+  not looked at first 16.4 % both ways; the attacker with no man near 14.9 % (bar 15 %). One war removed, not a cause.
+- Next: a table of causes over the 55 (the attacker's wars at the declaration, its plans, days to the first order,
+  aboard and ashore, landings thrown back), before any rule.
