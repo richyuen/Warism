@@ -237,7 +237,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
 - [x] R168 **R79-N1: the random world's banners wrap mid-phrase** ("Orientale & / 1 ⚔ Diffa & / 2" at 1600 × 900).
   AT: `node critic/scripts/c79_rw2.mjs 64965 730` ends with each banner on one line, or a name truncated with its
   count whole; a case in a spec.
-  COMMIT: a side's name on one line, cut short past 11 rem, its "& n" whole (the closed row squeezed three banners and
+  eba1ee3f: a side's name on one line, cut short past 11 rem, its "& n" whole (the closed row squeezed three banners and
   wrapped them). `c79_rw2.mjs 64965 730`: "Kagoshima ⚔ Chukotka Autonomous Okrug & 3 +55" on one line, every banner so;
   `warBannerRows1938`'s case renames the sides to long names: one line closed and opened (red without: 28 px).
 - [ ] R169 **R79-N2: `WebGL: INVALID_VALUE: bufferSubData: buffer overflow` at 2560 × 1440,** 64907 day 500, 30 m/px over
