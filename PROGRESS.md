@@ -382,3 +382,9 @@
   a nation chosen again from the Ranking on a sideways phone gets no panel. UI/UX 7, its third run under the bar; the
   rest 8 (most carried). Batch 49's items fixed on their cases. Filed as Batch 50 (R183–R188); ADR-1136 proposed for
   the user. The loop stops until the user decides.
+
+## 2026-11-19 — R183, R187 (the user's (a), ADR-1136): the phone's war row sized in (a)'s order
+
+- The long names give way down to five letters and the ellipsis, then banners with a long name drop their counts; the
+  clamp is gone. Every long name five letters or more from 320 to 412 px on the critic's cases, the row in its width;
+  a case in `warBannerRows1938` that measures the drawn letters.

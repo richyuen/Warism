@@ -2464,24 +2464,30 @@ button.unit-icon.on {
   .war-banners:not(.opened) .war-score-n {
     display: none;
   }
-  /* A side and a banner no narrower than what they show (R178, critic run 81: shrunk under it, "& 2" stood under the
-     swords): a long name's least is its first letters, one line clamped at a word where it can be ("Soviet…"), so that
-     it and not the swatch or the count gives way. */
+  /* The long names give way, then banners drop their allies' counts, one at a time (R183, ADR-1136 (a); critic run 82,
+     R82-B1: R178's clamp broke inside a word and hid the counts by the row's width alone, "Sovi… & 3" at 375 px, "Que…"
+     at 390): `WarBanners` sizes the names and marks a banner `war-tight`. The counts are still in the banner's title, and
+     opened. */
+  .war-banners:not(.opened) .war-side {
+    overflow: hidden;
+  }
+  /* Sized by `WarBanners` (R183): its banners and their sides as wide as their content, a long name as wide as it is set;
+     measured with nothing shrunk (`war-measuring`). */
+  .war-banners:not(.opened) .war-banner,
+  .war-banners:not(.opened) .war-side {
+    flex-shrink: 0;
+  }
   .war-banners:not(.opened) .war-name:not(.war-name-short) {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    flex: 0 0 auto;
+    min-width: 0;
   }
-  .war-banners:not(.opened) .war-side,
-  .war-banners:not(.opened) .war-banner {
-    min-width: auto;
+  .war-banners.war-measuring .war-name {
+    width: auto !important;
   }
-  /* The row's own width (its left and right are set here): on a row of 350 px or less (a phone 365 px wide or less) the
-     banners' padding is less and the allies' count gives way before a name goes under five letters (ADR-1135 (a); R178:
-     two banners and "+n" overflowed 5 px at 360 and 58 px at 320, "Soviet Union" 4 letters); the count is still in the
-     banner's title, and opened. */
+  .war-banners:not(.opened) .war-tight .war-allies {
+    display: none;
+  }
+  /* On a row of 350 px or less (a phone 365 px wide or less) the banners' padding is less (R178). */
   .war-banners {
     container-type: inline-size;
   }
@@ -2492,9 +2498,6 @@ button.unit-icon.on {
     }
     .war-banners:not(.opened) .war-title {
       gap: 0.2rem;
-    }
-    .war-banners:not(.opened) .war-allies {
-      display: none;
     }
   }
   .war-more-btn {

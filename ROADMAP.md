@@ -369,8 +369,8 @@ bar in runs 80 and 81 (two in a row).
 ## Batch 50 — critic run 82's findings (focused, on 3e560a9c; two blocking issues, one a regression; UI/UX 7)
 
 ADR-829's exit, on two counts: R82-B1 is a regression of R174 by R178, and UI/UX is under its bar in runs 80, 81 and 82.
-ADR-1136 (proposed) waits on the user; no item of the UI/UX dimension is taken until the user decides.
-- [ ] R183 **R82-B1: on a phone the war row cuts a name under five letters while its "& n" stays** (R178 regresses R174 and
+ADR-1136: the user chose (a).
+- [x] R183 **R82-B1: on a phone the war row cuts a name under five letters while its "& n" stays** (R178 regresses R174 and
   ADR-1135 (a)). `c82_nameLetters 68901 400 375x667`: "Sovi… & 3"; 82901 day 400 at 375 × 667 "Sovi… & 3", the row 10 px
   past its width, "+5" cut at the edge; `SCEN=random c81_bannerFit 64965 730 390 844`: "Que…" (Queensland). Cause: the
   count gives way by the row's width alone (≤ 350 px), and `overflow-wrap: anywhere` breaks inside a word. AT: by the
@@ -378,6 +378,17 @@ ADR-1136 (proposed) waits on the user; no item of the UI/UX dimension is taken u
   375x667` and the random 64965 at 390 show every long name with 5 or more letters or whole ("Queen…" or more), read from
   the shots or by a drawn-width check; `c81_bannerFit 82901 400 375 667` no overflow and "+n" in the view; 320, 360, 390
   and 412 as now; a case in `warBannerRows1938` that measures the drawn letters.
+  - Done (COMMIT, ADR-1136 (a)): R178's clamp and its row-width rule out; `WarBanners` sizes the phone's closed row
+    (`sizeRow`): each banner measured as with room; if the row is short the long names give way by what each has to
+    give, down to their first five letters and the ellipsis (its drawn width in the name's font); if not enough, banners
+    drop their counts one at a time, those with a long name first, and the names give way again. Banners and sides do
+    not shrink on that row; a short name is whole. Shots (DPR 2): 68901 day 400 "Soviet Union" whole at 320–375 with
+    its banner's counts gone and "Japan & 2 ⚔ China & 1" kept, "Soviet… & 3" at 384, "Soviet U… & 3" at 390, whole with
+    all counts at 412; 82901 at 375 "Soviet Union ⚔ Japan | France & 11 ⚔ Germany & 2", "+5" in the view; random 64965
+    at 390 "Kagosh… ⚔ Chukotka Auton…" and "Alaska ⚔ Queens…"; 69903 at 360 "Sovie… & 1". `c81_bannerFit`: 0 faults
+    but "allies shown 0" (by design) on 68901 d0/d400, 69903, 82901 from 320 to 412 and opened. The new case in
+    `warBannerRows1938` at 368, 375, 384 and 390 measures the drawn letters (red on R178: "Kagoshima Prefecture" under
+    five letters, the row past its width, "+n" off the screen); the 13 specs on the banners 57/57.
 - [ ] R184 **R82-B2: on a sideways phone the nation whose panel Relations hid, chosen again from the Ranking, shows no
   panel** (R175/R181 unfinished; run 81's build the same). `c82_relRank.mjs 68901 844 390 SOV USA` step 4, and at 667 ×
   375: selected 10, `relationsOver` 10, no panel. Cause: `relationsOver` cleared only when the id changes; the same id
@@ -390,8 +401,10 @@ ADR-1136 (proposed) waits on the user; no item of the UI/UX dimension is taken u
 - [ ] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
   fallback). `c81_goto2 69937 360 740 400 ITA,USA,ENG`: Brussels at (176, 528). AT: the capital's dot and name seen in
   the probe's shots at 360 × 740; a case in a spec.
-- [ ] R187 **At 360 and 375 px a clamped name sits away from its swatch, some clamps end ".."** (`c82nl_82903_d700_375x667`,
+- [x] R187 **At 360 and 375 px a clamped name sits away from its swatch, some clamps end ".."** (`c82nl_82903_d700_375x667`,
   `69903_d700`). AT: the name beside its swatch and one ellipsis, from the shots. (With R183.)
+  - Done (COMMIT, with R183): the clamp is gone; a cut name ends in one "…" by `text-overflow`, its box as wide as set,
+    beside its swatch (`c82nl_82903_d700_375x667_r183`, `c82nl_69903_d700_360x740_r183` shots).
 - [ ] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
   build the same; `c82rr_68901_844x390_SOV_USA_*_4_A_row_tapped.png`). AT: those buttons tappable with the Ranking open
   at 844 × 390 and 667 × 375; a case in a spec.

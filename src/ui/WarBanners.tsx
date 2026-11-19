@@ -18,6 +18,70 @@ export const PHONE_BANNERS = 2;
 export const DESK_BANNERS = 3;
 /** A banner's name of this many letters or fewer is shown whole however narrow the row (R174); a longer one keeps ~5. */
 export const SHORT_NAME = 8;
+const ellipses = new Map<string, number>();
+/** The drawn width of "…" in a font (R183: 0.9 em was too little, "Quee…" drawn for five letters). */
+function ellipsisWidth(font: string): number {
+  let w = ellipses.get(font);
+  if (w === undefined) {
+    const g = document.createElement('canvas').getContext('2d');
+    if (g) g.font = font;
+    w = g ? g.measureText('…').width : 12;
+    ellipses.set(font, w);
+  }
+  return w;
+}
+/** The drawn width of a name's first `n` letters (all of them by default). */
+function lettersWidth(name: HTMLElement, n = Infinity): number {
+  const text = name.firstChild;
+  if (!text) return 0;
+  const range = document.createRange();
+  range.setStart(text, 0);
+  range.setEnd(text, Math.min(n, text.textContent?.length ?? 0));
+  return range.getBoundingClientRect().width;
+}
+/**
+ * A phone's closed row sized by ADR-1136 (a)'s order (R183; critic run 82, R82-B1: shrunk by the flexbox alike, a
+ * name went under five letters while its "& n" stayed, "Sovi… & 3", "Que…"). Each banner measured as it would be with
+ * room; if the row is short, the long names give way by what each has to give, down to their first five letters and the
+ * ellipsis; if that is not enough, banners drop their allies' counts one at a time, those with a long name first, and
+ * the names give way again. Set on the elements: `war-tight` on a banner without its counts, a long name's width.
+ */
+function sizeRow(row: HTMLElement): void {
+  const banners = [...row.querySelectorAll<HTMLElement>('[data-testid=war-banner]')];
+  // As with room: nothing tight, no widths, nothing shrinks.
+  for (const b of banners) b.classList.remove('war-tight');
+  for (const n of row.querySelectorAll<HTMLElement>('[data-testid=war-name]')) n.style.width = '';
+  row.classList.add('war-measuring');
+  type Name = { el: HTMLElement; full: number; give: number };
+  const rows = banners.map((b) => {
+    const names: Name[] = [...b.querySelectorAll<HTMLElement>('.war-name:not(.war-name-short)')].map((el) => {
+      const full = el.getBoundingClientRect().width;
+      const least = Math.min(full, lettersWidth(el, 5) + ellipsisWidth(getComputedStyle(el).font) + 1);
+      return { el, full, give: Math.max(0, full - least) };
+    });
+    const counts = [...b.querySelectorAll<HTMLElement>('[data-testid=war-allies]')].reduce((w, a) => w + a.getBoundingClientRect().width + parseFloat(getComputedStyle(a).marginLeft), 0);
+    return { b, names, counts, width: b.getBoundingClientRect().width };
+  });
+  const children = [...row.children] as HTMLElement[];
+  const gap = parseFloat(getComputedStyle(row).columnGap) || 0;
+  const others = children.filter((c) => !banners.includes(c)).reduce((w, c) => w + c.getBoundingClientRect().width, 0);
+  row.classList.remove('war-measuring');
+  let short = rows.reduce((w, r) => w + r.width, 0) + others + gap * Math.max(0, children.length - 1) - row.clientWidth + 1;
+  if (short <= 0) return;
+  const give = (): number => rows.reduce((w, r) => w + r.names.reduce((v, n) => v + n.give, 0), 0);
+  // The counts, while the names cannot give what is short: first those of a banner with a long name (whose names would go
+  // under five letters), then the others; the widest first.
+  const long = (r: (typeof rows)[number]): number => (r.names.some((n) => n.give > 0) ? 0 : 1);
+  for (const r of [...rows].sort((p, q) => long(p) - long(q) || q.counts - p.counts)) {
+    if (short <= give() || r.counts === 0) break;
+    r.b.classList.add('war-tight');
+    short -= r.counts;
+  }
+  const all = give();
+  if (short <= 0 || all <= 0) return;
+  const k = Math.min(1, short / all);
+  for (const r of rows) for (const n of r.names) n.el.style.width = `${n.full - n.give * k}px`;
+}
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 
 /**
@@ -57,22 +121,40 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return () => window.removeEventListener('resize', again);
   }, []);
   useEffect(() => setFit(DESK_BANNERS), [wars.length]);
+  /** A resize lays the phone's row out again (R183: its sizes are set on the elements, not drawn from the stats). */
+  const [, relay] = useState(0);
+  useEffect(() => {
+    const again = (): void => relay((n) => n + 1);
+    window.addEventListener('resize', again);
+    return () => window.removeEventListener('resize', again);
+  }, []);
   const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : Math.min(DESK_BANNERS, fit);
   useLayoutEffect(() => {
     const el = root.current;
-    if (opened || phone || !el || shown <= 1) return;
+    if (!el) return;
+    if (opened) {
+      for (const b of el.querySelectorAll<HTMLElement>('[data-testid=war-banner]')) b.classList.remove('war-tight');
+      for (const n of el.querySelectorAll<HTMLElement>('[data-testid=war-name]')) n.style.width = '';
+      return;
+    }
+    if (phone) {
+      sizeRow(el);
+      return;
+    }
+    if (shown <= 1) return;
     if (el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
   });
   if (wars.length === 0) return null;
   const side = (ids: number[]) => {
     const lead = byId.get(ids[0] ?? 0);
     const name = lead ? displayName(lead.name) : '?';
+    const short = [...name].length <= SHORT_NAME;
     return (
       <span class="war-side">
         <span class="chip-swatch" style={{ background: hex(lead?.color ?? 0x777777) }} />
         {/* On one line, a long name cut short and its count whole (R168, critic run 79: "Chukotka Autonomous / Okrug & / 3").
             A short name is never cut, a long one keeps its first letters (R174, critic run 80: on a phone "J… & 2 ⚔ C… & 1"). */}
-        <span class={[...name].length <= SHORT_NAME ? 'war-name war-name-short' : 'war-name'} data-testid="war-name">
+        <span class={short ? 'war-name war-name-short' : 'war-name'} data-testid="war-name">
           {name}
         </span>
         {/* "& 2", not "+2" beside the score's "+32" (R162, critic run 77). */}

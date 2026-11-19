@@ -213,3 +213,46 @@ test('1024 × 768: the closed row within its width, "+n" clickable; three banner
   await page.setViewportSize({ width: 1600, height: 900 });
   await expect.poll(async () => (await look()).banners).toBe(DESK_BANNERS);
 });
+
+// R183 (critic run 82, R82-B1; ADR-1136 (a)): R178 cut "Soviet Union" to "Sovi…" at 375 px and "Queensland" to "Que…" at
+// 390 while their "& n" stayed. A long name draws five letters or more before its ellipsis (its first five letters' width
+// and the ellipsis's within its box: a box's width alone did not see the cut), its banner's counts giving way first; the
+// row in its width and "+n" in the view.
+test('368 to 390 px: a long name draws five letters or more, the counts giving way first', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ jap, chi, a, d }) => {
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: jap, name: 'Queensland' });
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: chi, name: 'Kagoshima Prefecture' });
+    window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d });
+  }, { jap: id('JAP'), chi: id('CHI'), a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-name').filter({ hasText: 'Queensland' })).toHaveCount(1, { timeout: 20_000 });
+  for (const [w, h] of [[368, 740], [375, 667], [384, 832], [390, 844]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(400);
+    const faults = await page.getByTestId('war-banners').evaluate((row) => {
+      const out: string[] = [];
+      const g = document.createElement('canvas').getContext('2d')!;
+      for (const n of row.querySelectorAll<HTMLElement>('[data-testid=war-name]')) {
+        const text = n.textContent ?? '';
+        if (n.scrollWidth <= n.clientWidth + 1) continue;
+        g.font = getComputedStyle(n).font;
+        const r = document.createRange();
+        r.setStart(n.firstChild!, 0);
+        r.setEnd(n.firstChild!, Math.min(5, text.length));
+        if (r.getBoundingClientRect().width + g.measureText('…').width > n.clientWidth + 1) out.push(`"${text}" under five letters`);
+        const side = n.closest('.war-side') as HTMLElement;
+        if (side.scrollWidth > side.clientWidth + 1) out.push(`"${text}"'s side cut`);
+      }
+      if (row.scrollWidth > row.clientWidth + 1) out.push('the row past its width');
+      const more = row.querySelector('[data-testid=war-more]');
+      if (more && more.getBoundingClientRect().right > innerWidth) out.push('"+n" off the screen');
+      return out;
+    });
+    expect(faults, `${w} × ${h}`).toEqual([]);
+  }
+  await page.screenshot({ path: test.info().outputPath('r183-phone-row.png') });
+});

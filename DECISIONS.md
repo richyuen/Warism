@@ -5,7 +5,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1136 · 2026-11-19 · proposed, the user's decision · The phone's war row, again: R178 cut names under five letters (ADR-829's exit)
+## ADR-1136 · 2026-11-19 · the user's decision: (a) · The phone's war row, again: R178 cut names under five letters (ADR-829's exit)
 
 - **The case** (critic run 82, focused, on 3e560a9c): R82-B1. At 375 × 667 the row reads "Sovi… & 3 ⚔ Japan & 6"
   (`critic/shots/c82nl_68901_d400_375x667_5405_row.png`); on 82901 the row is 10 px past its width and "+5" cut at the
@@ -33,6 +33,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   runs clean; 14 minutes of monkeys, 0 page errors. Non-blocking: R82-N1 the sideways relations graph unreadable (55 px
   high at 667 × 375; Hearts of Iron IV's list of ties is an option there), R82-N2 Go to country's 8 px strip, a clamped
   name away from its swatch, R82-N3 the opened Ranking over the bar's buttons sideways. Filed as Batch 50 (R183–R188).
+- **The user:** "OK let's do a". Batch 50 goes on in order: R183 by (a), then R184 to R188.
 
 ## ADR-1135 · 2026-11-19 · the user's decision: (a) · R80-B1: R168 cut the phone's war-banner names to 0–3 letters (ADR-829's exit)
 
