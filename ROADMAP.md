@@ -560,7 +560,7 @@ The run was handed back before lane E (6 of about 40 page cases) and the perform
   (R195; the name in `title` and `aria-label` only). AT: a tap on a filter there names its kind on screen (the report's
   ways: the footer says it, or a letter on each swatch; Hearts of Iron IV's legend chip, its idea), R195's graph height
   and every filter's tap as now; crossing the sizes.
-  - Done (COMMIT): a tap on a filter says its kind in the footer's line, "Wars hidden", "Wars shown" (the report's first
+  - Done (e5502278): a tap on a filter says its kind in the footer's line, "Wars hidden", "Wars shown" (the report's first
     way), at every size. A case in `relationsTap1938` tapping Wars, Alliances and Truces off and on at 568 × 320, 844 ×
     390, a desk, upright and back, a nation's panel opened and closed (ADR-1137 (d)): the kind named each time, the footer
     in view (red without: the hint unchanged). R195's case (the graph 110 px and more, every filter's tap) as before. 22
