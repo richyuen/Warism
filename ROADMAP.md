@@ -569,6 +569,8 @@ The run was handed back before lane E (6 of about 40 page cases) and the perform
   `critic/scripts/c85_chainPerf.sh` alone on a quiet machine, before a release is cut on this commit or a later one. The
   next critic run (focused, on R197–R198) takes them: its prompt names them. AT: its report has lane E's cases and
   performance scored afresh, not carried.
+  - Under ADR-1138 (the user's decision, after this was filed): no full run; run 86 (focused) runs these, and if it has
+    no blocking issue, every score at its bar and its performance chain finished, it is the release check.
 - Not taken: the graph's 13 px jump while a two-row line is said at 568 × 320 (R196 accepted it, the report lists it
   without a fix); heroPop on 85905 (7 to 15 jumps panning, on both builds, older than these batches; the report asks no
   fix); R172's, R192's and ADR-1111's kept items.

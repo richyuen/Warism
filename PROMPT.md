@@ -70,13 +70,12 @@ game's assets or code.
     (the bar, what moved, what is left) and the loop takes the next item. The cause found becomes a
     ROADMAP item of its own.
 
-# RELEASES (ADR-804, ADR-805)
+# RELEASES (ADR-804, ADR-805, ADR-1138)
 
 Items come in batches (a ROADMAP section). The critic runs only when no batch in ROADMAP.md has an open item
 (ADR-1039, the user's decision): a batch done while another is open goes on to that one's items, and a fix filed
 from a critic run is done with every other open item before the critic runs again. Then:
-1. Spawn the `critic` subagent with no hints (its run is focused; "full run" only as step 3 says, ADR-915,
-   ADR-916), wait for it, check that its report names HEAD, commit
+1. Spawn the `critic` subagent with no hints (every run is focused, ADR-1138), wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,
    scripts and scenario files; its logs and dumps stay on disk (`.gitignore`, ADR-914). That commit carries `critic/`,
    PROGRESS.md, ROADMAP.md and DECISIONS.md only; a fix is a commit of its own.
@@ -84,13 +83,10 @@ from a critic run is done with every other open item before the critic runs agai
    in that dimension, and its "what the bar needs", as a one-line ROADMAP entry: taken, or the reason it
    is not (ADR-843).
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
-   runs again (focused, ADR-915). So does each non-blocking issue of every run, with its AT, design
-   objections named as issues among them (ADR-1005, the user's decision): fixed before the release, not
-   after it. The full run's own non-blocking issues (step 3) are fixed too, before step 3's checks, and the
-   release goes on with no critic run after them: the checks run once, on the fixed code (ADR-1022, the user's
-   decision). A focused run with no
-   blocking issue: its non-blocking issues fixed, the next run is the full run (step 3), not another
-   focused one (ADR-1016, the user's decision).
+   runs again. Each non-blocking issue of every run is filed too, with its AT, design objections named as
+   issues among them, but **does not hold a release** (ADR-1138, the user's decision): a batch's blocking items
+   are done first and the critic runs again with its non-blocking items still open; they are done after the
+   release, before the next critic run that follows it (ADR-1039).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
    the structural options (a redesign, taking the feature out of the release, the bar), when:
    - one dimension is under its bar, or blocks, in three critic runs in a row; or
@@ -102,10 +98,9 @@ from a critic run is done with every other open item before the critic runs agai
    Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
-3. Focused runs until one has no blocking issue and every score at its bar; then the critic is spawned
-   with "full run" (ADR-916, the user's decision). On a full report with no blocking issue and every
-   score at its bar, its non-blocking issues fixed first (step 2; ADR-1022), then: `npm run check:review`
-   and `npm run bench -- G --gpu-only` (budgets PASS). No sweep is a release condition (ADR-1072, the user's
+3. Focused runs until one has no blocking issue and every score at its bar, its performance scored afresh when
+   `src/` changed since the last release (ADR-1138, the user's decision): that run is the release check. Then:
+   `npm run check:review` and `npm run bench -- G --gpu-only` (budgets PASS). No sweep is a release condition (ADR-1072, the user's
    decision): the nightly and weekly runs (`.github/workflows/nightly.yml`) sweep `main` on their own, and a red one
    is a ROADMAP item whenever it comes. A check that fails becomes a ROADMAP item, and so does each
    `WARNING historyTrack` line in check:review's output (the historical track's other seeds, ADR-950).

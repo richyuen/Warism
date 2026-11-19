@@ -48,24 +48,44 @@ no score.
   only the report, its JSON, `critic/scripts/` and scenario files are. Put every script and job list a case
   needs to be re-run in `critic/scripts/`.
 - Run the rule checkers on new seeds (`npx tsx tools/diag/diploInvariants.ts <seed> ...` and any
-  other checker under `tools/diag/`); a broken rule they report is a finding. For each dimension scored
-  afresh, three new seeds of five years a checker (ADR-917). `landingInvariants` on new seeds: 90 runs,
+  other checker under `tools/diag/`); a broken rule they report is a finding. Every run, touched or not
+  (ADR-1138): three new seeds of five years a checker (ADR-917). `landingInvariants` on new seeds: 90 runs,
   15 seeds × its six shapes (setups 3517 and 15101 with two groups, 3517 with one; each with orders
   throughout and for 8 days), as `tools/diag/landingFuzz.ts --seeds 15` runs them.
-- **Time (ADR-917).** A focused run aims to finish in about an hour: the dimensions scored afresh first,
-  then exploring. Say at the top of the report what was left out for time. A full run is not bounded.
+- **Time (ADR-917).** A run aims to finish in about an hour: start the long jobs (the performance chain, the
+  checkers) first, then the dimensions scored afresh, then exploring. Say at the top of the report what was left
+  out for time; if time runs short, report what finished rather than nothing.
 
-# FULL OR FOCUSED RUN (ADR-804, ADR-915, the user's decisions)
-A run is **focused** unless the message that spawned you asks for a **full run**: the builder asks for one
-only before a release (ADR-916), and that request is the one framing from the spawner you follow. A run with no earlier report is full.
+# EVERY RUN IS FOCUSED (ADR-804, ADR-1138, the user's decisions)
+There is no full run (ADR-1138 replaced ADR-915 and ADR-916's). A run with no earlier report scores every dimension.
 
-A focused run re-runs every named case of the last report; scores afresh each dimension the last report
-scored under its bar or blocked on, and each one the changed files touch (`git diff --stat <last report's
-commit> HEAD`), exploring those freely with new seeds; and carries every other score, marked "carried",
-from the last report that scored it. A defect met in passing still counts. A full run is the whole brief.
+A run re-runs every named case of the last report, and scores afresh, exploring each freely with new seeds:
+- each dimension the last report scored under its bar or blocked on;
+- each dimension the diff since the last report's commit touches (`git diff --stat <commit> HEAD`), by the table
+  below; a path in no row touches the dimension its feature is scored under;
+- `performance` whenever anything under `src/` changed: the tick of seed 99, the page's frame rate at three sizes
+  and the long watch, run alone on a quiet machine;
+- **the rotation:** the two dimensions longest without a fresh score in the last report's `fresh` (ties in the
+  DIMENSIONS order), besides those above. A dimension scored afresh for any reason resets its clock, so each is
+  judged afresh at least once in seven runs.
+Every other score is carried, marked "carried", from the last report that scored it. A defect met in passing
+still counts. Every run, touched or not: the rule checkers on new seeds and `landingFuzz --seeds 15`, the
+page-error monkeys, and the 20-year hashes of plain 1938 seeds 7019 and 32019.
 
-A release needs a full run with no blocking issue; the builder asks for one after a focused run with no
-blocking issue and every score at its bar (ADR-916). Say the mode and the reason at the top of the report.
+| Changed paths | Dimensions touched |
+|---|---|
+| `src/sim/`, `data/`, `public/data/`, `src/worker/` | `diplomacyWarDepth`, `emergentDynamics`, `stability`, `naval`, `tanks`, `aircraft`, `aiNukes` (and `performance`) |
+| `src/render/`, `src/app/MapView.ts`, `src/app/battleView.ts` | `mapVisuals`, `semanticZoom` |
+| `src/app/style.css`, `src/app/App.tsx`, `src/app/hud.ts`, `src/app/game.tsx`, `src/ui/i18n/` | `uiUxPolish`, `statsHistory`, `godMode`, `editorScenarios`, `diplomacyWarDepth` |
+| `src/ui/RelationsPanel.tsx`, `src/ui/relation*.ts` | `diplomacyWarDepth`, `uiUxPolish` |
+| `src/ui/HistoryPanel.tsx`, `StatsChart.tsx`, `StatsRanking.tsx`, `TimeLapseBar.tsx`, `historyText.ts` | `statsHistory`, `uiUxPolish` |
+| `src/ui/GodTab.tsx`, `GodToolbar.tsx` | `godMode`, `uiUxPolish` |
+| `src/ui/EditorPanel.tsx`, `FlagEditor.tsx`, `src/sim/editor.ts`, `src/sim/scenarioEdit.ts` | `editorScenarios`, `uiUxPolish` |
+| any other file under `src/ui/` or `src/app/` | `uiUxPolish` |
+
+A release needs one run with no blocking issue and every score at its bar, `performance` scored afresh when
+`src/` changed since the last release. Non-blocking issues do not hold it (ADR-1138). Say at the top of the
+report which dimensions were scored afresh and why (blocked, under its bar, touched, performance, rotation).
 
 # DIMENSIONS (score 0–10)
 7 is solid: a demanding player finds nothing worth leaving the game over. 10 is the best this genre
@@ -86,9 +106,10 @@ A new feature is scored under the dimension it belongs to (the relations graph u
    rate as "k of n". Under that, each break is a non-blocking issue with its case and figures, and does
    not by itself hold naval under its bar. Every other rule a checker reports broken stays blocking.
    Then the last report's cases re-run, the "Design objections", and ideas from other games (none of them scored).
-2. `critic/CRITIC_REPORT.json`: `{commit, mode, scores:{dimension:number}, blocking:[{id,title,
+2. `critic/CRITIC_REPORT.json`: `{commit, mode, scores:{dimension:number}, fresh:{dimension:{run,commit}}
+   (each dimension's last fresh score, for the rotation; ADR-1138), blocking:[{id,title,
    evidence,fix}], timestamp}`, where commit is `git rev-parse HEAD` when you started and mode is
-   `"full"` or `"focused"`.
+   `"focused"` (ADR-1138: every run).
 3. Scores must be defensible; every score above 7 needs explicit evidence.
 4. Every score under its bar names the evidence that would earn the bar (ADR-843): beside "what to fix", "what
    the bar needs", as cases the builder can run: a seed and scenario, a probe (`critic/scripts/...`) or a checker

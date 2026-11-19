@@ -5,6 +5,42 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1138 · 2026-11-19 · the user's decision · Releases on one focused run: no full run, nothing untouched judged again, non-blocking issues after the release
+
+- **The case.** Since release-2026-11-17, ten critic runs (76–85), four of them full, and no release. No full run found a
+  blocking issue in an area its changes had not touched: run 79's lift blocker came from the rule checker on new seeds,
+  runs 80 and 81's from code just changed; run 85 found nothing new outside what it re-checked. Run 85 was cut off at
+  88 minutes and never finished (a full run no longer fits one critic's time), and its resume was cut off at once. The
+  larger delay was the lap after a clean focused run: its non-blocking issues fixed, a full run, its non-blocking issues
+  fixed (Batches 52, 53), each lap finding a few more.
+- **The user:** "Let's rethink the release approach. We are taking too long to release. What if we stop doing full
+  critic runs and only do focused critic runs for releases, and we do not evaluate anything that was not touched?"; then,
+  to the builder's version with safeguards, "Yes, this sounds good as you laid out", asking how the cap stays at one or
+  two dimensions a run (answered by the rotation below).
+- **The rule.**
+  1. **Every critic run is focused.** No full run (ADR-915, ADR-916 and ADR-1016's full run replaced). A run with no
+     earlier report scores every dimension.
+  2. **Scored afresh:** each dimension the last report scored under its bar or blocked on; each dimension the diff since
+     the last report touches, by a table of paths to dimensions in CRITIC_PROMPT.md, shared files counted broadly
+     (`style.css`, `App.tsx`, `hud.ts`, `src/ui/i18n/` touch every page dimension; anything under `src/sim`, `data/`,
+     `public/data/` every sim dimension); **performance** whenever anything under `src/` changed, from the performance
+     chain; and **the rotation**: the two dimensions longest without a fresh score, ties in the brief's order. Every
+     other score is carried, marked so.
+  3. **The rotation's record.** The report's JSON gives each dimension's last fresh score (`fresh: {dimension: {run,
+     commit}}`); a dimension scored afresh for any reason resets its clock. At most two dimensions a run come from the
+     rotation, so each is judged afresh at least once in seven runs (14 / 2), and sooner when touched.
+  4. **Always run, touched or not:** the rule checkers on new seeds (three seeds of five years a checker) and
+     `landingFuzz --seeds 15`; the page-error monkeys; the 20-year hashes of plain 1938 seeds 7019 and 32019.
+  5. **Non-blocking issues do not hold a release.** Every run's non-blocking issues, design objections and ideas are
+     filed as now (each taken or with its reason), and done after the release (ADR-1005 and ADR-1022 replaced for the
+     release; ADR-1039 holds: they are done before the next critic run that follows the release).
+  6. **The release check:** a focused run with no blocking issue and every score at its bar; then `npm run
+     check:review` and `npm run bench -- G --gpu-only` as before (ADR-1072 holds: no sweep is a condition); then the tag.
+  - Kept: ADR-829's exit; ADR-1137 (d), each phone-row or panel item's AT crossing the sizes; naval's ADR-833.
+- **Now:** critic run 86 (focused, spawned before this rule to finish run 85's lanes and its performance chain) is
+  judged by it: if it has no blocking issue and every score at its bar, and its performance chain finished, it is the
+  release check.
+
 ## ADR-1137 · 2026-11-19 · the user's decision: (d) · The phone's war row a third time: R183 off its route (ADR-829's exit)
 
 - **The case** (critic run 83, focused, on 42d0964e): R83-B1. A window that crosses a phone's width keeps the phone's

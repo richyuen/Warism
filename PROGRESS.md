@@ -476,3 +476,10 @@
 
 - "Wars hidden", "Wars shown" in the footer, at every size; a crossing case. Batch 53's code items done; R199 (run 85's
   unfinished checks) next, by resuming the critic (the user asked whether it could be).
+
+## 2026-11-19 — ADR-1138: releases on one focused run (the user's decision)
+
+- No full run; a run scores afresh what is under its bar or blocked, what the diff touches (a table of paths to
+  dimensions), performance when `src/` changed, and two dimensions by rotation; the checkers, monkeys and hashes every
+  run; non-blocking issues do not hold a release. PROMPT.md, CRITIC_PROMPT.md and the critic's agent file changed.
+  Run 85's resume was cut off at once; run 86 (focused) runs its lanes and perf chain.
