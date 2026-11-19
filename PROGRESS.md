@@ -452,3 +452,7 @@
 ## 2026-11-19 — R194: a narrow desk's war row stays in its width
 
 - The lone banner sized as a phone's, or "+n" alone where none fits; off the news at 620 to 768 px; a crossing case.
+
+## 2026-11-19 — R195: the relations filters one row of colours on the smallest sideways phone
+
+- At 568 × 320 the graph 123 px (82 before); each kind named in its title; a crossing case.

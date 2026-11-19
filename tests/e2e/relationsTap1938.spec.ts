@@ -294,3 +294,36 @@ test('every relations filter, the focus and the zoom take a tap at every size', 
     if (h < 500) expect((await page.getByTestId('relations-graph').boundingBox())!.height, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(150);
   }
 });
+
+// R195 (critic run 84, R84-N2; ADR-1137 (d)): at 568 × 320 R191's wrapped filters took three rows and the graph fell to
+// 82 px (110 before). There the filters are their colours alone, one row, each named in its title: the graph 110 px or
+// more, every filter and the focus taking a tap; across 568 × 320, 844 × 390, a desk, upright and back, a nation's panel
+// opened and closed beside it.
+test('the smallest sideways phone keeps the relations graph and every filter', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  const ids = ['relations-kind-war', 'relations-kind-alliance', 'relations-kind-guarantee', 'relations-kind-puppet', 'relations-kind-truce', 'relations-focus', 'relations-zoom-in', 'relations-close'];
+  for (const [w, h] of [[568, 320], [844, 390], [1280, 720], [390, 844], [568, 320]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    for (const id of ids) {
+      const ok = await page.evaluate((id) => {
+        const e = document.querySelector(`[data-testid="${id}"]`);
+        if (!e) return 'missing';
+        const box = (e.closest('label') ?? e).getBoundingClientRect();
+        const panel = document.querySelector('[data-testid=relations-panel]')!.getBoundingClientRect();
+        if (box.right > Math.min(innerWidth, panel.right) + 1 || box.bottom > innerHeight || box.width === 0) return 'off the panel';
+        const top = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        return top === e || e.contains(top) || e.closest('label')?.contains(top) ? 'ok' : `under ${top?.className}`;
+      }, id);
+      expect(ok, `${w} × ${h}: ${id}`).toBe('ok');
+    }
+    // Each kind named, seen or in its title.
+    expect(await page.locator('.relations-kind[title]').count(), `${w} × ${h}: each kind named`).toBe(5);
+    if (h === 320) expect((await page.getByTestId('relations-graph').boundingBox())!.height, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(110);
+  }
+});

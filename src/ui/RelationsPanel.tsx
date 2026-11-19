@@ -302,10 +302,10 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
       </header>
       <div class="god-row relations-filters">
         {EDGE_KINDS.map((k) => (
-          <label key={k} class="relations-kind">
-            <input type="checkbox" data-testid={`relations-kind-${k}`} checked={kinds.has(k)} onChange={() => toggle(k)} />
+          <label key={k} class="relations-kind" title={t(`relations.kind.${k}` as MessageKey)}>
+            <input type="checkbox" data-testid={`relations-kind-${k}`} aria-label={t(`relations.kind.${k}` as MessageKey)} checked={kinds.has(k)} onChange={() => toggle(k)} />
             <span class="relations-swatch" style={{ background: EDGE_COLOR[k] }} />
-            {t(`relations.kind.${k}` as MessageKey)}
+            <span class="relations-kind-name">{t(`relations.kind.${k}` as MessageKey)}</span>
           </label>
         ))}
         <select data-testid="relations-focus" aria-label={t('relations.focus')} title={t('relations.focus')} value={String(focus)} onChange={(e) => setFocus(Number((e.currentTarget as HTMLSelectElement).value))}>

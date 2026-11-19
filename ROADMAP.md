@@ -513,10 +513,16 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
     `warBannerRows1938` crossing a phone, 640 (a nation's panel and History opened and closed), 620, 700, 768, 1280 and
     back (ADR-1137 (d)): the row in its width and off the news, "+n" opening the rest at 620, the phone's banners as at
     the start (red without: 640 × 800 past its width). 51 specs on the banners, phones and the news 175/175.
-- [ ] R195 **R84-N2: at 568 × 320 the wrapped relations filters take three rows, the graph 82 px (110 before R191)**
+- [x] R195 **R84-N2: at 568 × 320 the wrapped relations filters take three rows, the graph 82 px (110 before R191)**
   (`c82_graphSize 68901 568 320`, `84933`). AT: the graph at 568 × 320 at least as high as before R191 (110 px), every
   filter and the focus still taking a tap; R191's case and R185's heights at the other sizes as now. (Hearts of Iron IV's
   single filter button, the report's idea: one way to do it.)
+  - Done (COMMIT): at a height of 340 px or less the filters are their checkboxes and colours alone, one row, each kind
+    named in its title and read aloud (`aria-label`), the focus taking the room left. `c82_graphSize` 68901 and 84933 at
+    568 × 320: the graph 123 px (HEAD 82, before R191 110); 667 × 375 152 px and 844 × 390 173 px as R191. A case in
+    `relationsTap1938` crossing 568 × 320, 844 × 390, a desk, upright and back, a nation's panel opened and closed (ADR-1137
+    (d)): every filter, the focus, the zoom and the × taking a tap inside the panel, each kind named, the graph 110 px or
+    more at 568 × 320 (red without: no kind named there). 13 specs on Relations and phones 62/62.
 - [ ] R196 **R84-N3: on a sideways phone the relations hint's second line runs over the panel's foot** (667 × 375, 568 ×
   320; both builds; `c84rs_84903_d400_c84_5409_2_667x375_GER.png`). AT: the hint inside the panel at 568 × 320, 667 × 375,
   844 × 390 and upright, a nation's panel opened and closed beside it; the graph's heights as R185/R195.

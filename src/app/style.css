@@ -2918,6 +2918,20 @@ button.unit-icon.on {
   .relations-filters select {
     max-width: 8rem;
   }
+  /* The smallest sideways phones (R195, critic run 84, R84-N2: at 568 × 320 the words took three rows, the graph 82 px):
+     the filters their colours alone, one row; each kind's name in its title and read aloud. */
+  @media (max-height: 340px) {
+    .relations-kind-name {
+      display: none;
+    }
+    .relations-filters {
+      flex-wrap: nowrap;
+    }
+    .relations-filters select {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
   /* Every filter and the focus seen (R191, critic run 83, R83-N3: in one row that scrolled, "Truces" and the focus were
      off its edge): the filters wrap, and the zoom's buttons stand in the header beside the ×, no hint. */
   .relations-panel {
