@@ -456,3 +456,8 @@
 ## 2026-11-19 — R195: the relations filters one row of colours on the smallest sideways phone
 
 - At 568 × 320 the graph 123 px (82 before); each kind named in its title; a crossing case.
+
+## 2026-11-19 — R196: the relations footer inside its panel on a sideways phone
+
+- The left-out count not said there, the graph takes what the footer leaves; a crossing case. Batch 52 done; the full
+  critic run next (ADR-1016).

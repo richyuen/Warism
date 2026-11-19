@@ -523,9 +523,16 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
     `relationsTap1938` crossing 568 × 320, 844 × 390, a desk, upright and back, a nation's panel opened and closed (ADR-1137
     (d)): every filter, the focus, the zoom and the × taking a tap inside the panel, each kind named, the graph 110 px or
     more at 568 × 320 (red without: no kind named there). 13 specs on Relations and phones 62/62.
-- [ ] R196 **R84-N3: on a sideways phone the relations hint's second line runs over the panel's foot** (667 × 375, 568 ×
+- [x] R196 **R84-N3: on a sideways phone the relations hint's second line runs over the panel's foot** (667 × 375, 568 ×
   320; both builds; `c84rs_84903_d400_c84_5409_2_667x375_GER.png`). AT: the hint inside the panel at 568 × 320, 667 × 375,
   844 × 390 and upright, a nation's panel opened and closed beside it; the graph's heights as R185/R195.
+  - Done (COMMIT): on a sideways phone the footer leaves out the count of nations left out of the graph (the report's
+    second way), and the graph takes the room the footer leaves (`flex: 1 1 0`; a line read in two rows makes it
+    shorter while shown). `c82_graphSize 68901`: 568 × 320 123 px, 667 × 375 158 px (R191: 152), 844 × 390 173 px,
+    932 × 430 213 px; the 667 × 375 shot shows the footer inside the panel. A case in `relationsTap1938` crossing 568 ×
+    320, 667 × 375, 844 × 390, upright, a desk and back, a nation's panel opened and closed (ADR-1137 (d)): the footer's
+    text inside the panel's border, the graph at R185's and R195's heights (red without: 10 px past at 568 × 320). 13
+    specs on Relations and phones 63/63. Batch 52 done.
 - Not taken: R192 kept (the report's "the builder's reason holds"); the objection that a Ranking row beside the graph
   could open its nation in the panel's place: the row is under the panel there, so no tap reaches it (R192's reason);
   ADR-1111's heroes' plates (decided there); R172's kept three.

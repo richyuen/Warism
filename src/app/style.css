@@ -2946,6 +2946,15 @@ button.unit-icon.on {
   .relations-zoom-hint {
     display: none;
   }
+  /* The footer inside the panel (R196, critic run 84, R84-N3: its second line, "… shown are left out", ran over the
+     panel's foot): the count of nations left out is not said here, and the graph takes the room the footer leaves (a
+     line read in two rows makes it shorter while it is shown). */
+  .relations-untied {
+    display: none;
+  }
+  .relations-graph {
+    flex: 1 1 0;
+  }
   /* The news beside the graph's half, not under it (R191: the taller panel of R185 stood over both rows). */
   #ui:has([data-testid='relations-panel']) .ticker.compact {
     left: calc(50vw + 0.25rem);

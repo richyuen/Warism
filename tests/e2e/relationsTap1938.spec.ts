@@ -327,3 +327,29 @@ test('the smallest sideways phone keeps the relations graph and every filter', a
     if (h === 320) expect((await page.getByTestId('relations-graph').boundingBox())!.height, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(110);
   }
 });
+
+// R196 (critic run 84, R84-N3; ADR-1137 (d)): on a sideways phone the footer's second line ran over the relations panel's
+// foot. The footer's text inside the panel's border at 568 × 320, 667 × 375, 844 × 390, upright, a desk and back, a
+// nation's panel opened and closed beside it; the graph keeps R185's and R195's heights.
+test('the relations footer stays inside its panel at every size', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  for (const [w, h, least] of [[568, 320, 110], [667, 375, 150], [844, 390, 150], [390, 844, 0], [1280, 720, 0], [667, 375, 150]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => {
+      const panel = document.querySelector<HTMLElement>('[data-testid=relations-panel]')!;
+      const inner = panel.getBoundingClientRect().bottom - parseFloat(getComputedStyle(panel).borderBottomWidth);
+      const range = document.createRange();
+      range.selectNodeContents(document.querySelector('[data-testid=relations-said]')!);
+      const lines = [...range.getClientRects()].filter((q) => q.height > 0);
+      return { over: Math.round(Math.max(...lines.map((q) => q.bottom)) - inner), graph: document.querySelector('[data-testid=relations-graph]')!.getBoundingClientRect().height };
+    });
+    expect(r.over, `${w} × ${h}: the footer's text past the panel's border`).toBeLessThanOrEqual(0);
+    expect(r.graph, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(least);
+  }
+});
