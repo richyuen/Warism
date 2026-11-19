@@ -351,7 +351,7 @@ bar in runs 80 and 81 (two in a row).
 - [x] R181 **R81-N4: on a phone a nation chosen again from outside the graph shows no panel** (R175's `relationsOver`
   still names it). `c81_relOver.mjs 68933 390 844` step 4; 69933, 69935 at 360 × 740, and 844 × 390. AT: the panel
   shows at step 4 on these; a case in `relationsTap1938`.
-  - Done (COMMIT): `relationsOver` forgotten once another nation is chosen (hud's selection effect). `c81_relOver`
+  - Done (bb611265): `relationsOver` forgotten once another nation is chosen (hud's selection effect). `c81_relOver`
     step 4 "panel Germany" on 68933 and 69933 at 390 × 844, 69935 at 360 × 740 and 68933 at 844 × 390 (before: none); the
     rest of its steps as before. A case in `relationsTap1938` at both sizes (red without: no panel).
 - [ ] R182 **On a sideways phone a node chosen in the graph hides the whole graph under its panel** (non-blocking 5 and the
