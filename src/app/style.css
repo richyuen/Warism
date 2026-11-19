@@ -2901,6 +2901,13 @@ button.unit-icon.on {
   .relations-zoom-hint {
     display: none;
   }
+  /* The ranking opened stops above the bar, its rows scrolling (R188, critic run 82, R82-N3: at 844 × 390 its fifteen rows
+     lay over the bar's History, Relations and Editor). */
+  .stats-ranking:not(.folded) {
+    box-sizing: border-box;
+    max-height: calc(100% - 1rem - var(--bar-top, 2.8rem) - 0.4rem);
+    overflow-y: auto;
+  }
   #ui:has(.nation-panel) .ticker.compact,
   #ui:has(.nation-panel) .war-banners {
     left: calc(var(--side-panel-w) + 2.5rem);

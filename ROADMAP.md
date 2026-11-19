@@ -426,9 +426,12 @@ ADR-1136: the user chose (a).
   `69903_d700`). AT: the name beside its swatch and one ellipsis, from the shots. (With R183.)
   - Done (b69e59a8, with R183): the clamp is gone; a cut name ends in one "…" by `text-overflow`, its box as wide as set,
     beside its swatch (`c82nl_82903_d700_375x667_r183`, `c82nl_69903_d700_360x740_r183` shots).
-- [ ] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
+- [x] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
   build the same; `c82rr_68901_844x390_SOV_USA_*_4_A_row_tapped.png`). AT: those buttons tappable with the Ranking open
   at 844 × 390 and 667 × 375; a case in a spec.
+  - Done (COMMIT): on a sideways phone the opened Ranking stops above the bar, its rows scrolling in its box. A case in
+    `relationsTap1938`: History, Relations and Editor each the top element under a tap at 844 × 390 and 667 × 375 with
+    the Ranking open (red without: History covered). The 31 specs on phones, the Ranking and the banners 123/123.
 - Not taken: ADR-1111's heroes' plates over Europe at 3,000 m/px (decided there); R172's kept three (as R172); the
   design objection on ADR-1135 (a)'s order is ADR-1136's question.
 

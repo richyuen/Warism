@@ -408,3 +408,7 @@
 
 - `buildTab1938`'s landscape case found a banner off the screen after R183 (a spec not run with it); the closed row
   on a phone counts the banners that fit, as the desk's does.
+
+## 2026-11-19 — R188: on a sideways phone the opened Ranking leaves the bar's buttons free
+
+- It stops above the bar and scrolls; a case in `relationsTap1938`. Batch 50 done.

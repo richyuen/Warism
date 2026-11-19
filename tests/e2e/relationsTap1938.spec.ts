@@ -242,3 +242,25 @@ test('on a sideways phone the relations graph is 150 px high or more, its names 
     expect(r.median, `${w} × ${h}: a name's median height`).toBeGreaterThanOrEqual(10);
   }
 });
+
+// R188 (critic run 82, R82-N3): on a sideways phone the opened Ranking lay over the bar's History, Relations and Editor.
+// It stops above the bar: those buttons take a tap with it open.
+test("on a sideways phone the opened Ranking leaves the bar's buttons free", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  for (const [w, h] of [[844, 390], [667, 375]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    const rows = page.locator('[data-testid=rank-row]');
+    if (!(await rows.first().isVisible())) await page.getByTestId('ranking-toggle').tap();
+    await expect(rows.first()).toBeVisible();
+    for (const id of ['history-btn', 'relations-btn', 'editor-btn']) {
+      const free = await page.getByTestId(id).evaluate((b) => {
+        const r = b.getBoundingClientRect();
+        const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        return top === b || b.contains(top);
+      });
+      expect(free, `${w} × ${h}: ${id} under a tap`).toBe(true);
+    }
+  }
+});
