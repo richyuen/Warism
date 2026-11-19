@@ -274,3 +274,8 @@
 
 - Opened, the war banners stand at their row's head, each its own height: one with no death line is no longer half
   empty beside one with it. Batch 46 done; next, the full critic run (ADR-1016).
+
+## 2026-11-18 — critic run 79 (full, on 79058a5a)
+
+- One blocking issue (R79-B1: a war across the sea with no lift, by a door the gate does not ask); every score at its
+  bar (8 each). Batch 46's four fixed on their probes. Filed as Batch 47 (R167–R172).

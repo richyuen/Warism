@@ -1,6 +1,6 @@
 {
- "commit": "d7b981dd4aecef70c0ec4876c361b9fc6b2d8adb",
- "mode": "focused",
+ "commit": "79058a5acedb876c3d68a8893f57431bcbf7cf0c",
+ "mode": "full",
  "scores": {
   "mapVisuals": 8,
   "diplomacyWarDepth": 8,
@@ -17,6 +17,13 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [],
- "timestamp": "2026-11-18T17:55:00-05:00"
+ "blocking": [
+  {
+   "id": "R79-B1",
+   "title": "A war across the sea declared with no lift, through a door the lift gate does not ask (diploInvariants lift broken)",
+   "evidence": "npx tsx tools/diag/diploInvariants.ts 64015 random 1825 --heroes: 1 broken, 'day 1411: lift: ARG declared on #105 over the sea, 16294 men to lift for a room of 25200' (critic/c79_diploinv_64015rh.log). D=105 npx tsx critic/scripts/c79_liftTrace.ts 64015 random 1411 ARG --heroes (critic/c79_liftTrace_64015_D2.log): in each of the six hours before, callSides(ARG,#105) = [[ARG],[#105]], the sides touch nowhere and noLift is true; #105 at war with Brazil, Argentina's land neighbour by ownership only; in the declaration's hour Brazil makes peace with #105 and takes it as a puppet. The lift's jump to 84,894 is the war's own effect: at tick 33864 seaLift 16,294 and noLift true, declareWar by hand with no step makes it 84,894 (npx tsx critic/scripts/c79_liftJump.ts, critic/c79_liftJump_64015.log). 0 broken on the other 16 checker runs of new seeds and on 3 of earlier seeds. The sim is run 78's, so run 78's build gives the same.",
+   "fix": "Find the door that declared ARG on #105 and ask noLift there (not found by me; one candidate: a test of 'over the sea' by ownership, where neighbourMap has ARG beside #105 while the sides touch nowhere by control), as R145 did for a massing's declaration; or narrow the checker by an ADR if a war on a rebel at war with its holder is meant to be exempt. Seen fixed when the command prints 0 broken, and diploInvariants on ten more random-diplomacy seeds with heroes (five years each) prints 0 broken."
+  }
+ ],
+ "timestamp": "2026-11-18T20:22:00-05:00"
 }

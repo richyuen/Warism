@@ -1,409 +1,541 @@
-# Critic report, run 78 (focused): Batch 45 (R157 to R162), on `d7b981dd`
+# Critic report, run 79 (full): Batch 46 (R163 to R166) and the whole brief, on `79058a5a`
 
 ## The run
 
-- **Mode: focused.** The spawning message asks for no full run (CRITIC_PROMPT, ADR-915).
-  - The last report, run 77 (focused, on `7066d800`), had one blocking issue (R77-B1: UI/UX and stats) and UI/UX at
-    7, under its bar of 8.
-  - **Scored afresh:**
-    - UI/UX (under its bar, and blocked on).
-    - Stats and history (blocked on; `historyText.ts` and `timeline.json` changed).
-    - Map visuals: `style.css` and `WarBanners.tsx` changed.
-  - **Carried** from run 77: diplomacy, emergent dynamics, God Mode, the editor, performance, stability, semantic zoom,
-    naval, tanks, aircraft and AI nukes. No file under `src/sim/` changed, and the plain 1938 worlds end at run 77's
-    hashes (below).
-    - Two carried dimensions were still probed: stability (two monkeys) and naval (`landingFuzz` on 15 new seeds).
-    - Diplomacy's R77-N3 was re-run and measured on new seeds.
-- **Commit judged:** `d7b981dd4aecef70c0ec4876c361b9fc6b2d8adb`, HEAD at the start (`critic/c78_commit.txt`).
-- **Time:** 16:50 to 17:55 by the machine's clock.
-- **Carried, not run:** run 77's headless named cases on plain 1938, as "plain 1938 unchanged, carried" (ADR-959):
-  - `nukecount`, `topArea`, `piles`, `repulse`, `heroCeiling`, `farConquests`, `massTold` and the rest of
-    `c77_jobsAll.txt`.
-  - The performance chain.
-  - Run 61's bulk landing sets and Malta.
-- **Run again:**
-  - Run 77's replay cases (`c78_startsJobs.txt`, 40 runs on HEAD's built starts): `timeline.json` is their input, and
-    it changed.
-  - Run 77's page cases of the carried dimensions (`c78_laneP.sh`): God, the editor, take control, peace, the stage,
-    planes, the armoured fight and the tiers. They click through `view.onSelect` and `togglePause`, which this batch
-    changed.
-- **Left out for time:**
-  - Run 77's `heroPop` and `markerPop` (semantic zoom), `markers`, `seaBattlesLook` and `seaclick` page cases. No
-    changed file touches them.
-  - The 1280 × 720 and 844 × 390 monkeys, and five-minute monkeys (two of three minutes ran).
-  - `bannerOwn 1942` and `massSeen 56211`.
+- **Mode: full.** The spawning message asks for a full run (CRITIC_PROMPT, ADR-915, ADR-916).
+  - Run 78 (focused, on `d7b981dd`) had no blocking issue and every score at its bar. Every dimension is scored afresh
+    here.
+- **Commit judged:** `79058a5acedb876c3d68a8893f57431bcbf7cf0c`, HEAD at the start (`critic/c79_commit.txt`).
+- **Time:** 18:21 to 20:22 by the machine's clock. A full run is not bounded.
+- **Left out:** no dimension. Of run 78's left-outs, all were run (`heroPop`, `markerPop`, `markers`, `seaBattlesLook`,
+  `seaclick`, the 1280 × 720 and 844 × 390 monkeys, five-minute monkeys, `bannerOwn 1942`, `massSeen 56211`).
+  - Not run: run 61's bulk landing sets and Malta's 18. They are "plain 1938 unchanged, carried" (ADR-959, below).
+  - Not tested: a nation that died and came back, on the time-lapse (R165). I did not look for one.
 
-### What changed since run 77
+### What changed since run 78
 
-- **Size:** 9 commits (one of them run 77's own report). 11 files under `src/`, none of them in `src/sim/`.
-  - `git diff --stat 7066d800 HEAD -- src/sim data public/data` lists one file: `data/scenarios/1938h/timeline.json`.
-    Five track notes were rewritten in it.
-- **Batch 45:**
-  - **R157** (R77-B1): the time-lapse names a nation that is dead now, from the stats' dead list. A click on one selects
-    nothing.
-  - **R158** (R77-N1): resuming the game closes the time-lapse.
-  - **R159** (R77-N2): a track row is told only where its note is a bare place.
-  - **R160, ADR-1130** (R77-N3): R147 kept, with no code change. The ADR is for the user's review.
-  - **R161, ADR-1131:** a banner still for three days yields to a war in battle. The worker sends `lastBattle`. Also a
-    fix of R156's death line, which widened an opened banner.
-  - **R162:** a side's allies show as "& 2".
+- **Size:** 9 commits (one of them run 78's report). Outside `critic/` and the documents: 12 files (9 under `src/` and
+  `data/`, and 3 tests).
+  - `git diff --stat d7b981dd HEAD -- src/sim data public/data` lists one file, `data/scenarios/1938h/timeline.json`
+    (one note: "Rome" became "Rome falls to the Allies").
+  - `src/`: `App.tsx`, `style.css`, `shared/history.ts`, `MapTooltip.tsx`, `TimeLapseBar.tsx`, `historyText.ts`,
+    `i18n/en.json`, `worker/historyRows.ts`.
+- **Batch 46:**
+  - **R163, ADR-1132** (R78-N2): R147 pooled on twelve seeds; the attacker bar at 13.2 %. No code change.
+  - **R164** (R78-N1): track rows name the alliance joined, start with a capital, keep a note with a semicolon whole;
+    Rome's note rewritten.
+  - **R165** (run 78's time-lapse items): the tooltip says "Gone by now: nothing to select" over a nation dead now; at
+    the first month the "from" label is hidden.
+  - **R166** (run 78's small item): opened war banners each their own height.
 
 ### Carry checks (ADR-959)
 
-- **Plain 1938 is unchanged:** the two 20-year saves end at run 77's hashes.
-  - 7019: `ab927e1b`, 78 nations (`critic/c78_seed7019_save.log`).
-  - 32019: `c3520016`, 76 nations (`critic/c78_seed32019_save.log`).
-  - The diff touches nothing under `src/sim/systems/`, `src/sim/ai/` or `src/sim/nav/`, nor `tick.ts` or `sim.ts`.
-  - So the plain 1938 sets, the bulk landing sets among them, are "plain 1938 unchanged, carried".
-- **"Sim unchanged" does not apply,** because `timeline.json` is in the diff. The replay cases that read it were run
-  again (track rows).
-- **R77-N3's case repeats exactly:** `warOpening 57211 57213 57215`, three years, gives 14 of 88 with no cell held and
-  the defender ahead in 20.3 %, as run 77 (`critic/c78_woCount.log`).
+- **Plain 1938 is unchanged:** the two 20-year saves end at run 78's hashes.
+  - 7019: `ab927e1b`, 78 nations (`critic/c79_seed7019_save.log`).
+  - 32019: `c3520016`, 76 nations (`critic/c79_seed32019_save.log`).
+  - The heroes' 7019 run ends at run 77's `a980a729` (`critic/c79_hero_7019_20.log`).
+  - The diff touches nothing under `src/sim/`.
+- So run 61's bulk landing sets and Malta are "plain 1938 unchanged, carried". Every other set of run 78 was run again.
 
 ### Setup
 
 - **Builds:**
-  - HEAD in `critic/c78_dist`, with the replay's 54 starts built from HEAD (`npm run saves`, 570 s, exit 0;
-    `critic/scripts/c78_build.sh`). Served on 127.0.0.1:5397.
-  - Run 77's build (`critic/c77_dist`, `7066d800`; `critic/c77_commit.txt`) on 5396, for the cases whose score moves.
-- **Browser:** Playwright Chromium on the GPU. New seed family: 63xxx, and 66xxx for `warOpening`.
+  - HEAD in `critic/c79_dist`, with the replay's 54 starts built from HEAD (`npm run saves`, 560 s, exit 0;
+    `critic/scripts/c79_build.sh`). Served on 127.0.0.1:5391.
+  - Run 78's build (`critic/c78_dist`, `d7b981dd`) on 5392, for the batch's own cases beside HEAD.
+- **Browser:** Playwright Chromium on the GPU, at 1600 × 900, 1400 × 800, 1024 × 768, 1920 × 1080, 2560 × 1440,
+  1280 × 720, 390 × 844, 844 × 390, and 3840 × 2160 for the frames.
+- **New seed family:** 64xxx.
+  - Disclosed: my `warOpening` seeds 64211, 64213 and 64215 turned out to be one of ADR-1132's own sets
+    (`.cache/r160/on_64211.json`). My run repeats the builder's figures exactly. It confirms them, but it adds no new
+    seed to the pool.
 - **Scripts:**
-  - `c78_runNamed.sh` runs `c78_jobs.txt`, then `landingFuzz`.
-  - `c78_laneOld.sh` runs the cases on both builds.
-  - `c78_woAB.sh` runs the R77-N3 A/B.
-  - The page probes are copied from run 77 as `c78_*`.
-  - New: `c78_bannerHourly.mjs`, R161 hour by hour.
-- **Name collisions, disclosed:**
-  - `c78_tlDead.mjs` and `c78_bannerRank.mjs` write fixed file names whatever the build.
-  - HEAD's outputs were copied aside before the old-build runs: `critic/c78tld_head_*`, `critic/c78_br_head_*` and
-    `critic/shots/c78tld_head_*`.
-  - The old build's copies are `c78tld_c77build_*` and `c78_br_c77build_*`; the 32019 world's are `c78tld_32019_*`.
-- **`c78_look.mjs` names its shots `c75look_<seed>_*`.** Those of seed 63901 are this run's.
-- **Probe failures of mine:**
-  - `c78_afterTrack` 55601 and 37601 crashed on a cache folder I had not made (`critic/c78_atcache`), as in run 77. I made
-    the folder and ran both again.
-  - All three `afterTrack` cases then gave run 77's figures to the war: 207, 222 and 220 wars declared, the same great
-    powers and blocs.
+  - Headless: `c79_runNamed.sh` runs `c79_jobsAll.txt` (60 cases, then `landingFuzz` from 64101).
+  - Replay starts: `c79_chainS.sh` runs `c79_startsJobs.txt` (run 78's 40 cases and 5 new ones), then `c79_jobsB.txt`
+    (run 78's named headless cases).
+  - Page lanes: `c79_laneA.sh` (the batch, UI, stats), `c79_laneB.sh` and `c79_laneC.sh` (run 75's whole page suite on
+    new seeds), `c79_laneD.sh` (look, zoom, monkeys, sea battles).
+  - Performance: `c79_chainPerf.sh`, alone, last.
+  - Every page probe was copied as `c79_<name>.mjs` from its newest version, its output names made `c79`
+    (`c79_mkprobes.sh`). Run 78's outputs, the comparison baseline, are untouched.
+  - New probes: `c79_liftTrace.ts` (R79-B1), `c79_glWarn.mjs`, `c79_glSpot.mjs` and `c79_lookW.mjs` (R79-N2),
+    `c79_rw2.mjs`, `c79_trackTexts.ts`.
+  - Extended: `c79_tlDead.mjs` (STEP, the "gone" note, the "from" label's visibility) and `c79_deathTitle.mjs` (each
+    banner's box, cut text, lines).
+- **Probe failures of mine, and three items unjudged since run 77, settled:**
+  - **`x_continue`, `h_continue` (the title's Continue):** they stood since run 77 because Settings > Main menu now asks
+    to confirm (`settings-menu-yes`). Probe fault. Mended, both are whole:
+    - 64415: continued at tick 960, the hash of the game left, "Playing Germany" in the corner. Sixty days later it is
+      the unbroken game's hash (`critic/c79_xc_64415_GER.json`, `critic/shots/c79xc_64415_continued.png`).
+    - The replay: the same, with the track's "Next" line kept (`critic/c79_h_continue.mend_400_120.log`).
+  - **`rw_random`:** its war selector (`war-chip`) is stale, so it read no wars. Mended as `c79_rw2.mjs`. The random
+    world runs two years on the page with 60 nations, 4 to 15 wars and 0 errors (`critic/c79_rw2_64965.json`).
+  - **`dirHand`'s History act on a phone:** the probe is not at fault. History opens under the nation panel the act
+    before opened. Filed as R79-N3.
+  - `x_editor` with MAINSTART: the title's Start is disabled while a scenario file is chosen. Run 75 judged this as
+    designed; so do I.
 
 ### At the end
 
-- Both preview servers (5397, 5396) were stopped by the process ids that held their ports. 5397 was started again for
-  the carried page cases and stopped the same way. No probe, sim or browser of mine is left. No worktree.
+- Both preview servers (5391, 5392) were stopped by the process ids that held their ports. No probe, sim, browser or
+  monitor of mine is left. No worktree. A `vite preview` on port 4174, not mine, was left running.
+- After the performance chain, three short page probes and one headless check were run alone: `c79_liftJump.ts`,
+  `c79_xcRow.mjs` and `c79_ownFirst.mjs`.
+  - The last two looked into whether the played nation's war is first on the banner row after Continue. It is: Germany
+    is in "Italy & 2 ⚔ Austria & 3" (`critic/c79_ownFirst_64415_w.log`). No finding.
+  - A small one, though: the banner hides the played nation behind "& 2".
 - `git status` shows nothing new outside `critic/`. The eight untracked PNGs under `docs/evidence/7.132/` were there
   before.
 - **Writes outside `critic/` by tools at their defaults:** `npm run sim` to `.cache/runs/`, and `landingFuzz` to
-  `.cache/landingFuzz/d7b981dd-63101`.
+  `.cache/landingFuzz/79058a5a-64101`.
 
 ## Verdict
 
-**No blocking issue.**
-- **R77-B1 is fixed on its own case and on a second world.** HEAD names Sweden, Norway and Germany, dead now, on the
-  time-lapse's first month, and a click on one selects nothing. Run 77's build, run beside it on the same world, still
-  gives an empty tooltip and `selected` 32.
-- **Every checker run is clean:**
-  - `diploInvariants` and `worldInvariants`: 0 broken on 7 runs.
-    - New seeds: 63001, 63003, 63005, 63051, 63053 and 63055.
-    - R76-B1's seed 33501.
-  - `landingFuzz`: 0 of 90 on new seeds 63101 to 63129, `slowClick` included.
+**One blocking issue: R79-B1.** `diploInvariants 64015 random 1825 --heroes` breaks `lift`.
+- On day 1411 Argentina declares war on #105 across the sea, with 16,294 men to lift for a room of 25,200.
+- The AI's own gate refused it in every hour before:
+  - `noLift(ARG, callSides(ARG, #105))` is true in each of the six hours before.
+  - The sides `[[ARG],[#105]]` touch nowhere.
+- So a door that does not ask the gate declared it. This is R76-B1 again, by another door.
+- It is the only break in 17 checker runs on new seeds (10 `diploInvariants`, 7 `worldInvariants`); the 3 on earlier
+  seeds are clean. The sim is the same as run 78's, so run 78's build gives the same.
 
-**One score moves: UI/UX goes from 7 to 8.** Each of run 77's three cases for an 8 is met on HEAD. Run 77's build was
-run in the same session:
-- `bannerRank 57901 150`: 8, 20 and 17 on HEAD.
-  - Run 77's build gave 34 in this session. That one run is under the bar of 44.
-  - The failure is run 77's own three runs: 51, 33 and 42, against the bar of each under 44.
-  - HEAD's three are all under 21, where the old build's spread on that seed was 33 to 53 (runs 77 and 78).
-- `tlDead`: "Sweden" with `selected` 0 on HEAD, against an empty tooltip and `selected` 32.
-- Resume: the plate closes on HEAD, and stays open over 1938 on run 77's build.
+**Every other checker run is clean:**
+- `diploInvariants`: 0 broken on the other nine of 64001 to 64019 (1938, random diplomacy, heroes, the random world;
+  two of ten years), and on run 76's and 78's 33501 and 63001.
+- `worldInvariants`: 0 broken on 64051 to 64061, 64065 (ten years) and 63051.
+- `landingFuzz --seeds 15 --first 64101`: **0 of 90** broken, `slowClick` included (`critic/c79_landingFuzz.log`).
+- `landingRows all`: 115 cases, 20,321 hours, 0 broken, as in run 77 (`critic/c79_lrows_all.log`).
+- `workerDeterminism`: 54059 ends at `ed05e7b5` on every arm, as in runs 76 and 77; 64059 at `a01d68d7`.
+- `seaBattlesLook`: 51 of 51 and 35 of 35 battles seen.
+- The replay's free starts: 0 broken lines in 13 runs (5 of them new seeds), and `blocend` 0 on 54611 and 64611.
 
-The churn R161 could have brought is not there:
-- `bannerFlip`: 8, 4, 5 on HEAD, against 7, 4, 6 on run 77's build.
-- `bannerHourly`: 2 changes of the row's set in 480 hours, and no banner that came and went within three hours.
+**The batch is fixed on its own cases, with run 78's build beside it:**
 
-**Every score is now at or over its bar, and there is no blocking issue.** Under ADR-916 the next run is the full one.
+| case | run 78's build | HEAD |
+|---|---|---|
+| R165: the tooltip on Sweden, January 1938 | "Sweden" | "Sweden / Gone by now: nothing to select" |
+| R165: the "from" label at step 0 | visible | hidden; visible at January 1948 |
+| R166: the neighbour of the death banner, opened, 1400 × 800 | 78 px tall | 31 px |
+| R164: "Italy occupies Rome" | on the page (run 78's report) | "4 June 1944 Rome falls to the Allies" on the page |
+| R164: "Romania joins the alliance" | no alliance named (run 78's report) | "Romania joins the Anti-Comintern Pact", through `trackText` with the key `historyRows` sends; not seen on the page |
 
-**Still open, non-blocking:**
-1. **R78-N1:** the residue of the track rows. On the page, "Italy occupies Rome" and a row that begins "the Second
-   Vienna Award". Through `trackText` only, "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania".
-2. **R78-N2:** R77-N3, kept by ADR-1130. On three new seeds of mine, with R147 the attacker has no man near in 18.8 % of
-   wars, against 9.4 % without it. ADR-1094's bar is 15 %.
+**No score moves.** Every dimension is at 8, at or over its bar. With R79-B1 blocking, this run does not clear a
+release (ADR-916).
 
 ## Scores
 
-### Map visuals and readability: 8 → **8** (afresh)
+### Map visuals and readability: 8 → **8**
 
 **What I tested:**
-- `look` on a new seed (63901) at desk size, days 45, 180 and 400, every tier, both looks.
-- The opened banners at 1400 × 800 and on a phone (R161's death-line fix).
-- The phone's ticker over the opened banners (62903).
+- `look` on new seeds:
+  - 64901 at 1600 × 900, days 45, 180 and 400.
+  - 64903 on a phone.
+  - 64907 at 2560 × 1440, days 120 and 500.
+  - Every tier, both looks.
+- The opened banners at six sizes (R166).
 - The time-lapse's map on two worlds.
+- The random world after two years.
 
 **Evidence for 8:**
-- **The fronts read at every tier.** In February 1939 on 63901, at 3,000 m/px over Europe, there are hatched occupied
-  land, named capitals and each army's men (`critic/shots/c75look_63901_1600x900_d400_3eur3000.png`).
-  - At 100 m/px on the Japanese–Chinese front: named divisions, the line and the orders' arrows
-    (`critic/shots/c75look_63901_1600x900_d400_f0_100m.png`).
-  - At 30 m/px: the men of each division (`…_f0_30m.png`).
-  - 0 page errors (`critic/c78_look_63901_desk.log`).
-- **R161's death-line fix holds.** At 1400 × 800 the opened banners stand two rows deep, not three, and the death line
-  wraps under its own banner (`critic/shots/c78dt_7019_400_1400x800.png`). On a phone:
-  `critic/shots/c78dt_7019_400_390x844.png`.
-- **The phone's ticker** stands clear above the opened banners: the ticker at y 575 to 613
-  (`critic/c78pt_62903_390x844.json`, `critic/shots/c78pt_62903_390x844_opened.png`).
-- **The phone's layout:** 0 controls off the screen and 0 clipped (`critic/c78_p_phone.log`).
-- **The time-lapse's map is exact:**
-  - `tlMonths 59947`: three months, each with 0 cells unlike the game's own map, and the record whole after a save and
-    load (`critic/c78_tlMonths_59947.json`).
-  - On 32019 (HEAD's year-20 world), Manchukuo, dead now, is named on its 1938 land (`critic/c78tld_32019_1600x900.json`,
-    `critic/shots/c78tld_32019_1600x900_hover.png`).
+- **The fronts read at every tier.** In February 1939 on 64901, at 3,000 m/px over Europe, there are hatched occupied
+  France, arrows, named capitals and each army's men (`critic/shots/c79look_64901_1600x900_d400_3eur3000.png`).
+  - At 100 m/px on the Franco-German front: the line's glow, named divisions, their men, the hatching
+    (`critic/shots/c79look_64901_1600x900_d400_f0_100m.png`).
+  - 0 page errors at desk and phone size (`critic/c79_look.64901_1600_900_45_180_400.log`,
+    `critic/c79_look.64903_390_844_60_240_phone.log`).
+- **R166:** opened, every banner without the death line is 31 px tall (27 on a phone) at 1400 × 800, 1600 × 900,
+  1024 × 768, 1920 × 1080, 390 × 844 and 844 × 390. The death banner is 78 (68). There is no cut text and nothing off
+  the screen (`critic/c79_dt_7019_400_*.json`, `critic/shots/c79dt_7019_400_1400x800_opened.png`).
+  - Run 78's build at 1400 × 800: the neighbour is 78 px (`critic/c79_dt_c78build_7019_400_1400x800.json`).
+- **The time-lapse's map and its tooltip** (see UI/UX): Sweden, Norway and Germany on 7019, Manchukuo and French Morocco
+  on 32019, are each marked gone (`critic/shots/c79tld_390x844_smid_hover.png`).
+- **The world over 12 years** (`long_watch2 64941`) is legible at the world's zoom to 1950
+  (`critic/shots/c79lwhon_64941_y12_world.png`).
 
 **Not 9:**
-- An opened banner of a short war stands as tall as its neighbour with the death line, half of it empty ("Italy & 3 ⚔
-  Turkey & 2" in `critic/shots/c78dt_7019_400_1400x800.png`).
-- As before: heroes' names over counters at the world's zoom on a phone (ADR-1111).
+- **Heroes' names over Europe's counters at the world's zoom**, worst on a phone ("Maus", "Bismarck", "P.100 Ercole",
+  "Sovetsky Soyuz", "Richelieu", "Roma" in one heap over France, `critic/shots/c79pt_64903_390x844_opened.png`). ADR-1111
+  keeps this (Design objections).
+- **A WebGL warning at 2560 × 1440** (R79-N2). Nothing was seen missing in the picture.
+- **In the random world, banner text wraps mid-phrase** (R79-N1).
 
-### Diplomacy, war, alliance, puppet, revolt depth: 8 → **8** (carried; R77-N3 re-run)
-
-- **Carried:** plain 1938 is unchanged (above). The checkers are 0 broken on the new seeds 63001, 63003 and 63005, and on
-  33501.
-- **R77-N3, kept by ADR-1130,** which is the builder's decision for the user's review, so it is judged here.
-  - **The case on HEAD** (sim unchanged) repeats run 77: 57211 to 57215 give 14 of 88 with no cell held, the defender
-    ahead in 20.3 %.
-  - **ADR-1130's claim on three new seeds of mine** (66211, 66213, 66215; three years; `critic/scripts/c78_woAB.sh`,
-    `critic/c78_woCount.log`):
-
-    | measure (ADR-1094's bar) | HEAD | R147 off (`--lift-far`) |
-    |---|---|---|
-    | no cell held at day 30 | 10 of 92 (10.9 %) | 10 of 96 (10.4 %) |
-    | attacker with no man near (bar 15 %) | **13 of 69 (18.8 %)** | 6 of 64 (9.4 %) |
-    | defender ahead at day 30 (bar 15 %) | **12 of 69 (17.4 %)** | 9 of 64 (14.1 %) |
-
-  - **What this shows:**
-    - The bare openings are as many with R147 as without it. That bears out ADR-1130's main finding.
-    - On these three seeds HEAD breaks both of ADR-1094's bars, and R147 off breaks neither. ADR-1130 says the bars hold
-      on its nine seeds; they do not on mine.
-    - Three seeds are noise (run 77 saw 5 to 14 % a set either way), so this moves no score.
-    - Pooled with run 77's fifteen seeds, the defender is ahead in 60 of 382 (15.7 %, bar 15 %).
-  - It is filed as R78-N2.
-  - **Diplomacy stays at 8, at its limit as in run 77:** the code is the same, and only the pool of seeds grew.
-
-### Emergent world dynamics: 8 → **8** (carried)
-
-Plain 1938 is unchanged: 7019 and 32019 end at run 77's hashes with 78 and 76 nations.
-
-### God Mode: 8 → **8** (carried)
-
-No changed file touches it. Run again on HEAD, each with exit 0 and 0 page errors:
-- `a_god_nuke 63917`, with the strikes on Paris and London (`critic/c78_a_63917.json`).
-- `q_god_tools 63919`.
-- `undo2 41211` and `undo2y 51231`: each of the five tools undone (`critic/c78_undo2*.log`).
-- `godpeace 1942 JAP` and `takescore 1942 GER`.
-
-### Editor and scenarios: 8 → **8** (carried)
-
-No changed file touches it. Run again all the same:
-- **The replay's starts**, built from HEAD with the new `timeline.json`. Run 77's 40 replay cases were run on them; the
-  side-by-side lines are in `critic/c78_startsCmp.txt` (`sh critic/scripts/c78_startsCmp.sh`).
-  - The free starts 1942 to 1991 (13 runs): 0 broken lines each, as in run 77.
-  - `blocend 54611`: 0 bloc lines broken. `track 58301`: 0 broken.
-  - `capsurvey 1975`: 2 of 154, as in run 77.
-  - Run 77's 1975 start loads on HEAD (`critic/c78_oldsave_1975.log`).
-- **The page:**
-  - `g_editor 58921`, `x_stage normandyD`, `god42 1942 replay`: exit 0, 0 page errors.
-  - `x_continue 58415`: the same failure to find Continue as in run 77's log, not judged.
-
-### Stats and history: 8 → **8** (afresh)
+### Diplomacy, war, alliance, puppet, revolt depth: 8 → **8** (R79-B1 blocking)
 
 **Evidence for 8:**
-- **R77-N2 fixed on its own probe.**
-  - `npx tsx critic/scripts/c78_trackTexts.ts` (`critic/c78_trackTexts.log`): 67 rows told, 36 kept as written, 65 bare.
-  - Of run 77's 41 odd rows, 0 are produced: `cut -f5 critic/c78_trackTexts.log | grep -Fxf critic/c77_trackTexts_odd.txt`
-    is empty.
+- **16 of 17 checker runs on new seeds are 0 broken** (above), and the 3 on earlier seeds.
+- **Wars that open:** on `warOpening` 64211 to 64215, of 68 wars with a border, the attacker has no man near in 10
+  (14.7 %; ADR-1094's bar 15 %) and the defender is ahead at day 30 in 10 (14.7 %) (`critic/c79_warOpening_64.log`).
+  - This is ADR-1132's own set, and it repeats exactly.
+  - R78-N2's case 57211 to 57215 repeats run 78 (sim unchanged): 8 of 64 (12.5 %), the defender ahead 20.3 %
+    (`critic/c79_wo_57.log`).
+  - ADR-1132's pooled 13.2 % stands. R78-N2 is settled as the builder's decision, for the user's review.
+- **The first declarations:** 58 on ten seeds in 60 days, none over 6,000 km (`critic/c79_firstdecl_64.log`).
+- **Piles:** at day 365, 2 of ten seeds have a war over 4:1, both Italy on Portugal at 1:5 realms (64139, 64149;
+  `critic/c79_piles_*64.log`). Run 77 had 2 of 30. `pileSides` finds 0 of 63 declarations born over the bar: the pile
+  grows after (`critic/c79_pileSides_64.log`).
+- **Massings told:** 50 told, 43 followed by war, 6 given up, 3 called off with no rule broken
+  (`critic/c79_massTold_64.log`). The three given up in silence were each at war with the target already. Run 77's 57613
+  repeats run 77 line for line.
+- **Few-nation worlds:** 2, 3 and 60 nations go to war and live (`critic/c79_few*_64.log`).
 - **On the page:**
-  - 1941 (365 days): no "occupies The" and no "line of 1941" (`critic/c78tr_1941_1600x900.json`). The four lines read
-    "Barbarossa: the German front" (`critic/shots/c78tr_1941_1600x900_Barbarossa.png`).
-  - 1942 (400 days): "Kerch retaken" and "Buna and Gona retaken" stand as written
-    (`critic/shots/c78tr_1942_1600x900_Kerch.png`). "Japan occupies the Netherlands Indies" now has a small "the".
-  - The rows of 1943 and 1944: `critic/c78tr_1943_1600x900.json`, `critic/c78tr_1944_1600x900.json`.
-- **R77-B1 fixed** (see UI/UX).
-- **Run 77's late cases:**
-  - `histPlace 59961`: 11 of 11 kinds of row fly to their place on the canvas (`critic/c78hp_59961_1600x900.json`).
-  - `tlMore cell 59943`: still "Norway", with Norway's panel (`critic/c78tm_cell_59943.json`).
+  - The peace button is enabled at +25 and refused with its reason at +0, at two sizes
+    (`critic/c79_peacebtn.64217_*.log`).
+  - Ten wars' buttons fit in a phone's panel (`critic/c79_manywars.*.log`).
+  - The relations graph says each tie in words, at desk and phone size, with heroes and with random diplomacy
+    (`critic/c79_rg_relations.*.log`).
 
-**Not 9 (R78-N1):**
-- **"4 June 1944 Italy occupies Rome"** on the page. Rome fell to the Allies; the row makes Italy the taker of its own
-  capital (`critic/shots/c78tr_1943_1600x900_Rome.png`).
-- **"30 August 1940 the Second Vienna Award to Hungary"** begins with a small letter on the 1941 page
-  (`critic/c78tr_1941_1600x900.json`).
-- **Through `trackText` only** (the page shows that date's other row, which has a colon):
-  - "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania". The semicolon passes R159's bare-place test, and
-    Bagration is an operation, not a place.
-  - "Romania joins the alliance" and eight more name no alliance (`critic/c78_trackTexts.log`).
-- **Rows that repeat:**
-  - "Barbarossa: the German front" four times on four dates.
-  - On 31 December 1942: "Uranus and Little Saturn: the Red Army's advance" beside "Uranus and Little Saturn: west of
-    the line" (`critic/c78tr_1942_1600x900.json`).
-- Still bare: "Italy's zone", "Egypt clear", "The Soviet zone".
+**Under 9, and blocking:** R79-B1. A war declared across the sea with no lift, through a door the gate does not
+guard, is the second such door after R76-B1.
+- The score stays 8, as in run 76 with R76-B1: the break is one run of 17.
+- The rule it breaks is the builder's own (ADR-1119).
 
-### UI/UX and polish: 7 → **8** (afresh)
+### Emergent world dynamics: 8 → **8**
 
-**The cases run 77 named for an 8, on both builds in the same session:**
-
-| case | run 77's build (`7066d800`) | HEAD | the bar |
-|---|---|---|---|
-| `bannerRank 57901 150`: quiet banner-days with a war in battle behind "+n" | 34 here (`critic/c78_br_c77build_57901.log`); run 77: 51, 33, 42 | **8, 20, 17** (`critic/c78_br_57901_a.log`, `_b`, `_c`) | three runs each under 44 |
-| `tlDead` on run 76's 7019 world, at January 1938: the tooltip on Sweden | empty | **"Sweden"**; Norway and Germany named too | "Sweden" |
-| … a click | `selected` 32, no panel | **`selected` 0** | 0 or a panel |
-| … the bar's Resume | the plate stays open over 1938, 96 h run | **the plate closes; the map is 1957's** | `ranHours` 0 or the plate closed |
-
-- Files for the `tlDead` rows: `critic/c78tld_c77build_1600x900.json`, `critic/c78tld_head_1600x900.json`,
-  `critic/shots/c78tld_head_1600x900_hover.png`, `critic/shots/c78tld_head_1600x900_resume.png`.
-- **The same at phone size** (`critic/c78tld_head_390x844.json`):
-  - The tooltip "Sweden"; Norway and Sweden named at the control points.
-  - `selected` 0, and the plate closed on Resume.
-- **On a second world** (HEAD's 32019, year 20; `critic/c78tld_32019_1600x900.json`):
-  - "Manchukuo" and "Xinjiang", dead now, are named. Soviet Union, alive, is named too.
-  - `selected` 0, and the plate closed on Resume.
-- **New seed:** `bannerRank 63901 150` gives 6 (`critic/c78_br_63901.log`).
-- **R161 brings no churn:**
-  - `bannerFlip` (60 s at ×5), changes of the row and of the banner under a resting cursor:
-
-    | seed | HEAD | run 77's build |
-    |---|---|---|
-    | 57901 | 8; 1 | 7; 1 |
-    | 58901 | 4; 0 | 4; 0 |
-    | 57903 | 5; 2 | 6; 2 |
-
-    Files: `critic/c78_bf_head_*.log`, `critic/c78_bf_c77build_*.log`.
-  - Hour by hour (`c78_bannerHourly.mjs 57901 100 480`): the row's set changed 2 times in 480 hours, 0 of them back
-    within three hours (`critic/c78_bh_57901.log`).
-- **R162:** banners read "Nationalist Spain ⚔ Portugal & 2 +32 ☠"; the allies and the score no longer both carry a plus
-  (`critic/c78_dh_59955.log`).
-- **Run 77's other UI cases hold:**
-  - `dirHand 59955`: 0 cuts after every act on desk size (`critic/c78_dh_59955.log`). On a phone, 0 cuts after the
-    ticker and banner acts (`critic/c78_dh_59955_phone.log`).
-  - `timeLapse 59941` (desk) and `59945` (phone): `ranUnderLapse` 0 (`critic/c78_tl_59941_desk.log`,
-    `critic/c78_tl_59945_phone.log`).
-- **Monkeys:** 63803 (1600 × 900, 3 min) and 63811 (390 × 844 touch, 3 min).
-  - 0 page errors. The game was running at the end, neither hung nor left (`critic/c78_monkey_63803.log`,
-    `critic/c78_monkey_63811_phone.log`).
-  - The game stood paused through most of both: 83 ticks on the desk, and on the phone the tick went from 22 to 18 (a
-    load or an undo). They test the controls, not a running world.
-- **R161 after a page save and load** (`c78_bannerLoad.mjs 57901 150`, with `LOAD=1` and without):
-  - The row is the same before and after the load, and 0 changes in the next 72 hours, as in the run with no load
-    (`critic/c78_bl_load150.log`, `critic/c78_bl_noload150.log`).
-  - Not stressed: the case had no war fought one or two days before the load. Such a war has no `lastBattle` after a load
-    and counts as still at once. Not tested.
-- **R157 was tested at step 0 (January 1938) only,** not at a mid-record month.
-- **Run 77's page cases of the carried dimensions, on HEAD:**
-  - Exit 0 and 0 page errors for all 15 (`critic/c78_laneP*.out`, `critic/c78_*.log`).
-  - `x_continue 58415` cannot find the title's Continue after leaving, as in run 77's own log
-    (`critic/c78_x_continue.58415_40_GER_60.log`). Run 77 did not judge it. It is not judged here either.
-  - The first `c_battle 63915` timed out loading the page beside five headless sims. Run again alone: exit 0.
+**Evidence for 8:**
+- **Two 12-year watches on the page**, with and without heroes (`long_watch2 64941` and `64943`), 0 errors each
+  (`critic/c79_long_watch2.*.log`). Wars stand on
+  every continent through 1950, the map changes each year (`critic/shots/c79lwhon_64941_y*_world.png`).
+  - By 1950 the Soviet Union fights Belgium & 7 and France & 3; China fights Siam.
+- **No runaway:** `topArea 64097` over 25 years has the Soviet Union, the largest, at 16 to 23 % of the land. The second
+  is the United States, Brazil or France at 7 to 14 % (`critic/c79_toparea_64097.log`).
+- **Twenty years with heroes:** 80 nations live, 6 to 12 wars declared a year to the end (`critic/c79_hero_64019_20.log`).
+- **The random world on the page:** 60 nations, 4 to 15 wars a month, one nation dead in two years
+  (`critic/c79_rw2_64965.json`).
+- **After the track** (`afterTrack` 55601, 37601, ten years): 207 and 222 wars declared, the same as run 78.
 
 **Not 9:**
-- **A dead nation is named exactly as a living one** on the time-lapse ("Sweden"), with no sign that it is gone. A click
-  on it does nothing, with no word why.
-- **At the first month the plate says "from January 1938" and "January 1938" side by side**
-  (`critic/shots/c78tld_head_1600x900_hover.png`).
-- **`dirHand`'s History act** still cannot be clicked on a phone (`history-go` not shown). Not judged, as in run 77.
+- Alliances join across the world for no reason a watcher can see: "Afghanistan joined the Balkan Entente" on
+  13 January 1938 (`critic/c79_histgrep.64309_FRA_540_joined.log`).
+- In the 1942 game left free, Finland, Switzerland and Sweden join a war on Siam within 30 days
+  (`critic/c79_freewar_1942god.log`; the same since run 71).
 
-### Performance: 8 → **8** (carried)
+### God Mode: 8 → **8**
 
-No sim file changed. The worker's one change adds a field per war to the stats.
+**Evidence for 8:**
+- **Strikes:** `a_god_nuke 64917` puts a hydrogen bomb on Paris and an atomic bomb on London. The alert names the toll,
+  and the ring and cloud stand over Paris (`critic/shots/c79a_64917_14_paris_h_2h.png`).
+- **Each tool works and each is undone:** `q_god_tools 64919` (Prague razed, told in the ticker), and `undo2 41211` /
+  `undo2y 51231` undo all five tools (`critic/c79_undo2.41211.log`).
+- **A breakthrough** is told in the ticker, in History, in the CSV and in the JSON export (`critic/c79_kwhist.64951.log`).
+  `kw_breakthrough 64923` tells it in the ticker at once (`critic/c79_kw_breakthrough.64923.log`).
+- **On the replay:**
+  - `godpeace 1942 JAP` says what a God act does to the replay (`critic/c79_godpeace.1942_JAP_United_States.log`).
+  - `god42 1942 64542`: 0 errors.
+  - `takescore 1942 GER`: the player's wars are first on the row.
+- **Forced war:** `fw2_forcewar 64935` breaks the bonds in its way.
 
-### Stability: 8 → **8** (carried)
+**Not 9:** the strike's ring covers the city's own name ("Pari", `critic/shots/c79a_64917_14_paris_h_2h.png`).
 
-Probed all the same:
-- Two monkeys, 0 errors (above).
-- Run 76's year-20 save loaded on HEAD plays its 240-month time-lapse (`critic/c78tld_head_1600x900.json`).
-- The 20-year runs repeat run 77's hashes.
+### Editor and scenarios: 8 → **8**
 
-### Semantic zoom to unit level: 8 → **8** (carried)
+**Evidence for 8:**
+- **Paint, undo, redo, export and load:** `x_editor 64443` paints French cells German and undoes them. It exports the
+  file and loads it from the title as painted (`critic/c79_x_editor.64443.log`).
+- **Bad files are refused** with the Start gone (`critic/c79_x_badfiles.log`).
+- **The standoff file** loads in 5.3 s (`critic/c79_os2_scen.*.log`). `g_editor 64921` runs 120 days with ten warheads
+  given to Poland (`critic/c79_g_editor.64921.log`).
+- **The replay's starts, built from HEAD:**
+  - 13 free starts from 1942 to 1991, 0 broken lines each (`critic/c79_free_*_free.log`).
+  - `saveload 1942`: the same hash after 30 days.
+  - `capsurvey 1975`: 2 of 154, as in run 78.
+  - Run 78's 1975 start loads on HEAD and plays the track to its end (`critic/c79_oldsave_1975.log`).
+- **The page's own save:** saved and loaded twice, then the same hash 200 days on (`critic/c79_saveload_page.64937_200.log`).
+- **Continue:** whole on both kinds of game (Setup above).
+- **The stages:** `x_stage normandyD` and `stalin` run with the track's "Next" line and their notes
+  (`critic/c79_x_stage.*.log`).
 
-No changed file touches it. Every tier was drawn in `look 63901` (30 to 14,000 m/px, `critic/shots/c75look_63901_*`).
+**Not 9:** the game is started from the title only by an exact path; a chosen file disables the title's own Start with a
+sentence, not a choice.
 
-### Naval warfare: 8 → **8** (carried)
+### Stats and history: 8 → **8**
 
-- `landingFuzz --seeds 15 --first 63101`: **0 of 90** broken, `slowClick` included (`critic/c78_landingFuzz.log`).
-- The bulk sets and Malta: plain 1938 unchanged, carried.
+**Evidence for 8 (R164):**
+- **On the page:**
+  - "4 June 1944 Rome falls to the Allies" (`critic/shots/c79tr_1943_1600x900_Rome.png`).
+  - "30 August 1940 The Second Vienna Award to Hungary", and "The First Vienna Award to Hungary"
+    (`critic/c79tr_1940_1600x900.json`).
+  - "Bagration and Lvov-Sandomierz; Romania: the Germans fall back" whole (`critic/c79tr_1944_1600x900.json`).
+- **Through `trackText`, with the alliance's key as `historyRows` sends it** (`critic/c79_trackTexts2.log`):
+  - "Romania joins the Anti-Comintern Pact", "Czechoslovakia joins the Eastern Bloc", "France joins the North Atlantic
+    Treaty".
+  - Bagration's row is not told as an occupation.
+  - Run 78's own probe, which passes no alliance key, still prints "joins the alliance" nine times
+    (`critic/c79_trackTexts_now.log`). That is the probe, not the game.
+- **History itself:** on 32019 at year 20, 2,650 of 2,650 events, 29 kinds of filter, opened in 200 ms
+  (`critic/c79_hist.32019_critic_c79_seed32019_y20.bin.log`). The CSV and JSON exports agree
+  (`critic/c79_dl_export.*.log`).
+- **R165's time-lapse plate** (UI/UX).
 
-### Tanks: 8 → **8** (carried)
+**Not 9 (R79-N4):**
+- "Romania joins the Anti-Comintern Pact" (23 November 1940) sits under Hungary's row of three days before, "The
+  Tripartite Pact: Hungary". The game names one pact for the other.
+- Still bare: "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949".
 
-### Aircraft: 8 → **8** (carried)
+### UI/UX and polish: 8 → **8**
 
-### AI nuclear use: 8 → **8** (carried)
+**Evidence for 8:**
+- **R165 on the time-lapse** (`c79_tlDead`, run 76's 7019 world, and HEAD's 32019 world):
+  - At step 0, the middle month and on a phone, the tooltip names the dead nation and says "Gone by now: nothing to
+    select". A click selects nothing.
+  - Living nations are named without the note: Denmark (`critic/c79tld_1600x900_s0.json`, controlTips).
+  - The "from" label is hidden at January 1938 and shown at January 1948. Resume closes the plate
+    (`critic/c79tld_*_s*.json`).
+  - Run 78's build: "Sweden" alone, the "from" label shown at step 0 (`critic/c79tld_c78build_1600x900_s0.json`).
+- **The banners' row:**
+  - `bannerRank 57901 150`: 11 quiet banner-days while a fought war was behind "+n" (run 78: 8, 20, 17; the bar under 44).
+    On 64901: 8 (`critic/c79_bannerRank.*.log`).
+  - `bannerFlip` 57901, 58901, 57903: 8, 4, 5 changes, and the banner under a resting cursor changed 1, 0, 2 times. This
+    is run 78 to the figure (`critic/c79_bannerFlip.*.log`).
+  - `bannerHourly 57901`: 3 changes in 480 hours, none back within three hours.
+  - **After a load, with a war fought an hour before** (`bannerLoad 64901` at days 90, 120, 150, with and without a
+    load): the row is the same, `lastBattle` is back after the load, and there are 0 changes in 72 hours
+    (`critic/c79_bannerLoad.*.log`). This was untested in run 78.
+- **Monkeys:** 0 page errors in 16 minutes, and the game was running at each end, neither hung nor left
+  (`critic/c79_monkey.*.log`). The two touch monkeys left the game mostly paused (ticks 52 to 671, 360 to 1,606): they
+  test the controls more than a running world.
+  - 1600 × 900, 5 min, 1,957 acts; ticks 38 to 7,967.
+  - 390 × 844 touch, 5 min.
+  - 1280 × 720, 3 min.
+  - 844 × 390 touch, 3 min.
+- **Nine window sizes** in a running game: 0 chrome off the screen, the canvas the window's size
+  (`critic/c79_resize.64821_60.log`).
+- **The phone's layout:** 0 controls off the screen or clipped in 10 states (`critic/c79_p_phone..log`). The ticker
+  stands clear of the opened banners (`critic/c79pt_64903_390x844.json`).
+- **The rest of run 75's suite:** keys, the first cue, filters, the build menu, the mine and corridor marks, the
+  interventions and the late worlds. All exited 0 with 0 page errors. `x_title` wrote its JSON and no log line
+  (`critic/c79_x_title.json`). `nvpage 64213` found no next voyage to read, as run 75's 58213 did not.
+
+**Not 9:**
+- **R79-N1:** in the random world, banners wrap names and the "& 1" counts onto two lines ("Eastern / Cape",
+  "Orientale & / 1") with room beside them (`critic/shots/c79rw2_random_64965_banners_crop.png`).
+- **R79-N3:** on a phone, History opens under an open nation panel. Its rows with links are hidden behind it
+  (`critic/shots/c79dh_59955_390x844_history.png`).
+- **On a phone, three opened banners repeat the same death sentence** word for word ("Nationalist Spain fights to the
+  death…", `critic/shots/c79pt_64903_390x844_opened.png`). Together the opened banners take 286 of 844 px.
+
+### Performance: 8 → **8**
+
+**What I measured** (`critic/scripts/c79_chainPerf.sh`, alone, after every lane; each step exit 0, `critic/c79_pf.status`).
+Run 78 carried this dimension, so HEAD is set beside run 77's chain, the last one run:
+
+| measure | run 77 (`7066d800`) | HEAD |
+|---|---|---|
+| seed 99, 5 years, the pin's game: mean tick, year 5 p95 | 1.809 ms; 4.06 ms (`ca4700f1`) | 1.818 ms; 4.02 ms (`ca4700f1`) |
+| seed 99 with heroes, 5 years: mean tick; year 5 p95, max | 1.629 ms; 4.71, 220.5 ms | 1.617 ms; 4.65, 221.7 ms |
+| frames on 7019's year-20 world, 1600 × 900, every tier, both looks: mean fps, p95, worst | 59.4 to 60.2; 18.2 ms; 131 ms | 59.6 to 60.1; 18.2 ms; 116 ms |
+| the same at 2560 × 1440 | 59.7 to 60.2; 18.4; 122 | 59.5 to 60.1; 18.4; 126 |
+| the same at 3840 × 2160 | 59.3 to 60.1; 19.5; 122 | 59.5 to 60.1; 19.1; 119 |
+| the same, heroes' world | 59.3 to 60.2; 18.0; 128 | 59.4 to 60.1; 18.2; 118 |
+| touch, ticks a second with a selection / without | 383 / 268 | 380 / 271 |
+| a 12-year watch at Max, alone: a year's wall time; the longest gap between frames (seeds differ: not compared) | 17 to 34 s; 83 ms (58941) | 11 to 36 s; 83 ms (64945) |
+
+Files: `critic/c79_tick99*.log`, `critic/c79_pf_lookfps*.log`, `critic/c79_lookfps.log`, `critic/c79_tm_touch.alone.log`,
+`critic/c79_lw_64945_alone.log`.
+
+**Evidence for 8:**
+- Every figure is run 77's within noise. The sim is unchanged, and the batch's page changes (a tooltip line, a CSS rule)
+  cost nothing measurable.
+- 60 frames a second at every tier up to 4K, with a p95 of 18 to 19 ms.
+- `lookFps` 7019: forced 58.8 to 60 fps at 3,000 and 1,200 m/px, a draw 2.0 to 3.3 ms (`critic/c79_lookfps.log`).
+- The 20-year world plays a 240-month time-lapse (`critic/c79_tm_lapse20.log`).
+- A year of the 20-year world runs in 15.8 s (run 78's save; run 77 loaded run 76's: not compared).
+
+**Not 9:**
+- The worst frame at 1,200 m/px in the classic look is still 108 to 126 ms at each size: one frame a run that a player
+  sees as a hitch.
+- With heroes, a 20-year game's tick reaches 3.2 to 3.4 ms mean, with a max of 400 ms, in its late years
+  (`critic/c79_hero_64019_20.log`).
+
+### Stability: 8 → **8**
+
+**Evidence for 8:**
+- **0 page errors in every probe of this run**, about 170 page runs, and 16 minutes of monkeys at four sizes. The one
+  console line is R79-N2's WebGL warning.
+- **Determinism:** `workerDeterminism` repeats run 77's hash on 54059 on every arm. Plain 1938's 20-year hashes repeat
+  run 78's. The page's saves load to the same hash (`saveload_page`, `x_continue`, `h_continue`).
+- **Old saves:** run 78's 7019 year-20 save loads on HEAD and runs a year (15.8 s, `07e768a6`, `critic/c79_loadold_7019.log`). Run 78's 1975 start plays to the
+  track's end.
+- **Long runs:** two 12-year page watches with 0 errors. The longest gap between frames at Max is 133 ms
+  (`critic/c79_long_watch2.64941_12__heroes_on_hon.log`).
+
+### Semantic zoom to unit level: 8 → **8**
+
+**Evidence for 8:**
+- **`z_zoom 64911`:** 18 tiers from the world to 3 m/px over a German division, with 64 elements and 3,194 indices at the
+  last (`critic/c79_z_zoom.64911.log`).
+- **`markerPop` 64951 and 56951:** 0 leaps and 0 pops gliding 1,300 to 1,100 m/px and running 15 s. A frame's p95 is
+  19 ms (`critic/c79_markerPop.*.log`).
+- **`heroPop`:** zooming 9,000 to 4,000 m/px gives 0 jumps on 56901 and on new seed 64905. 57905 gives 5, as run 77's
+  `hpz` gave on that seed (`critic/c79_heroPop.*.log`).
+- **`markers`:** at 600 m/px, 0 or 1 pairs over 30 px on two seeds (`critic/c79_markers.*.log`).
+- **`look`'s tiers:** 1,200 to 30 m/px over two fronts on three seeds, both looks.
+
+**Not 9:**
+- At 1,800 m/px, 12 marker pairs touch on 56951 (`critic/c79_markers.56951_*.log`).
+- Zooming in, Char 2C's counter jumps 5 times on 57905.
+
+### Naval warfare: 8 → **8**
+
+**Evidence for 8:**
+- **`landingFuzz`:** 0 of 90 on new seeds (64101 to 64129), `slowClick` included. `landingRows all`: 115 cases, 0 broken (`critic/c79_lrows_all.log`).
+- **Sea battles:** `seaBattles 64061` (3 years, 51 battles) and `64069` (35). On the page every battle is seen at its
+  camera with both sides (`critic/c79_sbl_*.log`). `seaclick 64913` finds the battle's row and flies to it
+  (`critic/shots/c79sc_64913_150m.png`).
+- **Landings on the page:**
+  - `lland` 64903, 64907 and 64909: the landings sail, land, or are told when their transports are sunk.
+  - `lhold 64905` (Malta).
+  - `turnback 64901`: the cancel brings the divisions back.
+  - `lbar` and `lbox` on a phone (`critic/c79_l*.log`).
+- **Repulses** are told in words ("over: 1 landed, 2 thrown back"), with 0 broken (`critic/c79_repulse_*.log`).
+- **Run 77's named `landingInvariants`:** each the same line as run 77. Three break `slowClick` (a timing bound,
+  ADR-914), one breaks nothing.
+
+**Not 9:** in a Spanish civil war's sea battle both sides fly the same red-and-yellow flag at 150 m/px. Only the names
+tell them apart (`critic/shots/c79sc_64913_150m.png`).
+
+### Tanks: 8 → **8**
+
+**Evidence for 8:**
+- **`c_battle 64915` and run 75's 7781:** the armoured fight at 250, 80, 25, 10 and 15 m/px live, with wrecks and
+  sorties drawn (`critic/c79_c_battle.*.log`). At 15 m/px, Armoured division 40's tanks against white-and-red infantry
+  across the red contact line, a dead white-and-red ball, Maus beside, two planes beside it
+  (`critic/shots/c79c_64915_arm_15m_live_2.png`).
+- **Land heroes:** `heroCeiling` on three new seeds passes 25 of 36 lives, as run 77's 92 of 131 (70 %)
+  (`critic/c79_heroCeiling3_641*.log`). `heroBattle 64081`: Char 2C in battle 81 of 487 days at war.
+- **The fronts' arrivals:** at day 60, 92 % of Poland's men are at the German front, and 90 % of China's at the Japanese
+  front (`critic/c79_fa_*.log`).
+
+### Aircraft: 8 → **8**
+
+**Evidence for 8:**
+- **`pl_planes 64925`:** air marks from 3,000 to 25 m/px in both looks (`critic/c79_pl_planes.*.log`,
+  `critic/shots/c79pl_64925_GER_POL_5391_0250m_balls.png`).
+- **`w_wing 64927`:** a followed wing is marked in 58 of 58 samples at 3,000 m/px (`critic/c79_w_wing.64927.log`).
+- **Air war in History and the ticker:** "Italy and United Kingdom fought in the air over the past month: Italy lost
+  21 aircraft" (`critic/c79_h_interv.*.log`).
+- **The build menu** offers fighters and bombers with their price and time. A strategic bomber not researched is shown
+  disabled (`critic/c79_new.build_*.log`).
+
+### AI nuclear use: 8 → **8**
+
+**Evidence for 8:**
+- **Launches on new seeds over 22 years:** 7, 0, 3 and 10 (`critic/c79_nc_*.log`).
+  - `nukeIntercepts 64501`: 26 launches, 9 bombers, 4 stopped, against an expected 3.6.
+- **On the page:** in `an_ainuke 64511` (13 years), the Soviet Union's strike on France near Paris is told in the alert
+  with its toll: 183,000 civilians, 56,936 men and 226 guns (`critic/c79_an_ainuke.64511_*.log`). "Go to" lands on
+  Paris; at 3,000 m/px a dark ring marks the burst (`critic/shots/c79an_64511y13_0_z03000.png`). France's answer near
+  Tórshavn follows within two days.
+  - The 20-year worlds 7019 and 32019 (with and without heroes) play up to 400 more days with 0 errors.
+- **In the free 1991 start, 2 detonations in five years** (`critic/c79_free_1991_64611_free.log`).
+- **The kinds a player reads:** `NukeDecided` and `NukeMeansLost` reach History (`critic/c79_interceptTold.log`).
+
+**Not 9:** where the AI's bomb fell, the paused game shows only a faint dark spot under Paris's counter at 600 m/px
+(`critic/shots/c79an_64511y13_0_z00600.png`). God's bomb, two hours on, stands as a cloud in a ring
+(`critic/shots/c79a_64917_14_paris_h_2h.png`). Run 75's AI strike looked the same (`critic/shots/c75an_58505y13_0_goto.png`).
 
 ## Blocking issues
 
-None.
+1. **R79-B1 (diplomacy; ADR-1119's lift): a war across the sea declared with no lift, through a door the gate does not
+   ask.**
+   - **The case:** `npx tsx tools/diag/diploInvariants.ts 64015 random 1825 --heroes` gives 1 broken:
+     `64015 random, heroes day 1411: lift: ARG declared on #105 over the sea, 16294 men to lift for a room of 25200`
+     (`critic/c79_diploinv_64015rh.log`).
+   - **The trace:** `D=105 npx tsx critic/scripts/c79_liftTrace.ts 64015 random 1411 ARG --heroes`
+     (`critic/c79_liftTrace_64015_D2.log`).
+     - In each of the six hours before, `callSides(ARG, #105)` is `[[ARG],[#105]]`, the sides touch nowhere, and
+       `noLift` is **true**.
+     - #105 is at war with Brazil. Argentina is its land neighbour by ownership (`neighbourMap`), not
+       by control.
+     - In the hour of the declaration, Brazil makes peace with #105 and takes it as a puppet.
+     - Argentina's lift is 84,894 men in the hour after. That jump is the war's own effect, not something earlier in the
+       hour: at tick 33864, `seaLift` is 16,294 and `noLift` true; `declareWar(ARG, #105)` by hand, with no step, makes it
+       84,894 (`npx tsx critic/scripts/c79_liftJump.ts`, `critic/c79_liftJump_64015.log`). So the gate, asked before
+       the declaration, said no.
+   - **What a player sees:** Argentina at war with a nation it cannot reach by land, its sea lift short of a group's room.
+     It is the rule R139 (ADR-1119) claims to hold.
+   - **Fix:** find the door that declared it, and ask `noLift` there, as R145 did for massings. Or narrow the checker by an
+     ADR, if a war on a rebel at war with its holder is meant to be exempt.
+     - I did not find the door. One candidate is a test of "over the sea" by ownership: `neighbourMap` has Argentina
+       beside #105 while the sides touch nowhere by control.
+   - **Seen fixed when:** the command above prints 0 broken. Also `diploInvariants` on ten more random-diplomacy seeds
+     with heroes, five years each, prints 0 broken.
 
 ## Non-blocking issues (prioritised)
 
-1. **R78-N2 (diplomacy; R77-N3, ADR-1130): with R147, the attacker has no man near more often on new seeds.**
-   - **The case:** `sh critic/scripts/c78_woAB.sh`.
-     - HEAD: attacker with no man near 13 of 69 (18.8 %), defender ahead 12 of 69 (17.4 %).
-     - R147 off: 9.4 % and 14.1 %.
-     - The bare openings are the same (10.9 % against 10.4 %).
-   - Over 3 seeds this is noise-sized, but it is against ADR-1130's "ADR-1094's bars hold on the new seeds".
-   - **Seen settled when:** the nine new seeds of ADR-1130, with mine added, give the attacker bar under 15 % with R147,
-     by `node critic/scripts/c77_woCount.mjs`.
-2. **R78-N1 (stats; R159): the track rows' residue.**
-   - On the page: "Italy occupies Rome" (4 June 1944), and "the Second Vienna Award to Hungary" with a small first
-     letter.
-   - Through `trackText` only, not seen on the page: "Soviet Union occupies Bagration and Lvov-Sandomierz; Romania" (a
-     semicolon passes the bare-place test), and nine "… joins the alliance" rows that name no alliance.
-   - **Seen fixed when:** `c78_trackTexts.ts` tells none of these, and `ROWS=Rome node critic/scripts/c78_trackRows.mjs
-     1943 600` shows Rome's row with its taker or as written.
-3. **The time-lapse:**
-   - It names a gone nation with no mark that it is gone.
-   - At step 0 the plate shows the month twice.
-4. **Small:**
-   - A short war's opened banner is as tall as a neighbour with the death line.
-   - `slowClick` (ADR-914) is 0 of 90 on new seeds.
+1. **R79-N1 (UI): the random world's banners wrap mid-phrase.**
+   - "Orientale & / 1 ⚔ Diffa & / 2", "Eastern / Cape & 1 ⚔ Free / Tete", "Chukotka Autonomous / Okrug & / 3" at
+     1600 × 900 (`critic/shots/c79rw2_random_64965_banners_crop.png`, from `c79rw2_random_64965_end_world.png`).
+   - **Seen fixed when:** `node critic/scripts/c79_rw2.mjs 64965 730` ends with each banner on one line, or a name
+     truncated with its count whole.
+2. **R79-N2 (map/stability): `WebGL: INVALID_VALUE: bufferSubData: buffer overflow` at 2560 × 1440.**
+   - The case: seed 64907 (heroes), day 500, the camera at (1043.43, 273.0) at 30 m/px, over British carrier groups at
+     sea.
+   - `node critic/scripts/c79_glSpot.mjs 64907 2560 1440 500 1043.43 273.0`: 1 warning at the 30 m/px step. At
+     1600 × 900: 0 (`critic/c79_glSpot_2560x1440.log`, `critic/c79_glSpot_1600x900.log`). Run 78's build gives it too
+     (`critic/c79_glSpot_c78build_2560x1440.log`).
+   - Found by `look 64907` three times out of three (`critic/c79w_look_64907_2560x1440.json` marks it at `d500_f0_30m`).
+     Nothing was seen missing from the picture.
+   - **Seen fixed when:** the probe prints `"errors":[]`.
+3. **R79-N3 (UI, phone): History opens under an open nation panel.**
+   - `dirHand 59955 120 390 844 touch`: the History act cannot click a row's link (`history-go`). The nation panel the
+     banner act opened covers History's rows (`critic/shots/c79dh_59955_390x844_history.png`).
+   - This is the item runs 77 and 78 left unjudged.
+   - **Seen fixed when:** that probe's History act ends with `cutsAfterAct` read and no "act failed".
+4. **R79-N4 (stats): a pact named for another.**
+   - "Romania joins the Anti-Comintern Pact" (1940-11-23) under "The Tripartite Pact: Hungary" (1940-11-20).
+   - Bare rows: "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949"
+     (`critic/c79_trackTexts2.log`).
+5. **Small:**
+   - The strike's ring over the city's name (God Mode).
+   - Like flags on both sides of a civil war's sea battle.
+   - Three opened banners with the same death sentence on a phone.
+   - The AI's bomb, where the game stops on it, leaves only a faint spot at 600 m/px (AI nukes, Not 9).
+   - `slowClick` on run 77's three named cases, the same lines as run 77 (ADR-914).
 
-## Run 77's cases re-run
+## Run 78's cases re-run
 
-| Run 77 case | Run 77 (`7066d800`) | Run 78 (`d7b981dd`) | Evidence |
+| Run 78 case | Run 78 (`d7b981dd`) | Run 79 (`79058a5a`) | Evidence |
 |---|---|---|---|
-| R77-B1 `tlDead` 7019 (desk, phone) | tooltip "", `selected` 32 | **fixed**: "Sweden", 0; run 77's build beside it: "", 32 | `critic/c78tld_head_*.json`, `critic/c78tld_c77build_1600x900.json` |
-| R77-N1 Resume under the plate | the plate stays, 96 h | **fixed**: the plate closes (run 77's build: stays) | the same |
-| R77-N2 `c77_trackTexts.ts`; the 1941 and 1942 pages | 31 wrong, 8 "The" | **fixed** for those 41 (0 produced); residue R78-N1 | `critic/c78_trackTexts.log`, `critic/c78tr_*.json` |
-| R77-N3 `warOpening 57211…` | 14 of 88, 20.3 % | the same (sim unchanged); kept by ADR-1130; R78-N2 | `critic/c78_woCount.log` |
-| `bannerRank 57901 150` | 51, 33, 42 | **8, 20, 17** (run 77's build: 34) | `critic/c78_br_*.log` |
-| `bannerFlip` 57901, 58901, 57903 | 7, 4, 6; 1, 0, 2 | 8, 4, 5; 1, 0, 2 (run 77's build: 7, 4, 6; 1, 0, 2) | `critic/c78_bf_*.log` |
-| Small: "+2 +32" banner | both pluses | "& 2 +32" | `critic/c78_dh_59955.log` |
-| `tlMore cell 59943` | "Norway" | "Norway" | `critic/c78tm_cell_59943.json` |
-| `tlMonths 59947`, `histPlace 59961` | 0 unlike; 11 of 11 | 0 unlike (3 months); 11 of 11 | `critic/c78_tlMonths_59947.json`, `critic/c78hp_59961_1600x900.json` |
-| `dirHand 59955` (desk, phone) | 0 cuts | 0 cuts | `critic/c78_dh_59955*.log` |
-| `timeLapse 59941`, `59945` | `ranUnderLapse` 0 | 0 | `critic/c78_tl_*.log` |
-| `phoneTicker 62903`, `p_phone` | clear; 0 off | clear; 0 off | `critic/c78pt_62903_390x844.json`, `critic/c78_p_phone.log` |
-| `diploInvariants 33501` | 0 broken | 0 broken | `critic/c78_diploinv_33501s.log` |
-| 7019 and 32019, twenty years | `ab927e1b`, `c3520016` | the same | `critic/c78_seed*_save.log` |
-| `landingFuzz` (new seeds) | 0 of 90 | 0 of 90 | `critic/c78_landingFuzz.log` |
-| Run 77's 40 replay cases (free starts, `freewar`, `saveload`, `blocend`, `oldsave`, `menloss`, `afterTrack`) | 0 broken lines | 0 broken lines; the same figures where they are counts | `critic/c78_startsCmp.txt` |
-| Run 77's God, editor, take-control, stage, planes, armour and tiers page cases (15) | exit 0 | exit 0, 0 page errors | `critic/c78_laneP*.out` |
-| Run 77's other headless plain-1938 cases, the bulk sets, Malta, the performance chain | | plain 1938 unchanged, carried | |
-| Run 77's `heroPop`, `markerPop`, `markers`, `seaBattlesLook`, `seaclick` | | left out for time (no changed file touches them) | |
+| R78-N1 track rows: Rome, Vienna, the alliance rows | "Italy occupies Rome", a small "the", "joins the alliance" | **fixed**: "Rome falls to the Allies", "The Second Vienna Award", "joins the Anti-Comintern Pact" (through `trackText`, not seen on the page); residue R79-N4 | `critic/c79tr_*.json`, `critic/c79_trackTexts2.log` |
+| R78-N2 `warOpening 57211…`; ADR-1130's seeds | 14 of 88; 12.5 % / 20.3 % | the same (sim unchanged); settled by ADR-1132 (13.2 % pooled; 64211 repeats it) | `critic/c79_wo_57.log`, `critic/c79_warOpening_64.log` |
+| Time-lapse: a gone nation unmarked; the month twice at step 0 | "Sweden"; "from January 1938" beside it | **fixed**: "Gone by now: nothing to select"; the label hidden (run 78's build beside it, unchanged) | `critic/c79tld_*.json` |
+| A short war's opened banner as tall as its neighbour | 78 px | **fixed**: 31 px at six sizes | `critic/c79_dt_*.json` |
+| `bannerRank 57901 150` | 8, 20, 17 | 11 | `critic/c79_bannerRank.57901_150.log` |
+| `bannerFlip` 57901, 58901, 57903 | 8, 4, 5; 1, 0, 2 | 8, 4, 5; 1, 0, 2 | `critic/c79_bannerFlip.*.log` |
+| `bannerHourly 57901` | 2 changes, 0 back | 3 changes, 0 back | `critic/c79_bannerHourly.57901_100_480.log` |
+| `bannerLoad` (a war fought before the load: untested) | | the same row, 0 changes in 72 h, `lastBattle` restored | `critic/c79_bannerLoad.*.log` |
+| `dirHand 59955` desk; phone History act | 0 cuts; unjudged | 0 cuts; R79-N3 | `critic/c79_dirHand.*.log` |
+| `x_continue 58415` (unjudged) | stood at Continue | probe fault (a confirm step); mended: the same hash | `critic/c79_xc_64415_GER.json` |
+| `timeLapse`, `tlMonths`, `histPlace`, `tlMore cell`, `phoneTicker`, `p_phone` (new seeds) | whole | whole, 0 errors | `critic/c79_timeLapse.*.log` and the rest |
+| 7019 and 32019, twenty years | `ab927e1b`, `c3520016` | the same | `critic/c79_seed*_save.log` |
+| `diploInvariants 33501`, `63001`; `worldInvariants 63051` | 0 | 0 | `critic/c79_diploinv_33501s.log` |
+| `landingFuzz` (new seeds) | 0 of 90 | 0 of 90 | `critic/c79_landingFuzz.log` |
+| Run 78's 40 replay cases | 0 broken lines; their counts | exit 0 for all, 0 broken lines in the free starts; compared by figure where I read them (`capsurvey` 2 of 154, `afterTrack` 207 and 222 wars, `atx 1938` 220, `massTold 57613`): the same. The rest not compared line by line | `critic/c79_*` of `c79_startsJobs.txt` |
+| Run 78's page cases (God, editor, take control, stage, planes, armour, tiers) | exit 0 | exit 0, 0 page errors, new seeds | `critic/c79_lane*.out` |
+| Run 78's left-outs (`heroPop`, `markerPop`, `markers`, `seaBattlesLook`, `seaclick`, monkeys, `bannerOwn`, `massSeen`) | left out | all run (above); `bannerOwn 1942 GER`: the player's three wars first, 0 errors; `massSeen 56211`: the massing told in ticker and History ("Soviet Union is massing its army on the border of Romania"); `bannerFlip 64903`: 7 changes of the row in 60 s, 0 under a resting cursor | `critic/c79_laneD.out`, `critic/c79_laneA.out` |
+| Run 77's `c64_track 1938 365` (not run by run 78) | `4e704f23` (run 77) | `50d75936`: every other line the same; `timeline.json`'s notes changed in runs 78 and 79's batches | `critic/c79_track_1938.log` |
+| Run 77's named `landingInvariants`, `dday`, `census`, `heroBattle 7019`, `massTold 57613` | | the same lines as run 77 | `critic/c79_li_*.log`, `critic/c79_heroBattle_7019.log` |
+| Run 61's bulk sets, Malta | | plain 1938 unchanged, carried | |
 
 ## Design objections (none blocking, no score lowered)
 
-- **ADR-1130 is "for the user's review".** The rule (R147) stays at the cost run 77 named. The builder's own trace from one
-  saved state (22 of 22 bare openings declared the same with R147 off) is a fair answer to "R147 causes them". My three
-  seeds do not bear out its line on ADR-1094's bars (R78-N2).
+- **ADR-1111 (heroes' names at the world's zoom):** on a phone, six heroes' names cover Europe's counters
+  (`critic/shots/c79pt_64903_390x844_opened.png`).
+- **ADR-1130 and ADR-1132:** with R147 the attacker has no man near about a point more often. The pooled figure is under
+  the bar. The trade is the user's.
 
 ## Ideas from other games (not scored)
 
-- **Ages of Conflict's time-lapse** writes the year's names on the map, a gone nation's too. A small "(gone)" in the
-  tooltip would say as much here.
-- **Hearts of Iron IV's event log** keeps the event's own sentence and puts the actor in a column. That would settle
-  "Italy occupies Rome".
+- **Hearts of Iron IV** names each faction by its own historical name at the time it is joined, and keeps the pact a
+  nation signed in its event. That would settle R79-N4.
+- **Ages of Conflict** shrinks a war's names before it wraps them.
 
 ## Strengths (verified)
 
-- **Every case run 77 named is met on its own probe.** Run 77's build, run in the same session, still fails the time-lapse
-  ones:
-  - `tlDead`: "" on the old build against "Sweden" on HEAD.
-  - The plate on Resume: open on the old build against closed on HEAD.
-  - `bannerRank`: 8, 20 and 17 on HEAD, against 34 on the old build here, and 51, 33 and 42 in run 77.
-- **R161 cut the quiet banners without churn.** `bannerFlip` is the same on both builds (8, 4, 5 against 7, 4, 6), and
-  the row's set changed 2 times in 480 hours.
+- **The batch is fixed on its own probes, run 78's build beside it.**
+  - The time-lapse's tooltip: "Sweden" against "Sweden / Gone by now: nothing to select".
+  - The banner heights: 78 px against 31 px.
+  - The track rows: Rome on the page, and the named pacts through `trackText` (not seen on the page).
+- **The page holds up under abuse:** about 170 page runs and 16 minutes of monkeys at four sizes with 0 page errors.
+  The worker's hash is the same on every arm of `workerDeterminism`.

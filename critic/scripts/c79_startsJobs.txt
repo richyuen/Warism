@@ -1,0 +1,45 @@
+npx tsx critic/scripts/c79_capsurvey.ts > critic/c79_capsurvey.log 2>&1
+npx tsx critic/scripts/c79_heroPlace.ts 1975 > critic/c79_heroPlace_1975.log 2>&1
+npx tsx critic/scripts/c79_heroPlace.ts 1991 > critic/c79_heroPlace_1991.log 2>&1
+npx tsx critic/scripts/c79_warlong.ts 1942 54601 god 730 > critic/c79_warlong_1942god_54601.log 2>&1
+npx tsx critic/scripts/c79_warlong.ts 1943 53543 free 1095 > critic/c79_warlong_1943free.log 2>&1
+npx tsx critic/scripts/c79_endleb.ts 999 > critic/c79_endleb_999.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1991 58611 1825 free heroes=on > critic/c79_free_1991_58611_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1942 58542 365 free heroes=on > critic/c79_free_1942_58542_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1951 58551 365 free heroes=on > critic/c79_free_1951_58551_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1975 58575 730 free heroes=on > critic/c79_free_1975_58575_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1966 58566 365 free diplomacy=random,heroes=on > critic/c79_free_1966_58566_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1975 51501 730 free - > critic/c79_free_1975_51501_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1983 51505 730 free - > critic/c79_free_1983_51505_free.log 2>&1
+npx tsx critic/scripts/c79_freewar.ts 1942 53542 god 30 > critic/c79_freewar_1942god.log 2>&1
+npx tsx critic/scripts/c79_freewar.ts 1941 53541 free 30 > critic/c79_freewar_1941free.log 2>&1
+npx tsx critic/scripts/c79_freewar.ts 1944 53544 free 30 > critic/c79_freewar_1944free.log 2>&1
+npx tsx critic/scripts/c79_saveload.ts 1942 53542 god 24 30 > critic/c79_saveload_1942god.log 2>&1
+npx tsx critic/scripts/c79_blocend.ts 54611 1825 > critic/c79_blocend_54611.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 54311 > critic/c79_heldAtEnd_54311.log 2>&1
+npx tsx critic/scripts/c79_heldfree.ts 1946 51515 3 > critic/c79_heldfree_1946.log 2>&1
+npx tsx critic/scripts/c79_clampend.ts > critic/c79_clampend.log 2>&1
+npx tsx critic/scripts/c79_afterTrack.ts 55601 10 critic/c79_atx_55601.json > critic/c79_atx_55601.log 2>&1
+npx tsx critic/scripts/c79_afterTrack.ts 37601 10 critic/c79_atx_37601.json > critic/c79_atx_37601.log 2>&1
+npx tsx critic/scripts/c64_track.ts 58301 365 > critic/c79_track_58301.log 2>&1
+npx tsx tools/diag/neighbourColours.ts critic/c79_starts/1938.sav 30 > critic/c79_neighbourColours_1938.log 2>&1
+npx tsx critic/scripts/c79_oldsave.ts 1975 30 critic/c78_starts > critic/c79_oldsave_1975.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1946 58546 365 free heroes=on > critic/c79_free_1946_58546_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1962 58562 365 free heroes=on > critic/c79_free_1962_58562_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1983 58583 730 free heroes=on > critic/c79_free_1983_58583_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1946 51515 730 free diplomacy=random > critic/c79_free_1946_51515_free.log 2>&1
+npx tsx critic/scripts/c79_freewar.ts 1942 53542 take 30 > critic/c79_freewar_1942take.log 2>&1
+npx tsx critic/scripts/c79_freewar.ts 1966 53566 god 30 > critic/c79_freewar_1966god.log 2>&1
+npx tsx critic/scripts/c79_landless.ts 1938 > critic/c79_landless_1938.log 2>&1
+npx tsx critic/scripts/c79_landless.ts 1975,1980,1985,1991 > critic/c79_landless_late.log 2>&1
+npx tsx critic/scripts/c79_warlong.ts 1942 58602 god 730 > critic/c79_warlong_1942god_58602.log 2>&1
+npx tsx critic/scripts/c79_warlong.ts 1943 58603 free 730 > critic/c79_warlong_1943free_58603.log 2>&1
+npx tsx tools/diag/successorPurse.ts 999 365 critic/c79_starts/1991.sav > critic/c79_successorPurse.log 2>&1
+npx tsx critic/scripts/c79_afterTrack.ts 1938 10 critic/c79_atx_1938.json > critic/c79_atx_1938.log 2>&1
+npx tsx critic/scripts/c79_menloss.ts 1943 53543 free 40 > critic/c79_menloss_1943free.log 2>&1
+npx tsx critic/scripts/c79_menloss.ts 1942 53542 god 40 > critic/c79_menloss_1942god.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1942 64542 365 free heroes=on > critic/c79_free_1942_64542_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1951 64551 365 free diplomacy=random,heroes=on > critic/c79_free_1951_64551_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1975 64575 730 free heroes=on > critic/c79_free_1975_64575_free.log 2>&1
+npx tsx critic/scripts/c79_free.ts 1991 64611 1825 free heroes=on > critic/c79_free_1991_64611_free.log 2>&1
+npx tsx critic/scripts/c79_blocend.ts 64611 1825 > critic/c79_blocend_64611.log 2>&1

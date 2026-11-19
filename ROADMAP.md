@@ -221,6 +221,29 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
   shorter than one with a death line on its row, at 1400 × 800 and 390 × 844 (red without: 78 against 73 px). The
   banner specs (13 files and the tooltip's) green on both projects.
 
+## Batch 47 — critic run 79's findings (full, on 79058a5a; one blocking issue; every score at its bar)
+
+RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking one; then the critic again (focused).
+- [ ] R167 **R79-B1: a war across the sea declared with no lift, through a door the gate does not ask.**
+  `npx tsx tools/diag/diploInvariants.ts 64015 random 1825 --heroes`: day 1411, ARG declares on #105 (at war with
+  Brazil, which takes it as a puppet that hour), 16,294 men to lift for a room of 25,200; `noLift` true in the six
+  hours before (`critic/scripts/c79_liftTrace.ts`). AT: that command prints 0 broken; `diploInvariants` on ten more
+  random-diplomacy seeds with heroes, five years each, 0 broken; a unit test of the door.
+- [ ] R168 **R79-N1: the random world's banners wrap mid-phrase** ("Orientale & / 1 ⚔ Diffa & / 2" at 1600 × 900).
+  AT: `node critic/scripts/c79_rw2.mjs 64965 730` ends with each banner on one line, or a name truncated with its
+  count whole; a case in a spec.
+- [ ] R169 **R79-N2: `WebGL: INVALID_VALUE: bufferSubData: buffer overflow` at 2560 × 1440,** 64907 day 500, 30 m/px over
+  British carrier groups. AT: `node critic/scripts/c79_glSpot.mjs 64907 2560 1440 500 1043.43 273.0` prints
+  `"errors":[]`; a test of the buffer's growth.
+- [ ] R170 **R79-N3: on a phone History opens under an open nation panel** (`dirHand 59955 120 390 844 touch`: the
+  History act cannot click `history-go`). AT: that act ends with `cutsAfterAct` and no "act failed"; a case in a spec.
+- [ ] R171 **R79-N4: a pact named for another:** "Romania joins the Anti-Comintern Pact" under "The Tripartite Pact:
+  Hungary"; bare rows "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949". AT:
+  the rows of 1940-11 name the pact the timeline names; those three told or rewritten; cases in `trackText.test.ts`.
+- [ ] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
+  battle; three opened phone banners with the same death sentence; the AI's bomb a faint spot at 600 m/px where the game
+  stops on it. AT: each seen fixed in a shot or a case, or kept by a line here. `slowClick` stays as ADR-914.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for
