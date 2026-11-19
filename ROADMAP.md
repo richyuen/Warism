@@ -547,7 +547,7 @@ The run was handed back before lane E (6 of about 40 page cases) and the perform
   (R194's "+n alone" hides every war on a half-screen desk) is the same case. AT: `c85_deskRow 84901 400 800` and `85903
   700 900` `fit0` [] and `covering` [] at every step; R194's probe and case as now; the case crossing 600 and 601 px, a
   nation's panel and History opened and closed.
-  - Done (COMMIT): a desk's closed row takes the band free between the page's boxes beside it at its height (the news,
+  - Done (4f4af819): a desk's closed row takes the band free between the page's boxes beside it at its height (the news,
     the legend) and any open panel on its side, centred in that band, 4 px clear of each, when that is wider than its
     rule's room (`freeBand`); the banners counted again when the band changes; the desk path's overflow checks strict
     (the width in whole px). `c85_deskRow` 84901 400 800, 85903 700 900, 85905 400 800 and random 85965: `fit0` [],
