@@ -243,7 +243,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
 - [x] R169 **R79-N2: `WebGL: INVALID_VALUE: bufferSubData: buffer overflow` at 2560 × 1440,** 64907 day 500, 30 m/px over
   British carrier groups. AT: `node critic/scripts/c79_glSpot.mjs 64907 2560 1440 500 1043.43 273.0` prints
   `"errors":[]`; a test of the buffer's growth.
-  COMMIT: the ground's instances were sent with a count of 0 when nothing stood in the view, and WebGL reads a length
+  85dfce3f: the ground's instances were sent with a count of 0 when nothing stood in the view, and WebGL reads a length
   of 0 as the whole array, there longer than the buffer (the scatter's array sized to the view and the frame's time).
   An empty upload now sends nothing (the units' `ProxyRenderer` the same). `c79_glSpot.mjs 64907 2560 1440 500 …`:
   `"errors":[]`; `groundThings1938`'s case: an empty upload of twice the buffer, `getError` 0 (red without: 1281).
