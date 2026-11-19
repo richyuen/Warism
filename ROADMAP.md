@@ -292,8 +292,11 @@ UI/UX dimension is taken until the user decides.
     0 sides cut to 3 or fewer, every name of 8 letters or fewer whole ("Soviet Un…", "Nationalist Sp…"), each count
     whole, the banners on the screen; the same at 360 × 740, 844 × 390 and opened. The new case red on the build
     before (`"Japan" whole`); the 1600 × 900 case green; the 13 specs on the banners 54/54.
-- [ ] R175 **R80-N1: on a phone Relations opens under an open nation panel** (`c80_menuPinch.mjs 68933 390 844`: 45 of 81
+- [x] R175 **R80-N1: on a phone Relations opens under an open nation panel** (`c80_menuPinch.mjs 68933 390 844`: 45 of 81
   graph points covered; 844 × 390: 81 of 81). AT: `hiddenOf81` 0 at both sizes; a case in a spec.
+  - Done (COMMIT): on a phone the panel open as the graph opens gives way to it (`hud.relationsOver`) until a nation is
+    chosen or the graph closes. `relationsTap1938`'s new case: 0 of 81 points covered at 390 × 844 and 844 × 390 (red
+    before: 45); closed with no choice, the panel back; a node tapped, its panel shown. The specs on Relations 36/36.
 - [ ] R176 **R80-N2: "Go to country" in a chip's menu selects but does not fly there** (PLAN 7.175f; `c80_goto.mjs 68931`:
   the camera still at (1024, 512) at 4 s). AT: the probe shows the camera on the nation; a case in a spec.
 

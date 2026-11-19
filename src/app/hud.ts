@@ -595,9 +595,17 @@ export class Hud {
   /** The relations graph (ROADMAP R1, ADR-806). */
   readonly showRelations = signal(false);
 
+  /**
+   * The nation whose panel was open as the graph opened, 0 for none (R175, critic run 80, R80-N1: on a phone Relations
+   * stood under it, 45 of 81 of the graph's points covered): on a phone that panel gives way to the graph until a nation
+   * is chosen (in the graph, or another), or the graph closes.
+   */
+  readonly relationsOver = signal(0);
+
   toggleRelations(): void {
     if (!this.showRelations.value) this.closeCentre('relations');
     this.showRelations.value = !this.showRelations.value;
+    this.relationsOver.value = this.showRelations.value ? this.selected.value : 0;
   }
 
   /**

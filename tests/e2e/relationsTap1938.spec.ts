@@ -103,3 +103,43 @@ test('a pinch after a finger whose lifting the graph never had still zooms', asy
   });
   await expect.poll(async () => Number(await graph.getAttribute('data-zoom')), { message: 'the pinch zoomed in' }).toBeGreaterThan(z0);
 });
+
+// R175 (critic run 80, R80-N1): on a phone Relations opened under a nation's panel opened before it (45 of 81 of the
+// graph's points covered upright, 81 of 81 on its side). The graph stands over it; a nation chosen in the graph shows its
+// panel; closed without a choice, the panel is back.
+test("on a phone Relations opened after a nation's panel: the graph is uncovered", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  const covered = (): Promise<number> =>
+    page.getByTestId('relations-graph').evaluate((g) => {
+      const r = g.getBoundingClientRect();
+      let n = 0;
+      for (let i = 1; i <= 9; i++)
+        for (let j = 1; j <= 9; j++) {
+          const top = document.elementFromPoint(r.x + (r.width * i) / 10, r.y + (r.height * j) / 10);
+          if (!top || !g.contains(top)) n++;
+        }
+      return n;
+    });
+  for (const [w, h] of [[390, 844], [844, 390]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await expect(page.getByTestId('nation-panel')).toBeVisible();
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await expect(page.getByTestId('relations-graph')).toBeVisible();
+    expect(await covered(), `${w} × ${h}: the graph's points under something else, of 81`).toBe(0);
+    // Closed with no choice made: the panel is back, its nation still chosen.
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await expect(page.getByTestId('nation-panel')).toBeVisible();
+    expect(await page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(1);
+  }
+  // A nation tapped in the graph opened over the panel: its own panel shows.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  await expect(page.getByTestId('nation-panel')).toBeHidden();
+  const n = (await node(page))!;
+  await page.touchscreen.tap(n.x, n.y);
+  await expect.poll(() => picked(page), { timeout: 3000 }).toBe(n.id.replace('relations-node-n', ''));
+  await expect(page.getByTestId('nation-panel')).toBeVisible();
+});

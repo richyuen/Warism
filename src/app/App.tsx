@@ -396,7 +396,10 @@ export function App({
           nations={stats.nations}
           wars={stats.wars}
           selected={hud.selected.value}
-          onSelect={(id) => hud.onSelectNation(id)}
+          onSelect={(id) => {
+            hud.relationsOver.value = 0;
+            hud.onSelectNation(id);
+          }}
           flagUrlOf={(id) => (view && flagVersion >= 0 ? view.flags.urlOf(id) : null)}
           onClose={() => hud.toggleRelations()}
         />
@@ -427,7 +430,7 @@ export function App({
               : null
           }
         />
-      ) : nation && !toolOnMap ? (
+      ) : nation && !toolOnMap && !(phone && hud.showRelations.value && hud.relationsOver.value === nation.id) ? (
         <NationPanel
           nation={nation}
           byId={byId}

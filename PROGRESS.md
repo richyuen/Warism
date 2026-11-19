@@ -328,3 +328,8 @@
 - A short name never cut, a long one its first five letters; on the phone's closed row the score's figure gives way.
   The critic's probe: 0 sides of 3 letters or fewer at 390 × 844, 360 × 740 and 844 × 390; a phone case in
   `warBannerRows1938`, red before.
+
+## 2026-11-19 — R175: on a phone Relations stands over a nation panel opened before it
+
+- The panel gives way until a nation is chosen or the graph closes; 0 of 81 graph points covered upright and on its side
+  (45 and 81 before), a case in `relationsTap1938`.
