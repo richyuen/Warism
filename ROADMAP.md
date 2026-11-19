@@ -313,7 +313,7 @@ bar in runs 80 and 81 (two in a row).
   and 932 × 430: 63 of 81; `dirHand 59955 120 844 390 touch`: "act failed … history-go". AT (the bar's): the probe shows
   `history-btn.hiddenOf81` 0 and `historyGoTapped` true at the three sizes; `dirHand` at 844 × 390 with no "act
   failed"; the upright case as it is; a case in `historyPlace1938`.
-  - Done (COMMIT): R170's give-way moved into the phone block that counts a sideways phone (`max-height: 500px`, as
+  - Done (1f45e2f3): R170's give-way moved into the phone block that counts a sideways phone (`max-height: 500px`, as
     `usePhone`). `c81_histOver 68901 60 … GER` at 844 × 390, 667 × 375, 932 × 430 and 390 × 844: `hiddenOf81` 0,
     `historyGoTapped` true; `dirHand 59955 120 844 390 touch`: History's act "A major battle began near Elbląg",
     `cutsAfterAct` 0, no "act failed". R170's case in `historyPlace1938` now at 390 × 844, 844 × 390 and 667 × 375 (red
