@@ -458,7 +458,7 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
 - [x] R190 **R83-N2: R186's strip costs every short upright phone's panel 39 px, all the time** (320 × 568 with God Mode: 167
   against 206 px of content; `c83ps_83941_d120_320x568_GER`, `360x640`). AT: the panel's full height except while Go
   to's flight shows a capital (or when its content is shorter than the room); R186's case as now.
-  - Done (COMMIT): only the panel "Go to country" opened leaves the strip (`hud.wentTo`, the panel's `go-strip`), gone
+  - Done (9533f115): only the panel "Go to country" opened leaves the strip (`hud.wentTo`, the panel's `go-strip`), gone
     once another nation is chosen. `c83_panelShort 83941 120 GER`: 320 × 568 206 px of content shown (R186: 167), the God
     tab 9 swipes (11); 360 × 640 303 px. R186's case as before. A case in `forceWar1938` crossing 360 × 740, 844 × 390,
     1280 × 720 and back (ADR-1137 (d)), History opened and closed over the panel: chosen otherwise no strip, Go to's
