@@ -2168,7 +2168,7 @@
    "nation": "ROM",
    "leader": "GER",
    "nameKey": "alliance.anti_comintern",
-   "note": "Romania"
+   "note": "The Tripartite Pact: Romania"
   },
   {
    "date": "1940-11-24",
@@ -2176,7 +2176,7 @@
    "nation": "SLO",
    "leader": "GER",
    "nameKey": "alliance.anti_comintern",
-   "note": "Slovakia"
+   "note": "The Tripartite Pact: Slovakia"
   },
   {
    "date": "1941-02-14",
@@ -2196,7 +2196,7 @@
    "nation": "BUL",
    "leader": "GER",
    "nameKey": "alliance.anti_comintern",
-   "note": "Bulgaria"
+   "note": "The Tripartite Pact: Bulgaria"
   },
   {
    "date": "1941-03-01",
@@ -4578,7 +4578,7 @@
    "nation": "SIA",
    "leader": "GER",
    "nameKey": "alliance.anti_comintern",
-   "note": "Thailand's alliance with Japan"
+   "note": "Thailand allies itself with Japan"
   },
   {
    "date": "1941-12-22",
@@ -16943,7 +16943,7 @@
    "nation": "CCP",
    "leader": "SOV",
    "nameKey": "alliance.eastern_bloc",
-   "note": "The Sino-Soviet treaty"
+   "note": "The Sino-Soviet treaty: the People's Republic of China allies itself with the Soviet Union"
   },
   {
    "date": "1950-04-01",
@@ -22588,7 +22588,7 @@
    "nation": "CAN",
    "leader": "USA",
    "nameKey": "alliance.nato",
-   "note": "Canada in NATO as since 1949"
+   "note": "NATO: Canada, a member since 1949"
   },
   {
    "date": "1982-04-18",

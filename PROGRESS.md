@@ -300,3 +300,8 @@
 
 - On a phone the nation's panel stands aside while History is open, and comes back as it closes; its rows' places can
   be tapped. `relationsTap1938` found red 1 in 2 on HEAD alike: filed as R173.
+
+## 2026-11-18 — R171: the pacts as the timeline names them
+
+- Romania, Slovakia and Bulgaria join the Tripartite Pact as Hungary does, not the game's Anti-Comintern Pact; three
+  bare alliance notes rewritten as sentences.

@@ -33,6 +33,27 @@ describe("a track row whose note is a bare place says what happened there (ROADM
     expect(trackText(row('occupy', 'Rome falls to the Allies', 'Italy'))).toBe('Rome falls to the Allies');
   });
 
+  it('critic run 79 (R171): a pact named as the timeline names it; no alliance row a bare name', () => {
+    const file = path.resolve(import.meta.dirname, '../../data/scenarios/1938h/timeline.json');
+    const json = JSON.parse(readFileSync(file, 'utf8')) as { events?: Record<string, unknown>[] } | Record<string, unknown>[];
+    const events = Array.isArray(json) ? json : (json.events ?? []);
+    const name = (tag: unknown): string => {
+      const n = NATIONS_1938.find((d) => d.tag === tag);
+      return n ? t(n.nameKey as MessageKey) : String(tag ?? '');
+    };
+    const rows = events
+      .filter((e) => e['kind'] === 'allianceJoin' && typeof e['note'] === 'string')
+      .map((e) => ({ date: String(e['date']), out: trackText({ ...row('allianceJoin', e['note'] as string, name(e['nation'])), trackAlliance: e['nameKey'] as string }) }));
+    // The Tripartite Pact's joinings of 1940 and 1941 (Hungary, Romania, Slovakia, Bulgaria): the Tripartite Pact.
+    const tripartite = rows.filter((r) => r.date >= '1940-11-20' && r.date <= '1941-03-01');
+    expect(tripartite.map((r) => r.out)).toEqual(['The Tripartite Pact: Hungary', 'The Tripartite Pact: Romania', 'The Tripartite Pact: Slovakia', 'The Tripartite Pact: Bulgaria']);
+    // Each row a sentence or a "Pact: nation" line: no bare name, no "X's alliance with Y", no "in NATO as since".
+    for (const r of rows) {
+      expect(r.out, r.date).toMatch(/:| joins | allies /);
+      expect(r.out, r.date).not.toMatch(/'s alliance with|as since/);
+    }
+  });
+
   it('a sentence, a name with a colon, a direction, or another kind: the note as it is', () => {
     for (const [kind, note] of [
       ['occupy', 'Kerch retaken'],

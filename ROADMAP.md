@@ -253,9 +253,14 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   still opens a panel over itself); the nation stays selected and its panel comes back. `c79_dirHand.mjs 59955 120 390
   844 touch`: the History act taps "A major battle began near Elbląg", `cutsAfterAct` 0, no "act failed";
   `historyPlace1938`'s case: History's link under the tap (red without). The 19 phone specs of the nation panel green.
-- [ ] R171 **R79-N4: a pact named for another:** "Romania joins the Anti-Comintern Pact" under "The Tripartite Pact:
+- [x] R171 **R79-N4: a pact named for another:** "Romania joins the Anti-Comintern Pact" under "The Tripartite Pact:
   Hungary"; bare rows "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949". AT:
   the rows of 1940-11 name the pact the timeline names; those three told or rewritten; cases in `trackText.test.ts`.
+  COMMIT: the notes of the Tripartite Pact's joinings name it as Hungary's does ("The Tripartite Pact: Romania",
+  Slovakia, Bulgaria; the game's bloc is the Anti-Comintern Pact); "Thailand allies itself with Japan", "The
+  Sino-Soviet treaty: the People's Republic of China allies itself with the Soviet Union", "NATO: Canada, a member
+  since 1949". `trackText.test.ts`: the four 1940–41 rows the Tripartite Pact, every alliance row a sentence or a
+  "Pact: nation" line (red on the old notes).
 - [ ] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
   battle; three opened phone banners with the same death sentence; the AI's bomb a faint spot at 600 m/px where the game
   stops on it. AT: each seen fixed in a shot or a case, or kept by a line here. `slowClick` stays as ADR-914.
