@@ -1,6 +1,6 @@
 {
- "commit": "7c64529ead48045bcc461060273b8a0cad8f26e4",
- "mode": "full",
+ "commit": "3e560a9c551c52fc3f46a904288d48a8cba07343",
+ "mode": "focused",
  "scores": {
   "mapVisuals": 8,
   "diplomacyWarDepth": 8,
@@ -19,11 +19,17 @@
  },
  "blocking": [
   {
-   "id": "R81-B1",
-   "title": "On a sideways phone (844x390, 667x375, 932x430) History opens under an open nation panel: R170's 'on a phone History stands in the nation panel's place' holds upright only",
-   "evidence": "node critic/scripts/c81_histOver.mjs 68901 60 844 390 GER on HEAD: history-btn hiddenOf81 81, historyGoTapped false (critic/c81ho_68901_d60_844x390_GER_5403.json, critic/shots/c81ho_68901_d60_844x390_GER_5403_history-btn.png); 667x375 and 932x430: 63 of 81. dirHand 59955 120 844 390 touch: 'act failed ... history-go' (critic/c81_dirHand.59955_120_844_390_touch.log, critic/shots/c81dh_59955_844x390_history.png). Relations at the same sizes: 0 of 81 (R175). Upright 390x844 works (dirHand taps 'A major battle began near Elbląg', cutsAfterAct 0). R170's rule '#ui:has([data-testid=history-panel]) .nation-panel { display: none }' sits in '@media (max-width: 600px)' only (src/app/style.css). Run 80's build fails the same (critic/c81ho_68901_d60_844x390_GER_5404.json).",
-   "fix": "Apply R170's give-way under the sideways-phone query too ((max-height: 500px), as usePhone and ADR-760 define a phone), as R175 does for Relations. Seen fixed when c81_histOver.mjs 68901 60 at 844x390, 667x375 and 932x430 shows history-btn.hiddenOf81 0 and historyGoTapped true, dirHand 59955 120 844 390 touch has no 'act failed', and the 390x844 case stays as now."
+   "id": "R82-B1",
+   "title": "R178 regresses R174 / ADR-1135 (a): on a phone the war row cuts a name under 5 letters while the '& n' stays ('Sovi… & 3' at 375 x 667; 'Que…' for Queensland at 390 x 844 on the random world)",
+   "evidence": "c82_nameLetters.mjs 68901 400 375x667 on HEAD: 'Sovi… & 3 ⚔ Japan & 6' (critic/shots/c82nl_68901_d400_375x667_5405_row.png); run 81's build 'Soviet Un…' (critic/shots/c82nl_68901_d400_375x667_5406_row.png). 82901 day 400 at 375 x 667: 'Sovi… & 3', the row 10 px past its width and '+5' cut at the screen's edge (critic/c82_bf_82901_400_375_667_5405.log). SCEN=random c81_bannerFit 64965 730 390 844: 'Alaska ⚔ Que…' (3 letters) on HEAD, 'Queen…' on run 81's build (critic/shots/c81bf_random_64965_d730_390x844_c82_540[56]_row.png). c81_bannerFit reports 0 faults on these because the line clamp keeps scrollWidth equal to clientWidth; the shots show the cut. The name's box is 34 px on HEAD against 51 px on run 81's build (68901 d400 375, the probes' geometry). Contradicts ADR-1135 (a) ('a longer one keeps 6 ch (its first five letters and the ellipsis)'; the score, then the '& n', give way first), R178's own style.css comment ('gives way before a name goes under five letters') and R178's ROADMAP note ('0 overflow' on 68901 d400 at 375; 'random 64965 at 390' clean).",
+   "fix": "Let '& n' give way per banner before a name goes under 5 letters (not by the row's 350 px container width alone), or widen the container bound over the 366-400 px rows; keep the clamp's break at a word, not overflow-wrap:anywhere. Seen fixed when the row shots of c82_nameLetters 68901 400 368x740,375x667,384x832 and 82901 400 375x667, and of SCEN=random c81_bannerFit 64965 730 390 844, show every long name with 5 or more letters before its ellipsis or whole ('Queen…' or more), c81_bannerFit 82901 400 375 667 shows no overflow and '+n' inside the view, and the 320, 360, 390 and 412 px 1938 cases stay as now."
+  },
+  {
+   "id": "R82-B2",
+   "title": "On a sideways phone, a nation chosen again from outside the relations graph (its Ranking row) while Relations stands over its panel shows no panel: R181's claim holds only for A, B, then A",
+   "evidence": "node critic/scripts/c82_relRank.mjs 68901 844 390 SOV USA on HEAD: Soviet Union's panel, Relations tapped, Ranking opened, the Soviet Union's row tapped by finger: selected 10, relationsOver 10, panel null (step 4); the United States' row then opens its panel (step 5) (critic/c82rr_68901_844x390_SOV_USA_5405.json, critic/shots/c82rr_68901_844x390_SOV_USA_5405_4_A_row_tapped.png). The same at 667 x 375 (critic/c82_relRank.log). Run 81's build the same (…_5406.json). R181's hud rule clears relationsOver only when the selection changes; MapView.select returns early on the same id.",
+   "fix": "Clear relationsOver on any choice made from outside the graph, the same id included. Seen fixed when c82_relRank.mjs 68901 844 390 SOV USA and 667 375 show at step 4 a panel with selected 10, steps 5-7 as now, and c81_relOver's eight steps as now."
   }
  ],
- "timestamp": "2026-11-19T09:30:00-05:00"
+ "timestamp": "2026-11-19T10:30:00-05:00"
 }

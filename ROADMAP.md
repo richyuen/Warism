@@ -366,6 +366,38 @@ bar in runs 80 and 81 (two in a row).
 - Not taken: ADR-1111's heroes' names over Europe's counters at the world's zoom (decided there); R172's kept three (the
   ring over "Pari", the AI's bomb at 600 m/px, like flags at sea; as R172); `slowClick`'s named cases (ADR-914).
 
+## Batch 50 — critic run 82's findings (focused, on 3e560a9c; two blocking issues, one a regression; UI/UX 7)
+
+ADR-829's exit, on two counts: R82-B1 is a regression of R174 by R178, and UI/UX is under its bar in runs 80, 81 and 82.
+ADR-1136 (proposed) waits on the user; no item of the UI/UX dimension is taken until the user decides.
+- [ ] R183 **R82-B1: on a phone the war row cuts a name under five letters while its "& n" stays** (R178 regresses R174 and
+  ADR-1135 (a)). `c82_nameLetters 68901 400 375x667`: "Sovi… & 3"; 82901 day 400 at 375 × 667 "Sovi… & 3", the row 10 px
+  past its width, "+5" cut at the edge; `SCEN=random c81_bannerFit 64965 730 390 844`: "Que…" (Queensland). Cause: the
+  count gives way by the row's width alone (≤ 350 px), and `overflow-wrap: anywhere` breaks inside a word. AT: by the
+  user's choice in ADR-1136; for (a), the row shots of `c82_nameLetters 68901 400 368x740,375x667,384x832`, `82901 400
+  375x667` and the random 64965 at 390 show every long name with 5 or more letters or whole ("Queen…" or more), read from
+  the shots or by a drawn-width check; `c81_bannerFit 82901 400 375 667` no overflow and "+n" in the view; 320, 360, 390
+  and 412 as now; a case in `warBannerRows1938` that measures the drawn letters.
+- [ ] R184 **R82-B2: on a sideways phone the nation whose panel Relations hid, chosen again from the Ranking, shows no
+  panel** (R175/R181 unfinished; run 81's build the same). `c82_relRank.mjs 68901 844 390 SOV USA` step 4, and at 667 ×
+  375: selected 10, `relationsOver` 10, no panel. Cause: `relationsOver` cleared only when the id changes; the same id
+  changes nothing. AT: step 4 a panel with `selected` 10 at both sizes; steps 5–7 and `c81_relOver`'s eight as now; a case
+  in `relationsTap1938`. (UI/UX: held for ADR-1136 with the rest.)
+- [ ] R185 **R82-N1: on a sideways phone the relations graph cannot be read** (667 × 375: 302 × 55 px, names 4 px; R182
+  made it smaller there; zoom leaves names 4–6 px). `c82_graphSize 68901 667 375`, `844 390`; `c82_graphZoom`. AT: the
+  graph 150 px high or more and a median name 10 px or more, at least after one "+", at both sizes. (Hearts of Iron IV's
+  list of a nation's ties on a small screen, the report's idea: an option for ADR-1136, not taken alone.)
+- [ ] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
+  fallback). `c81_goto2 69937 360 740 400 ITA,USA,ENG`: Brussels at (176, 528). AT: the capital's dot and name seen in
+  the probe's shots at 360 × 740; a case in a spec.
+- [ ] R187 **At 360 and 375 px a clamped name sits away from its swatch, some clamps end ".."** (`c82nl_82903_d700_375x667`,
+  `69903_d700`). AT: the name beside its swatch and one ellipsis, from the shots. (With R183.)
+- [ ] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
+  build the same; `c82rr_68901_844x390_SOV_USA_*_4_A_row_tapped.png`). AT: those buttons tappable with the Ranking open
+  at 844 × 390 and 667 × 375; a case in a spec.
+- Not taken: ADR-1111's heroes' plates over Europe at 3,000 m/px (decided there); R172's kept three (as R172); the
+  design objection on ADR-1135 (a)'s order is ADR-1136's question.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

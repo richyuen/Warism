@@ -375,3 +375,10 @@
 ## 2026-11-19 — R182: on a sideways phone Relations and a nation's panel side by side
 
 - A node's tap no longer covers the graph (81 of 81 → 0); a case in `relationsTap1938`. Batch 49 done.
+
+## 2026-11-19 — critic run 82 (focused, on 3e560a9c): ADR-829's exit
+
+- Two blocking issues: R82-B1, R178 cut the phone's war-row names under five letters (a regression of R174), and R82-B2,
+  a nation chosen again from the Ranking on a sideways phone gets no panel. UI/UX 7, its third run under the bar; the
+  rest 8 (most carried). Batch 49's items fixed on their cases. Filed as Batch 50 (R183–R188); ADR-1136 proposed for
+  the user. The loop stops until the user decides.

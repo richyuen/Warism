@@ -5,6 +5,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1136 · 2026-11-19 · proposed, the user's decision · The phone's war row, again: R178 cut names under five letters (ADR-829's exit)
+
+- **The case** (critic run 82, focused, on 3e560a9c): R82-B1. At 375 × 667 the row reads "Sovi… & 3 ⚔ Japan & 6"
+  (`critic/shots/c82nl_68901_d400_375x667_5405_row.png`); on 82901 the row is 10 px past its width and "+5" cut at the
+  edge; on the random world at 390 × 844 "Queensland" shows "Que…". Run 81's build: "Soviet Un…", "Queen…" (with the
+  swatch squeezed, R81-N1). R178 kept the swatches (R81-N1) by a one-line clamp that breaks inside a word, and it hides
+  the "& n" only on a row of 350 px or less: between 366 and about 400 px wide a banner with two counts has no room left
+  and the name goes first. R178's own probe could not see it (a clamp keeps `scrollWidth` equal to `clientWidth`).
+- **Why the loop stopped:** a blocking issue that is a regression of an item ticked since the last release (R174, by
+  R178); and UI/UX under its bar in three runs in a row (80, 81, 82). The phone's war row is the blocking issue of two of
+  the three (R80-B1, R82-B1); the others are claims that held on their own route only (R81-B1, R82-B2).
+- **Also blocking:** R82-B2, a nation chosen again from the Ranking on a sideways phone gets no panel while Relations hid
+  it (R181's rule cleared only on a new id). Small and understood; held with the dimension until the decision.
+- **The options:**
+  - **(a) Finish ADR-1135 (a) in the same design (recommended):** the "& n" gives way per banner, by measure (a banner
+    whose names would go under five letters drops its counts, the others keep theirs), the clamp breaks at a word only
+    (the floor: the first word or five letters), and a test that measures the letters drawn, not the box. Then R184
+    and the non-blocking items. Small; the row reads as now on wider phones.
+  - **(b) Fewer banners on a narrow phone:** under about 400 px one banner and "+n" on the closed row (ADR-1135 (b)):
+    names and counts whole, less seen at a glance.
+  - **(c) A redesign of the phone row:** each side its flag or swatch alone, the names on a tap or opened (ADR-1135 (c));
+    the class of name-floor defects goes away with the names.
+  - **(d) The bar:** accept a shorter floor on phones under 400 px (three letters and the ellipsis), with the counts
+    kept; the row as it is.
+- **Also in the run:** every item of Batch 49 works on its cases (run 81's build fails each); 18 new five-year checker
+  runs clean; 14 minutes of monkeys, 0 page errors. Non-blocking: R82-N1 the sideways relations graph unreadable (55 px
+  high at 667 × 375; Hearts of Iron IV's list of ties is an option there), R82-N2 Go to country's 8 px strip, a clamped
+  name away from its swatch, R82-N3 the opened Ranking over the bar's buttons sideways. Filed as Batch 50 (R183–R188).
+
 ## ADR-1135 · 2026-11-19 · the user's decision: (a) · R80-B1: R168 cut the phone's war-banner names to 0–3 letters (ADR-829's exit)
 
 - **The case** (critic run 80, full, on 18c2b40a): at 390 × 844 every 1938 game opens with "J… & 2 ⚔ C… & 1"; on 68901
