@@ -366,3 +366,36 @@ test('on a phone "Go to country" brings the capital where the map shows', async 
       .toBe('map');
   }
 });
+
+// R186 (critic run 82, R82-N2): at 360 × 740 "Go to country" put the capital in an 8 px strip between the panel and the
+// news, its dot and name unseen. On a short phone the panel leaves a strip of map: the capital and 16 px about it there.
+test('on a short phone "Go to country" shows the capital with room about it', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+  await page.getByTestId('take-control').click();
+  for (const [w, h] of [[360, 740], [375, 667]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+    await page.getByTestId('tab-overview').click();
+    await page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${FRA}"]`).click();
+    await page.getByTestId('nation-menu-goto').click();
+    await expect
+      .poll(
+        () =>
+          page.evaluate((n) => {
+            const v = window.__warsim!.view!;
+            if (v.controller.animating) return 'flying';
+            const [at, c, el] = [v.capitalOf(n)!, v.controller.cam, document.querySelector('canvas')!];
+            const r = el.getBoundingClientRect();
+            const [px, py] = [(at[0] - c.cx) * c.scale + el.clientWidth / 2 + r.left, (at[1] - c.cy) * c.scale + el.clientHeight / 2 + r.top];
+            const off = [[0, 0], [0, -16], [0, 16], [-16, 0], [16, 0]].filter(([dx, dy]) => document.elementFromPoint(px + dx!, py + dy!) !== el);
+            return off.length === 0 ? 'clear' : `covered at ${JSON.stringify(off)}`;
+          }, FRA),
+        { timeout: 6000, message: `${w} × ${h}: Paris and 16 px about it on the map` },
+      )
+      .toBe('clear');
+  }
+});

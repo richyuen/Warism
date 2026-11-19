@@ -2360,6 +2360,13 @@ button.unit-icon.on {
    spans the view without its tagline, the ranking stands under it and gives way while a nation's,
    a formation's or a top-centre panel is open (the Statistics button still shows it alone), those
    panels take the view's width, and the bottom bar wraps onto rows rather than run off it. */
+/* A short phone held upright (R186, critic run 82, R82-N2: at 360 × 740 a nation's panel left 8 px of map above the news,
+   and "Go to country" put the capital there, unseen): the panel leaves a strip of map under it. */
+@media (max-width: 600px) and (max-height: 760px) {
+  .nation-panel {
+    max-height: calc(100% - 15.5rem - var(--bar-top, 2.8rem));
+  }
+}
 @media (max-width: 600px) {
   .topbar {
     right: 0.5rem;

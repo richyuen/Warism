@@ -409,9 +409,14 @@ ADR-1136: the user chose (a).
     median name 13 px (before 55 px, 4 px); 844 × 390 173 px, 13 px; 932 × 430 212 px, 13 px; 390 × 844 as before
     (13 px). A case in `relationsTap1938` (red without: 54.75 px). The specs on Relations 35/35. (The list of ties, not
     needed: the graph reads.)
-- [ ] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
+- [x] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
   fallback). `c81_goto2 69937 360 740 400 ITA,USA,ENG`: Brussels at (176, 528). AT: the capital's dot and name seen in
   the probe's shots at 360 × 740; a case in a spec.
+  - Done (COMMIT): on a phone upright and 760 px tall or less the nation panel leaves a strip of map under it
+    (`max-height` 15.5 rem and the bar less than the view); Go to tries a room of 60, 32, 20, then 8 px about the
+    capital. `c81_goto2 69937 360 740 400 ITA,USA,ENG`: 7 of 7 on the map, at y 456–488 (before 528, in the 8 px
+    strip); the shot shows Brussels' dot and name; `82937 375 667 300`: 7 of 7. A case in `forceWar1938` at 360 × 740
+    and 375 × 667: Paris and 16 px about it on the map (red without the panel's cap: covered above).
 - [x] R187 **At 360 and 375 px a clamped name sits away from its swatch, some clamps end ".."** (`c82nl_82903_d700_375x667`,
   `69903_d700`). AT: the name beside its swatch and one ellipsis, from the shots. (With R183.)
   - Done (b69e59a8, with R183): the clamp is gone; a cut name ends in one "…" by `text-overflow`, its box as wide as set,

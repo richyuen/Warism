@@ -152,8 +152,9 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       // the old panel, the capital came to rest under the new one in 11 of 27 flights on a phone).
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
-          // At 360 × 740 the panel leaves a strip of map under it and no room of 60 px: the strip, then the centre.
-          if (!view.showPlaceClear(at[0], at[1]) && !view.showPlaceClear(at[0], at[1], 8)) view.showPlace(at[0], at[1]);
+          // On a short phone the panel leaves a strip of map under it and no room of 60 px: the most room the strip has
+          // (R186: at 8 px the capital stood against the panel's foot), then the centre.
+          if (![undefined, 32, 20, 8].some((m) => view.showPlaceClear(at[0], at[1], m))) view.showPlace(at[0], at[1]);
         }),
       );
     };

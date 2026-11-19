@@ -398,3 +398,8 @@
 
 - Its names sized by the dimension that bounds the drawing, the panel down to the bar, the filters one row: 151 px high
   and 13 px names at 667 × 375 (55 px, 4 px before); a case in `relationsTap1938`.
+
+## 2026-11-19 — R186: on a short phone "Go to country" shows the capital
+
+- The panel leaves a strip of map on phones 760 px tall or less, and Go to takes the most room the strip has; Brussels
+  seen at 360 × 740; a case in `forceWar1938`.
