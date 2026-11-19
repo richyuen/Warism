@@ -1,0 +1,16 @@
+npx tsx tools/diag/warOpening.ts critic/c81_wo_57.json --years 3 57211 57213 57215 > critic/c81_wo_57.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 30041 3517 120 30041 30,90 1 > critic/c81_li_30041_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 27037 15101 120 27037 30,90 2 > critic/c81_li_27037_15101_g2.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 51101 3517 120 51101 30,90 1 > critic/c81_li_51101_g1.log 2>&1
+npx tsx tools/diag/landingInvariants.ts 53125 15101 120 53125 30,90 2 > critic/c81_li_53125_15101_g2.log 2>&1
+npx tsx tools/diag/landingRows.ts all critic/c81_lrows_all.json > critic/c81_lrows_all.log 2>&1
+npx tsx tools/diag/pileSides.ts 365 64141 64143 64145 --all > critic/c81_pileSides_64.log 2>&1
+npx tsx critic/scripts/c77_dday.ts 1938 > critic/c81_dday_1938.log 2>&1
+npx tsx critic/scripts/c77_census.ts 1938 > critic/c81_census_1938.log 2>&1
+npx tsx critic/scripts/c64_track.ts 1938 365 > critic/c81_track_1938.log 2>&1
+npx tsx tools/diag/trackFronts.ts 1938 > critic/c81_tf_1938.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 57613 > critic/c81_massTold_57613.log 2>&1
+npx tsx tools/diag/heroBattle.ts 7019 3 > critic/c81_heroBattle_7019.log 2>&1
+npx tsx critic/scripts/c81_trackTexts.ts > critic/c81_trackTexts2.log 2>&1
+npx tsx tools/diag/pileSides.ts 365 69141 69143 69145 --all > critic/c81_pileSides_68.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c81_warOpening_68b.json --years 3 69217 69219 69221 > critic/c81_warOpening_68b.log 2>&1

@@ -304,6 +304,36 @@ UI/UX dimension is taken until the user decides.
     (1095, 344.5) × 20.9, Rome in the view, 0 errors. `forceWar1938`'s Go to case: Rome in view and uncovered, the scale
     up (red without the wiring: unchanged).
 
+## Batch 49 — critic run 81's findings (full, on 7c64529e; one blocking issue; UI/UX 7, every other score at its bar)
+
+R81-B1 is R170 unfinished (run 80's build the same), not a regression: ADR-829's exit does not apply. UI/UX under its
+bar in runs 80 and 81 (two in a row).
+- [ ] R177 **R81-B1: on a sideways phone History opens under an open nation panel** (R170 held upright only). `BASE=… node
+  critic/scripts/c81_histOver.mjs 68901 60 844 390 GER`: 81 of 81 of History covered, `historyGoTapped` false; 667 × 375
+  and 932 × 430: 63 of 81; `dirHand 59955 120 844 390 touch`: "act failed … history-go". AT (the bar's): the probe shows
+  `history-btn.hiddenOf81` 0 and `historyGoTapped` true at the three sizes; `dirHand` at 844 × 390 with no "act
+  failed"; the upright case as it is; a case in `historyPlace1938`.
+- [ ] R178 **R81-N1: on a phone 375 px or narrower the banners' swatches squeezed to 0 px; at 320 px the swords over "& 2"**
+  (R174's side effect; also Hearts of Iron IV's flag kept by a cut name, the report's idea: taken here). `DPR=2 node
+  critic/scripts/c81_bannerFit.mjs 68901 0 360 740`; 69903 day 700; 320 × 568 day 400. AT: no swatch under 6 px and no
+  overlap on these cases; a case in `warBannerRows1938`.
+- [ ] R179 **R81-N2: "Go to country" on a phone leaves the capital under the new panel** (11 of 27; 360 × 740 7 of 7).
+  `c81_goto2.mjs 68931 390 844`, `69937 360 740 400 ITA,USA,ENG`. Cause by the code: the clear map measured before the
+  new panel is drawn. AT: the capital on open map in the probe's flights at both sizes; a case in a spec.
+- [ ] R180 **R81-N3: at 1024 × 768 the war row's "+n" under the legend, not clickable** (and the row over the ticker's
+  second row). `c81_moreClick.mjs 68901 400 1024 768`. AT: the click works at 1024 × 768 and the sizes that work now; a
+  case in a spec. (Ages of Conflict's scrolling war list, the report's idea: not taken unless the row cannot clear the
+  legend, a change of what the row is.)
+- [ ] R181 **R81-N4: on a phone a nation chosen again from outside the graph shows no panel** (R175's `relationsOver`
+  still names it). `c81_relOver.mjs 68933 390 844` step 4; 69933, 69935 at 360 × 740, and 844 × 390. AT: the panel
+  shows at step 4 on these; a case in `relationsTap1938`.
+- [ ] R182 **On a sideways phone a node chosen in the graph hides the whole graph under its panel** (non-blocking 5 and the
+  design objection; R175 as designed). `c81_relOver.mjs 68933 844 390` step 5: 81 of 81. Taken: the graph stays in
+  view beside or above the panel. AT: at 844 × 390 after a node's tap its panel shows and at most half the graph's
+  points are covered; a case in `relationsTap1938`.
+- Not taken: ADR-1111's heroes' names over Europe's counters at the world's zoom (decided there); R172's kept three (the
+  ring over "Pari", the AI's bomb at 600 m/px, like flags at sea; as R172); `slowClick`'s named cases (ADR-914).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

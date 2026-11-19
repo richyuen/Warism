@@ -338,3 +338,9 @@
 
 - It selected the nation alone; now the camera flies to the capital as History's places do. The critic's probe and a case
   in `forceWar1938`. Batch 48 done.
+
+## 2026-11-19 — critic run 81 (full, on 7c64529e)
+
+- One blocking issue, R81-B1: on a sideways phone History opens under a nation panel (R170 unfinished, not a regression).
+  UI/UX 7; every other dimension 8, performance scored afresh. R80-B1, R80-N1 and R80-N2 fixed. Filed as Batch 49
+  (R177–R182).

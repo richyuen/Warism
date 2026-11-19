@@ -1,5 +1,5 @@
 {
- "commit": "18c2b40a360e646995dcc112635768e6afc4ab3e",
+ "commit": "7c64529ead48045bcc461060273b8a0cad8f26e4",
  "mode": "full",
  "scores": {
   "mapVisuals": 8,
@@ -19,11 +19,11 @@
  },
  "blocking": [
   {
-   "id": "R80-B1",
-   "title": "On a phone the war banners' names are cut to 0-3 letters (R168's regression): 'J… & 2 ⚔ C… & 1' on every 1938 phone game",
-   "evidence": "node critic/scripts/c80_bannerNames.mjs 68901 400 390 844 on HEAD: Soviet Union 7/12, Japan 1/5, Japan 1/5, China 0/5 letters shown (critic/c80_bn_68901_400_390x844_5401.log, critic/shots/c80bn_1938_68901_d400_390x844_5401_row.png); run 79's build on the same case shows the names whole (critic/shots/c80bn_1938_68901_d400_390x844_5402_row.png). Day 0: 'J… & 2 ⚔ C… & 1' (critic/shots/c80bn_1938_68901_d0_390x844_5401_row.png); 68903 day 700: 'T… ⚔ Gr…' (critic/shots/c80bn_1938_68903_d700_390x844_5401.png). Whole at 844x390, 1024x768, 1280x720, 1600x900 and in the opened row. warBannerRows1938's R168 case runs only at 1600x900.",
-   "fix": "On a phone keep the name's width (flex-shrink 0 to a minimum of about 4-5 em) and give way with the score or the '& n' first, or fit fewer banners in the closed row. Seen fixed when the probe above and '68903 700 390 844' show each side with at least 5 letters or the whole name, and the 1600x900 random case (SCEN=random 64965 730 1600 900) stays whole."
+   "id": "R81-B1",
+   "title": "On a sideways phone (844x390, 667x375, 932x430) History opens under an open nation panel: R170's 'on a phone History stands in the nation panel's place' holds upright only",
+   "evidence": "node critic/scripts/c81_histOver.mjs 68901 60 844 390 GER on HEAD: history-btn hiddenOf81 81, historyGoTapped false (critic/c81ho_68901_d60_844x390_GER_5403.json, critic/shots/c81ho_68901_d60_844x390_GER_5403_history-btn.png); 667x375 and 932x430: 63 of 81. dirHand 59955 120 844 390 touch: 'act failed ... history-go' (critic/c81_dirHand.59955_120_844_390_touch.log, critic/shots/c81dh_59955_844x390_history.png). Relations at the same sizes: 0 of 81 (R175). Upright 390x844 works (dirHand taps 'A major battle began near Elbląg', cutsAfterAct 0). R170's rule '#ui:has([data-testid=history-panel]) .nation-panel { display: none }' sits in '@media (max-width: 600px)' only (src/app/style.css). Run 80's build fails the same (critic/c81ho_68901_d60_844x390_GER_5404.json).",
+   "fix": "Apply R170's give-way under the sideways-phone query too ((max-height: 500px), as usePhone and ADR-760 define a phone), as R175 does for Relations. Seen fixed when c81_histOver.mjs 68901 60 at 844x390, 667x375 and 932x430 shows history-btn.hiddenOf81 0 and historyGoTapped true, dirHand 59955 120 844 390 touch has no 'act failed', and the 390x844 case stays as now."
   }
  ],
- "timestamp": "2026-11-18T23:55:00-05:00"
+ "timestamp": "2026-11-19T09:30:00-05:00"
 }
