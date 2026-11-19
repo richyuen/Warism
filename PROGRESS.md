@@ -483,3 +483,13 @@
   dimensions), performance when `src/` changed, and two dimensions by rotation; the checkers, monkeys and hashes every
   run; non-blocking issues do not hold a release. PROMPT.md, CRITIC_PROMPT.md and the critic's agent file changed.
   Run 85's resume was cut off at once; run 86 (focused) runs its lanes and perf chain.
+
+## 2026-11-19 — critic run 86 (focused, on bd85eb10): the release check (ADR-1138)
+
+- No blocking issue; every score at its bar. Performance scored afresh from the chain alone (tick 1.851 ms, 58.8–59.8
+  fps), statsHistory with lane E's cases; mapVisuals, diplomacyWarDepth, uiUxPolish for Batch 53. Checkers 0 of 12
+  broken, 0 page errors in 155 outputs. R199 done. Three non-blocking issues filed as Batch 54 (R200–R202), after the
+  release. Not run by the critic: `landingFuzz` on new seeds (it started before ADR-1138 asked for it every run): run
+  by the builder with the release checks. The run's JSON has no `fresh` record (it began before the rule): the rotation
+  starts at run 87, taking performance, statsHistory, mapVisuals, diplomacyWarDepth and uiUxPolish as fresh at run 86
+  and the rest at run 85.

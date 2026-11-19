@@ -565,15 +565,36 @@ The run was handed back before lane E (6 of about 40 page cases) and the perform
     390, a desk, upright and back, a nation's panel opened and closed (ADR-1137 (d)): the kind named each time, the footer
     in view (red without: the hint unchanged). R195's case (the graph 110 px and more, every filter's tap) as before. 22
     specs on Relations, phones and i18n 84/84.
-- [ ] R199 **Finish run 85's release check**: `critic/scripts/c85_laneE.sh` (lane E's cases from the 7th) and
+- [x] R199 **Finish run 85's release check**: `critic/scripts/c85_laneE.sh` (lane E's cases from the 7th) and
   `critic/scripts/c85_chainPerf.sh` alone on a quiet machine, before a release is cut on this commit or a later one. The
   next critic run (focused, on R197–R198) takes them: its prompt names them. AT: its report has lane E's cases and
   performance scored afresh, not carried.
   - Under ADR-1138 (the user's decision, after this was filed): no full run; run 86 (focused) runs these, and if it has
     no blocking issue, every score at its bar and its performance chain finished, it is the release check.
+  - Done (critic run 86, focused, on bd85eb10): lane G and lane E2 (36 cases) all exit 0; the performance chain alone on a
+    quiet machine, scored afresh at 8 (seed 99's tick 1.851 ms, hash `ca4700f1`; least mean frame rate 58.8–59.1 fps at
+    1600 × 900, 2560 × 1440 and 4K; the 12-year watch 59.1–59.8 fps; within about 1 % of run 81). No blocking issue,
+    every score at its bar: the release check (ADR-1138).
 - Not taken: the graph's 13 px jump while a two-row line is said at 568 × 320 (R196 accepted it, the report lists it
   without a fix); heroPop on 85905 (7 to 15 jumps panning, on both builds, older than these batches; the report asks no
   fix); R172's, R192's and ADR-1111's kept items.
+
+## Batch 54 — critic run 86's findings (focused, on bd85eb10; no blocking issue; every score at its bar; the release check)
+
+Non-blocking: done after the release (ADR-1138), before the next critic run (ADR-1039). Each crosses the sizes and opens and
+closes the panels beside it (ADR-1137 (d)).
+- [ ] R200 **R86-N2: in the sea-control, air-control and fallout map modes a desk 680 to 760 px wide shows no war, "+5"
+  alone** (R197's side effect: those modes' legend is wider and the band too narrow; run 85's build showed one banner over
+  the legend's corner). `critic/c86_mr2_*`, `c86ms_84901_700x800_seaControl*.png`. AT: `c86_modeRow` a war shown in
+  every map mode at 680–760, nothing covered; R197's case as now. (Hearts of Iron IV's folded legend, the report's idea:
+  one way to free the room.)
+- [ ] R201 **R86-N1: with every relations kind hidden the footer says "Truces hidden" where it said "No ties of these
+  kinds"** (R198's side effect; `critic/c86_rs_84903.log`). AT: the empty graph says it has nothing shown; a kind tapped
+  is named as R198 has it.
+- [ ] R202 **The design objection: the desk's row centred in the free band leaves the bar's axis** (24 to 44 px on a wide
+  desk, moving about 68 px when the map mode changes; R197). AT: on a desk with room the row on the bar's centre, its
+  width limited by the band; R197's and R200's cases as then.
+- Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 85).
 
 ## Released
 
