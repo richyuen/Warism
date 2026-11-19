@@ -49,7 +49,7 @@ import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 import { beginMassing, massStep, unprepared } from './massing';
-import { LIFT_PROBE, noLift } from './seaLift';
+import { LIFT_PROBE, noLift, sidesTouch } from './seaLift';
 
 export const STAGGER = 7;
 /** Nations below this aggression never start wars (they still defend, ally and make peace). */
@@ -634,6 +634,16 @@ export const BLOC_PROBE: { lastingOff?: boolean; deterrenceOff?: boolean } = {};
 export const PILE_PROBE: { off?: boolean } = {};
 
 /**
+ * Whether a war of `n` on `t` is across the sea, asked of the war's defender (`t`'s overlord, R145): not a land neighbour,
+ * not one at home (`atHome`), or one `n` touches nowhere by control (R167, critic run 79's R79-B1: Argentina on a rebel of
+ * Brazil's whose border Brazil held, a neighbour by ownership, declared with no lift on 64015).
+ */
+export function acrossSea(world: World, n: number, t: number, isNeighbour: (d: number) => boolean, atHome: (d: number) => boolean): boolean {
+  const d = world.nations.cols.overlord[t] || t;
+  return !isNeighbour(d) || !atHome(d) || !sidesTouch(world, [n], [d]);
+}
+
+/**
  * Whether `n`, its army at the border of the war on `t` it chose weeks ago (ROADMAP R97b, `massStep`), would still
  * declare it by the rules of the choice that `whyNotWar` does not hold: its gold, the blocs' deterrence (ADR-981) and
  * the pile of realms (ADR-1042).
@@ -644,9 +654,9 @@ export function stillDeclares(world: World, n: number, t: number, blocs: Readonl
   if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) return false;
   // Nor across the sea with no lift for it (R145, critic run 76's R76-B1): a massing's target may be a puppet whose
   // overlord, the war's defender, is no neighbour at home.
-  const d = nc.overlord[t] || t;
   const home = homeNeighbours(world, n);
-  if ((!neighbourMap(world).get(n)?.has(d) || (home !== null && !home.has(d))) && noLift(world, n, callSides(world, n, t))) return false;
+  const across = acrossSea(world, n, t, (d) => neighbourMap(world).get(n)?.has(d) === true, (d) => home === null || home.has(d));
+  if (across && noLift(world, n, callSides(world, n, t))) return false;
   return PILE_PROBE.off === true || !outnumbered(world, n, t);
 }
 
@@ -717,10 +727,7 @@ export function strategicAi(world: World): void {
         // Nor one across the sea it has no lift for (R139, `noLift`).
         // Over the sea is asked of the war's defender (R145, R76-B1): a puppet beside `n` brings its overlord, from
         // across the sea, as the war's head (`declareWar`).
-        const overSea = (x: number): boolean => {
-          const d = nc.overlord[x] || x;
-          return !neighbours.includes(d) || !atHome(d);
-        };
+        const overSea = (x: number): boolean => acrossSea(world, n, x, (d) => neighbours.includes(d), atHome);
         const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : target(refused)), overSea);
         // A nation at peace with a border to its target brings its army there first (R97b, `beginMassing`).
         if (t !== 0 && !beginMassing(world, n, t, day, atHome(t))) declareWar(world, n, t);

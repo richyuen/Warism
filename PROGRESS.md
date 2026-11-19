@@ -279,3 +279,9 @@
 
 - One blocking issue (R79-B1: a war across the sea with no lift, by a door the gate does not ask); every score at its
   bar (8 each). Batch 46's four fixed on their probes. Filed as Batch 47 (R167–R172).
+
+## 2026-11-18 — R167: across the sea by control too (ADR-1133); the next critic run full (ADR-1134)
+
+- Argentina's war on a rebel of Brazil's was declared with no lift: its border was Brazil's, but "across the sea" was
+  asked by ownership. Both doors now ask it by control too. The case and ten new seeds 0 broken; seed 99 unchanged.
+- The user: the critic run after Batch 47 is a full run.

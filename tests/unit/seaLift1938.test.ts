@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { firstNotOutnumbered } from '../../src/sim/ai/strategic';
+import { acrossSea, firstNotOutnumbered, neighbourMap, stillDeclares } from '../../src/sim/ai/strategic';
 import { LIFT_PROBE, noLift, seaLift, sidesTouch } from '../../src/sim/ai/seaLift';
 import { NATIONS_1938, SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
@@ -92,5 +92,39 @@ describe('a war across the sea needs a lift (ROADMAP R139)', () => {
     const last = home[home.length - 1]!;
     [c.x[last], c.y[last]] = [(front % CW) + 0.5, Math.floor(front / CW) + 0.5];
     if (men - c.strength[last]! < room) expect(firstNotOutnumbered(w, JAP, pick, across)).toBe(0);
+  }, 300_000);
+
+  // R167 (critic run 79, R79-B1): on 64015 Argentina declared on a rebel of Brazil's, a neighbour by ownership whose
+  // border Brazil held, with no lift; "across the sea" was asked by ownership, so the gate was never asked.
+  it('a neighbour by ownership touched nowhere by control is across the sea: no war on it without a lift', () => {
+    const s = new Sim({ scenario: '1938', seed: 4601, assets: assets1938(W) });
+    const w = s.world;
+    const [ARG, CHL, BOL] = [id('ARG'), id('CHL'), id('BOL')];
+    const nb = (d: number): boolean => neighbourMap(w).get(ARG)?.has(d) === true;
+    expect(nb(CHL)).toBe(true);
+    expect(acrossSea(w, ARG, CHL, nb, () => true), 'touching by land').toBe(false);
+    // Argentina's free men none: no lift.
+    const c = w.formations.cols;
+    w.formations.forEach((f) => {
+      if (c.nation[f] === ARG) c.moving[f] = 1;
+    });
+    expect(stillDeclares(w, ARG, CHL, new Set()), 'beside it by land, no lift asked').toBe(true);
+    // Chile's land beside Argentina's held by a third: still a neighbour by ownership, touched nowhere by control.
+    const { w: CW, controller } = w.cells;
+    const held: number[] = [];
+    for (let k = CW; k < controller.length - CW; k++) {
+      if (controller[k] === CHL && [k + 1, k - 1, k + CW, k - CW].some((q) => controller[q] === ARG)) held.push(k);
+    }
+    for (const k of held) controller[k] = BOL;
+    expect(held.length).toBeGreaterThan(0);
+    expect(sidesTouch(w, [ARG], [CHL])).toBe(false);
+    expect(nb(CHL), 'a neighbour by ownership still').toBe(true);
+    expect(acrossSea(w, ARG, CHL, nb, () => true)).toBe(true);
+    const sides = callSides(w, ARG, CHL);
+    expect(sidesTouch(w, sides[0], sides[1])).toBe(false);
+    expect(noLift(w, ARG, sides)).toBe(true);
+    // Both doors refuse it: the massing's last word, and the day's choice.
+    expect(stillDeclares(w, ARG, CHL, new Set()), "the massing's door").toBe(false);
+    expect(firstNotOutnumbered(w, ARG, (r) => (r.has(CHL) ? 0 : CHL), (x) => acrossSea(w, ARG, x, nb, () => true)), "the day's choice").toBe(0);
   }, 300_000);
 });

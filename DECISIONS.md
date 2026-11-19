@@ -5,6 +5,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1134 · 2026-11-18 · the user's decision · The critic run after Batch 47 is a full run
+
+- **The user:** "Let's make the next critic run a full run again." After Batch 47 (critic run 79's findings, full) the
+  critic is spawned with "full run", not a focused one (an exception to ADR-915's focused run after a blocking issue).
+
+## ADR-1133 · 2026-11-18 · accepted · Across the sea by control too: a neighbour touched nowhere asks the lift (ROADMAP R167)
+
+- **The case** (critic run 79, R79-B1): `diploInvariants 64015 random 1825 --heroes`, day 1411: Argentina declared on
+  #105, a rebel of Brazil's whose land beside Argentina's Brazil held, with 16,294 men to lift for a room of 25,200.
+  No massing (`.cache/r167_door.ts`): the day's choice. Its `overSea` asked "a land neighbour at home" by ownership
+  (`neighbourMap`), so `noLift` (R139) was never asked; by control the two touched nowhere.
+- **Decision:** `acrossSea` (strategic.ts), the one test of both doors (the day's choice and the massing's
+  `stillDeclares`): not a land neighbour, not at home, or one `n` touches nowhere by control (`sidesTouch`). Only then is
+  the lift asked, as before.
+- **Measured:** the case 0 broken; ten new seeds 67001–67010 (random diplomacy, heroes, five years) 0 broken each. Seed
+  99's pin and its three-year hashes unchanged; its tick 2.476 ms against HEAD's 2.479 ms, run side by side.
+
 ## ADR-1132 · 2026-11-18 · accepted (for the user's review, with ADR-1130) · R147's pooled figures on twelve new seeds (ROADMAP R163)
 
 - **The case** (critic run 78, R78-N2): on three new seeds (66211–66215, `critic/scripts/c78_woAB.sh`) HEAD's attacker

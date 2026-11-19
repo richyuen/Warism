@@ -223,12 +223,17 @@ RELEASES step 2 (ADR-1016): a focused run with no blocking issue; its non-blocki
 
 ## Batch 47 — critic run 79's findings (full, on 79058a5a; one blocking issue; every score at its bar)
 
-RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking one; then the critic again (focused).
-- [ ] R167 **R79-B1: a war across the sea declared with no lift, through a door the gate does not ask.**
+RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking one; then the critic again, a full run
+(ADR-1134, the user's decision).
+- [x] R167 **R79-B1: a war across the sea declared with no lift, through a door the gate does not ask.**
   `npx tsx tools/diag/diploInvariants.ts 64015 random 1825 --heroes`: day 1411, ARG declares on #105 (at war with
   Brazil, which takes it as a puppet that hour), 16,294 men to lift for a room of 25,200; `noLift` true in the six
   hours before (`critic/scripts/c79_liftTrace.ts`). AT: that command prints 0 broken; `diploInvariants` on ten more
   random-diplomacy seeds with heroes, five years each, 0 broken; a unit test of the door.
+  COMMIT (ADR-1133): the day's choice declared it (no massing); "across the sea" was asked by ownership. Now
+  `acrossSea`, for both doors, counts a neighbour touched nowhere by control too. The case 0 broken; 67001–67010 0
+  broken each; `seaLift1938.test.ts`: Chile's border held by Bolivia, both doors refuse Argentina with no lift (red
+  without the rule). Seed 99's pin unchanged.
 - [ ] R168 **R79-N1: the random world's banners wrap mid-phrase** ("Orientale & / 1 ⚔ Diffa & / 2" at 1600 × 900).
   AT: `node critic/scripts/c79_rw2.mjs 64965 730` ends with each banner on one line, or a name truncated with its
   count whole; a case in a spec.
