@@ -31,6 +31,7 @@ export interface ControlProps {
 }
 
 export function NationPanel({
+  strip = false,
   nation,
   byId,
   techs,
@@ -44,6 +45,8 @@ export function NationPanel({
   onEconomy,
   onHero,
 }: {
+  /** "Go to country" brought it: on a short phone it leaves a strip of map for the capital (R186, R190). */
+  strip?: boolean;
   nation: NationStat;
   byId: Map<number, NationStat>;
   /** The scenario's techs, for the names and prices of what the nation is researching (PLAN 3.1e). */
@@ -101,7 +104,7 @@ export function NationPanel({
     </div>
   );
   return (
-    <aside class="nation-panel" data-testid="nation-panel" data-nation={nation.id}>
+    <aside class={strip ? 'nation-panel go-strip' : 'nation-panel'} data-testid="nation-panel" data-nation={nation.id}>
       <header class="panel-head">
         {flagUrl ? <img class="panel-flag" data-testid="nation-flag" src={flagUrl} alt="" width={36} height={24} /> : <span class="panel-swatch" style={{ background: hex(nation.color) }} />}
         <span class="panel-name" data-testid="nation-name">

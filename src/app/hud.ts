@@ -131,6 +131,12 @@ export class Hud {
    * selected it alone, the camera where it was).
    */
   onGoToNation: (id: number) => void = (id) => this.onSelectNation(id);
+  /**
+   * The nation "Go to country" flew to, 0 for none: its panel leaves a strip of map for the capital on a short phone, and
+   * no other panel does (R190, critic run 82→83, R83-N2: R186's strip cost every short phone's panel 39 px). Gone once
+   * another nation is chosen.
+   */
+  readonly wentTo = signal(0);
   /** A row of History's place (ROADMAP R141): in the view where the page shows the map; false when it shows none (`MapView.showPlaceClear`). */
   onShowPlaceClear: (x: number, y: number) => boolean = () => false;
   /** The director's camera (ROADMAP R142); main wires it to the map view. */
@@ -323,6 +329,7 @@ export class Hud {
       // The panel that gave way to the graph is forgotten once another nation is chosen (R181, critic run 81, R81-N4:
       // Germany chosen again after Italy had no panel, `relationsOver` still naming it).
       if (selected !== this.relationsOver.peek()) this.relationsOver.value = 0;
+      if (selected !== this.wentTo.peek()) this.wentTo.value = 0;
     });
     sim.onMapLayers((m) => {
       this.templates.value = m.templates;

@@ -145,6 +145,7 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     };
     hud.onGoToNation = (id) => {
       hud.onSelectNation(id);
+      hud.wentTo.value = id;
       const at = view.capitalOf(id);
       if (!at) return;
       hud.director.stop();

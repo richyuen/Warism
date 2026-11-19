@@ -425,3 +425,7 @@
 - The phone's sizing cleared off a phone's closed row, the banners counted again when the window turns; the critic's
   crossing routes all met; a spec case that crosses the sizes and opens and closes the panels beside the row, as (d)
   asks of every such item from now on.
+
+## 2026-11-19 — R190: only Go to's panel leaves the strip of map on a short phone
+
+- Other panels have their full height again (206 px of content at 320 × 568, as before R186); a case crossing the sizes.

@@ -455,9 +455,15 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
     case in `warBannerRows1938` crosses upright, two desks, sideways with a nation's panel and History opened and
     closed, upright and a wide desk (red without: a desk banner without its counts). The 31 specs on phones, the Ranking
     and the banners 124/124.
-- [ ] R190 **R83-N2: R186's strip costs every short upright phone's panel 39 px, all the time** (320 × 568 with God Mode: 167
+- [x] R190 **R83-N2: R186's strip costs every short upright phone's panel 39 px, all the time** (320 × 568 with God Mode: 167
   against 206 px of content; `c83ps_83941_d120_320x568_GER`, `360x640`). AT: the panel's full height except while Go
   to's flight shows a capital (or when its content is shorter than the room); R186's case as now.
+  - Done (COMMIT): only the panel "Go to country" opened leaves the strip (`hud.wentTo`, the panel's `go-strip`), gone
+    once another nation is chosen. `c83_panelShort 83941 120 GER`: 320 × 568 206 px of content shown (R186: 167), the God
+    tab 9 swipes (11); 360 × 640 303 px. R186's case as before. A case in `forceWar1938` crossing 360 × 740, 844 × 390,
+    1280 × 720 and back (ADR-1137 (d)), History opened and closed over the panel: chosen otherwise no strip, Go to's
+    panel 30 px and more shorter at 360 × 740 and the same elsewhere, another nation chosen and the strip gone (red
+    without: no strip on Go to's panel). The 47 specs on phones, panels, the Ranking and the banners 176/176.
 - [ ] R191 **R83-N3: the sideways relations filters' row hides "Truces" and the focus selector off its edge** (R185's cost;
   667 × 375 "Puppets" too; the panel now over both ticker rows). AT: every filter and the selector reachable and seen
   to be there (Hearts of Iron IV's single filter button, the report's idea: one way to do it); R185's case as now.

@@ -2361,9 +2361,10 @@ button.unit-icon.on {
    a formation's or a top-centre panel is open (the Statistics button still shows it alone), those
    panels take the view's width, and the bottom bar wraps onto rows rather than run off it. */
 /* A short phone held upright (R186, critic run 82, R82-N2: at 360 × 740 a nation's panel left 8 px of map above the news,
-   and "Go to country" put the capital there, unseen): the panel leaves a strip of map under it. */
+   and "Go to country" put the capital there, unseen): the panel "Go to country" opened leaves a strip of map under it,
+   and no other (R190, critic run 83, R83-N2: every panel there was 39 px shorter, a God tab's row cut). */
 @media (max-width: 600px) and (max-height: 760px) {
-  .nation-panel {
+  .nation-panel.go-strip {
     max-height: calc(100% - 15.5rem - var(--bar-top, 2.8rem));
   }
 }

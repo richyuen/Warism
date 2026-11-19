@@ -399,3 +399,40 @@ test('on a short phone "Go to country" shows the capital with room about it', as
       .toBe('clear');
   }
 });
+
+// R190 (critic run 83, R83-N2; ADR-1137 (d): crossing the sizes, the panels opened and closed): R186's strip shortened
+// every nation panel on a short phone by 39 px. Only the panel "Go to country" opened leaves it; a nation chosen otherwise
+// has the full height, upright, sideways, on a desk and back.
+test('only the panel "Go to country" opened leaves the strip of map', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+  await page.getByTestId('take-control').click();
+  const maxH = (): Promise<{ strip: boolean; max: string; bottom: number }> =>
+    page.getByTestId('nation-panel').evaluate((p) => ({ strip: p.classList.contains('go-strip'), max: getComputedStyle(p).maxHeight, bottom: p.getBoundingClientRect().bottom }));
+  for (const [w, h] of [[360, 740], [844, 390], [1280, 720], [360, 740]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    // Chosen otherwise: the full height.
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), ENG);
+    await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', String(ENG));
+    const full = await maxH();
+    expect(full.strip, `${w} × ${h}: a panel chosen otherwise, no strip`).toBe(false);
+    // Go to: the strip on a short upright phone alone.
+    await page.getByTestId('tab-overview').click();
+    await page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${FRA}"]`).click();
+    await page.getByTestId('nation-menu-goto').click();
+    await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', String(FRA));
+    const went = await maxH();
+    expect(went.strip, `${w} × ${h}: Go to's panel`).toBe(true);
+    // Both panels longer than their room there: their feet say the room.
+    if (w === 360) expect(full.bottom - went.bottom, `${w} × ${h}: the strip`).toBeGreaterThan(30);
+    else expect(went.max, `${w} × ${h}: no strip off a short upright phone`).toBe(full.max);
+    // History opened and closed over it; then another nation chosen: the strip gone.
+    await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+    await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), ENG);
+    expect((await maxH()).strip, `${w} × ${h}: another nation chosen, the strip gone`).toBe(false);
+  }
+});

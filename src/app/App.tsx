@@ -432,6 +432,7 @@ export function App({
         />
       ) : nation && !toolOnMap && !(phone && hud.showRelations.value && hud.relationsOver.value === nation.id) ? (
         <NationPanel
+          strip={hud.wentTo.value === nation.id}
           nation={nation}
           byId={byId}
           economy={hud.economy.value?.nation === nation.id ? hud.economy.value.parts : null}
