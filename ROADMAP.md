@@ -358,7 +358,7 @@ bar in runs 80 and 81 (two in a row).
   design objection; R175 as designed). `c81_relOver.mjs 68933 844 390` step 5: 81 of 81. Taken: the graph stays in
   view beside or above the panel. AT: at 844 × 390 after a node's tap its panel shows and at most half the graph's
   points are covered; a case in `relationsTap1938`.
-  - Done (COMMIT): on a sideways phone with Relations open, the graph's panel on the left half and a nation's panel on
+  - Done (e29440c0): on a sideways phone with Relations open, the graph's panel on the left half and a nation's panel on
     the right half. `c81_relOver 68933 844 390`: 0 of 81 covered at every step (before: 81 at steps 3–5); boxes at 667 ×
     375 and 932 × 430 side by side; upright unchanged. A case in `relationsTap1938` at 844 × 390 and 932 × 430 (red
     without: 81); not at 667 × 375, where the graph is 54 px high and no node is wide enough to pick by finger. The 17
