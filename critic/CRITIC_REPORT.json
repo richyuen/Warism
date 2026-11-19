@@ -1,5 +1,5 @@
 {
- "commit": "42d0964e5ce420b4a89766119751f5b1b2df30f3",
+ "commit": "764aa144050bf43f40ca2d63e34a3298bd0c81b5",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
@@ -8,7 +8,7 @@
   "godMode": 8,
   "editorScenarios": 8,
   "statsHistory": 8,
-  "uiUxPolish": 7,
+  "uiUxPolish": 8,
   "performance": 8,
   "stability": 8,
   "semanticZoom": 8,
@@ -17,13 +17,6 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [
-  {
-   "id": "R83-B1",
-   "title": "A window that crosses a phone's width keeps R183's phone sizing: back at a phone width the war row shows 1 banner with 143-156 px empty (R183 follow-up's 'counted again when the row's own width changes'), and back on a desk a long name stays cut ('Nationalist Sp…') where run 82's build shows it whole",
-   "evidence": "node critic/scripts/c83_phoneToDesk.mjs 68901 400 (384x832,1280x720,1024x768,384x832,1600x900): at the second 384x832 HEAD 1 banner '+4', 156 px empty (critic/shots/c83pd_68901_d400_c83_5407_3_384x832.png); run 82's build 2 banners '+3' (critic/shots/c83pd_68901_d400_c83_5405_3_384x832.png). 83903 700 375x667,1280x720,1024x768,375x667: 1 banner, 143 px empty, against 2 (critic/shots/c83pd_83903_d700_c83_540[57]_3_375x667.png). 83901 400 384x832,1366x768,...: at 1366x768 HEAD 'Nationalist Sp…' cut with inline width 89 px, run 82's build whole (critic/shots/c83pd_83901_d400_c83_540[57]_1_1366x768.png). A phone that stays a phone is clean: c83_rotate 68901 and 83903, 0 stale steps (critic/c83ro_*_c83_5407.json).",
-   "fix": "Clear the names' inline widths and war-tight whenever the row is not a phone's; count fit again when `phone` changes (or reset rowWidth when the ResizeObserver is attached). Seen fixed when c83_phoneToDesk 68901 400 shows 2 banners at the second 384x832 and no inline width at 1280/1024/1600; 83903 700 375x667,1280x720,1024x768,375x667 shows 2 banners at the last step; 83901 400 384x832,1366x768,1024x768,384x832 shows 'Nationalist Spain' whole at 1366; c83_rotate 68901 400 GER 20 and 83903 700 GER 30 stay at 0 stale."
-  }
- ],
- "timestamp": "2026-11-19T12:30:00-05:00"
+ "blocking": [],
+ "timestamp": "2026-11-19T14:10:00-05:00"
 }

@@ -495,6 +495,27 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
     specs on phones, the Ranking and the banners 135/135.
 - Not taken: R83-N4 `slowClick` 1 of 90 (ADR-914); ADR-1111's heroes' plates (decided there); R172's kept three.
 
+## Batch 52 — critic run 84's findings (focused, on 764aa144; no blocking issue; every score at its bar)
+
+A focused run with no blocking issue: its non-blocking issues are fixed, then the full run (ADR-1016). Each item on the
+war row or a panel's place crosses the sizes and opens and closes the panels beside it (ADR-1137 (d)).
+- [ ] R194 **R84-N1: on a desk window 601 to 768 px wide one war banner wider than its row spills over the ticker's second
+  row** (older than Batch 51; run 83's build the same). `c84_rowShot 84901 400 620x900,640x800,683x768,700x800,768x1024`:
+  the row over by 81, 71, 50, 41, 7 px, 56 to 16 px of the ticker's row covered; 84903 day 700 at 640 × 800. AT: that
+  probe `ov` 0 and `under` [] at every size; the case crossing a phone, these desks and back, a nation's panel and
+  History opened and closed; R180's and R189's cases as now. (Ages of Conflict's side list, the report's idea: the
+  phone's row on a narrow desk is the nearer form of it.)
+- [ ] R195 **R84-N2: at 568 × 320 the wrapped relations filters take three rows, the graph 82 px (110 before R191)**
+  (`c82_graphSize 68901 568 320`, `84933`). AT: the graph at 568 × 320 at least as high as before R191 (110 px), every
+  filter and the focus still taking a tap; R191's case and R185's heights at the other sizes as now. (Hearts of Iron IV's
+  single filter button, the report's idea: one way to do it.)
+- [ ] R196 **R84-N3: on a sideways phone the relations hint's second line runs over the panel's foot** (667 × 375, 568 ×
+  320; both builds; `c84rs_84903_d400_c84_5409_2_667x375_GER.png`). AT: the hint inside the panel at 568 × 320, 667 × 375,
+  844 × 390 and upright, a nation's panel opened and closed beside it; the graph's heights as R185/R195.
+- Not taken: R192 kept (the report's "the builder's reason holds"); the objection that a Ranking row beside the graph
+  could open its nation in the panel's place: the row is under the panel there, so no tap reaches it (R192's reason);
+  ADR-1111's heroes' plates (decided there); R172's kept three.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

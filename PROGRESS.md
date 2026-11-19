@@ -443,3 +443,8 @@
 
 - One cap for every long name, each kept to five letters: "Kagoshima" whole beside "Chukotka Autonomous…"; a case
   crossing the sizes. Batch 51 done.
+
+## 2026-11-19 — critic run 84 (focused, on 764aa144)
+
+- No blocking issue; every score at its bar, UI/UX back to 8. Run 83's case and Batch 51 fixed. Three non-blocking
+  issues filed as Batch 52 (R194–R196); then the full run (ADR-1016).
