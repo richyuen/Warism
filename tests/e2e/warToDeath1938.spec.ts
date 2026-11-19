@@ -64,3 +64,26 @@ test('a war banner says which side fights to the death and why the war goes on (
     for (const b of beside) expect(poland.h, `${w} × ${h}: Poland's banner beside one with its death line`).toBeLessThan(b.h - 5);
   }
 });
+
+// R172 (critic run 79's small things): on a phone three opened banners of one nation's wars to the death said the whole
+// sentence three times. Said once in full; another banner of the same sentence says it short.
+test('a death sentence said once in full on the opened banners, short on another of the same', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await open1938(page, 7019);
+  // A second war on China, China to the death in it too (God's switch); and Poland's, so the row has a "+n" to open.
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }, true), { a: id('SOV'), d: id('CHI') });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }, true), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(24));
+  const war = await page.evaluate((sov) => window.__warsim!.hud.stats.value!.wars.find((w) => w.attackers[0] === sov)?.id ?? -1, id('SOV'));
+  expect(war, "the Soviet Union's war on China").toBeGreaterThan(0);
+  await page.evaluate((war) => window.__warsim!.sim.command({ kind: 'setWarFightToDeath', war, side: 1, value: true }, true), war);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.waitForFunction((war) => window.__warsim!.hud.stats.value!.wars.find((w) => w.id === war)?.toDeath[1] === true, war, { timeout: 20_000 });
+  await page.getByTestId('war-more').click();
+  const lines = await page.getByTestId('war-death-line').allInnerTexts();
+  const china = lines.filter((l) => l.startsWith('China fights to the death'));
+  expect(china, "China's lines").toHaveLength(2);
+  expect(china.filter((l) => l === `China fights to the death: ${ENDS}`), 'in full once').toHaveLength(1);
+  expect(china.filter((l) => l === 'China fights to the death: no peace is made'), 'short once').toHaveLength(1);
+});

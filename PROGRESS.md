@@ -305,3 +305,8 @@
 
 - Romania, Slovakia and Bulgaria join the Tripartite Pact as Hungary does, not the game's Anti-Comintern Pact; three
   bare alliance notes rewritten as sentences.
+
+## 2026-11-18 — R172: a death sentence said once in full
+
+- Opened, a war banner whose sentence another already said says it short. The strike's ring, the civil war's flags and
+  the AI's bomb at 600 m/px kept, each with its reason in ROADMAP.

@@ -92,6 +92,21 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     if (w.toDeath[0] || w.toDeath[1]) return `\n${t('wars.toDeath', { name: lead(w.toDeath[0] ? w.attackers : w.defenders) })}`;
     return '';
   };
+  // Opened, a sentence already said on another banner is said short (R172, critic run 79: on a phone three banners of
+  // Nationalist Spain's wars said the whole sentence three times, 286 of 844 px).
+  const said = new Set<string>();
+  const lineOf = new Map<number, string>();
+  for (const w of newest) {
+    const full = deathLine(w).trim();
+    if (!full) continue;
+    const lead = (ids: number[]): string => {
+      const n = byId.get(ids[0] ?? 0);
+      return n ? displayName(n.name) : '?';
+    };
+    const short = w.toDeath[0] && w.toDeath[1] ? t('wars.toDeathBothAgain', { a: lead(w.attackers), d: lead(w.defenders) }) : t('wars.toDeathAgain', { name: lead(w.toDeath[0] ? w.attackers : w.defenders) });
+    lineOf.set(w.id, said.has(full) ? short : full);
+    said.add(full);
+  }
   return (
     <div ref={root} class={opened ? 'war-banners opened' : 'war-banners'} data-testid="war-banners">
       {newest.map((w) => (
@@ -117,7 +132,7 @@ ${t(w.battle ? 'wars.toBattle' : 'wars.noBattle')}${deathLine(w)}`}
           </span>
           {opened && (w.toDeath[0] || w.toDeath[1]) ? (
             <span class="war-death-line" data-testid="war-death-line">
-              {deathLine(w).trim()}
+              {lineOf.get(w.id)}
             </span>
           ) : null}
           <span class="war-score">

@@ -767,6 +767,8 @@
   "wars.noBattle": "No battle now",
   "wars.toDeath": "{name} fights to the death: no peace is made, whatever the score; the war ends when one side holds three quarters of the other's land, or after five years",
   "wars.toDeathBoth": "{a} and {d} fight to the death: no peace is made, whatever the score; the war ends when one side holds three quarters of the other's land, or after five years",
+  "wars.toDeathAgain": "{name} fights to the death: no peace is made",
+  "wars.toDeathBothAgain": "{a} and {d} fight to the death: no peace is made",
   "wars.more": "Show the other wars",
   "wars.fewer": "Show fewer wars",
   "legend.fold": "Fold the legend",

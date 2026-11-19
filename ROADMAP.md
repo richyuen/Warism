@@ -261,9 +261,16 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   Sino-Soviet treaty: the People's Republic of China allies itself with the Soviet Union", "NATO: Canada, a member
   since 1949". `trackText.test.ts`: the four 1940–41 rows the Tripartite Pact, every alliance row a sentence or a
   "Pact: nation" line (red on the old notes).
-- [ ] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
+- [x] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
   battle; three opened phone banners with the same death sentence; the AI's bomb a faint spot at 600 m/px where the game
   stops on it. AT: each seen fixed in a shot or a case, or kept by a line here. `slowClick` stays as ADR-914.
+  COMMIT: the death sentence: opened, a banner whose sentence another already said says it short ("China fights to
+  the death: no peace is made"); `warToDeath1938`'s case, a second war with China to the death (red without: in full
+  twice). Kept, each a drawing of its own, not the bar's (every dimension at 8; each is the report's "not 9"): the
+  strike's ring over the city's name (the ring is the strike's, drawn over the labels on purpose so it is seen; a name
+  that moves aside is a labels' rule of its own); like flags in a civil war's sea battle (a civil war's side has its
+  parent's flag until it takes one: its names tell the sides); the AI's bomb as a faint spot at 600 m/px where the game
+  stops (God's two hours on stands as a cloud: the stop comes before the cloud has risen).
 - [ ] R173 **`relationsTap1938` red 1 in 2 on HEAD** (found in R170's hand run, not the critic's): "the pinch zoomed in"
   fails with or without R170's change (`--repeat-each 2`: 1 failed, 1 passed). AT: ten runs green, or on
   `tools/gate/knownRed.json` with a BLOCKERS entry if a machine's alone.
