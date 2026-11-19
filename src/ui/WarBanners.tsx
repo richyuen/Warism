@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import type { NationStat, WarStat } from '../shared/protocol';
 import { bannerOrder, heldRow, type Held } from './bannerOrder';
 import { t } from './i18n';
@@ -45,8 +45,25 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
    * taken). Each its own: a nation released, the row is the one before it was taken (R121); a new world's wars reuse ids.
    */
   const held = useRef(new Map<string, Held[]>());
+  /**
+   * On a desk, the banners of the closed row that fit its width (R180, critic run 81, R81-N3: at 1024 × 768 three stood
+   * past it, over the ticker and under the legend, and "+n" could not be clicked); counted again at each resize and
+   * when the number of wars changes.
+   */
+  const [fit, setFit] = useState(DESK_BANNERS);
+  useEffect(() => {
+    const again = (): void => setFit(DESK_BANNERS);
+    window.addEventListener('resize', again);
+    return () => window.removeEventListener('resize', again);
+  }, []);
+  useEffect(() => setFit(DESK_BANNERS), [wars.length]);
+  const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : Math.min(DESK_BANNERS, fit);
+  useLayoutEffect(() => {
+    const el = root.current;
+    if (opened || phone || !el || shown <= 1) return;
+    if (el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
+  });
   if (wars.length === 0) return null;
-  const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : DESK_BANNERS;
   const side = (ids: number[]) => {
     const lead = byId.get(ids[0] ?? 0);
     const name = lead ? displayName(lead.name) : '?';

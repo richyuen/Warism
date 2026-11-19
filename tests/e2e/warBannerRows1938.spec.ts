@@ -173,3 +173,43 @@ test('360 × 740 and 320 × 568: the swatches whole, nothing over another, the r
     expect(r, `${w} × ${h}`).toEqual([]);
   }
 });
+
+// R180 (critic run 81, R81-N3): at 1024 × 768 the desk's closed row of three stood past its width, over the ticker and
+// under the legend, and "+n" could not be clicked. The row shows the banners that fit; "+n" is clicked; wider, three again.
+test('1024 × 768: the closed row within its width, "+n" clickable; three banners again when wider', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const pairs = PAIRS.slice(0, 3).map(([a, b]) => [id(a), id(b)] as const);
+  await page.evaluate((pairs) => {
+    for (const [attacker, defender] of pairs) window.__warsim!.sim.command({ kind: 'declareWar', attacker, defender });
+  }, pairs);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  const more = page.getByTestId('war-more');
+  await expect(more).toBeVisible({ timeout: 20_000 });
+  const look = () =>
+    page.getByTestId('war-banners').evaluate((row) => {
+      const hit = (e: Element | null): boolean => {
+        if (!e) return false;
+        const r = e.getBoundingClientRect();
+        const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        return top === e || e.contains(top);
+      };
+      const over = (sel: string): boolean => {
+        const o = document.querySelector(sel)?.getBoundingClientRect();
+        if (!o) return false;
+        return [...row.children].some((c) => {
+          const r = c.getBoundingClientRect();
+          return r.right > o.left && r.left < o.right && r.bottom > o.top && r.top < o.bottom;
+        });
+      };
+      return { inside: row.scrollWidth <= row.clientWidth + 1, banners: row.querySelectorAll('[data-testid=war-banner]').length, more: hit(row.querySelector('[data-testid=war-more]')), legend: over('.map-legend'), ticker: over('[data-testid=ticker]') };
+    });
+  await expect.poll(look).toMatchObject({ inside: true, more: true, legend: false, ticker: false });
+  await more.click();
+  await expect(more).toHaveAttribute('aria-expanded', 'true');
+  await more.click();
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await expect.poll(async () => (await look()).banners).toBe(DESK_BANNERS);
+});

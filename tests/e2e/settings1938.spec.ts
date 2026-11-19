@@ -216,8 +216,10 @@ test('a low view: the settings panel keeps its rows in its box, and "New game" c
   }, pairs);
   // Eight wars: as many banners as are shown (`MAX_BANNERS` of WarBanners.tsx, 6 since PLAN 7.4f6:
   // this waited for 8), and the rest a "+N".
-  // One row of them on a desk since ROADMAP R110; "+N" opens the six, the two rows this view is measured with.
-  await expect.poll(() => page.getByTestId('war-banner').count(), { timeout: 30_000 }).toBe(3);
+  // One row of them on a desk since ROADMAP R110; "+N" opens the six, the two rows this view is measured with. The row
+  // holds the banners that fit its width (R180: at 1100 px three stood past it), one or more.
+  await expect.poll(() => page.getByTestId('war-banner').count(), { timeout: 30_000 }).toBeGreaterThanOrEqual(1);
+  expect(await page.getByTestId('war-banners').evaluate((row) => row.scrollWidth <= row.clientWidth + 1), 'the closed row within its width').toBe(true);
   await page.getByTestId('war-more').click();
   await expect.poll(() => page.getByTestId('war-banner').count(), { timeout: 30_000 }).toBe(6);
   await expect(page.getByTestId('war-more')).toBeVisible();

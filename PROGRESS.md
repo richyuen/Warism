@@ -360,3 +360,9 @@
 
 - Measured after the new panel is drawn, and a narrow strip before the centre; the critic's probe all flights on the map
   at 360, 390, 844 wide and the desk; a case in `forceWar1938`.
+
+## 2026-11-19 — R180: on a narrow desk the war row shows the banners that fit, "+n" clickable
+
+- At 1024 × 768 three banners stood past the row's width, under the legend; the closed row now counts what fits. The
+  critic's probe clicks "+n" at five desk sizes; a case in `warBannerRows1938`; `settings1938`'s low view expects the
+  fit, not 3.

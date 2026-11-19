@@ -337,10 +337,17 @@ bar in runs 80 and 81 (two in a row).
     (`showPlaceClear`'s `margin`). `c81_goto2`: 68931 at 390 × 844 8 of 8 on the map (before 6), 69937 at 360 × 740 7 of
     7 (before 0), 69931 at 390 × 844 day 700 9 of 9, the desk and 844 × 390 8 of 8. A case in `forceWar1938` at 390 ×
     844 and 360 × 740 (red without: "panel-puppets").
-- [ ] R180 **R81-N3: at 1024 × 768 the war row's "+n" under the legend, not clickable** (and the row over the ticker's
+- [x] R180 **R81-N3: at 1024 × 768 the war row's "+n" under the legend, not clickable** (and the row over the ticker's
   second row). `c81_moreClick.mjs 68901 400 1024 768`. AT: the click works at 1024 × 768 and the sizes that work now; a
   case in a spec. (Ages of Conflict's scrolling war list, the report's idea: not taken unless the row cannot clear the
   legend, a change of what the row is.)
+  - Done (COMMIT): on a desk the closed row shows the banners that fit its width (`fit` in `WarBanners`, counted again
+    at a resize and when the number of wars changes), the rest behind "+n"; the row's `max-width` (PLAN 3.12Rh) kept
+    it clear of the ticker and the legend once it no longer spills past it. `c81_moreClick 68901 400`: the click works
+    at 1024 × 768 (before refused, "map-legend intercepts"), 1152 × 864, 1280 × 800, 1366 × 768 and 1600 × 900;
+    `overTicker` []. The case in `warBannerRows1938` (red without: past its width, over the ticker, under the legend,
+    "+n" not hit). `settings1938`'s low view at 1100 × 600 waited for 3 closed banners: now the row's fit (1 there) and
+    the row within its width, its opening to 6 as before. The 13 specs on the banners 56/56.
 - [ ] R181 **R81-N4: on a phone a nation chosen again from outside the graph shows no panel** (R175's `relationsOver`
   still names it). `c81_relOver.mjs 68933 390 844` step 4; 69933, 69935 at 360 × 740, and 844 × 390. AT: the panel
   shows at step 4 on these; a case in `relationsTap1938`.
