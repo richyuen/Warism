@@ -378,7 +378,7 @@ ADR-1136: the user chose (a).
   375x667` and the random 64965 at 390 show every long name with 5 or more letters or whole ("Queen…" or more), read from
   the shots or by a drawn-width check; `c81_bannerFit 82901 400 375 667` no overflow and "+n" in the view; 320, 360, 390
   and 412 as now; a case in `warBannerRows1938` that measures the drawn letters.
-  - Done (COMMIT, ADR-1136 (a)): R178's clamp and its row-width rule out; `WarBanners` sizes the phone's closed row
+  - Done (b69e59a8, ADR-1136 (a)): R178's clamp and its row-width rule out; `WarBanners` sizes the phone's closed row
     (`sizeRow`): each banner measured as with room; if the row is short the long names give way by what each has to
     give, down to their first five letters and the ellipsis (its drawn width in the name's font); if not enough, banners
     drop their counts one at a time, those with a long name first, and the names give way again. Banners and sides do
@@ -403,7 +403,7 @@ ADR-1136: the user chose (a).
   the probe's shots at 360 × 740; a case in a spec.
 - [x] R187 **At 360 and 375 px a clamped name sits away from its swatch, some clamps end ".."** (`c82nl_82903_d700_375x667`,
   `69903_d700`). AT: the name beside its swatch and one ellipsis, from the shots. (With R183.)
-  - Done (COMMIT, with R183): the clamp is gone; a cut name ends in one "…" by `text-overflow`, its box as wide as set,
+  - Done (b69e59a8, with R183): the clamp is gone; a cut name ends in one "…" by `text-overflow`, its box as wide as set,
     beside its swatch (`c82nl_82903_d700_375x667_r183`, `c82nl_69903_d700_360x740_r183` shots).
 - [ ] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
   build the same; `c82rr_68901_844x390_SOV_USA_*_4_A_row_tapped.png`). AT: those buttons tappable with the Ranking open
