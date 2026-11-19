@@ -393,3 +393,8 @@
 
 - Any choice of a nation, the same one included, brings the hidden panel back; the critic's route at both sideways
   sizes, a case in `relationsTap1938`.
+
+## 2026-11-19 — R185: the relations graph reads on a sideways phone
+
+- Its names sized by the dimension that bounds the drawing, the panel down to the bar, the filters one row: 151 px high
+  and 13 px names at 667 × 375 (55 px, 4 px before); a case in `relationsTap1938`.

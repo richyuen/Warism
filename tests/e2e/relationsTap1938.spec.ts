@@ -222,3 +222,23 @@ test("on a sideways phone the Ranking's row of the nation Relations hid shows it
     await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
   }
 });
+
+// R185 (critic run 82, R82-N1): on a sideways phone the graph was 55 px high at 667 × 375, its names drawn 4 px (scaled by
+// the drawing's width while its height bounded it). The graph has the panel's height, its names one size on the screen.
+test('on a sideways phone the relations graph is 150 px high or more, its names 10 px or more', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  for (const [w, h] of [[667, 375], [844, 390]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(400);
+    const r = await page.getByTestId('relations-graph').evaluate((g) => {
+      const hs = [...g.querySelectorAll('.relations-label')].map((t) => t.getBoundingClientRect().height).sort((a, b) => a - b);
+      return { h: g.getBoundingClientRect().height, median: hs[Math.floor(hs.length / 2)] ?? 0, n: hs.length };
+    });
+    expect(r.h, `${w} × ${h}: the graph's height`).toBeGreaterThanOrEqual(150);
+    expect(r.n, `${w} × ${h}: names drawn`).toBeGreaterThan(5);
+    expect(r.median, `${w} × ${h}: a name's median height`).toBeGreaterThanOrEqual(10);
+  }
+});

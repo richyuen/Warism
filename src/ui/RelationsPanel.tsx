@@ -108,12 +108,15 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   const [H] = useState(() => (typeof matchMedia === 'function' && matchMedia('(max-width: 600px)').matches ? H_TALL : H_WIDE));
   const [zoom, setZoom] = useState<Zoom>(() => whole(H));
   const svg = useRef<SVGSVGElement>(null);
-  // The drawing's width on the screen (labels keep one size on the screen: R34a).
-  const [svgPx, setSvgPx] = useState(0);
+  // The drawing's box on the screen (labels keep one size on the screen: R34a; its height too, R185).
+  const [svgBox, setSvgBox] = useState({ w: 0, h: 0 });
   useEffect(() => {
     const el = svg.current;
     if (!el) return;
-    const read = (): void => setSvgPx(el.getBoundingClientRect().width);
+    const read = (): void => {
+      const r = el.getBoundingClientRect();
+      setSvgBox({ w: r.width, h: r.height });
+    };
     read();
     const ro = new ResizeObserver(read);
     ro.observe(el);
@@ -124,10 +127,14 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   /** A finger's tap in the graph (R34f): where it went down; the time a tap was clicked by us. */
   const tap = useRef<{ id: number; x: number; y: number; target: EventTarget | null } | null>(null);
   const tapped = useRef(-Infinity);
-  /** Drawing units in a CSS px of the SVG, at the zoom now. */
+  /**
+   * Drawing units in a CSS px of the SVG, at the zoom now: by its width or its height, whichever bounds the drawing (R185,
+   * critic run 82: in a sideways phone's low graph the height did, and by the width alone the names were drawn 4 px).
+   */
+  const perPx = (w: number, h: number): number => (w > 0 && h > 0 ? Math.max(W / zoom.z / w, H / zoom.z / h) : w > 0 ? W / zoom.z / w : 1);
   const unitsPerPx = (): number => {
     const r = svg.current?.getBoundingClientRect();
-    return r && r.width > 0 ? W / zoom.z / r.width : 1;
+    return r ? perPx(r.width, r.height) : 1;
   };
   /** The drawing's point under a client point, at the zoom now. */
   const pointAt = (clientX: number, clientY: number): { x: number; y: number } => {
@@ -268,7 +275,7 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
   // The labels (R34a): one size on the screen; those that would print over another left out, in order of
   // importance (the one chosen, the focus, those at war or allied (R81e), then the largest and most tied); zooming in
   // names more.
-  const k = W / zoom.z / (svgPx > 0 ? svgPx : W);
+  const k = svgBox.w > 0 ? perPx(svgBox.w, svgBox.h) : 1 / zoom.z;
   const fontUnits = LABEL_PX * k;
   const tied = new Set(shown.edges.filter((e) => e.kind === 'war' || e.kind === 'alliance').flatMap((e) => [e.from, e.to]));
   const labelled = shown.nodes

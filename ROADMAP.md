@@ -399,10 +399,16 @@ ADR-1136: the user chose (a).
     … SOV USA` at 844 × 390 and 667 × 375: step 4 `selected` 10, `relationsOver` 0, the panel shown (before: none);
     `c81_relOver 68933 844 390` its eight steps as before. A case in `relationsTap1938` at both sizes, the Ranking's row
     tapped (red without: no panel). The specs on Relations and the Ranking 53/53.
-- [ ] R185 **R82-N1: on a sideways phone the relations graph cannot be read** (667 × 375: 302 × 55 px, names 4 px; R182
+- [x] R185 **R82-N1: on a sideways phone the relations graph cannot be read** (667 × 375: 302 × 55 px, names 4 px; R182
   made it smaller there; zoom leaves names 4–6 px). `c82_graphSize 68901 667 375`, `844 390`; `c82_graphZoom`. AT: the
   graph 150 px high or more and a median name 10 px or more, at least after one "+", at both sizes. (Hearts of Iron IV's
   list of a nation's ties on a small screen, the report's idea: an option for ADR-1136, not taken alone.)
+  - Done (COMMIT): the labels' size and the pointer's drawing units from whichever of the graph's width and height
+    bounds the drawing (by the width alone, a low graph's names were drawn 4 px); on a sideways phone the panel runs
+    down to the bar, its filters one row that scrolls, no zoom hint. `c82_graphSize 68901`: 667 × 375 302 × 151 px,
+    median name 13 px (before 55 px, 4 px); 844 × 390 173 px, 13 px; 932 × 430 212 px, 13 px; 390 × 844 as before
+    (13 px). A case in `relationsTap1938` (red without: 54.75 px). The specs on Relations 35/35. (The list of ties, not
+    needed: the graph reads.)
 - [ ] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
   fallback). `c81_goto2 69937 360 740 400 ITA,USA,ENG`: Brussels at (176, 528). AT: the capital's dot and name seen in
   the probe's shots at 360 × 740; a case in a spec.
