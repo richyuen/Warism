@@ -348,9 +348,12 @@ bar in runs 80 and 81 (two in a row).
     `overTicker` []. The case in `warBannerRows1938` (red without: past its width, over the ticker, under the legend,
     "+n" not hit). `settings1938`'s low view at 1100 × 600 waited for 3 closed banners: now the row's fit (1 there) and
     the row within its width, its opening to 6 as before. The 13 specs on the banners 56/56.
-- [ ] R181 **R81-N4: on a phone a nation chosen again from outside the graph shows no panel** (R175's `relationsOver`
+- [x] R181 **R81-N4: on a phone a nation chosen again from outside the graph shows no panel** (R175's `relationsOver`
   still names it). `c81_relOver.mjs 68933 390 844` step 4; 69933, 69935 at 360 × 740, and 844 × 390. AT: the panel
   shows at step 4 on these; a case in `relationsTap1938`.
+  - Done (COMMIT): `relationsOver` forgotten once another nation is chosen (hud's selection effect). `c81_relOver`
+    step 4 "panel Germany" on 68933 and 69933 at 390 × 844, 69935 at 360 × 740 and 68933 at 844 × 390 (before: none); the
+    rest of its steps as before. A case in `relationsTap1938` at both sizes (red without: no panel).
 - [ ] R182 **On a sideways phone a node chosen in the graph hides the whole graph under its panel** (non-blocking 5 and the
   design objection; R175 as designed). `c81_relOver.mjs 68933 844 390` step 5: 81 of 81. Taken: the graph stays in
   view beside or above the panel. AT: at 844 × 390 after a node's tap its panel shows and at most half the graph's

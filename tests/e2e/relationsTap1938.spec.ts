@@ -143,3 +143,23 @@ test("on a phone Relations opened after a nation's panel: the graph is uncovered
   await expect.poll(() => picked(page), { timeout: 3000 }).toBe(n.id.replace('relations-node-n', ''));
   await expect(page.getByTestId('nation-panel')).toBeVisible();
 });
+
+// R181 (critic run 81, R81-N4): a nation's panel gave way to the graph; another nation chosen from outside it, then the
+// first again: the first had no panel. Chosen again, its panel shows.
+test('on a phone a nation chosen again from outside the graph shows its panel', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  for (const [w, h] of [[390, 844], [844, 390]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await expect(page.getByTestId('relations-graph')).toBeVisible();
+    await expect(page.getByTestId('nation-panel')).toBeHidden();
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(2));
+    await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', '2');
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await expect(page.getByTestId('nation-panel'), `${w} × ${h}: chosen again, its panel`).toHaveAttribute('data-nation', '1');
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  }
+});

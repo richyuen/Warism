@@ -320,6 +320,9 @@ export class Hud {
       // The Territory brush paints for the selected nation. With none it painted nothing, took the
       // map's clicks all the same, and no God tab was open to switch it off (PLAN 2.17e3).
       if (selected === 0 && this.godTool.peek() === 'brush') this.setGodTool(null);
+      // The panel that gave way to the graph is forgotten once another nation is chosen (R181, critic run 81, R81-N4:
+      // Germany chosen again after Italy had no panel, `relationsOver` still naming it).
+      if (selected !== this.relationsOver.peek()) this.relationsOver.value = 0;
     });
     sim.onMapLayers((m) => {
       this.templates.value = m.templates;
