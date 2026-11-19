@@ -104,3 +104,28 @@ for (const seed of [1938, 7]) {
     }
   });
 }
+
+// R170 (critic run 79, R79-N3): on a phone History opened under a nation's panel (a banner's tap selects its attacker),
+// and no row's place could be tapped. History stands in the panel's place; the panel is back as History closes.
+test("on a phone History opened over a nation's panel: its rows' places can be tapped", async ({ page }) => {
+  test.setTimeout(200_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await setUp(page, 1938);
+  await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+  await expect(page.getByTestId('nation-panel')).toBeVisible();
+  await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+  await expect(page.getByTestId('history-panel')).toBeVisible();
+  await expect(page.getByTestId('nation-panel')).toBeHidden();
+  const go = page.getByTestId('history-go').first();
+  await expect(go).toBeVisible();
+  // What a tap at the link's middle reaches: the link, not a panel over it.
+  const hit = await go.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+    return top === el || el.contains(top);
+  });
+  expect(hit, "History's link under the tap").toBe(true);
+  await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+  await expect(page.getByTestId('nation-panel')).toBeVisible();
+  expect(await page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(id('GER'));
+});

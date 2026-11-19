@@ -2384,6 +2384,12 @@ button.unit-icon.on {
     width: auto;
     right: 0.5rem;
   }
+  /* History, opened after it, stands in its place; the nation stays selected and its panel comes back as History
+     closes (R170, critic run 79: History's rows under the nation's panel, no row's place to tap). History's own panel:
+     the others of its look (relations, settings, the editor, the charts) open a nation's panel from inside them. */
+  #ui:has([data-testid='history-panel']) .nation-panel {
+    display: none;
+  }
   .history-panel,
   #ui:has(.nuke-alert) .history-panel {
     top: 3.4rem;

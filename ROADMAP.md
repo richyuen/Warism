@@ -247,14 +247,21 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   of 0 as the whole array, there longer than the buffer (the scatter's array sized to the view and the frame's time).
   An empty upload now sends nothing (the units' `ProxyRenderer` the same). `c79_glSpot.mjs 64907 2560 1440 500 …`:
   `"errors":[]`; `groundThings1938`'s case: an empty upload of twice the buffer, `getError` 0 (red without: 1281).
-- [ ] R170 **R79-N3: on a phone History opens under an open nation panel** (`dirHand 59955 120 390 844 touch`: the
+- [x] R170 **R79-N3: on a phone History opens under an open nation panel** (`dirHand 59955 120 390 844 touch`: the
   History act cannot click `history-go`). AT: that act ends with `cutsAfterAct` and no "act failed"; a case in a spec.
+  COMMIT: on a phone History stands in the nation panel's place while open (History's own panel; the relations graph
+  still opens a panel over itself); the nation stays selected and its panel comes back. `c79_dirHand.mjs 59955 120 390
+  844 touch`: the History act taps "A major battle began near Elbląg", `cutsAfterAct` 0, no "act failed";
+  `historyPlace1938`'s case: History's link under the tap (red without). The 19 phone specs of the nation panel green.
 - [ ] R171 **R79-N4: a pact named for another:** "Romania joins the Anti-Comintern Pact" under "The Tripartite Pact:
   Hungary"; bare rows "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949". AT:
   the rows of 1940-11 name the pact the timeline names; those three told or rewritten; cases in `trackText.test.ts`.
 - [ ] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
   battle; three opened phone banners with the same death sentence; the AI's bomb a faint spot at 600 m/px where the game
   stops on it. AT: each seen fixed in a shot or a case, or kept by a line here. `slowClick` stays as ADR-914.
+- [ ] R173 **`relationsTap1938` red 1 in 2 on HEAD** (found in R170's hand run, not the critic's): "the pinch zoomed in"
+  fails with or without R170's change (`--repeat-each 2`: 1 failed, 1 passed). AT: ten runs green, or on
+  `tools/gate/knownRed.json` with a BLOCKERS entry if a machine's alone.
 
 ## Released
 

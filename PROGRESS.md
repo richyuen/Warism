@@ -295,3 +295,8 @@
 
 - An upload of no ground things sent the whole scatter array (WebGL's length 0), longer than the buffer at 2560 × 1440.
   An empty upload now sends nothing; the critic's probe shows no warning.
+
+## 2026-11-18 — R170: on a phone History stands over a nation's panel
+
+- On a phone the nation's panel stands aside while History is open, and comes back as it closes; its rows' places can
+  be tapped. `relationsTap1938` found red 1 in 2 on HEAD alike: filed as R173.
