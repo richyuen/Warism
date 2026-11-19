@@ -412,3 +412,10 @@
 ## 2026-11-19 — R188: on a sideways phone the opened Ranking leaves the bar's buttons free
 
 - It stops above the bar and scrolls; a case in `relationsTap1938`. Batch 50 done.
+
+## 2026-11-19 — critic run 83 (focused, on 42d0964e): ADR-829's exit
+
+- One blocking issue, R83-B1: a window that crosses a phone's width keeps R183's phone sizing (1 banner where 2 fit; a
+  desk name cut where run 82's build shows it whole), a regression. UI/UX 7, its fourth run under the bar; the rest 8
+  (most carried). Run 82's blocking cases and Batch 50 fixed. Filed as Batch 51 (R189–R193); ADR-1137 proposed for the
+  user. The loop stops until the user decides.

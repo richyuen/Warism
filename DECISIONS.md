@@ -5,6 +5,35 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1137 · 2026-11-19 · proposed, the user's decision · The phone's war row a third time: R183 off its route (ADR-829's exit)
+
+- **The case** (critic run 83, focused, on 42d0964e): R83-B1. A window that crosses a phone's width keeps the phone's
+  sizing. Back at a phone's width the row shows 1 banner with 143–156 px empty (`c83_phoneToDesk 68901 400`, `83903
+  700 …`); back on a desk "Nationalist Sp…" stays cut with room to spare, where run 82's build shows it whole
+  (`83901 400 384x832,1366x768,…`). By the code: R183's `sizeRow` writes the names' widths on the elements and only the
+  opened row clears them; its follow-up's `fit` is counted down on the desk and not again when the row turns a phone's.
+  A phone that stays a phone is not affected (`c83_rotate`: 0 stale). Who meets it: a desk browser narrowed under 600 px
+  and widened, a tablet's split view.
+- **Why the loop stopped:** a blocking issue that is a regression of an item ticked since the last release (R183 against
+  run 82's desk row); and UI/UX under its bar in four runs in a row (80 to 83). The war row on a phone is the blocking
+  issue of three of the four (R80-B1, R82-B1, R83-B1), each a fix's side effect on a route its tests did not take; the
+  fourth (R81-B1) and R82-B2 were claims held on their own route only. Everything else of the dimension is met: run 82's
+  two blocking cases are fixed, and the critic says "it would be 8 without R83-B1".
+- **The options:**
+  - **(a) Fix R83-B1 in the same design (recommended):** clear the names' widths and `war-tight` whenever the row is not a
+    phone's closed row, count `fit` again when `phone` changes; a spec that crosses the width both ways. Small and
+    understood. Then the non-blocking items (R190–R193).
+  - **(b) A simpler phone row:** drop R183's measuring for a fixed rule under about 400 px (one banner and "+n", ADR-1135
+    (b)); less state to go stale, less seen at a glance.
+  - **(c) The bar:** take UI/UX at 7 for the release, R83-B1 fixed as an item after it; the release goes on to its checks.
+  - **(d) Fix and also widen the critic's routes:** (a), and each phone-row or panel item's AT from now on crosses the
+    sizes (phone, sideways, desk, back) and opens and closes the panels beside it, the class run 81 to 83 kept finding.
+- **Also in the run:** run 82's two blocking cases fixed on their seeds and new ones; R185, R186, R188 fixed; 0 page
+  errors in 13.5 minutes of monkeys. Non-blocking: R83-N2 R186's strip costs short phones' panel 39 px all the time;
+  R83-N3 the sideways filters' row hides "Truces" and the focus selector; R184's panel back over the sideways Ranking;
+  the give-way cutting a short long name as much as a long one (design objection); `slowClick` 1 of 90. Filed as Batch 51
+  (R189–R193).
+
 ## ADR-1136 · 2026-11-19 · the user's decision: (a) · The phone's war row, again: R178 cut names under five letters (ADR-829's exit)
 
 - **The case** (critic run 82, focused, on 3e560a9c): R82-B1. At 375 × 667 the row reads "Sovi… & 3 ⚔ Japan & 6"

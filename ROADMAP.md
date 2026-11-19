@@ -435,6 +435,32 @@ ADR-1136: the user chose (a).
 - Not taken: ADR-1111's heroes' plates over Europe at 3,000 m/px (decided there); R172's kept three (as R172); the
   design objection on ADR-1135 (a)'s order is ADR-1136's question.
 
+## Batch 51 — critic run 83's findings (focused, on 42d0964e; one blocking issue, a regression; UI/UX 7)
+
+ADR-829's exit, on two counts: R83-B1 is a regression by R183 (a desk name cut where run 82's build shows it whole), and
+UI/UX is under its bar in runs 80 to 83. ADR-1137 (proposed) waits on the user; no item of the UI/UX dimension is taken
+until the user decides.
+- [ ] R189 **R83-B1: a window that crosses a phone's width keeps the phone's sizing** (R183 and its follow-up off their
+  route). Back at a phone's width the row shows 1 banner, 143–156 px empty (`c83_phoneToDesk 68901 400`; `83903 700
+  375x667,1280x720,1024x768,375x667`); back on a desk "Nationalist Sp…" stays cut with room (`83901 400
+  384x832,1366x768,1024x768,384x832`). Cause by the code: `sizeRow`'s widths cleared only when opened; `fit` counted
+  down on the desk and not again when `phone` turns true (the observer saw the same width). AT: by the user's choice in
+  ADR-1137; for (a), the report's "seen fixed when" (2 banners at the phone steps, no inline width on a desk name,
+  "Nationalist Spain" whole at 1366, `c83_rotate` 0 stale); a case in `warBannerRows1938` that crosses the width.
+- [ ] R190 **R83-N2: R186's strip costs every short upright phone's panel 39 px, all the time** (320 × 568 with God Mode: 167
+  against 206 px of content; `c83ps_83941_d120_320x568_GER`, `360x640`). AT: the panel's full height except while Go
+  to's flight shows a capital (or when its content is shorter than the room); R186's case as now.
+- [ ] R191 **R83-N3: the sideways relations filters' row hides "Truces" and the focus selector off its edge** (R185's cost;
+  667 × 375 "Puppets" too; the panel now over both ticker rows). AT: every filter and the selector reachable and seen
+  to be there (Hearts of Iron IV's single filter button, the report's idea: one way to do it); R185's case as now.
+- [ ] R192 **After R184 the panel brought back on a sideways phone covers the Ranking beside the graph** (`c82_relRank`
+  step 5: a second nation from the Ranking takes a close first). AT: a second Ranking row chosen with one tap at 844 ×
+  390 and 667 × 375, or the reason it is not.
+- [ ] R193 **The design objection: the give-way cuts a short long name as much as a longer one** ("Kagosh…" 6 letters
+  beside "Chukotka Auton…" 14). Taken: the longest names give way first, each to its five letters. AT: on the random
+  64965 at 390 × 844 "Kagoshima" whole or more of it than now, the floor kept.
+- Not taken: R83-N4 `slowClick` 1 of 90 (ADR-914); ADR-1111's heroes' plates (decided there); R172's kept three.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

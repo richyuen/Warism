@@ -1,5 +1,5 @@
 {
- "commit": "3e560a9c551c52fc3f46a904288d48a8cba07343",
+ "commit": "42d0964e5ce420b4a89766119751f5b1b2df30f3",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
@@ -19,17 +19,11 @@
  },
  "blocking": [
   {
-   "id": "R82-B1",
-   "title": "R178 regresses R174 / ADR-1135 (a): on a phone the war row cuts a name under 5 letters while the '& n' stays ('Sovi… & 3' at 375 x 667; 'Que…' for Queensland at 390 x 844 on the random world)",
-   "evidence": "c82_nameLetters.mjs 68901 400 375x667 on HEAD: 'Sovi… & 3 ⚔ Japan & 6' (critic/shots/c82nl_68901_d400_375x667_5405_row.png); run 81's build 'Soviet Un…' (critic/shots/c82nl_68901_d400_375x667_5406_row.png). 82901 day 400 at 375 x 667: 'Sovi… & 3', the row 10 px past its width and '+5' cut at the screen's edge (critic/c82_bf_82901_400_375_667_5405.log). SCEN=random c81_bannerFit 64965 730 390 844: 'Alaska ⚔ Que…' (3 letters) on HEAD, 'Queen…' on run 81's build (critic/shots/c81bf_random_64965_d730_390x844_c82_540[56]_row.png). c81_bannerFit reports 0 faults on these because the line clamp keeps scrollWidth equal to clientWidth; the shots show the cut. The name's box is 34 px on HEAD against 51 px on run 81's build (68901 d400 375, the probes' geometry). Contradicts ADR-1135 (a) ('a longer one keeps 6 ch (its first five letters and the ellipsis)'; the score, then the '& n', give way first), R178's own style.css comment ('gives way before a name goes under five letters') and R178's ROADMAP note ('0 overflow' on 68901 d400 at 375; 'random 64965 at 390' clean).",
-   "fix": "Let '& n' give way per banner before a name goes under 5 letters (not by the row's 350 px container width alone), or widen the container bound over the 366-400 px rows; keep the clamp's break at a word, not overflow-wrap:anywhere. Seen fixed when the row shots of c82_nameLetters 68901 400 368x740,375x667,384x832 and 82901 400 375x667, and of SCEN=random c81_bannerFit 64965 730 390 844, show every long name with 5 or more letters before its ellipsis or whole ('Queen…' or more), c81_bannerFit 82901 400 375 667 shows no overflow and '+n' inside the view, and the 320, 360, 390 and 412 px 1938 cases stay as now."
-  },
-  {
-   "id": "R82-B2",
-   "title": "On a sideways phone, a nation chosen again from outside the relations graph (its Ranking row) while Relations stands over its panel shows no panel: R181's claim holds only for A, B, then A",
-   "evidence": "node critic/scripts/c82_relRank.mjs 68901 844 390 SOV USA on HEAD: Soviet Union's panel, Relations tapped, Ranking opened, the Soviet Union's row tapped by finger: selected 10, relationsOver 10, panel null (step 4); the United States' row then opens its panel (step 5) (critic/c82rr_68901_844x390_SOV_USA_5405.json, critic/shots/c82rr_68901_844x390_SOV_USA_5405_4_A_row_tapped.png). The same at 667 x 375 (critic/c82_relRank.log). Run 81's build the same (…_5406.json). R181's hud rule clears relationsOver only when the selection changes; MapView.select returns early on the same id.",
-   "fix": "Clear relationsOver on any choice made from outside the graph, the same id included. Seen fixed when c82_relRank.mjs 68901 844 390 SOV USA and 667 375 show at step 4 a panel with selected 10, steps 5-7 as now, and c81_relOver's eight steps as now."
+   "id": "R83-B1",
+   "title": "A window that crosses a phone's width keeps R183's phone sizing: back at a phone width the war row shows 1 banner with 143-156 px empty (R183 follow-up's 'counted again when the row's own width changes'), and back on a desk a long name stays cut ('Nationalist Sp…') where run 82's build shows it whole",
+   "evidence": "node critic/scripts/c83_phoneToDesk.mjs 68901 400 (384x832,1280x720,1024x768,384x832,1600x900): at the second 384x832 HEAD 1 banner '+4', 156 px empty (critic/shots/c83pd_68901_d400_c83_5407_3_384x832.png); run 82's build 2 banners '+3' (critic/shots/c83pd_68901_d400_c83_5405_3_384x832.png). 83903 700 375x667,1280x720,1024x768,375x667: 1 banner, 143 px empty, against 2 (critic/shots/c83pd_83903_d700_c83_540[57]_3_375x667.png). 83901 400 384x832,1366x768,...: at 1366x768 HEAD 'Nationalist Sp…' cut with inline width 89 px, run 82's build whole (critic/shots/c83pd_83901_d400_c83_540[57]_1_1366x768.png). A phone that stays a phone is clean: c83_rotate 68901 and 83903, 0 stale steps (critic/c83ro_*_c83_5407.json).",
+   "fix": "Clear the names' inline widths and war-tight whenever the row is not a phone's; count fit again when `phone` changes (or reset rowWidth when the ResizeObserver is attached). Seen fixed when c83_phoneToDesk 68901 400 shows 2 banners at the second 384x832 and no inline width at 1280/1024/1600; 83903 700 375x667,1280x720,1024x768,375x667 shows 2 banners at the last step; 83901 400 384x832,1366x768,1024x768,384x832 shows 'Nationalist Spain' whole at 1366; c83_rotate 68901 400 GER 20 and 83903 700 GER 30 stay at 0 stale."
   }
  ],
- "timestamp": "2026-11-19T10:30:00-05:00"
+ "timestamp": "2026-11-19T12:30:00-05:00"
 }
