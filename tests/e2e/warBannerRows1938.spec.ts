@@ -411,3 +411,42 @@ test('a narrow desk\'s row stays in its width and off the news', async ({ page }
     }
   }
 });
+
+// R197 (critic run 85, R85-N1; ADR-1137 (d)): a desk 601 to 700 px wide showed no war, "+3" alone, its row's room kept for
+// a left panel that was not open. The row takes the band free between the news and the legend: a banner at least at every
+// desk, the row in its width and over nothing of the page's; a phone of 600 px on each side, a nation's panel and History
+// opened and closed at 640.
+test('a narrow desk shows a war in the room between the news and the legend', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 600, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  for (const [w, h] of [[601, 800], [620, 900], [640, 800], [700, 800], [1280, 720], [600, 800], [640, 800]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    if (w === 640) {
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+      await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    }
+    await page.waitForTimeout(400);
+    const r = await page.getByTestId('war-banners').evaluate((row) => {
+      const over = (a: DOMRect, b: DOMRect): boolean => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+      const items = [...row.children].map((c) => c.getBoundingClientRect());
+      const others = [...row.parentElement!.children].filter((c) => c !== row).map((c) => c.getBoundingClientRect()).filter((b) => b.width > 0 && b.height > 0);
+      return {
+        banners: row.querySelectorAll('[data-testid=war-banner]').length,
+        inside: row.scrollWidth <= row.clientWidth + 1 && items.every((i) => i.left >= 0 && i.right <= innerWidth),
+        over: items.filter((i) => others.some((o) => over(i, o))).length,
+      };
+    });
+    expect(r.banners, `${w} × ${h}: a war shown`).toBeGreaterThanOrEqual(1);
+    expect(r.inside, `${w} × ${h}: the row in its width`).toBe(true);
+    expect(r.over, `${w} × ${h}: the row over nothing`).toBe(0);
+  }
+});

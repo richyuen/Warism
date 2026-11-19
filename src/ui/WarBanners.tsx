@@ -90,6 +90,32 @@ function sizeRow(row: HTMLElement): void {
   }
   for (const n of names) if (n.full > lo) n.el.style.width = `${Math.max(n.full - n.give, lo)}px`;
 }
+/**
+ * The band a desk's row has free (R197, critic run 85, R85-N1: its `max-width` kept room for a left panel that was not
+ * open, 16 px at 640, and the row showed "+3" alone): between the nearest of the page's boxes beside it at its height (the
+ * news, the legend, an open panel), its centre and width in the page's px; null when one stands across the page's centre.
+ */
+function freeBand(row: HTMLElement): { mid: number; width: number } | null {
+  const ui = row.parentElement;
+  if (!ui) return null;
+  const at = row.getBoundingClientRect();
+  const page = ui.getBoundingClientRect();
+  const cx = page.left + page.width / 2;
+  let [left, right] = [page.left, page.right];
+  for (const c of ui.children) {
+    if (c === row) continue;
+    const b = c.getBoundingClientRect();
+    // An open panel at any height, the row right of it as its rule has it (PLAN 3.12Rh4); the rest at the row's height.
+    const panel = c.matches('[class*="panel"]');
+    if (b.width === 0 || b.height === 0 || (!panel && (b.bottom <= at.top || b.top >= at.bottom))) continue;
+    if (b.right <= cx) left = Math.max(left, b.right);
+    else if (b.left >= cx) right = Math.min(right, b.left);
+    else return null;
+  }
+  // 4 px clear of each neighbour (at 8 a 601 px desk had 6 px too few for "Germany ⚔ Poland" and its "+2").
+  const gap = 4;
+  return { mid: (left + right) / 2 - page.left, width: Math.max(0, right - left - 2 * gap) };
+}
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 
 /**
@@ -129,6 +155,8 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return () => window.removeEventListener('resize', again);
   }, []);
   useEffect(() => setFit(DESK_BANNERS), [wars.length]);
+  /** The desk row's free width last measured: when it changes (a panel opened or closed), its banners are counted again (R197). */
+  const room = useRef(-1);
   /**
    * A resize lays the phone's row out again (R183: its sizes are set on the elements, not drawn from the stats); so does
    * a change of the row's own width there (its left and right are set: a panel opened beside it), counting its banners
@@ -166,6 +194,27 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     if (!el) return;
     // What `sizeRow` set is a phone's closed row's alone: opened or on a desk it goes (R189, R83-B1: back on a desk
     // "Nationalist Sp…" kept the phone's width with room to spare).
+    el.style.maxWidth = '';
+    el.style.left = '';
+    if (!opened && !phone) {
+      // A desk's closed row in the band free beside it, if that is wider than its rule's room (R197).
+      const free = freeBand(el);
+      const rule = parseFloat(getComputedStyle(el).maxWidth);
+      if (free !== null && !(free.width <= rule)) {
+        // Whole px: a fraction rounded the row's width down and left its last 1 px past it (85905 at 680).
+        el.style.maxWidth = `${Math.floor(free.width)}px`;
+        el.style.left = `${free.mid}px`;
+      }
+      const now = Math.round(free ? free.width + free.mid / 1000 : -2);
+      if (Math.abs(now - room.current) > 1) {
+        const first = room.current === -1;
+        room.current = now;
+        if (!first && fit < DESK_BANNERS) {
+          setFit(DESK_BANNERS);
+          return;
+        }
+      }
+    }
     if (opened || !phone) {
       el.classList.remove('war-sized');
       for (const b of el.querySelectorAll<HTMLElement>('[data-testid=war-banner]')) b.classList.remove('war-tight');
@@ -184,14 +233,14 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
       // A desk's row too narrow for its one banner (a window 600 to 770 px wide, between the news and the legend): its
       // names give way as a phone's do; past that, "+n" alone (R194, critic run 84, R84-N1: the banner 220 px wide in a
       // row of 90 to 170, over the ticker's second row by up to 56 px).
-      if (shown === 1 && el.scrollWidth > el.clientWidth + 1) {
+      if (shown === 1 && el.scrollWidth > el.clientWidth) {
         el.classList.add('war-sized');
         sizeRow(el);
-        if (el.scrollWidth > el.clientWidth + 1) setFit(0);
+        if (el.scrollWidth > el.clientWidth) setFit(0);
       }
       return;
     }
-    if (el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
+    if (el.scrollWidth > el.clientWidth) setFit(shown - 1);
   });
   if (wars.length === 0) return null;
   const side = (ids: number[]) => {

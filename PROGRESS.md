@@ -467,3 +467,7 @@
 - No blocking issue; every score at its bar (performance carried: the perf chain and most of lane E did not run). Batch
   52 confirmed; checkers 0 of 32 broken, landingFuzz 0 of 90, the 20-year hashes unchanged, 0 page errors in 421 outputs.
   Two non-blocking issues and the unfinished check filed as Batch 53 (R197–R199).
+
+## 2026-11-19 — R197: a narrow desk's war row in the room between the news and the legend
+
+- The row centred in the band free beside it; a war shown at every desk width from 601 px; a crossing case.
