@@ -429,7 +429,7 @@ ADR-1136: the user chose (a).
 - [x] R188 **R82-N3: on a sideways phone the opened Ranking covers the bar's History, Relations and Editor** (run 81's
   build the same; `c82rr_68901_844x390_SOV_USA_*_4_A_row_tapped.png`). AT: those buttons tappable with the Ranking open
   at 844 × 390 and 667 × 375; a case in a spec.
-  - Done (COMMIT): on a sideways phone the opened Ranking stops above the bar, its rows scrolling in its box. A case in
+  - Done (a6e357c7): on a sideways phone the opened Ranking stops above the bar, its rows scrolling in its box. A case in
     `relationsTap1938`: History, Relations and Editor each the top element under a tap at 844 × 390 and 667 × 375 with
     the Ranking open (red without: History covered). The 31 specs on phones, the Ranking and the banners 123/123.
 - Not taken: ADR-1111's heroes' plates over Europe at 3,000 m/px (decided there); R172's kept three (as R172); the
