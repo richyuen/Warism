@@ -272,7 +272,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
 - [x] R173 **`relationsTap1938` red 1 in 2 on HEAD** (found in R170's hand run, not the critic's): "the pinch zoomed in"
   fails with or without R170's change (`--repeat-each 2`: 1 failed, 1 passed). AT: ten runs green, or on
   `tools/gate/knownRed.json` with a BLOCKERS entry if a machine's alone.
-  COMMIT: two faults, both the game's. (1) A nation's menu closed only on a press on the map: the spec's second tap
+  8233a81b: two faults, both the game's. (1) A nation's menu closed only on a press on the map: the spec's second tap
   could land on the chip of the panel now over the node, opening the menu, and the panel's × left it over the graph,
   where the pinch began (traced by logging the pointers in a failing run: "nation-menu-take < nation-menu"). A press
   anywhere outside the menu now closes it (`touchMenu1938`'s case, red without). (2) A finger whose `pointerup` the
