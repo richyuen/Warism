@@ -349,3 +349,9 @@
 
 - R170's rule moved to the phone block that also counts a sideways phone; the critic's probe 0 of 81 covered at three
   sideways sizes, `dirHand` 844 × 390 with no failed act.
+
+## 2026-11-19 — R178: the war row's swatches whole on the narrowest phones
+
+- Swatches, swords and skull never shrink; a long name gives way to its first letters, then on rows of 350 px or less the
+  "& n". The critic's fit probe: no swatch under 6 px, no overlap, no overflow from 320 to 412 px; a case in
+  `warBannerRows1938`.

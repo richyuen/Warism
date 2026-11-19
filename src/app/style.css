@@ -798,6 +798,13 @@ textarea,
 .war-name-short {
   min-width: max-content;
 }
+/* The side's colour, the swords and the skull never squeezed (R178, critic run 81, R81-N1: at 360 px "Japan" and
+   "China" kept whole by their swatches cut to 0 px; at 320 px the swords drawn over "& 2"). */
+.war-side > .chip-swatch,
+.war-swords,
+.war-death {
+  flex-shrink: 0;
+}
 .war-name:not(.war-name-short) {
   min-width: 6ch;
 }
@@ -2456,6 +2463,39 @@ button.unit-icon.on {
      score (its figure in the title, and opened); clipped, "-100" read "-10". */
   .war-banners:not(.opened) .war-score-n {
     display: none;
+  }
+  /* A side and a banner no narrower than what they show (R178, critic run 81: shrunk under it, "& 2" stood under the
+     swords): a long name's least is its first letters, one line clamped at a word where it can be ("Soviet…"), so that
+     it and not the swatch or the count gives way. */
+  .war-banners:not(.opened) .war-name:not(.war-name-short) {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .war-banners:not(.opened) .war-side,
+  .war-banners:not(.opened) .war-banner {
+    min-width: auto;
+  }
+  /* The row's own width (its left and right are set here): on a row of 350 px or less (a phone 365 px wide or less) the
+     banners' padding is less and the allies' count gives way before a name goes under five letters (ADR-1135 (a); R178:
+     two banners and "+n" overflowed 5 px at 360 and 58 px at 320, "Soviet Union" 4 letters); the count is still in the
+     banner's title, and opened. */
+  .war-banners {
+    container-type: inline-size;
+  }
+  @container (max-width: 350px) {
+    .war-banners:not(.opened) .war-banner {
+      padding-left: 0.3rem;
+      padding-right: 0.3rem;
+    }
+    .war-banners:not(.opened) .war-title {
+      gap: 0.2rem;
+    }
+    .war-banners:not(.opened) .war-allies {
+      display: none;
+    }
   }
   .war-more-btn {
     flex: 0 0 auto;

@@ -128,3 +128,48 @@ test('390 × 844: on the closed row a short name whole, a long one five letters,
   judge(await look());
   await page.screenshot({ path: test.info().outputPath('r174-phone-row.png') });
 });
+
+// R178 (critic run 81, R81-N1: R174 kept short names whole by squeezing the swatches to 0 px at 360 px, and at 320 px the
+// swords stood over "& 2"): on the narrowest phones each side keeps its colour, nothing in a banner stands on another, and
+// the row stays on the screen; on a row of 350 px or less the allies' count gives way, never a name under five letters.
+test('360 × 740 and 320 × 568: the swatches whole, nothing over another, the row on the screen', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  // A third war, for the "+n".
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  for (const [w, h] of [[360, 740], [320, 568]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(300);
+    const r = await page.getByTestId('war-banners').evaluate((row) => {
+      const box = (e: Element): DOMRect => e.getBoundingClientRect();
+      const out: string[] = [];
+      for (const b of row.querySelectorAll('[data-testid=war-banner]')) {
+        const bb = box(b);
+        if (bb.left < 0 || bb.right > innerWidth) out.push(`banner off the screen ${bb.left}..${bb.right}`);
+        const parts = [...b.querySelectorAll('.war-side > .chip-swatch, [data-testid=war-name], [data-testid=war-allies], .war-swords, [data-testid=war-death]')].filter((e) => box(e).width > 0);
+        for (const s of b.querySelectorAll('.war-side > .chip-swatch')) if (box(s).width < 6) out.push(`swatch ${box(s).width} px`);
+        for (const n of b.querySelectorAll<HTMLElement>('[data-testid=war-name]')) {
+          const range = document.createRange();
+          range.setStart(n.firstChild!, 0);
+          range.setEnd(n.firstChild!, Math.min(5, n.textContent!.length));
+          if (n.clientWidth + 1 < range.getBoundingClientRect().width) out.push(`"${n.textContent}" under five letters`);
+        }
+        for (let i = 0; i < parts.length; i++)
+          for (let j = i + 1; j < parts.length; j++) {
+            const [p, q] = [box(parts[i]!), box(parts[j]!)];
+            if (Math.min(p.right, q.right) - Math.max(p.left, q.left) > 1) out.push(`${parts[i]!.className} over ${parts[j]!.className}`);
+          }
+        const t = box(b.querySelector('.war-title')!);
+        if (t.right > bb.right + 1) out.push(`title past its banner by ${t.right - bb.right}`);
+      }
+      const more = row.querySelector('[data-testid=war-more]');
+      if (more && box(more).right > innerWidth) out.push('"+n" off the screen');
+      return out;
+    });
+    expect(r, `${w} × ${h}`).toEqual([]);
+  }
+});

@@ -318,10 +318,17 @@ bar in runs 80 and 81 (two in a row).
     `historyGoTapped` true; `dirHand 59955 120 844 390 touch`: History's act "A major battle began near Elbląg",
     `cutsAfterAct` 0, no "act failed". R170's case in `historyPlace1938` now at 390 × 844, 844 × 390 and 667 × 375 (red
     without: the panel visible). The 21 specs that open History 76/76.
-- [ ] R178 **R81-N1: on a phone 375 px or narrower the banners' swatches squeezed to 0 px; at 320 px the swords over "& 2"**
+- [x] R178 **R81-N1: on a phone 375 px or narrower the banners' swatches squeezed to 0 px; at 320 px the swords over "& 2"**
   (R174's side effect; also Hearts of Iron IV's flag kept by a cut name, the report's idea: taken here). `DPR=2 node
   critic/scripts/c81_bannerFit.mjs 68901 0 360 740`; 69903 day 700; 320 × 568 day 400. AT: no swatch under 6 px and no
   overlap on these cases; a case in `warBannerRows1938`.
+  - Done (COMMIT): the swatch, swords and skull never shrink; on the phone's closed row a side and a banner are no
+    narrower than what they show, a long name's least its first letters (one line clamped, at a word where it can be:
+    "Soviet.."); on a row of 350 px or less (a phone ≤ 365 px) the padding is less and the "& n" gives way (ADR-1135 (a)'s
+    order; still in the title and opened). `c81_bannerFit` (DPR 2): 0 swatches under 6 px, 0 overlaps, 0 overflow on
+    68901 d0 and d400 and 69903 d700 at 320, 360, 375, 390 and 412 wide, opened at 360 and the random 64965 at 390; its
+    only lines left are "allies shown 0" at 320 and 360, by design. The new case red before (swatches 1.5–2.5 px); the 13
+    specs on the banners 55/55.
 - [ ] R179 **R81-N2: "Go to country" on a phone leaves the capital under the new panel** (11 of 27; 360 × 740 7 of 7).
   `c81_goto2.mjs 68931 390 844`, `69937 360 740 400 ITA,USA,ENG`. Cause by the code: the clear map measured before the
   new panel is drawn. AT: the capital on open map in the probe's flights at both sizes; a case in a spec.
