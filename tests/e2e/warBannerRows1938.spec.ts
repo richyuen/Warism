@@ -83,3 +83,48 @@ test('a banner\'s sides each on one line, a long name cut short with its count w
     }
   }
 });
+
+// R174 (critic run 80, R80-B1: R168 cut the phone's names, every 1938 game opening "J… & 2 ⚔ C… & 1", "China" 0 of 5
+// letters): on a phone's closed row a short name is whole and a long one keeps its first five letters; the allies' count
+// stays whole, and the row stays on the screen. Then with a long name and allies at the row's head.
+test('390 × 844: on the closed row a short name whole, a long one five letters, the count whole', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await expect(page.getByTestId('war-name').first()).toBeVisible({ timeout: 20_000 });
+  const look = () =>
+    page.locator('[data-testid=war-banners] .war-side').evaluateAll((els) =>
+      els.map((e) => {
+        const name = e.querySelector<HTMLElement>('[data-testid=war-name]')!;
+        const allies = e.querySelector<HTMLElement>('[data-testid=war-allies]');
+        const text = name.textContent ?? '';
+        const node = name.firstChild!;
+        const range = document.createRange();
+        range.setStart(node, 0);
+        range.setEnd(node, Math.min(5, text.length));
+        const banner = e.closest('[data-testid=war-banner]')!.getBoundingClientRect();
+        return { text, whole: name.scrollWidth <= name.clientWidth + 1, five: range.getBoundingClientRect().width, w: name.clientWidth, allies: allies ? allies.scrollWidth <= allies.clientWidth + 1 : true, on: banner.left >= 0 && banner.right <= innerWidth };
+      }),
+    );
+  const judge = (sides: Awaited<ReturnType<typeof look>>): void => {
+    expect(sides.length, 'sides on the row').toBeGreaterThanOrEqual(2);
+    for (const s of sides) {
+      if ([...s.text].length <= 8) expect(s.whole, `"${s.text}" whole`).toBe(true);
+      else expect(s.w, `"${s.text}": its first five letters`).toBeGreaterThanOrEqual(s.five);
+      expect(s.allies, `"${s.text}"'s count whole`).toBe(true);
+      expect(s.on, `"${s.text}"'s banner on the screen`).toBe(true);
+    }
+  };
+  judge(await look());
+  // Long names with allies on both sides of the first banner.
+  const [jap, chi] = [id('JAP'), id('CHI')];
+  await page.evaluate(({ jap, chi }) => {
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: jap, name: 'Chukotka Autonomous Okrug' });
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: chi, name: 'Democratic Republic of Orientale' });
+  }, { jap, chi });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-name').filter({ hasText: 'Chukotka' })).toHaveCount(1, { timeout: 20_000 });
+  judge(await look());
+  await page.screenshot({ path: test.info().outputPath('r174-phone-row.png') });
+});

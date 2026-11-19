@@ -16,6 +16,8 @@ export const PHONE_BANNERS = 2;
  * deep over the map, with the ticker and the bar a fifth of the view's height in a year of wars.
  */
 export const DESK_BANNERS = 3;
+/** A banner's name of this many letters or fewer is shown whole however narrow the row (R174); a longer one keeps ~5. */
+export const SHORT_NAME = 8;
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 
 /**
@@ -47,12 +49,14 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
   const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : DESK_BANNERS;
   const side = (ids: number[]) => {
     const lead = byId.get(ids[0] ?? 0);
+    const name = lead ? displayName(lead.name) : '?';
     return (
       <span class="war-side">
         <span class="chip-swatch" style={{ background: hex(lead?.color ?? 0x777777) }} />
-        {/* On one line, a long name cut short and its count whole (R168, critic run 79: "Chukotka Autonomous / Okrug & / 3"). */}
-        <span class="war-name" data-testid="war-name">
-          {lead ? displayName(lead.name) : '?'}
+        {/* On one line, a long name cut short and its count whole (R168, critic run 79: "Chukotka Autonomous / Okrug & / 3").
+            A short name is never cut, a long one keeps its first letters (R174, critic run 80: on a phone "J… & 2 ⚔ C… & 1"). */}
+        <span class={[...name].length <= SHORT_NAME ? 'war-name war-name-short' : 'war-name'} data-testid="war-name">
+          {name}
         </span>
         {/* "& 2", not "+2" beside the score's "+32" (R162, critic run 77). */}
         {ids.length > 1 ? (

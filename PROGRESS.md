@@ -322,3 +322,9 @@
 - One blocking issue, R80-B1: R168 cut the phone's war-banner names to 0–3 letters, a regression of an item ticked since
   the release. UI/UX 7; the rest 8 (performance carried). R79-B1 fixed. Filed as Batch 48; ADR-1135 proposed for the
   user. The loop stops until the user decides.
+
+## 2026-11-19 — R174 (the user's (a), ADR-1135): the phone's banner names whole or five letters
+
+- A short name never cut, a long one its first five letters; on the phone's closed row the score's figure gives way.
+  The critic's probe: 0 sides of 3 letters or fewer at 390 × 844, 360 × 740 and 844 × 390; a phone case in
+  `warBannerRows1938`, red before.

@@ -793,6 +793,14 @@ textarea,
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Never cut to nothing (R174, critic run 80, R80-B1: on a phone's row "J… & 2 ⚔ C… & 1", "China" 0 of 5 letters): a short
+   name whole, a long one its first five letters or so; the allies' count and the score give way before it. */
+.war-name-short {
+  min-width: max-content;
+}
+.war-name:not(.war-name-short) {
+  min-width: 6ch;
+}
 .war-allies {
   flex: 0 0 auto;
   margin-left: 0.25rem;
@@ -2443,11 +2451,10 @@ button.unit-icon.on {
     flex: 0 1 auto;
     min-width: 0;
   }
-  .war-banners:not(.opened) .war-side {
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  /* The name not cut to nothing for the score's figure (R174, critic run 80): on the closed row the bar alone says the
+     score (its figure in the title, and opened); clipped, "-100" read "-10". */
+  .war-banners:not(.opened) .war-score-n {
+    display: none;
   }
   .war-more-btn {
     flex: 0 0 auto;

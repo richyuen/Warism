@@ -5,7 +5,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1135 · 2026-11-19 · proposed, the user's decision · R80-B1: R168 cut the phone's war-banner names to 0–3 letters (ADR-829's exit)
+## ADR-1135 · 2026-11-19 · the user's decision: (a) · R80-B1: R168 cut the phone's war-banner names to 0–3 letters (ADR-829's exit)
 
 - **The case** (critic run 80, full, on 18c2b40a): at 390 × 844 every 1938 game opens with "J… & 2 ⚔ C… & 1"; on 68901
   day 400 "China" shows 0 of 5 letters (`critic/scripts/c80_bannerNames.mjs`). Run 79's build shows the names whole.
@@ -27,6 +27,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   under an open nation panel on a phone (R170 fixed History only); R80-N2, "Go to country" in a chip's menu does not move
   the camera. The run is incomplete (the performance chain carried, next-voyage, Malta and part of stuck-return left
   out), so it does not clear a release whatever is chosen: the next run is a full one.
+- **The user:** "Let's do a". Done in R174: a name of 8 letters or fewer is never cut (`min-width: max-content`), a
+  longer one keeps 6 ch (its first five letters and the ellipsis); on the phone's closed row the score's figure is not
+  shown (the bar under the names still is, the figure is in the title and on the opened banners). Clipped instead, the
+  figure read "-10" for "-100" and "& 6" read "&", so it goes whole; the allies' count stays whole. The desk keeps R168.
 
  2026-11-18 · the user's decision · The critic run after Batch 47 is a full run
 
