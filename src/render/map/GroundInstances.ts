@@ -149,6 +149,9 @@ export class GroundInstances {
   upload(count: number, data = this.data): void {
     const gl = this.gl;
     this.count = Math.min(count, this.cap);
+    // None: nothing to send. A length of 0 is "to the end of `data`" to WebGL, and a larger `data` than the buffer
+    // overflowed it (R169, critic run 79: "bufferSubData: buffer overflow" at 2560 × 1440, 30 m/px, over the sea).
+    if (this.count === 0) return;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.buf);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, data, 0, this.count * SCATTER_STRIDE);
   }

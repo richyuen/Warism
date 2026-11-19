@@ -290,3 +290,8 @@
 
 - The closed row squeezed its three banners and long names wrapped mid-phrase. A side's name now stays on one line, cut
   short past 11 rem, with its allies' count whole.
+
+## 2026-11-18 — R169: no WebGL overflow over an empty view
+
+- An upload of no ground things sent the whole scatter array (WebGL's length 0), longer than the buffer at 2560 × 1440.
+  An empty upload now sends nothing; the critic's probe shows no warning.

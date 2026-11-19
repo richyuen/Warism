@@ -313,3 +313,19 @@ test('beyond T2 the ground and what stands on it go with the zoom: far out there
   expect(rec.wheel.at(-1)!).toMatchObject({ sprites: 0, ground: 0, scattered: 0 });
   expect(Math.abs(rec.wheel.at(-1)!.m - 1500)).toBeLessThan(2);
 });
+
+// R169 (critic run 79, R79-N2): at 2560 × 1440 the scatter's array (as long as the view and the frame's time allow) was
+// longer than the instances' buffer (`GROUND_CAP`); with no thing in the view a length of 0 sent the whole array:
+// "bufferSubData: buffer overflow". Nothing is sent when nothing stands in the view.
+test("no thing in the view: nothing sent to the instances' buffer, whatever the array's length", async ({ page }) => {
+  test.setTimeout(120_000);
+  await open1938(page);
+  const err = await page.evaluate(() => {
+    const v = window.__warsim!.view! as unknown as { groundThings: { cap: number; upload: (n: number, d: Float32Array) => void }; gl: WebGL2RenderingContext };
+    const gl = v.gl;
+    while (gl.getError() !== gl.NO_ERROR);
+    v.groundThings.upload(0, new Float32Array(v.groundThings.cap * 6 * 2));
+    return gl.getError();
+  });
+  expect(err, 'gl.getError() after an empty upload of an array twice the buffer').toBe(0);
+});

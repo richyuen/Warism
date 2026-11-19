@@ -213,6 +213,8 @@ export class ProxyRenderer {
   upload(count: number): void {
     const gl = this.gl;
     this.count = count;
+    // None: nothing to send (a length of 0 is "the whole array" to WebGL, larger than the buffer; R169).
+    if (count === 0) return;
     gl.bindBuffer(gl.ARRAY_BUFFER, this.instBuf);
     if (count > this.capacity) {
       this.capacity = Math.max(count, this.capacity * 2);
