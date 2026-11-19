@@ -355,3 +355,8 @@
 - Swatches, swords and skull never shrink; a long name gives way to its first letters, then on rows of 350 px or less the
   "& n". The critic's fit probe: no swatch under 6 px, no overlap, no overflow from 320 to 412 px; a case in
   `warBannerRows1938`.
+
+## 2026-11-19 — R179: on a phone "Go to country" brings the capital where the map shows
+
+- Measured after the new panel is drawn, and a narrow strip before the centre; the critic's probe all flights on the map
+  at 360, 390, 844 wide and the desk; a case in `forceWar1938`.

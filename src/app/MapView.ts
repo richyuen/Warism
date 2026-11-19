@@ -1824,16 +1824,19 @@ export class MapView {
    * map is what the page shows, PLACE_CLEAR_PX about it too (`elementFromPoint`: the History panel, the bars, the ticker
    * and the side panels stand over the map, and do not move with the camera). False, the camera left as it is, when the
    * page leaves no such point (a phone's view under the panel): the caller closes the panel and calls `showPlace`.
+   * `margin`: the clear room asked about the point, PLACE_CLEAR_PX unless a caller asks less (R179).
    */
-  showPlaceClear(x: number, y: number): boolean {
+  showPlaceClear(x: number, y: number, margin = PLACE_CLEAR_PX): boolean {
     const el = this.canvas;
     const at = el.getBoundingClientRect();
     const [vw, vh] = [el.clientWidth, el.clientHeight];
     const open = (px: number, py: number): boolean => px >= 0 && py >= 0 && px < vw && py < vh && document.elementFromPoint(at.left + px, at.top + py) === el;
-    const m = PLACE_CLEAR_PX;
+    const m = margin;
+    // A smaller margin looks on a finer grid: a strip of map between a phone's panel and its ticker (R179).
+    const step = Math.min(PLACE_CLEAR_STEP, Math.max(4, m));
     const clear = (px: number, py: number): boolean => open(px, py) && open(px - m, py) && open(px + m, py) && open(px, py - m) && open(px, py + m);
     const points: [number, number][] = [];
-    for (let py = m; py < vh - m; py += PLACE_CLEAR_STEP) for (let px = m; px < vw - m; px += PLACE_CLEAR_STEP) points.push([px, py]);
+    for (let py = m; py < vh - m; py += step) for (let px = m; px < vw - m; px += step) points.push([px, py]);
     points.sort((p, q) => Math.hypot(p[0] - vw / 2, p[1] - vh / 2) - Math.hypot(q[0] - vw / 2, q[1] - vh / 2));
     const p = points.find(([px, py]) => clear(px, py));
     if (!p) return false;

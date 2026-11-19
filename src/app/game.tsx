@@ -146,7 +146,14 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       const at = view.capitalOf(id);
       if (!at) return;
       hud.director.stop();
-      if (!view.showPlaceClear(at[0], at[1])) view.showPlace(at[0], at[1]);
+      // The clear map measured once the chosen nation's panel is drawn (R179, critic run 81, R81-N2: measured against
+      // the old panel, the capital came to rest under the new one in 11 of 27 flights on a phone).
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          // At 360 × 740 the panel leaves a strip of map under it and no room of 60 px: the strip, then the centre.
+          if (!view.showPlaceClear(at[0], at[1]) && !view.showPlaceClear(at[0], at[1], 8)) view.showPlace(at[0], at[1]);
+        }),
+      );
     };
     hud.onShowPlaceClear = (x, y) => {
       hud.director.stop();

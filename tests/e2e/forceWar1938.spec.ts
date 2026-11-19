@@ -332,3 +332,37 @@ test('the menu takes and releases control; Place at once first in God\'s tab', a
   await page.getByTestId('nation-menu-take').click();
   await expect.poll(played).toBe(POL);
 });
+
+// R179 (critic run 81, R81-N2): on a phone "Go to country" left the capital under the chosen nation's panel (the clear map
+// measured against the panel before it), in every flight at 360 × 740. Paris ends where the map shows.
+test('on a phone "Go to country" brings the capital where the map shows', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+  await page.getByTestId('take-control').click();
+  for (const [w, h] of [[390, 844], [360, 740]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+    await page.getByTestId('tab-overview').click();
+    await page.getByTestId('panel-allies').locator(`[data-testid=nation-chip][data-nation="${FRA}"]`).click();
+    await page.getByTestId('nation-menu-goto').click();
+    await expect.poll(() => page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(FRA);
+    await expect
+      .poll(
+        () =>
+          page.evaluate((n) => {
+            const v = window.__warsim!.view!;
+            if (v.controller.animating) return 'flying';
+            const [at, c, el] = [v.capitalOf(n)!, v.controller.cam, document.querySelector('canvas')!];
+            const r = el.getBoundingClientRect();
+            const [px, py] = [(at[0] - c.cx) * c.scale + el.clientWidth / 2 + r.left, (at[1] - c.cy) * c.scale + el.clientHeight / 2 + r.top];
+            const top = document.elementFromPoint(px, py);
+            return top === el ? 'map' : (top?.closest('[data-testid]')?.getAttribute('data-testid') ?? 'off');
+          }, FRA),
+        { timeout: 6000, message: `${w} × ${h}: Paris on the map` },
+      )
+      .toBe('map');
+  }
+});

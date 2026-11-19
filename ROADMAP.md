@@ -329,9 +329,14 @@ bar in runs 80 and 81 (two in a row).
     68901 d0 and d400 and 69903 d700 at 320, 360, 375, 390 and 412 wide, opened at 360 and the random 64965 at 390; its
     only lines left are "allies shown 0" at 320 and 360, by design. The new case red before (swatches 1.5–2.5 px); the 13
     specs on the banners 55/55.
-- [ ] R179 **R81-N2: "Go to country" on a phone leaves the capital under the new panel** (11 of 27; 360 × 740 7 of 7).
+- [x] R179 **R81-N2: "Go to country" on a phone leaves the capital under the new panel** (11 of 27; 360 × 740 7 of 7).
   `c81_goto2.mjs 68931 390 844`, `69937 360 740 400 ITA,USA,ENG`. Cause by the code: the clear map measured before the
   new panel is drawn. AT: the capital on open map in the probe's flights at both sizes; a case in a spec.
+  - Done (COMMIT): the clear map measured two frames on, once the chosen nation's panel is drawn; where no room of 60 px
+    is left (360 × 740: the panel leaves a strip over the ticker), a strip of 8 px, then the centre
+    (`showPlaceClear`'s `margin`). `c81_goto2`: 68931 at 390 × 844 8 of 8 on the map (before 6), 69937 at 360 × 740 7 of
+    7 (before 0), 69931 at 390 × 844 day 700 9 of 9, the desk and 844 × 390 8 of 8. A case in `forceWar1938` at 390 ×
+    844 and 360 × 740 (red without: "panel-puppets").
 - [ ] R180 **R81-N3: at 1024 × 768 the war row's "+n" under the legend, not clickable** (and the row over the ticker's
   second row). `c81_moreClick.mjs 68901 400 1024 768`. AT: the click works at 1024 × 768 and the sizes that work now; a
   case in a spec. (Ages of Conflict's scrolling war list, the report's idea: not taken unless the row cannot clear the
