@@ -475,9 +475,14 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
     filter, the focus and the zoom take a tap at 667 × 375, 844 × 390, 1280 × 720, 390 × 844 and back, a nation's panel
     opened and closed (ADR-1137 (d); red without: Puppets under the panel). 69 specs on phones, panels, Relations and
     the news 226/226.
-- [ ] R192 **After R184 the panel brought back on a sideways phone covers the Ranking beside the graph** (`c82_relRank`
+- [x] R192 **After R184 the panel brought back on a sideways phone covers the Ranking beside the graph** (`c82_relRank`
   step 5: a second nation from the Ranking takes a close first). AT: a second Ranking row chosen with one tap at 844 ×
   390 and 667 × 375, or the reason it is not.
+  - Not taken, by its AT's second branch: with Relations open a sideways phone shows two panels, the graph on the left
+    half and a nation's on the right (R182); the Ranking is a third with no room. Over the nation's panel it would cover
+    that panel's name and its × (the panel the player chose last); the tap on the Ranking lands on the panel, not a dead
+    tap (the critic's "not a dead tap"). A second nation is chosen with one tap in the graph beside it, the tool open for
+    that; or the panel's × then the Ranking. No code.
 - [ ] R193 **The design objection: the give-way cuts a short long name as much as a longer one** ("Kagosh…" 6 letters
   beside "Chukotka Auton…" 14). Taken: the longest names give way first, each to its five letters. AT: on the random
   64965 at 390 × 844 "Kagoshima" whole or more of it than now, the floor kept.

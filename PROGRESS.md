@@ -433,3 +433,8 @@
 ## 2026-11-19 — R191: every relations filter seen on a sideways phone
 
 - The filters wrap, the zoom in the header, the news beside the graph; a case crossing five sizes.
+
+## 2026-11-19 — R192: not taken, by its AT's second branch
+
+- On a sideways phone with Relations and a nation's panel, the Ranking is a third panel with no room; a second nation is
+  chosen in the graph beside it. No code.
