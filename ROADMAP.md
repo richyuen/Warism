@@ -486,7 +486,7 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
 - [x] R193 **The design objection: the give-way cuts a short long name as much as a longer one** ("Kagosh…" 6 letters
   beside "Chukotka Auton…" 14). Taken: the longest names give way first, each to its five letters. AT: on the random
   64965 at 390 × 844 "Kagoshima" whole or more of it than now, the floor kept.
-  - Done (COMMIT): `sizeRow` cuts every long name to one cap, the highest that fits, each kept to its five letters and
+  - Done (fecbc9c4): `sizeRow` cuts every long name to one cap, the highest that fits, each kept to its five letters and
     the ellipsis; the longest give way first. Random 64965 at 390 × 844: "Kagoshima" and "Queensland" whole,
     "Chukotka Autonomous Okrug" cut to 12 letters (before "Kagosh…", "Queens…", 14); `c82_nameLetters` 68901, 69903 and
     82903 from 320 to 412 px as before, none under five letters. A case in `warBannerRows1938` crossing 390 × 844, a
