@@ -264,7 +264,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
 - [x] R172 **Small:** the strike's ring over the city's name (God Mode); like flags on both sides of a civil war's sea
   battle; three opened phone banners with the same death sentence; the AI's bomb a faint spot at 600 m/px where the game
   stops on it. AT: each seen fixed in a shot or a case, or kept by a line here. `slowClick` stays as ADR-914.
-  COMMIT: the death sentence: opened, a banner whose sentence another already said says it short ("China fights to
+  3d68ee45: the death sentence: opened, a banner whose sentence another already said says it short ("China fights to
   the death: no peace is made"); `warToDeath1938`'s case, a second war with China to the death (red without: in full
   twice). Kept, each a drawing of its own, not the bar's (every dimension at 8; each is the report's "not 9"): the
   strike's ring over the city's name (the ring is the strike's, drawn over the labels on purpose so it is seen; a name
