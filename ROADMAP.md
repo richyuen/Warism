@@ -403,7 +403,7 @@ ADR-1136: the user chose (a).
   made it smaller there; zoom leaves names 4–6 px). `c82_graphSize 68901 667 375`, `844 390`; `c82_graphZoom`. AT: the
   graph 150 px high or more and a median name 10 px or more, at least after one "+", at both sizes. (Hearts of Iron IV's
   list of a nation's ties on a small screen, the report's idea: an option for ADR-1136, not taken alone.)
-  - Done (COMMIT): the labels' size and the pointer's drawing units from whichever of the graph's width and height
+  - Done (d8ea2664): the labels' size and the pointer's drawing units from whichever of the graph's width and height
     bounds the drawing (by the width alone, a low graph's names were drawn 4 px); on a sideways phone the panel runs
     down to the bar, its filters one row that scrolls, no zoom hint. `c82_graphSize 68901`: 667 × 375 302 × 151 px,
     median name 13 px (before 55 px, 4 px); 844 × 390 173 px, 13 px; 932 × 430 212 px, 13 px; 390 × 844 as before
