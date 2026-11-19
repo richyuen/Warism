@@ -42,8 +42,8 @@ function lettersWidth(name: HTMLElement, n = Infinity): number {
 /**
  * A phone's closed row sized by ADR-1136 (a)'s order (R183; critic run 82, R82-B1: shrunk by the flexbox alike, a
  * name went under five letters while its "& n" stayed, "Sovi… & 3", "Que…"). Each banner measured as it would be with
- * room; if the row is short, the long names give way by what each has to give, down to their first five letters and the
- * ellipsis; if that is not enough, banners drop their allies' counts one at a time, those with a long name first, and
+ * room; if the row is short, the longest names give way first, each down to its first five letters and the
+ * ellipsis at most (R193); if that is not enough, banners drop their allies' counts one at a time, those with a long name first, and
  * the names give way again. Set on the elements: `war-tight` on a banner without its counts, a long name's width.
  */
 function sizeRow(row: HTMLElement): void {
@@ -77,10 +77,18 @@ function sizeRow(row: HTMLElement): void {
     r.b.classList.add('war-tight');
     short -= r.counts;
   }
-  const all = give();
-  if (short <= 0 || all <= 0) return;
-  const k = Math.min(1, short / all);
-  for (const r of rows) for (const n of r.names) n.el.style.width = `${n.full - n.give * k}px`;
+  if (short <= 0 || give() <= 0) return;
+  // The longest give way first (R193, critic run 83's design objection: shrunk in proportion, "Kagosh…" lost as much as
+  // "Chukotka Auton…"): one cap for every long name, each kept to its five letters; the highest cap that fits.
+  const names = rows.flatMap((r) => r.names);
+  const at = (cap: number): number => names.reduce((w, n) => w + Math.max(0, n.full - Math.max(n.full - n.give, cap)), 0);
+  let [lo, hi] = [0, Math.max(...names.map((n) => n.full))];
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (at(mid) >= short) lo = mid;
+    else hi = mid;
+  }
+  for (const n of names) if (n.full > lo) n.el.style.width = `${Math.max(n.full - n.give, lo)}px`;
 }
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 

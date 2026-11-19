@@ -438,3 +438,8 @@
 
 - On a sideways phone with Relations and a nation's panel, the Ranking is a third panel with no room; a second nation is
   chosen in the graph beside it. No code.
+
+## 2026-11-19 — R193: the longest names give way first on the phone's war row
+
+- One cap for every long name, each kept to five letters: "Kagoshima" whole beside "Chukotka Autonomous…"; a case
+  crossing the sizes. Batch 51 done.

@@ -313,3 +313,57 @@ test('a window crossing a phone\'s width: the row counted again, a desk name who
     } else if (kind === 'phone') expect(r.banners, `${w} × ${h}: the banners as at the start`).toBe(start.banners);
   }
 });
+
+// R193 (critic run 83's design objection; ADR-1137 (d)): shrunk in proportion, "Kagosh…" lost as much as "Chukotka
+// Auton…". The longest names give way first: on a phone's closed row no long name is cut narrower than one left whole,
+// and none under five letters; upright, a desk, sideways with a nation's panel opened and closed, and back.
+test('the longest names give way first, at every size', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ jap, chi }) => {
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: jap, name: 'Kagoshima' });
+    window.__warsim!.sim.command({ kind: 'renameNation', nation: chi, name: 'Chukotka Autonomous Okrug' });
+  }, { jap: id('JAP'), chi: id('CHI') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-name').filter({ hasText: 'Chukotka' })).toHaveCount(1, { timeout: 20_000 });
+  for (const [w, h] of [[390, 844], [1280, 720], [844, 390], [375, 667], [390, 844]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    if (h < 500) {
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    }
+    await page.waitForTimeout(400);
+    const r = await page.getByTestId('war-banners').evaluate((row) => {
+      const g = document.createElement('canvas').getContext('2d')!;
+      const long = [...row.querySelectorAll<HTMLElement>('[data-testid=war-name]:not(.war-name-short)')];
+      const cut = long.filter((n) => n.scrollWidth > n.clientWidth + 1);
+      const whole = long.filter((n) => n.scrollWidth <= n.clientWidth + 1);
+      const under = cut.filter((n) => {
+        g.font = getComputedStyle(n).font;
+        const range = document.createRange();
+        range.setStart(n.firstChild!, 0);
+        range.setEnd(n.firstChild!, 5);
+        return range.getBoundingClientRect().width + g.measureText('…').width > n.clientWidth + 1;
+      });
+      const narrowestCut = Math.min(...cut.map((n) => n.clientWidth));
+      const widerWhole = whole.filter((n) => n.clientWidth > narrowestCut + 1).map((n) => n.textContent);
+      // Cut above its five letters, a name is at the one cap: all such the same width.
+      const floor = (n: HTMLElement): number => {
+        g.font = getComputedStyle(n).font;
+        const range = document.createRange();
+        range.setStart(n.firstChild!, 0);
+        range.setEnd(n.firstChild!, 5);
+        return range.getBoundingClientRect().width + g.measureText('…').width;
+      };
+      const capped = cut.filter((n) => n.clientWidth > floor(n) + 2).map((n) => n.clientWidth);
+      const spread = capped.length > 1 ? Math.max(...capped) - Math.min(...capped) : 0;
+      return { under: under.map((n) => n.textContent), widerWhole, spread, cut: cut.map((n) => `${n.textContent}:${n.clientWidth}`) };
+    });
+    expect(r.under, `${w} × ${h}: under five letters`).toEqual([]);
+    expect(r.spread, `${w} × ${h}: names cut above their floor at one width (${r.cut.join(', ')})`).toBeLessThanOrEqual(1.5);
+    expect(r.widerWhole, `${w} × ${h}: whole and wider than a name cut`).toEqual([]);
+  }
+});
