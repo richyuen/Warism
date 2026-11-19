@@ -265,6 +265,9 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
     if (next.has(k)) next.delete(k);
     else next.add(k);
     setKinds(next);
+    // The kind named where it is seen (R198, critic run 85, R85-N2: on the smallest phone its filter is a colour alone, the
+    // name in a title no touch shows): "Wars hidden", "Wars shown".
+    setSaid(t(next.has(k) ? 'relations.kindShown' : 'relations.kindHidden', { kind: t(`relations.kind.${k}` as MessageKey) }));
   };
   const sorted = [...nations].sort((x, y) => displayName(x.name).localeCompare(displayName(y.name)));
   // The nodes shown drawn stretched to fill the drawing (R81e: the forces' size is the same at any height, so a phone's

@@ -353,3 +353,28 @@ test('the relations footer stays inside its panel at every size', async ({ page 
     expect(r.graph, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(least);
   }
 });
+
+// R198 (critic run 85, R85-N2; ADR-1137 (d)): at 568 × 320 the filters are colours alone, their names in titles no touch
+// shows. A tap on a filter names its kind where it is seen, "Wars hidden", "Wars shown"; at 568 × 320, 844 × 390, a desk,
+// upright and back, a nation's panel opened and closed beside it.
+test('a relations filter tapped says its kind at every size', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  const said = page.getByTestId('relations-said');
+  for (const [w, h] of [[568, 320], [844, 390], [1280, 720], [390, 844], [568, 320]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    for (const [k, name] of [['war', 'Wars'], ['alliance', 'Alliances'], ['truce', 'Truces']] as const) {
+      const box = (await page.getByTestId(`relations-kind-${k}`).boundingBox())!;
+      await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      await expect(said, `${w} × ${h}: ${k} off`).toHaveText(new RegExp(`^${name} hidden`));
+      await expect(said, `${w} × ${h}: the footer seen`).toBeInViewport();
+      await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      await expect(said, `${w} × ${h}: ${k} on`).toHaveText(new RegExp(`^${name} shown`));
+    }
+  }
+});

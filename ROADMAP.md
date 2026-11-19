@@ -556,10 +556,15 @@ The run was handed back before lane E (6 of about 40 page cases) and the perform
     `warBannerRows1938` crossing 601, 620, 640 (a nation's panel and History opened and closed), 700, 1280, a 600 px phone
     and back (ADR-1137 (d)): a war shown at every desk, the row in its width and over nothing of the page's (red
     without: 601 × 800 no war). 63 specs on the banners, phones, the news, the legend and the settings 213/213.
-- [ ] R198 **R85-N2: on a 568 × 320 touch phone the relations filters are bare colours; nothing names the kind tapped**
+- [x] R198 **R85-N2: on a 568 × 320 touch phone the relations filters are bare colours; nothing names the kind tapped**
   (R195; the name in `title` and `aria-label` only). AT: a tap on a filter there names its kind on screen (the report's
   ways: the footer says it, or a letter on each swatch; Hearts of Iron IV's legend chip, its idea), R195's graph height
   and every filter's tap as now; crossing the sizes.
+  - Done (COMMIT): a tap on a filter says its kind in the footer's line, "Wars hidden", "Wars shown" (the report's first
+    way), at every size. A case in `relationsTap1938` tapping Wars, Alliances and Truces off and on at 568 × 320, 844 ×
+    390, a desk, upright and back, a nation's panel opened and closed (ADR-1137 (d)): the kind named each time, the footer
+    in view (red without: the hint unchanged). R195's case (the graph 110 px and more, every filter's tap) as before. 22
+    specs on Relations, phones and i18n 84/84.
 - [ ] R199 **Finish run 85's release check**: `critic/scripts/c85_laneE.sh` (lane E's cases from the 7th) and
   `critic/scripts/c85_chainPerf.sh` alone on a quiet machine, before a release is cut on this commit or a later one. The
   next critic run (focused, on R197–R198) takes them: its prompt names them. AT: its report has lane E's cases and

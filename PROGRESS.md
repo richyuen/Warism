@@ -471,3 +471,8 @@
 ## 2026-11-19 — R197: a narrow desk's war row in the room between the news and the legend
 
 - The row centred in the band free beside it; a war shown at every desk width from 601 px; a crossing case.
+
+## 2026-11-19 — R198: a relations filter tapped says its kind
+
+- "Wars hidden", "Wars shown" in the footer, at every size; a crossing case. Batch 53's code items done; R199 (run 85's
+  unfinished checks) next, by resuming the critic (the user asked whether it could be).

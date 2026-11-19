@@ -1191,6 +1191,8 @@
   "relations.kind.guarantee": "Guarantees",
   "relations.kind.puppet": "Puppets",
   "relations.kind.truce": "Truces",
+  "relations.kindShown": "{kind} shown",
+  "relations.kindHidden": "{kind} hidden",
   "relations.allNations": "All nations",
   "relations.focus": "Show the ties of",
   "relations.untied": "{n} nations with no tie shown are left out",
