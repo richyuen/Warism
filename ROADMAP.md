@@ -230,7 +230,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   Brazil, which takes it as a puppet that hour), 16,294 men to lift for a room of 25,200; `noLift` true in the six
   hours before (`critic/scripts/c79_liftTrace.ts`). AT: that command prints 0 broken; `diploInvariants` on ten more
   random-diplomacy seeds with heroes, five years each, 0 broken; a unit test of the door.
-  COMMIT (ADR-1133): the day's choice declared it (no massing); "across the sea" was asked by ownership. Now
+  838b1aff (ADR-1133): the day's choice declared it (no massing); "across the sea" was asked by ownership. Now
   `acrossSea`, for both doors, counts a neighbour touched nowhere by control too. The case 0 broken; 67001–67010 0
   broken each; `seaLift1938.test.ts`: Chile's border held by Bolivia, both doors refuse Argentina with no lift (red
   without the rule). Seed 99's pin unchanged.
