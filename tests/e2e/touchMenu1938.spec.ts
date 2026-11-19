@@ -103,3 +103,25 @@ test('Diplomacy then a tap on Poland opens its menu and declares war; a long pre
   await expect(menu).toHaveCount(0);
   expect(boxed.length, 'the box on own land selected formations').toBeGreaterThan(0);
 });
+
+// R173 (relationsTap red 1 run in 20): a nation's menu closed only on a press on the map; opened from a panel, it stayed
+// over the relations graph after the panel closed, and the next pinch began on it. A press anywhere outside closes it;
+// one inside it does not.
+test("a nation's menu closes on a press anywhere outside it, not inside", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const open = (): Promise<void> => page.evaluate(() => window.__warsim!.player!.openMenu(1, 400, 300));
+  await open();
+  const menu = page.getByTestId('nation-menu');
+  await expect(menu).toBeVisible();
+  // Inside: kept.
+  const box = (await menu.boundingBox())!;
+  await page.mouse.move(box.x + 4, box.y + 4);
+  await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)!.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: x!, clientY: y! })), [box.x + 4, box.y + 4]);
+  await expect(menu).toBeVisible();
+  // Outside, on the page's chrome (the bottom bar), not the map: closed.
+  const bar = (await page.getByTestId('history-btn').boundingBox())!;
+  await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)!.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: x!, clientY: y! })), [bar.x + bar.width / 2, bar.y + bar.height / 2]);
+  await expect(menu).toHaveCount(0);
+});

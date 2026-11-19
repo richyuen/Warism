@@ -310,3 +310,9 @@
 
 - Opened, a war banner whose sentence another already said says it short. The strike's ring, the civil war's flags and
   the AI's bomb at 600 m/px kept, each with its reason in ROADMAP.
+
+## 2026-11-18 — R173: the relations pinch, red 1 run in 20
+
+- A nation's menu now closes on a press anywhere outside it (it stayed over the relations graph after its panel closed,
+  and the next pinch began on it); a finger whose lifting the graph missed no longer turns a pinch into a drag.
+  `relationsTap1938` 48 of 48 green. Batch 47 done; next, the full critic run (ADR-1134).

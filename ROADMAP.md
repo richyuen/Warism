@@ -269,9 +269,16 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   twice). Kept, not traced in this batch: the strike's ring over the city's name, like flags in a civil war's sea
   battle, the AI's bomb as a faint spot at 600 m/px where the game stops. Each is the report's "not 9" in a dimension
   at its bar (God Mode, naval, AI nukes at 8), a drawing question of its own; the full run judges them again.
-- [ ] R173 **`relationsTap1938` red 1 in 2 on HEAD** (found in R170's hand run, not the critic's): "the pinch zoomed in"
+- [x] R173 **`relationsTap1938` red 1 in 2 on HEAD** (found in R170's hand run, not the critic's): "the pinch zoomed in"
   fails with or without R170's change (`--repeat-each 2`: 1 failed, 1 passed). AT: ten runs green, or on
   `tools/gate/knownRed.json` with a BLOCKERS entry if a machine's alone.
+  COMMIT: two faults, both the game's. (1) A nation's menu closed only on a press on the map: the spec's second tap
+  could land on the chip of the panel now over the node, opening the menu, and the panel's × left it over the graph,
+  where the pinch began (traced by logging the pointers in a failing run: "nation-menu-take < nation-menu"). A press
+  anywhere outside the menu now closes it (`touchMenu1938`'s case, red without). (2) A finger whose `pointerup` the
+  graph never had stayed among the fingers down and made a pinch's two three: a new gesture's first finger starts the
+  count again (`relationsTap1938`'s case, red without). `relationsTap1938` 48 of 48 green at 8 workers (before: 2 of 20
+  red).
 
 ## Released
 

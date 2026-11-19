@@ -262,6 +262,15 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     });
     canvas.addEventListener('pointerdown', () => p.closeMenu());
     canvas.addEventListener('wheel', () => p.closeMenu(), { passive: true });
+    // A press anywhere outside the menu closes it, not the map's alone (R173: opened from a nation panel's chip on a
+    // phone, it stayed over the relations graph after the panel closed, and the next pinch began on it).
+    document.addEventListener(
+      'pointerdown',
+      (e) => {
+        if (p.menu.value !== null && !(e.target instanceof Element && e.target.closest('.nation-menu'))) p.closeMenu();
+      },
+      true,
+    );
     // The editor's brush and line paint on a left-drag (PLAN 1.44); the cursor says so.
     view.paint = { active: () => hud.dragTool() !== null, start: (x, y) => hud.dragStart(x, y), move: (x, y) => hud.dragMove(x, y), end: (x, y) => hud.dragEnd(x, y), cancel: () => hud.dragCancel() };
     effect(() => {

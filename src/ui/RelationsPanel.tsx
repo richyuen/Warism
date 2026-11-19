@@ -147,6 +147,9 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
     zoomBy(e.deltaY < 0 ? 1.25 : 0.8, pointAt(e.clientX, e.clientY));
   };
   const onPointerDown = (e: PointerEvent): void => {
+    // A new gesture's first finger: none of the last is still down (R173: a finger whose lifting the graph never had, a
+    // tap that opened a panel over it, made the next pinch's two fingers three, and it did not zoom).
+    if (e.isPrimary) pointers.current.clear();
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 1) dragged.current = false;
     tap.current = e.pointerType === 'touch' && pointers.current.size === 1 ? { id: e.pointerId, x: e.clientX, y: e.clientY, target: e.target } : null;

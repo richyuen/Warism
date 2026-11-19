@@ -74,3 +74,32 @@ test('a phone: the first tap after a drag, and after a pinch, selects the nation
   await page.touchscreen.tap(n.x, n.y);
   await expect.poll(() => picked(page), { timeout: 3000 }).toBe(want(n));
 });
+
+// R173 (relationsTap red 1 in 2 once: "the pinch zoomed in"): a finger whose `pointerup` the graph never had (a tap that
+// opened a panel over it) stayed among the fingers down, and the next pinch's two made three: no pinch. A new gesture's
+// first finger starts the count again.
+test('a pinch after a finger whose lifting the graph never had still zooms', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  const btn = page.getByTestId('relations-btn');
+  await btn.scrollIntoViewIfNeeded();
+  await btn.tap();
+  const graph = page.getByTestId('relations-graph');
+  await expect(graph).toBeVisible();
+  const z0 = Number(await graph.getAttribute('data-zoom'));
+  await graph.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const [x, y] = [r.x + r.width / 2, r.y + r.height / 2];
+    const ev = (type: string, id: number, px: number, primary: boolean): PointerEvent => new PointerEvent(type, { pointerId: id, pointerType: 'touch', isPrimary: primary, clientX: px, clientY: y, bubbles: true });
+    // A finger down whose lifting is lost.
+    el.dispatchEvent(ev('pointerdown', 7, x, true));
+    // A pinch out: two fingers, the first of a new gesture.
+    el.dispatchEvent(ev('pointerdown', 1, x - 20, true));
+    el.dispatchEvent(ev('pointerdown', 2, x + 20, false));
+    el.dispatchEvent(ev('pointermove', 2, x + 60, false));
+    el.dispatchEvent(ev('pointerup', 1, x - 20, true));
+    el.dispatchEvent(ev('pointerup', 2, x + 60, false));
+  });
+  await expect.poll(async () => Number(await graph.getAttribute('data-zoom')), { message: 'the pinch zoomed in' }).toBeGreaterThan(z0);
+});
