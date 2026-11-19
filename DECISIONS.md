@@ -5,7 +5,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1134 · 2026-11-18 · the user's decision · The critic run after Batch 47 is a full run
+## ADR-1135 · 2026-11-19 · proposed, the user's decision · R80-B1: R168 cut the phone's war-banner names to 0–3 letters (ADR-829's exit)
+
+- **The case** (critic run 80, full, on 18c2b40a): at 390 × 844 every 1938 game opens with "J… & 2 ⚔ C… & 1"; on 68901
+  day 400 "China" shows 0 of 5 letters (`critic/scripts/c80_bannerNames.mjs`). Run 79's build shows the names whole.
+  R168 (eba1ee3f) gave `.war-name` `min-width: 0` and an ellipsis so that long names stay on one line at 1600 × 900; in
+  the phone's squeezed closed row the short names shrink first. Its spec case ran at 1600 × 900 only.
+- **Why the loop stopped:** a blocking issue that is a regression of an item ticked since the last release (ADR-829).
+  UI/UX is at 7, under its bar, held there by it.
+- **The options:**
+  - **(a) Fix R168 on the phone (recommended):** a side's name keeps at least about 5 em (or its whole width if shorter)
+    and the score, then the "& n", give way first; the 1600 × 900 case stays as R168 made it. A phone case in
+    `warBannerRows1938` at 390 × 844 (each side at least 5 letters or whole), and the critic's probe on 68901 day 400
+    and 68903 day 700. Small and in scope.
+  - **(b) Fewer banners on the phone's closed row:** one banner and "+n" instead of two; the names have the room. Less
+    seen at a glance.
+  - **(c) A redesign:** on a phone the sides as flags alone, the names on a tap (as Ages of Conflict and Hearts of Iron
+    IV do, the critic's idea). Larger; changes what the row says.
+  - **(d) Take R168 back:** the desk's long random-world names wrap mid-phrase again (R79-N1 reopened).
+- **Also in the run:** R79-B1 fixed (0 broken on the case and ten new seeds). Non-blocking: R80-N1, Relations opens
+  under an open nation panel on a phone (R170 fixed History only); R80-N2, "Go to country" in a chip's menu does not move
+  the camera. The run is incomplete (the performance chain carried, next-voyage, Malta and part of stuck-return left
+  out), so it does not clear a release whatever is chosen: the next run is a full one.
+
+ 2026-11-18 · the user's decision · The critic run after Batch 47 is a full run
 
 - **The user:** "Let's make the next critic run a full run again." After Batch 47 (critic run 79's findings, full) the
   critic is spawned with "full run", not a focused one (an exception to ADR-915's focused run after a blocking issue).

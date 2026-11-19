@@ -316,3 +316,9 @@
 - A nation's menu now closes on a press anywhere outside it (it stayed over the relations graph after its panel closed,
   and the next pinch began on it); a finger whose lifting the graph missed no longer turns a pinch into a drag.
   `relationsTap1938` 48 of 48 green. Batch 47 done; next, the full critic run (ADR-1134).
+
+## 2026-11-19 — critic run 80 (full, incomplete, on 18c2b40a): ADR-829's exit
+
+- One blocking issue, R80-B1: R168 cut the phone's war-banner names to 0–3 letters, a regression of an item ticked since
+  the release. UI/UX 7; the rest 8 (performance carried). R79-B1 fixed. Filed as Batch 48; ADR-1135 proposed for the
+  user. The loop stops until the user decides.
