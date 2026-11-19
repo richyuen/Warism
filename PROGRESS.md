@@ -344,3 +344,8 @@
 - One blocking issue, R81-B1: on a sideways phone History opens under a nation panel (R170 unfinished, not a regression).
   UI/UX 7; every other dimension 8, performance scored afresh. R80-B1, R80-N1 and R80-N2 fixed. Filed as Batch 49
   (R177–R182).
+
+## 2026-11-19 — R177: on a sideways phone History stands in the nation panel's place too
+
+- R170's rule moved to the phone block that also counts a sideways phone; the critic's probe 0 of 81 covered at three
+  sideways sizes, `dirHand` 844 × 390 with no failed act.

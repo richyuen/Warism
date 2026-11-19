@@ -308,11 +308,16 @@ UI/UX dimension is taken until the user decides.
 
 R81-B1 is R170 unfinished (run 80's build the same), not a regression: ADR-829's exit does not apply. UI/UX under its
 bar in runs 80 and 81 (two in a row).
-- [ ] R177 **R81-B1: on a sideways phone History opens under an open nation panel** (R170 held upright only). `BASE=… node
+- [x] R177 **R81-B1: on a sideways phone History opens under an open nation panel** (R170 held upright only). `BASE=… node
   critic/scripts/c81_histOver.mjs 68901 60 844 390 GER`: 81 of 81 of History covered, `historyGoTapped` false; 667 × 375
   and 932 × 430: 63 of 81; `dirHand 59955 120 844 390 touch`: "act failed … history-go". AT (the bar's): the probe shows
   `history-btn.hiddenOf81` 0 and `historyGoTapped` true at the three sizes; `dirHand` at 844 × 390 with no "act
   failed"; the upright case as it is; a case in `historyPlace1938`.
+  - Done (COMMIT): R170's give-way moved into the phone block that counts a sideways phone (`max-height: 500px`, as
+    `usePhone`). `c81_histOver 68901 60 … GER` at 844 × 390, 667 × 375, 932 × 430 and 390 × 844: `hiddenOf81` 0,
+    `historyGoTapped` true; `dirHand 59955 120 844 390 touch`: History's act "A major battle began near Elbląg",
+    `cutsAfterAct` 0, no "act failed". R170's case in `historyPlace1938` now at 390 × 844, 844 × 390 and 667 × 375 (red
+    without: the panel visible). The 21 specs that open History 76/76.
 - [ ] R178 **R81-N1: on a phone 375 px or narrower the banners' swatches squeezed to 0 px; at 320 px the swords over "& 2"**
   (R174's side effect; also Hearts of Iron IV's flag kept by a cut name, the report's idea: taken here). `DPR=2 node
   critic/scripts/c81_bannerFit.mjs 68901 0 360 740`; 69903 day 700; 320 × 568 day 400. AT: no swatch under 6 px and no

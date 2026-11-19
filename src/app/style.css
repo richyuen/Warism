@@ -2392,12 +2392,6 @@ button.unit-icon.on {
     width: auto;
     right: 0.5rem;
   }
-  /* History, opened after it, stands in its place; the nation stays selected and its panel comes back as History
-     closes (R170, critic run 79: History's rows under the nation's panel, no row's place to tap). History's own panel:
-     the others of its look (relations, settings, the editor, the charts) open a nation's panel from inside them. */
-  #ui:has([data-testid='history-panel']) .nation-panel {
-    display: none;
-  }
   .history-panel,
   #ui:has(.nuke-alert) .history-panel {
     top: 3.4rem;
@@ -2431,6 +2425,13 @@ button.unit-icon.on {
 /* A phone's screen, upright or on its side (ADR-760, the user's choice and report): a width of a
    phone, or a landscape phone's height. `usePhone` (src/ui/usePhone.ts) reads the same query. */
 @media (max-width: 600px), (max-height: 500px) {
+  /* History, opened after it, stands in its place; the nation stays selected and its panel comes back as History
+     closes (R170, critic run 79: History's rows under the nation's panel, no row's place to tap). Upright and on its
+     side (R177, critic run 81, R81-B1: at 844 × 390 81 of 81 of History covered). History's own panel: the others of
+     its look (relations, settings, the editor, the charts) open a nation's panel from inside them. */
+  #ui:has([data-testid='history-panel']) .nation-panel {
+    display: none;
+  }
   /* The news takes less of the map (the user's choice of 2026-10-29, ADR-760): the war banners a
      row on the bar, two and a "+N" (opened, they wrap and stand over the ticker); the ticker's two
      rows above them, at most 30 rem wide; the legend folded to its title, top left, giving way to a
