@@ -447,7 +447,7 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
   down on the desk and not again when `phone` turns true (the observer saw the same width). AT: by the user's choice in
   ADR-1137; for (a), the report's "seen fixed when" (2 banners at the phone steps, no inline width on a desk name,
   "Nationalist Spain" whole at 1366, `c83_rotate` 0 stale); a case in `warBannerRows1938` that crosses the width.
-  - Done (COMMIT, ADR-1137 (d)): what `sizeRow` sets (names' widths, `war-tight`) is cleared whenever the row is not a
+  - Done (a6eb4c06, ADR-1137 (d)): what `sizeRow` sets (names' widths, `war-tight`) is cleared whenever the row is not a
     phone's closed row; the banners counted again when the window turns a phone's or a desk's, and the observer starts
     afresh. `c83_phoneToDesk 68901 400`: 2 banners at both 384 × 832 steps (before: 1 at the second), no inline width at
     1280, 1024, 1600; `83903 700 375x667,…`: 2 at the last (before 1); `83901 400 384x832,1366x768,…`: "Nationalist
