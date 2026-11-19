@@ -857,6 +857,26 @@ textarea,
 .war-banners:not(.opened) {
   flex-wrap: nowrap;
 }
+/* A desk's row too narrow for its one banner, sized as a phone's (R194, `WarBanners` sets `war-sized`): the score's figure
+   gone, the long names as wide as they are set, the counts of a `war-tight` banner gone. */
+.war-banners.war-sized:not(.opened) .war-score-n,
+.war-banners.war-sized:not(.opened) .war-tight .war-allies {
+  display: none;
+}
+.war-banners.war-sized:not(.opened) .war-side {
+  overflow: hidden;
+}
+.war-banners.war-sized:not(.opened) .war-banner,
+.war-banners.war-sized:not(.opened) .war-side {
+  flex-shrink: 0;
+}
+.war-banners.war-sized:not(.opened) .war-name:not(.war-name-short) {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+.war-banners.war-sized.war-measuring .war-name {
+  width: auto !important;
+}
 /* Opened, each banner its own height, at its row's head (R166, critic run 78: one with no death line stood as tall as
    its neighbour with one, half empty). */
 .war-banners.opened {

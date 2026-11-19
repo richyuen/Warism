@@ -448,3 +448,7 @@
 
 - No blocking issue; every score at its bar, UI/UX back to 8. Run 83's case and Batch 51 fixed. Three non-blocking
   issues filed as Batch 52 (R194–R196); then the full run (ADR-1016).
+
+## 2026-11-19 — R194: a narrow desk's war row stays in its width
+
+- The lone banner sized as a phone's, or "+n" alone where none fits; off the news at 620 to 768 px; a crossing case.

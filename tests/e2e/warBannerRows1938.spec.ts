@@ -367,3 +367,47 @@ test('the longest names give way first, at every size', async ({ page }) => {
     expect(r.widerWhole, `${w} × ${h}: whole and wider than a name cut`).toEqual([]);
   }
 });
+
+// R194 (critic run 84, R84-N1; ADR-1137 (d)): on a desk 601 to 768 px wide one banner wider than its row spilled over the
+// ticker's second row. The row in its width and clear of the news at every desk, a phone before and after, a nation's
+// panel and History opened and closed on the narrow desk; the "+n" still opens the rest there.
+test('a narrow desk\'s row stays in its width and off the news', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 384, height: 832 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  await page.waitForTimeout(300);
+  const start = await page.getByTestId('war-banner').count();
+  for (const [w, h] of [[640, 800], [620, 900], [700, 800], [768, 1024], [1280, 720], [384, 832]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    if (w === 640) {
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+      await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    }
+    await page.waitForTimeout(400);
+    const r = await page.getByTestId('war-banners').evaluate((row) => {
+      const box = (e: Element): DOMRect => e.getBoundingClientRect();
+      const over = (a: DOMRect, b: DOMRect): boolean => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+      const items = [...row.children].map(box);
+      const news = [...document.querySelectorAll('.ticker .ticker-row')].map(box);
+      return { inside: row.scrollWidth <= row.clientWidth + 1, onNews: items.filter((i) => news.some((n) => over(i, n))).length };
+    });
+    expect(r.inside, `${w} × ${h}: the row in its width`).toBe(true);
+    expect(r.onNews, `${w} × ${h}: nothing of the row over the news`).toBe(0);
+    if (w === 384) expect(await page.getByTestId('war-banner').count(), `${w} × ${h}: the phone's banners as at the start`).toBe(start);
+    if (w === 620) {
+      await page.getByTestId('war-more').click();
+      await expect(page.getByTestId('war-banners')).toHaveClass(/opened/);
+      expect(await page.getByTestId('war-banner').count(), `${w} × ${h}: "+n" opens the rest`).toBeGreaterThan(1);
+      await page.getByTestId('war-more').click();
+      await expect(page.getByTestId('war-banners')).not.toHaveClass(/opened/);
+    }
+  }
+});

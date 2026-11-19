@@ -167,6 +167,7 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     // What `sizeRow` set is a phone's closed row's alone: opened or on a desk it goes (R189, R83-B1: back on a desk
     // "Nationalist Sp…" kept the phone's width with room to spare).
     if (opened || !phone) {
+      el.classList.remove('war-sized');
       for (const b of el.querySelectorAll<HTMLElement>('[data-testid=war-banner]')) b.classList.remove('war-tight');
       for (const n of el.querySelectorAll<HTMLElement>('[data-testid=war-name]')) n.style.width = '';
     }
@@ -178,7 +179,18 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
       if (shown > 1 && el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
       return;
     }
-    if (shown <= 1) return;
+    el.classList.remove('war-sized');
+    if (shown <= 1) {
+      // A desk's row too narrow for its one banner (a window 600 to 770 px wide, between the news and the legend): its
+      // names give way as a phone's do; past that, "+n" alone (R194, critic run 84, R84-N1: the banner 220 px wide in a
+      // row of 90 to 170, over the ticker's second row by up to 56 px).
+      if (shown === 1 && el.scrollWidth > el.clientWidth + 1) {
+        el.classList.add('war-sized');
+        sizeRow(el);
+        if (el.scrollWidth > el.clientWidth + 1) setFit(0);
+      }
+      return;
+    }
     if (el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
   });
   if (wars.length === 0) return null;

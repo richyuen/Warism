@@ -499,12 +499,20 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
 
 A focused run with no blocking issue: its non-blocking issues are fixed, then the full run (ADR-1016). Each item on the
 war row or a panel's place crosses the sizes and opens and closes the panels beside it (ADR-1137 (d)).
-- [ ] R194 **R84-N1: on a desk window 601 to 768 px wide one war banner wider than its row spills over the ticker's second
+- [x] R194 **R84-N1: on a desk window 601 to 768 px wide one war banner wider than its row spills over the ticker's second
   row** (older than Batch 51; run 83's build the same). `c84_rowShot 84901 400 620x900,640x800,683x768,700x800,768x1024`:
   the row over by 81, 71, 50, 41, 7 px, 56 to 16 px of the ticker's row covered; 84903 day 700 at 640 × 800. AT: that
   probe `ov` 0 and `under` [] at every size; the case crossing a phone, these desks and back, a nation's panel and
   History opened and closed; R180's and R189's cases as now. (Ages of Conflict's side list, the report's idea: the
   phone's row on a narrow desk is the nearer form of it.)
+  - Done (COMMIT): a desk's row too narrow for its one banner is sized as a phone's (`war-sized`: the score's figure
+    gone, the longest names give way, then the counts); still too narrow, "+n" alone. `c84_rowShot 84901 400`: `ov` 0
+    and `under` [] at 620 × 900, 640 × 800, 683 × 768, 700 × 800, 768 × 1024 (before over by 81 to 7 px, 56 to 16 px of
+    the news covered); at 683 and wider the banner shown sized, at 620 and 640 "+5" alone (no banner fits between the
+    news and the legend there); 84903 day 700 at 640, 1024, 1280 the same, the wide desks as before. A case in
+    `warBannerRows1938` crossing a phone, 640 (a nation's panel and History opened and closed), 620, 700, 768, 1280 and
+    back (ADR-1137 (d)): the row in its width and off the news, "+n" opening the rest at 620, the phone's banners as at
+    the start (red without: 640 × 800 past its width). 51 specs on the banners, phones and the news 175/175.
 - [ ] R195 **R84-N2: at 568 × 320 the wrapped relations filters take three rows, the graph 82 px (110 before R191)**
   (`c82_graphSize 68901 568 320`, `84933`). AT: the graph at 568 × 320 at least as high as before R191 (110 px), every
   filter and the focus still taking a tap; R191's case and R185's heights at the other sizes as now. (Hearts of Iron IV's
