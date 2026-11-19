@@ -517,7 +517,7 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
   (`c82_graphSize 68901 568 320`, `84933`). AT: the graph at 568 × 320 at least as high as before R191 (110 px), every
   filter and the focus still taking a tap; R191's case and R185's heights at the other sizes as now. (Hearts of Iron IV's
   single filter button, the report's idea: one way to do it.)
-  - Done (COMMIT): at a height of 340 px or less the filters are their checkboxes and colours alone, one row, each kind
+  - Done (83fb0375): at a height of 340 px or less the filters are their checkboxes and colours alone, one row, each kind
     named in its title and read aloud (`aria-label`), the focus taking the room left. `c82_graphSize` 68901 and 84933 at
     568 × 320: the graph 123 px (HEAD 82, before R191 110); 667 × 375 152 px and 844 × 390 173 px as R191. A case in
     `relationsTap1938` crossing 568 × 320, 844 × 390, a desk, upright and back, a nation's panel opened and closed (ADR-1137
