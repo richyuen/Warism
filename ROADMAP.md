@@ -526,7 +526,7 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
 - [x] R196 **R84-N3: on a sideways phone the relations hint's second line runs over the panel's foot** (667 × 375, 568 ×
   320; both builds; `c84rs_84903_d400_c84_5409_2_667x375_GER.png`). AT: the hint inside the panel at 568 × 320, 667 × 375,
   844 × 390 and upright, a nation's panel opened and closed beside it; the graph's heights as R185/R195.
-  - Done (COMMIT): on a sideways phone the footer leaves out the count of nations left out of the graph (the report's
+  - Done (e67aaf93): on a sideways phone the footer leaves out the count of nations left out of the graph (the report's
     second way), and the graph takes the room the footer leaves (`flex: 1 1 0`; a line read in two rows makes it
     shorter while shown). `c82_graphSize 68901`: 568 × 320 123 px, 667 × 375 158 px (R191: 152), 844 × 390 173 px,
     932 × 430 213 px; the 667 × 375 shot shows the footer inside the panel. A case in `relationsTap1938` crossing 568 ×
