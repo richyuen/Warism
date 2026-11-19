@@ -394,7 +394,7 @@ ADR-1136: the user chose (a).
   375: selected 10, `relationsOver` 10, no panel. Cause: `relationsOver` cleared only when the id changes; the same id
   changes nothing. AT: step 4 a panel with `selected` 10 at both sizes; steps 5–7 and `c81_relOver`'s eight as now; a case
   in `relationsTap1938`. (UI/UX: held for ADR-1136 with the rest.)
-  - Done (COMMIT): any choice of a nation, the one selected among them, clears `relationsOver` (`MapView.onChoose`,
+  - Done (e90d7437): any choice of a nation, the one selected among them, clears `relationsOver` (`MapView.onChoose`,
     called before `select`'s early return: the Ranking, the map's tap, every `hud.onSelectNation`). `c82_relRank 68901
     … SOV USA` at 844 × 390 and 667 × 375: step 4 `selected` 10, `relationsOver` 0, the panel shown (before: none);
     `c81_relOver 68933 844 390` its eight steps as before. A case in `relationsTap1938` at both sizes, the Ranking's row
