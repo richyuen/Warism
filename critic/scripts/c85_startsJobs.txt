@@ -1,0 +1,5 @@
+npx tsx critic/scripts/c85_free.ts 1942 85542 365 free heroes=on > critic/c85_free_1942_85542_free.log 2>&1
+npx tsx critic/scripts/c85_free.ts 1951 85551 365 free diplomacy=random,heroes=on > critic/c85_free_1951_85551_free.log 2>&1
+npx tsx critic/scripts/c85_free.ts 1975 85575 730 free heroes=on > critic/c85_free_1975_85575_free.log 2>&1
+npx tsx critic/scripts/c85_free.ts 1991 85611 1825 free heroes=on > critic/c85_free_1991_85611_free.log 2>&1
+npx tsx critic/scripts/c85_blocend.ts 85611 1825 > critic/c85_blocend_85611.log 2>&1

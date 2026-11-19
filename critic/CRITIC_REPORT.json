@@ -1,6 +1,6 @@
 {
- "commit": "764aa144050bf43f40ca2d63e34a3298bd0c81b5",
- "mode": "focused",
+ "commit": "a9736eb57c0784175f29cb0035c6b940912875b7",
+ "mode": "full",
  "scores": {
   "mapVisuals": 8,
   "diplomacyWarDepth": 8,
@@ -18,5 +18,6 @@
   "aiNukes": 8
  },
  "blocking": [],
- "timestamp": "2026-11-19T14:10:00-05:00"
+ "incomplete": "Lane E (History, time-lapse and banner cases) stopped at 6 of about 40 cases, and the performance chain was not run; performance is carried from run 84.",
+ "timestamp": "2026-11-19T16:12:00-05:00"
 }

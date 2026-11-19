@@ -461,3 +461,9 @@
 
 - The left-out count not said there, the graph takes what the footer leaves; a crossing case. Batch 52 done; the full
   critic run next (ADR-1016).
+
+## 2026-11-19 — critic run 85 (full, incomplete, on a9736eb5)
+
+- No blocking issue; every score at its bar (performance carried: the perf chain and most of lane E did not run). Batch
+  52 confirmed; checkers 0 of 32 broken, landingFuzz 0 of 90, the 20-year hashes unchanged, 0 page errors in 421 outputs.
+  Two non-blocking issues and the unfinished check filed as Batch 53 (R197–R199).

@@ -537,6 +537,28 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
   could open its nation in the panel's place: the row is under the panel there, so no tap reaches it (R192's reason);
   ADR-1111's heroes' plates (decided there); R172's kept three.
 
+## Batch 53 — critic run 85's findings (full, incomplete, on a9736eb5; no blocking issue; every score at its bar)
+
+The run was handed back before lane E (6 of about 40 page cases) and the performance chain ran; performance is carried at
+8. Each item on the war row or a panel crosses the sizes and opens and closes the panels beside it (ADR-1137 (d)).
+- [ ] R197 **R85-N1: a desk window 601 to about 700 px wide shows no war, only "+n"** (R194's side effect; 600 px, a phone,
+  shows two). The row's `max-width: min(60%, calc(100% - 39rem))` keeps room for a left panel that is not open: about 16
+  px at 640. `c85_deskRow` 84901, 85901 (620–660), 85903 (620–700), 85905, random 85965 (620–680). The design objection
+  (R194's "+n alone" hides every war on a half-screen desk) is the same case. AT: `c85_deskRow 84901 400 800` and `85903
+  700 900` `fit0` [] and `covering` [] at every step; R194's probe and case as now; the case crossing 600 and 601 px, a
+  nation's panel and History opened and closed.
+- [ ] R198 **R85-N2: on a 568 × 320 touch phone the relations filters are bare colours; nothing names the kind tapped**
+  (R195; the name in `title` and `aria-label` only). AT: a tap on a filter there names its kind on screen (the report's
+  ways: the footer says it, or a letter on each swatch; Hearts of Iron IV's legend chip, its idea), R195's graph height
+  and every filter's tap as now; crossing the sizes.
+- [ ] R199 **Finish run 85's release check**: `critic/scripts/c85_laneE.sh` (lane E's cases from the 7th) and
+  `critic/scripts/c85_chainPerf.sh` alone on a quiet machine, before a release is cut on this commit or a later one. The
+  next critic run (focused, on R197–R198) takes them: its prompt names them. AT: its report has lane E's cases and
+  performance scored afresh, not carried.
+- Not taken: the graph's 13 px jump while a two-row line is said at 568 × 320 (R196 accepted it, the report lists it
+  without a fix); heroPop on 85905 (7 to 15 jumps panning, on both builds, older than these batches; the report asks no
+  fix); R172's, R192's and ADR-1111's kept items.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

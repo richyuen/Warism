@@ -1,0 +1,2 @@
+npx tsx tools/diag/pileSides.ts 365 85141 85143 85145 --all > critic/c85_pileSides_68.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c85_warOpening_68b.json --years 3 85217 85219 85221 > critic/c85_warOpening_68b.log 2>&1
