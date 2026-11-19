@@ -5,7 +5,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1137 · 2026-11-19 · proposed, the user's decision · The phone's war row a third time: R183 off its route (ADR-829's exit)
+## ADR-1137 · 2026-11-19 · the user's decision: (d) · The phone's war row a third time: R183 off its route (ADR-829's exit)
 
 - **The case** (critic run 83, focused, on 42d0964e): R83-B1. A window that crosses a phone's width keeps the phone's
   sizing. Back at a phone's width the row shows 1 banner with 143–156 px empty (`c83_phoneToDesk 68901 400`, `83903
@@ -33,6 +33,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
   R83-N3 the sideways filters' row hides "Truces" and the focus selector; R184's panel back over the sideways Ranking;
   the give-way cutting a short long name as much as a long one (design objection); `slowClick` 1 of 90. Filed as Batch 51
   (R189–R193).
+- **The user:** "let's do d". R189 is fixed in the same design, and from now on **each item on the phone's war row or a
+  panel's place has an AT that crosses the sizes** (a phone upright, sideways, a desk, and back to the first) **and opens
+  and closes the panels beside it** (a nation's, History, Relations, the Ranking), in its spec and its probe; an item
+  filed from a critic run says so in its AT. Then R190 to R193.
 
 ## ADR-1136 · 2026-11-19 · the user's decision: (a) · The phone's war row, again: R178 cut names under five letters (ADR-829's exit)
 

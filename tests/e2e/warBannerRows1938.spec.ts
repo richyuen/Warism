@@ -256,3 +256,60 @@ test('368 to 390 px: a long name draws five letters or more, the counts giving w
   }
   await page.screenshot({ path: test.info().outputPath('r183-phone-row.png') });
 });
+
+// R189 (critic run 83, R83-B1; ADR-1137 (d): an item on the phone's row crosses the sizes and opens and closes the panels
+// beside it): a window that crossed a phone's width kept the phone's sizing: back at a phone's width 1 banner where 2 fit,
+// back on a desk "Nationalist Sp…" cut with room. Upright, a desk, a narrow desk, sideways with a nation's panel and
+// History opened and closed, upright again and a wide desk: on a phone the banners that fit (as many as at the start),
+// on a desk no name with the phone's width and none cut that fits.
+test('a window crossing a phone\'s width: the row counted again, a desk name whole', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 384, height: 832 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  const look = () =>
+    page.getByTestId('war-banners').evaluate((row) => {
+      const names = [...row.querySelectorAll<HTMLElement>('[data-testid=war-name]')];
+      return {
+        banners: row.querySelectorAll('[data-testid=war-banner]').length,
+        inside: row.scrollWidth <= row.clientWidth + 1,
+        widths: names.filter((n) => n.style.width !== '').map((n) => n.textContent),
+        cut: names.filter((n) => n.scrollWidth > n.clientWidth + 1).map((n) => n.textContent),
+        tight: row.querySelectorAll('.war-tight').length,
+      };
+    });
+  await page.waitForTimeout(300);
+  const start = await look();
+  expect(start.banners, 'upright at the start').toBe(2);
+  const steps: [number, number, string][] = [
+    [1280, 720, 'desk'],
+    [1024, 768, 'desk'],
+    [844, 390, 'sideways'],
+    [384, 832, 'phone'],
+    [1600, 900, 'desk'],
+  ];
+  for (const [w, h, kind] of steps) {
+    await page.setViewportSize({ width: w, height: h });
+    if (kind === 'sideways') {
+      // A nation's panel beside the row, opened and closed; History over it, opened and closed.
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await expect(page.getByTestId('history-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+      await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    }
+    await page.waitForTimeout(400);
+    const r = await look();
+    expect(r.inside, `${w} × ${h}: the row in its width`).toBe(true);
+    if (kind === 'desk') {
+      expect(r.widths, `${w} × ${h}: no name with the phone's width`).toEqual([]);
+      expect(r.tight, `${w} × ${h}: no banner without its counts`).toBe(0);
+      expect(r.cut, `${w} × ${h}: no name cut`).toEqual([]);
+    } else if (kind === 'phone') expect(r.banners, `${w} × ${h}: the banners as at the start`).toBe(start.banners);
+  }
+});

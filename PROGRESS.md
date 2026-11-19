@@ -419,3 +419,9 @@
   desk name cut where run 82's build shows it whole), a regression. UI/UX 7, its fourth run under the bar; the rest 8
   (most carried). Run 82's blocking cases and Batch 50 fixed. Filed as Batch 51 (R189–R193); ADR-1137 proposed for the
   user. The loop stops until the user decides.
+
+## 2026-11-19 — R189 (the user's (d), ADR-1137): a window crossing a phone's width counts its row again
+
+- The phone's sizing cleared off a phone's closed row, the banners counted again when the window turns; the critic's
+  crossing routes all met; a spec case that crosses the sizes and opens and closes the panels beside the row, as (d)
+  asks of every such item from now on.

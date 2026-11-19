@@ -133,9 +133,16 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return () => window.removeEventListener('resize', again);
   }, []);
   const rowWidth = useRef(0);
+  // A window that turns a phone's or a desk's: its banners counted again (R189, critic run 83, R83-B1: counted down on the
+  // way, while still a desk's, the phone's row kept 1 banner where 2 fit; its observer saw the width it had last seen).
+  useEffect(() => {
+    setFit(DESK_BANNERS);
+    relay((n) => n + 1);
+  }, [phone]);
   useEffect(() => {
     const el = root.current;
     if (!el || !phone || typeof ResizeObserver === 'undefined') return;
+    rowWidth.current = -1;
     const ro = new ResizeObserver(() => {
       if (Math.abs(el.clientWidth - rowWidth.current) < 1) return;
       rowWidth.current = el.clientWidth;
@@ -149,11 +156,13 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
   useLayoutEffect(() => {
     const el = root.current;
     if (!el) return;
-    if (opened) {
+    // What `sizeRow` set is a phone's closed row's alone: opened or on a desk it goes (R189, R83-B1: back on a desk
+    // "Nationalist Sp…" kept the phone's width with room to spare).
+    if (opened || !phone) {
       for (const b of el.querySelectorAll<HTMLElement>('[data-testid=war-banner]')) b.classList.remove('war-tight');
       for (const n of el.querySelectorAll<HTMLElement>('[data-testid=war-name]')) n.style.width = '';
-      return;
     }
+    if (opened) return;
     if (phone) {
       sizeRow(el);
       // Its names at five letters and its counts gone, a row still past its width shows fewer banners, the rest behind

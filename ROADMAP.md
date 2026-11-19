@@ -438,15 +438,23 @@ ADR-1136: the user chose (a).
 ## Batch 51 — critic run 83's findings (focused, on 42d0964e; one blocking issue, a regression; UI/UX 7)
 
 ADR-829's exit, on two counts: R83-B1 is a regression by R183 (a desk name cut where run 82's build shows it whole), and
-UI/UX is under its bar in runs 80 to 83. ADR-1137 (proposed) waits on the user; no item of the UI/UX dimension is taken
-until the user decides.
-- [ ] R189 **R83-B1: a window that crosses a phone's width keeps the phone's sizing** (R183 and its follow-up off their
+UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and each phone-row or panel item's AT crosses the sizes
+(upright, sideways, desk, back) and opens and closes the panels beside it.
+- [x] R189 **R83-B1: a window that crosses a phone's width keeps the phone's sizing** (R183 and its follow-up off their
   route). Back at a phone's width the row shows 1 banner, 143–156 px empty (`c83_phoneToDesk 68901 400`; `83903 700
   375x667,1280x720,1024x768,375x667`); back on a desk "Nationalist Sp…" stays cut with room (`83901 400
   384x832,1366x768,1024x768,384x832`). Cause by the code: `sizeRow`'s widths cleared only when opened; `fit` counted
   down on the desk and not again when `phone` turns true (the observer saw the same width). AT: by the user's choice in
   ADR-1137; for (a), the report's "seen fixed when" (2 banners at the phone steps, no inline width on a desk name,
   "Nationalist Spain" whole at 1366, `c83_rotate` 0 stale); a case in `warBannerRows1938` that crosses the width.
+  - Done (COMMIT, ADR-1137 (d)): what `sizeRow` sets (names' widths, `war-tight`) is cleared whenever the row is not a
+    phone's closed row; the banners counted again when the window turns a phone's or a desk's, and the observer starts
+    afresh. `c83_phoneToDesk 68901 400`: 2 banners at both 384 × 832 steps (before: 1 at the second), no inline width at
+    1280, 1024, 1600; `83903 700 375x667,…`: 2 at the last (before 1); `83901 400 384x832,1366x768,…`: "Nationalist
+    Spain" whole at 1366 (before "Nationalist Sp…"); `c83_rotate 68901 400 GER 20` and `83903 700 GER 30`: 0 stale. The
+    case in `warBannerRows1938` crosses upright, two desks, sideways with a nation's panel and History opened and
+    closed, upright and a wide desk (red without: a desk banner without its counts). The 31 specs on phones, the Ranking
+    and the banners 124/124.
 - [ ] R190 **R83-N2: R186's strip costs every short upright phone's panel 39 px, all the time** (320 × 568 with God Mode: 167
   against 206 px of content; `c83ps_83941_d120_320x568_GER`, `360x640`). AT: the panel's full height except while Go
   to's flight shows a capital (or when its content is shorter than the room); R186's case as now.
