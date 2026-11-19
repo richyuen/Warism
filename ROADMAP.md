@@ -299,7 +299,7 @@ UI/UX dimension is taken until the user decides.
     before: 45); closed with no choice, the panel back; a node tapped, its panel shown. The specs on Relations 36/36.
 - [x] R176 **R80-N2: "Go to country" in a chip's menu selects but does not fly there** (PLAN 7.175f; `c80_goto.mjs 68931`:
   the camera still at (1024, 512) at 4 s). AT: the probe shows the camera on the nation; a case in a spec.
-  - Done (COMMIT): "Go to country" selects the nation and flies to its capital, clear of the panels (`hud.onGoToNation`;
+  - Done (53861743): "Go to country" selects the nation and flies to its capital, clear of the panels (`hud.onGoToNation`;
     the chip never flew either, PLAN 7.175f's "as the chip did" was wrong). `c80_goto.mjs 68931`: (1024, 512) × 0.79 →
     (1095, 344.5) × 20.9, Rome in the view, 0 errors. `forceWar1938`'s Go to case: Rome in view and uncovered, the scale
     up (red without the wiring: unchanged).
