@@ -467,7 +467,7 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
 - [x] R191 **R83-N3: the sideways relations filters' row hides "Truces" and the focus selector off its edge** (R185's cost;
   667 × 375 "Puppets" too; the panel now over both ticker rows). AT: every filter and the selector reachable and seen
   to be there (Hearts of Iron IV's single filter button, the report's idea: one way to do it); R185's case as now.
-  - Done (COMMIT): on a sideways phone the filters wrap (two rows, the focus 8 rem at most) and the zoom's buttons stand
+  - Done (ea6c45e5): on a sideways phone the filters wrap (two rows, the focus 8 rem at most) and the zoom's buttons stand
     in the header beside the ×; the news beside the graph's half while Relations is open. `c83_relCover 83903 700` at
     667 × 375 and 844 × 390: `hiddenFilters` [], the ticker's rows 0 of 2 covered with Relations alone (before 2; with a
     nation's panel on the other half too, still covered: no room is left); `c82_graphSize 68901`: 152 px and 173 px,
