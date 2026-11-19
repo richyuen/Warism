@@ -264,3 +264,33 @@ test("on a sideways phone the opened Ranking leaves the bar's buttons free", asy
     }
   }
 });
+
+// R191 (critic run 83, R83-N3; ADR-1137 (d)): on a sideways phone the filters' one row hid "Truces" and the focus off its
+// edge. Every filter, the focus and the zoom's buttons take a tap where they are, sideways, upright, on a desk and back,
+// a nation's panel opened and closed beside the graph; the graph keeps R185's height sideways.
+test('every relations filter, the focus and the zoom take a tap at every size', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  const ids = ['relations-kind-war', 'relations-kind-alliance', 'relations-kind-guarantee', 'relations-kind-puppet', 'relations-kind-truce', 'relations-focus', 'relations-zoom-in', 'relations-zoom-out', 'relations-close'];
+  for (const [w, h] of [[667, 375], [844, 390], [1280, 720], [390, 844], [667, 375]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    // A nation's panel opened and closed beside it.
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    for (const id of ids) {
+      const ok = await page.evaluate((id) => {
+        const e = document.querySelector(`[data-testid="${id}"]`);
+        if (!e) return 'missing';
+        const box = (e.closest('label') ?? e).getBoundingClientRect();
+        if (box.right > innerWidth || box.bottom > innerHeight || box.width === 0) return 'off the screen';
+        const top = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        return top === e || e.contains(top) || e.closest('label')?.contains(top) ? 'ok' : `under ${top?.className}`;
+      }, id);
+      expect(ok, `${w} × ${h}: ${id}`).toBe('ok');
+    }
+    if (h < 500) expect((await page.getByTestId('relations-graph').boundingBox())!.height, `${w} × ${h}: the graph`).toBeGreaterThanOrEqual(150);
+  }
+});

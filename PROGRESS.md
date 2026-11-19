@@ -429,3 +429,7 @@
 ## 2026-11-19 — R190: only Go to's panel leaves the strip of map on a short phone
 
 - Other panels have their full height again (206 px of content at 320 × 568, as before R186); a case crossing the sizes.
+
+## 2026-11-19 — R191: every relations filter seen on a sideways phone
+
+- The filters wrap, the zoom in the header, the news beside the graph; a case crossing five sizes.

@@ -464,9 +464,17 @@ UI/UX is under its bar in runs 80 to 83. ADR-1137: the user chose (d): (a), and 
     1280 × 720 and back (ADR-1137 (d)), History opened and closed over the panel: chosen otherwise no strip, Go to's
     panel 30 px and more shorter at 360 × 740 and the same elsewhere, another nation chosen and the strip gone (red
     without: no strip on Go to's panel). The 47 specs on phones, panels, the Ranking and the banners 176/176.
-- [ ] R191 **R83-N3: the sideways relations filters' row hides "Truces" and the focus selector off its edge** (R185's cost;
+- [x] R191 **R83-N3: the sideways relations filters' row hides "Truces" and the focus selector off its edge** (R185's cost;
   667 × 375 "Puppets" too; the panel now over both ticker rows). AT: every filter and the selector reachable and seen
   to be there (Hearts of Iron IV's single filter button, the report's idea: one way to do it); R185's case as now.
+  - Done (COMMIT): on a sideways phone the filters wrap (two rows, the focus 8 rem at most) and the zoom's buttons stand
+    in the header beside the ×; the news beside the graph's half while Relations is open. `c83_relCover 83903 700` at
+    667 × 375 and 844 × 390: `hiddenFilters` [], the ticker's rows 0 of 2 covered with Relations alone (before 2; with a
+    nation's panel on the other half too, still covered: no room is left); `c82_graphSize 68901`: 152 px and 173 px,
+    names 13 px. (The single filter button: not needed, the row is seen whole.) A case in `relationsTap1938`: every
+    filter, the focus and the zoom take a tap at 667 × 375, 844 × 390, 1280 × 720, 390 × 844 and back, a nation's panel
+    opened and closed (ADR-1137 (d); red without: Puppets under the panel). 69 specs on phones, panels, Relations and
+    the news 226/226.
 - [ ] R192 **After R184 the panel brought back on a sideways phone covers the Ranking beside the graph** (`c82_relRank`
   step 5: a second nation from the Ranking takes a close first). AT: a second Ranking row chosen with one tap at 844 ×
   390 and 667 × 375, or the reason it is not.

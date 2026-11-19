@@ -2892,15 +2892,29 @@ button.unit-icon.on {
     box-sizing: border-box;
   }
   .relations-filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin: 0.15rem 0;
+    margin: 0 0 0.15rem;
+    gap: 0.1rem 0.5rem;
   }
-  .relations-kind {
-    flex: 0 0 auto;
+  .relations-filters select {
+    max-width: 8rem;
+  }
+  /* Every filter and the focus seen (R191, critic run 83, R83-N3: in one row that scrolled, "Truces" and the focus were
+     off its edge): the filters wrap, and the zoom's buttons stand in the header beside the ×, no hint. */
+  .relations-panel {
+    position: absolute;
+  }
+  .relations-zoom {
+    position: absolute;
+    top: 0.3rem;
+    right: 2.4rem;
+    margin: 0;
   }
   .relations-zoom-hint {
     display: none;
+  }
+  /* The news beside the graph's half, not under it (R191: the taller panel of R185 stood over both rows). */
+  #ui:has([data-testid='relations-panel']) .ticker.compact {
+    left: calc(50vw + 0.25rem);
   }
   /* The ranking opened stops above the bar, its rows scrolling (R188, critic run 82, R82-N3: at 844 × 390 its fifteen rows
      lay over the bar's History, Relations and Editor). */
