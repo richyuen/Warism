@@ -389,7 +389,7 @@ ADR-1136: the user chose (a).
     but "allies shown 0" (by design) on 68901 d0/d400, 69903, 82901 from 320 to 412 and opened. The new case in
     `warBannerRows1938` at 368, 375, 384 and 390 measures the drawn letters (red on R178: "Kagoshima Prefecture" under
     five letters, the row past its width, "+n" off the screen); the 13 specs on the banners 57/57.
-  - Follow-up (COMMIT): `buildTab1938`'s landscape case went red on R183 (not among the 13 run): on a sideways phone
+  - Follow-up (20fbf33b): `buildTab1938`'s landscape case went red on R183 (not among the 13 run): on a sideways phone
     beside a nation's panel the row is narrow, and with its names at five letters and its counts gone the second banner
     ran off the screen ("Nationalist Spain ⚔ Spanish Re…" off it). The phone's closed row now also shows the banners that
     fit (R180's `fit`), the rest behind "+n", counted again when the row's own width changes. The 31 specs on phones,
