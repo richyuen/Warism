@@ -332,7 +332,7 @@ bar in runs 80 and 81 (two in a row).
 - [x] R179 **R81-N2: "Go to country" on a phone leaves the capital under the new panel** (11 of 27; 360 × 740 7 of 7).
   `c81_goto2.mjs 68931 390 844`, `69937 360 740 400 ITA,USA,ENG`. Cause by the code: the clear map measured before the
   new panel is drawn. AT: the capital on open map in the probe's flights at both sizes; a case in a spec.
-  - Done (COMMIT): the clear map measured two frames on, once the chosen nation's panel is drawn; where no room of 60 px
+  - Done (b26ae6b6): the clear map measured two frames on, once the chosen nation's panel is drawn; where no room of 60 px
     is left (360 × 740: the panel leaves a strip over the ticker), a strip of 8 px, then the centre
     (`showPlaceClear`'s `margin`). `c81_goto2`: 68931 at 390 × 844 8 of 8 on the map (before 6), 69937 at 360 × 740 7 of
     7 (before 0), 69931 at 390 × 844 day 700 9 of 9, the desk and 844 × 390 8 of 8. A case in `forceWar1938` at 390 ×
