@@ -249,7 +249,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
   `"errors":[]`; `groundThings1938`'s case: an empty upload of twice the buffer, `getError` 0 (red without: 1281).
 - [x] R170 **R79-N3: on a phone History opens under an open nation panel** (`dirHand 59955 120 390 844 touch`: the
   History act cannot click `history-go`). AT: that act ends with `cutsAfterAct` and no "act failed"; a case in a spec.
-  COMMIT: on a phone History stands in the nation panel's place while open (History's own panel; the relations graph
+  2913b3e1: on a phone History stands in the nation panel's place while open (History's own panel; the relations graph
   still opens a panel over itself); the nation stays selected and its panel comes back. `c79_dirHand.mjs 59955 120 390
   844 touch`: the History act taps "A major battle began near Elbląg", `cutsAfterAct` 0, no "act failed";
   `historyPlace1938`'s case: History's link under the tap (red without). The 19 phone specs of the nation panel green.
