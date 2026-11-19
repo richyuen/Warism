@@ -505,7 +505,7 @@ war row or a panel's place crosses the sizes and opens and closes the panels bes
   probe `ov` 0 and `under` [] at every size; the case crossing a phone, these desks and back, a nation's panel and
   History opened and closed; R180's and R189's cases as now. (Ages of Conflict's side list, the report's idea: the
   phone's row on a narrow desk is the nearer form of it.)
-  - Done (COMMIT): a desk's row too narrow for its one banner is sized as a phone's (`war-sized`: the score's figure
+  - Done (a89d6ef7): a desk's row too narrow for its one banner is sized as a phone's (`war-sized`: the score's figure
     gone, the longest names give way, then the counts); still too narrow, "+n" alone. `c84_rowShot 84901 400`: `ov` 0
     and `under` [] at 620 × 900, 640 × 800, 683 × 768, 700 × 800, 768 × 1024 (before over by 81 to 7 px, 56 to 16 px of
     the news covered); at 683 and wider the banner shown sized, at 620 and 640 "+5" alone (no banner fits between the
