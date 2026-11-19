@@ -285,3 +285,8 @@
 - Argentina's war on a rebel of Brazil's was declared with no lift: its border was Brazil's, but "across the sea" was
   asked by ownership. Both doors now ask it by control too. The case and ten new seeds 0 broken; seed 99 unchanged.
 - The user: the critic run after Batch 47 is a full run.
+
+## 2026-11-18 — R168: a banner's sides on one line
+
+- The closed row squeezed its three banners and long names wrapped mid-phrase. A side's name now stays on one line, cut
+  short past 11 rem, with its allies' count whole.

@@ -782,8 +782,19 @@ textarea,
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+/* A side's name on one line, cut short past 11 rem; its allies' count whole beside it (R168, critic run 79: the random
+   world's names wrapped mid-phrase, "Orientale & / 1 ⚔ Diffa & / 2"). */
+.war-name {
+  min-width: 0;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .war-allies {
+  flex: 0 0 auto;
   margin-left: 0.25rem;
   opacity: 0.7;
 }

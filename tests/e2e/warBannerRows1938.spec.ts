@@ -41,3 +41,45 @@ for (const [w, h] of [[1400, 800], [1920, 1080]] as const) {
     expect(bg, 'the ranking\'s fill opaque').toContain('rgb(52, 58, 69)');
   });
 }
+
+// R168 (critic run 79, R79-N1): the random world's long names wrapped mid-phrase on a banner ("Chukotka Autonomous / Okrug
+// & / 3", "Orientale & / 1 ⚔ Diffa & / 2"). Each side stands on one line, a long name cut short, its allies' count whole.
+test('a banner\'s sides each on one line, a long name cut short with its count whole', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const pairs = PAIRS.map(([a, b]) => [id(a), id(b)] as const).filter(([a, b]) => a > 0 && b > 0);
+  const names = ['Chukotka Autonomous Okrug', 'Democratic Republic of Orientale', 'Free Tete', 'Eastern Cape', 'Diffa'];
+  await page.evaluate(({ pairs, names }) => {
+    for (const [i, [attacker, defender]] of pairs.entries()) {
+      window.__warsim!.sim.command({ kind: 'renameNation', nation: attacker, name: names[(2 * i) % names.length]! });
+      window.__warsim!.sim.command({ kind: 'renameNation', nation: defender, name: names[(2 * i + 1) % names.length]! });
+      window.__warsim!.sim.command({ kind: 'declareWar', attacker, defender });
+    }
+    // Allies on a side: an "& n" beside a long name.
+    window.__warsim!.sim.command({ kind: 'declareWar', attacker: pairs[0]![0], defender: pairs[1]![1] });
+  }, { pairs, names });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-name').first()).toContainText(/Chukotka|Orientale|Tete|Cape|Diffa/, { timeout: 20_000 });
+  // The closed row (three banners on one line, where the critic saw them wrap), then opened.
+  for (const opened of [false, true]) {
+    if (opened) await page.getByTestId('war-more').click();
+    const sides = await page.locator('.war-side').evaluateAll((els) =>
+      els.map((e) => {
+        const name = e.querySelector<HTMLElement>('[data-testid=war-name]')!;
+        const allies = e.querySelector<HTMLElement>('[data-testid=war-allies]');
+        const lh = parseFloat(getComputedStyle(name).lineHeight) || parseFloat(getComputedStyle(name).fontSize) * 1.3;
+        return { text: name.textContent, h: name.getBoundingClientRect().height, lh, allies: allies ? { h: allies.getBoundingClientRect().height, w: allies.scrollWidth, cw: allies.clientWidth } : null };
+      }),
+    );
+    expect(sides.some((s) => s.allies !== null), 'a side with allies').toBe(true);
+    for (const s of sides) {
+      expect(s.h, `"${s.text}" on one line`).toBeLessThan(s.lh * 1.5);
+      if (s.allies) {
+        expect(s.allies.h, `"${s.text}"'s count on one line`).toBeLessThan(s.lh * 1.5);
+        expect(s.allies.w, `"${s.text}"'s count whole`).toBeLessThanOrEqual(s.allies.cw);
+      }
+    }
+  }
+});

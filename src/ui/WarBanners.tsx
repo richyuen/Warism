@@ -50,7 +50,10 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return (
       <span class="war-side">
         <span class="chip-swatch" style={{ background: hex(lead?.color ?? 0x777777) }} />
-        {lead ? displayName(lead.name) : '?'}
+        {/* On one line, a long name cut short and its count whole (R168, critic run 79: "Chukotka Autonomous / Okrug & / 3"). */}
+        <span class="war-name" data-testid="war-name">
+          {lead ? displayName(lead.name) : '?'}
+        </span>
         {/* "& 2", not "+2" beside the score's "+32" (R162, critic run 77). */}
         {ids.length > 1 ? (
           <span class="war-allies" data-testid="war-allies" title={t('wars.sideMore', { name: lead ? displayName(lead.name) : '?', n: ids.length - 1 })}>
