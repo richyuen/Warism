@@ -551,7 +551,7 @@ export function App({
                   m.chip
                     ? () => {
                         player.closeMenu();
-                        hud.onSelectNation(m.nation);
+                        hud.onGoToNation(m.nation);
                       }
                     : null
                 }

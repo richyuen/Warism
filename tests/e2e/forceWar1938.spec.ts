@@ -263,9 +263,23 @@ test('an Overview chip opens the nation\'s menu with "Go to country"', async ({ 
   const [c, m] = [await chip.boundingBox(), await menu.boundingBox()];
   expect(Math.abs(m!.y - (c!.y + c!.height)), 'the menu by the chip').toBeLessThan(40);
   await expect(page.getByTestId('nation-menu-god')).toHaveCount(0);
+  const scale0 = await page.evaluate(() => window.__warsim!.view!.controller.cam.scale);
   await page.getByTestId('nation-menu-goto').click();
   await expect(menu).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => window.__warsim!.hud.selected.value)).toBe(ITA);
+  // And flies there (ROADMAP R176; critic run 80, R80-N2: the camera stayed where it was): Rome in the view, uncovered,
+  // the view about a country across.
+  await expect
+    .poll(
+      () =>
+        page.evaluate((n) => {
+          const v = window.__warsim!.view!;
+          const at = v.capitalOf(n);
+          return !v.controller.animating && at !== null && v.inView(at[0], at[1], 20, true) && v.controller.cam.scale;
+        }, ITA),
+      { timeout: 5000 },
+    )
+    .toBeGreaterThan(scale0 * 1.5);
 
   // God on: Germany's panel again, the chip's menu has God's items.
   await page.getByTestId('god-btn').click();

@@ -126,6 +126,11 @@ export class Hud {
 
   /** Brings the place of an event into view (a click on a row of the ticker, PLAN 3.12c); main wires it to the map view. */
   onShowPlace: (x: number, y: number) => void = () => {};
+  /**
+   * "Go to country" (PLAN 7.175f): selects the nation and flies to its capital (ROADMAP R176; critic run 80, R80-N2: it
+   * selected it alone, the camera where it was).
+   */
+  onGoToNation: (id: number) => void = (id) => this.onSelectNation(id);
   /** A row of History's place (ROADMAP R141): in the view where the page shows the map; false when it shows none (`MapView.showPlaceClear`). */
   onShowPlaceClear: (x: number, y: number) => boolean = () => false;
   /** The director's camera (ROADMAP R142); main wires it to the map view. */

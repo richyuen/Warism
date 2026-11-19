@@ -333,3 +333,8 @@
 
 - The panel gives way until a nation is chosen or the graph closes; 0 of 81 graph points covered upright and on its side
   (45 and 81 before), a case in `relationsTap1938`.
+
+## 2026-11-19 — R176: "Go to country" flies to the nation's capital
+
+- It selected the nation alone; now the camera flies to the capital as History's places do. The critic's probe and a case
+  in `forceWar1938`. Batch 48 done.

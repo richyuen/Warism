@@ -1808,6 +1808,11 @@ export class MapView {
     this.dirty = true;
   }
 
+  /** A living nation's capital (cells), null for none known: where "Go to country" flies (ROADMAP R176). */
+  capitalOf(id: number): readonly [number, number] | null {
+    return this.capitals.get(id) ?? null;
+  }
+
   /** Brings the place of an event into view (PLAN 3.12c): the camera flies to (x, y), PLACE_VIEW_KM across the view. */
   showPlace(x: number, y: number): void {
     this.controller.flyTo({ cx: x, cy: y, scale: (Math.max(1, this.canvas.clientWidth) * this.geo.kmPerCell) / PLACE_VIEW_KM });

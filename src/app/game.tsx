@@ -141,6 +141,13 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       hud.director.stop();
       view.showPlace(x, y);
     };
+    hud.onGoToNation = (id) => {
+      hud.onSelectNation(id);
+      const at = view.capitalOf(id);
+      if (!at) return;
+      hud.director.stop();
+      if (!view.showPlaceClear(at[0], at[1])) view.showPlace(at[0], at[1]);
+    };
     hud.onShowPlaceClear = (x, y) => {
       hud.director.stop();
       return view.showPlaceClear(x, y);
