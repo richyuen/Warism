@@ -341,7 +341,7 @@ bar in runs 80 and 81 (two in a row).
   second row). `c81_moreClick.mjs 68901 400 1024 768`. AT: the click works at 1024 × 768 and the sizes that work now; a
   case in a spec. (Ages of Conflict's scrolling war list, the report's idea: not taken unless the row cannot clear the
   legend, a change of what the row is.)
-  - Done (COMMIT): on a desk the closed row shows the banners that fit its width (`fit` in `WarBanners`, counted again
+  - Done (3bf4e111): on a desk the closed row shows the banners that fit its width (`fit` in `WarBanners`, counted again
     at a resize and when the number of wars changes), the rest behind "+n"; the row's `max-width` (PLAN 3.12Rh) kept
     it clear of the ticker and the legend once it no longer spills past it. `c81_moreClick 68901 400`: the click works
     at 1024 × 768 (before refused, "map-legend intercepts"), 1152 × 864, 1280 × 800, 1366 × 768 and 1600 × 900;
