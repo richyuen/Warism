@@ -388,3 +388,8 @@
 - The long names give way down to five letters and the ellipsis, then banners with a long name drop their counts; the
   clamp is gone. Every long name five letters or more from 320 to 412 px on the critic's cases, the row in its width;
   a case in `warBannerRows1938` that measures the drawn letters.
+
+## 2026-11-19 — R184: the nation Relations hid, chosen again from the Ranking, shows its panel
+
+- Any choice of a nation, the same one included, brings the hidden panel back; the critic's route at both sideways
+  sizes, a case in `relationsTap1938`.

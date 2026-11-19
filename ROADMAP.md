@@ -389,11 +389,16 @@ ADR-1136: the user chose (a).
     but "allies shown 0" (by design) on 68901 d0/d400, 69903, 82901 from 320 to 412 and opened. The new case in
     `warBannerRows1938` at 368, 375, 384 and 390 measures the drawn letters (red on R178: "Kagoshima Prefecture" under
     five letters, the row past its width, "+n" off the screen); the 13 specs on the banners 57/57.
-- [ ] R184 **R82-B2: on a sideways phone the nation whose panel Relations hid, chosen again from the Ranking, shows no
+- [x] R184 **R82-B2: on a sideways phone the nation whose panel Relations hid, chosen again from the Ranking, shows no
   panel** (R175/R181 unfinished; run 81's build the same). `c82_relRank.mjs 68901 844 390 SOV USA` step 4, and at 667 ×
   375: selected 10, `relationsOver` 10, no panel. Cause: `relationsOver` cleared only when the id changes; the same id
   changes nothing. AT: step 4 a panel with `selected` 10 at both sizes; steps 5–7 and `c81_relOver`'s eight as now; a case
   in `relationsTap1938`. (UI/UX: held for ADR-1136 with the rest.)
+  - Done (COMMIT): any choice of a nation, the one selected among them, clears `relationsOver` (`MapView.onChoose`,
+    called before `select`'s early return: the Ranking, the map's tap, every `hud.onSelectNation`). `c82_relRank 68901
+    … SOV USA` at 844 × 390 and 667 × 375: step 4 `selected` 10, `relationsOver` 0, the panel shown (before: none);
+    `c81_relOver 68933 844 390` its eight steps as before. A case in `relationsTap1938` at both sizes, the Ranking's row
+    tapped (red without: no panel). The specs on Relations and the Ranking 53/53.
 - [ ] R185 **R82-N1: on a sideways phone the relations graph cannot be read** (667 × 375: 302 × 55 px, names 4 px; R182
   made it smaller there; zoom leaves names 4–6 px). `c82_graphSize 68901 667 375`, `844 390`; `c82_graphZoom`. AT: the
   graph 150 px high or more and a median name 10 px or more, at least after one "+", at both sizes. (Hearts of Iron IV's

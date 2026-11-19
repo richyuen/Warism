@@ -76,6 +76,8 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
       hud.selected.value = id;
     };
     hud.onSelectNation = (id) => view.select(id);
+    // A nation chosen, even the one selected, brings back the panel Relations hid (R184).
+    view.onChoose = () => (hud.relationsOver.value = 0);
     view.onGroundShown = (shown) => (hud.groundShown.value = shown);
     // Over land across the sea with land formations selected, the tooltip says the order goes by
     // sea (ROADMAP R17c) and the map marks the landings it is for (ADR-827, R27b, R28b): each distinct

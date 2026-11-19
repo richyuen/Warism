@@ -195,3 +195,30 @@ test('on a sideways phone a node tapped shows its panel beside the graph', async
     await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
   }
 });
+
+// R184 (critic run 82, R82-B2): on a sideways phone the nation whose panel Relations hid, tapped again in the Ranking, kept
+// no panel (the same id changed nothing, R181's rule cleared on a new one only). Any choice brings it back.
+test("on a sideways phone the Ranking's row of the nation Relations hid shows its panel", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  for (const [w, h] of [[844, 390], [667, 375]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    const rows = page.locator('[data-testid=rank-row]:not([data-dead])');
+    if (!(await rows.first().isVisible())) await page.getByTestId('ranking-toggle').tap();
+    await expect(rows.first()).toBeVisible();
+    const [a, b] = [await rows.nth(0).getAttribute('data-nation'), await rows.nth(1).getAttribute('data-nation')];
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), Number(a));
+    await expect(page.getByTestId('nation-panel')).toBeVisible();
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await expect(page.getByTestId('relations-graph')).toBeVisible();
+    await expect(page.getByTestId('nation-panel')).toBeHidden();
+    await page.locator(`[data-testid=rank-row][data-nation="${a}"]`).tap();
+    await expect(page.getByTestId('nation-panel'), `${w} × ${h}: its panel`).toHaveAttribute('data-nation', a!);
+    // Another nation chosen opens its own.
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), Number(b));
+    await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', b!);
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+  }
+});

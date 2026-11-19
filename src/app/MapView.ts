@@ -1023,8 +1023,15 @@ export class MapView {
     return null;
   }
 
+  /**
+   * Called on every choice of a nation, the one already selected among them (R184, critic run 82, R82-B2: the nation whose
+   * panel Relations hid, chosen again from the Ranking, changed nothing and got no panel).
+   */
+  onChoose: (id: number) => void = () => {};
+
   /** Selects a nation (0 = none): diplomacy mode colours relations to it. */
   select(id: number): void {
+    this.onChoose(id);
     if (id === this.selected) return;
     this.selected = id;
     this.onSelect(id);
