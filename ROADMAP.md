@@ -288,7 +288,7 @@ UI/UX dimension is taken until the user decides.
   critic/scripts/c80_bannerNames.mjs 68901 400 390 844`: "China" 0 of 5; day 0 "J… & 2 ⚔ C… & 1"; 68903 day 700 "T… ⚔
   Gr…". AT: by the user's choice in ADR-1135; for (a), each side at least 5 letters or whole on both probes, the 1600 ×
   900 random case whole, a phone case in `warBannerRows1938`.
-  - Done (COMMIT, the user's (a), ADR-1135): `c80_bannerNames` at 390 × 844 on 68901 day 0 and 400 and 68903 day 700:
+  - Done (d6316672, the user's (a), ADR-1135): `c80_bannerNames` at 390 × 844 on 68901 day 0 and 400 and 68903 day 700:
     0 sides cut to 3 or fewer, every name of 8 letters or fewer whole ("Soviet Un…", "Nationalist Sp…"), each count
     whole, the banners on the screen; the same at 360 × 740, 844 × 390 and opened. The new case red on the build
     before (`"Japan" whole`); the 1600 × 900 case green; the 13 specs on the banners 54/54.
