@@ -403,3 +403,8 @@
 
 - The panel leaves a strip of map on phones 760 px tall or less, and Go to takes the most room the strip has; Brussels
   seen at 360 × 740; a case in `forceWar1938`.
+
+## 2026-11-19 — R183 follow-up: beside a nation's panel the phone's row shows the banners that fit
+
+- `buildTab1938`'s landscape case found a banner off the screen after R183 (a spec not run with it); the closed row
+  on a phone counts the banners that fit, as the desk's does.

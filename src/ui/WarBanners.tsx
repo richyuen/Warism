@@ -110,7 +110,7 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
    */
   const held = useRef(new Map<string, Held[]>());
   /**
-   * On a desk, the banners of the closed row that fit its width (R180, critic run 81, R81-N3: at 1024 × 768 three stood
+   * The banners of the closed row that fit its width, on a desk and (R183) on a phone (R180, critic run 81, R81-N3: at 1024 × 768 three stood
    * past it, over the ticker and under the legend, and "+n" could not be clicked); counted again at each resize and
    * when the number of wars changes.
    */
@@ -121,14 +121,31 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     return () => window.removeEventListener('resize', again);
   }, []);
   useEffect(() => setFit(DESK_BANNERS), [wars.length]);
-  /** A resize lays the phone's row out again (R183: its sizes are set on the elements, not drawn from the stats). */
+  /**
+   * A resize lays the phone's row out again (R183: its sizes are set on the elements, not drawn from the stats); so does
+   * a change of the row's own width there (its left and right are set: a panel opened beside it), counting its banners
+   * again.
+   */
   const [, relay] = useState(0);
   useEffect(() => {
     const again = (): void => relay((n) => n + 1);
     window.addEventListener('resize', again);
     return () => window.removeEventListener('resize', again);
   }, []);
-  const shown = opened ? MAX_BANNERS : phone ? PHONE_BANNERS : Math.min(DESK_BANNERS, fit);
+  const rowWidth = useRef(0);
+  useEffect(() => {
+    const el = root.current;
+    if (!el || !phone || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => {
+      if (Math.abs(el.clientWidth - rowWidth.current) < 1) return;
+      rowWidth.current = el.clientWidth;
+      setFit(DESK_BANNERS);
+      relay((n) => n + 1);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [phone]);
+  const shown = opened ? MAX_BANNERS : Math.min(phone ? PHONE_BANNERS : DESK_BANNERS, fit);
   useLayoutEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -139,6 +156,9 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     }
     if (phone) {
       sizeRow(el);
+      // Its names at five letters and its counts gone, a row still past its width shows fewer banners, the rest behind
+      // "+n" (R183: on a sideways phone beside a nation's panel the second ran off the screen).
+      if (shown > 1 && el.scrollWidth > el.clientWidth + 1) setFit(shown - 1);
       return;
     }
     if (shown <= 1) return;
