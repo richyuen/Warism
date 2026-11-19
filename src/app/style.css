@@ -2859,6 +2859,20 @@ button.unit-icon.on {
   #ui {
     --side-panel-w: min(40rem, calc(100vw - 20rem));
   }
+  /* Relations and a nation chosen in it side by side, the graph on the left half and the panel on the right (R182, critic
+     run 81: at 844 × 390 a node's tap laid the nation's panel over 81 of 81 of the graph's points). */
+  #ui:has([data-testid='relations-panel']) .relations-panel {
+    left: 0.5rem;
+    transform: none;
+    box-sizing: border-box;
+    width: calc(50vw - 0.75rem);
+    min-width: 0;
+  }
+  #ui:has([data-testid='relations-panel']) .nation-panel {
+    left: auto;
+    right: 0.5rem;
+    width: calc(50vw - 0.75rem);
+  }
   #ui:has(.nation-panel) .ticker.compact,
   #ui:has(.nation-panel) .war-banners {
     left: calc(var(--side-panel-w) + 2.5rem);

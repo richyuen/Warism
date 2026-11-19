@@ -371,3 +371,7 @@
 
 - The panel that gave way to Relations is forgotten once another nation is chosen; the critic's probe and a case in
   `relationsTap1938`.
+
+## 2026-11-19 — R182: on a sideways phone Relations and a nation's panel side by side
+
+- A node's tap no longer covers the graph (81 of 81 → 0); a case in `relationsTap1938`. Batch 49 done.

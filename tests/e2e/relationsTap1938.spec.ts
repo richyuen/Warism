@@ -163,3 +163,35 @@ test('on a phone a nation chosen again from outside the graph shows its panel', 
     await page.evaluate(() => window.__warsim!.hud.toggleRelations());
   }
 });
+
+// R182 (critic run 81, non-blocking 5 and its design objection): on a sideways phone a node's tap laid its nation's panel
+// over the whole graph (81 of 81). The graph and the panel stand side by side: the panel shows, the graph's points free.
+test('on a sideways phone a node tapped shows its panel beside the graph', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  for (const [w, h] of [[844, 390], [932, 430]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await expect(page.getByTestId('relations-graph')).toBeVisible();
+    // Zoomed in, as a finger picks a node in a graph this low.
+    for (let k = 0; k < 3; k++) await page.getByTestId('relations-zoom-in').tap();
+    const n = await node(page);
+    expect(n, `${w} × ${h}: a node to tap`).not.toBeNull();
+    await page.touchscreen.tap(n!.x, n!.y);
+    await expect(page.getByTestId('nation-panel')).toHaveAttribute('data-nation', n!.id.replace('relations-node-n', ''));
+    const hidden = await page.getByTestId('relations-graph').evaluate((g) => {
+      const r = g.getBoundingClientRect();
+      let k = 0;
+      for (let i = 1; i <= 9; i++)
+        for (let j = 1; j <= 9; j++) {
+          const top = document.elementFromPoint(r.x + (r.width * i) / 10, r.y + (r.height * j) / 10);
+          if (!top || !g.contains(top)) k++;
+        }
+      return k;
+    });
+    expect(hidden, `${w} × ${h}: the graph's points covered, of 81`).toBe(0);
+    await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+  }
+});

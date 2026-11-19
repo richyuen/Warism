@@ -354,10 +354,15 @@ bar in runs 80 and 81 (two in a row).
   - Done (bb611265): `relationsOver` forgotten once another nation is chosen (hud's selection effect). `c81_relOver`
     step 4 "panel Germany" on 68933 and 69933 at 390 × 844, 69935 at 360 × 740 and 68933 at 844 × 390 (before: none); the
     rest of its steps as before. A case in `relationsTap1938` at both sizes (red without: no panel).
-- [ ] R182 **On a sideways phone a node chosen in the graph hides the whole graph under its panel** (non-blocking 5 and the
+- [x] R182 **On a sideways phone a node chosen in the graph hides the whole graph under its panel** (non-blocking 5 and the
   design objection; R175 as designed). `c81_relOver.mjs 68933 844 390` step 5: 81 of 81. Taken: the graph stays in
   view beside or above the panel. AT: at 844 × 390 after a node's tap its panel shows and at most half the graph's
   points are covered; a case in `relationsTap1938`.
+  - Done (COMMIT): on a sideways phone with Relations open, the graph's panel on the left half and a nation's panel on
+    the right half. `c81_relOver 68933 844 390`: 0 of 81 covered at every step (before: 81 at steps 3–5); boxes at 667 ×
+    375 and 932 × 430 side by side; upright unchanged. A case in `relationsTap1938` at 844 × 390 and 932 × 430 (red
+    without: 81); not at 667 × 375, where the graph is 54 px high and no node is wide enough to pick by finger. The 17
+    specs on Relations and sideways layouts 86/86.
 - Not taken: ADR-1111's heroes' names over Europe's counters at the world's zoom (decided there); R172's kept three (the
   ring over "Pari", the AI's bomb at 600 m/px, like flags at sea; as R172); `slowClick`'s named cases (ADR-914).
 
