@@ -412,7 +412,7 @@ ADR-1136: the user chose (a).
 - [x] R186 **R82-N2: at 360 × 740 "Go to country" puts the capital in an 8 px strip where it cannot be seen** (R179's
   fallback). `c81_goto2 69937 360 740 400 ITA,USA,ENG`: Brussels at (176, 528). AT: the capital's dot and name seen in
   the probe's shots at 360 × 740; a case in a spec.
-  - Done (COMMIT): on a phone upright and 760 px tall or less the nation panel leaves a strip of map under it
+  - Done (6868e17e): on a phone upright and 760 px tall or less the nation panel leaves a strip of map under it
     (`max-height` 15.5 rem and the bar less than the view); Go to tries a room of 60, 32, 20, then 8 px about the
     capital. `c81_goto2 69937 360 740 400 ITA,USA,ENG`: 7 of 7 on the map, at y 456–488 (before 528, in the 8 px
     strip); the shot shows Brussels' dot and name; `82937 375 667 300`: 7 of 7. A case in `forceWar1938` at 360 × 740
