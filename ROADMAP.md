@@ -256,7 +256,7 @@ RELEASES step 2 (ADR-1022): the blocking issue first, then every non-blocking on
 - [x] R171 **R79-N4: a pact named for another:** "Romania joins the Anti-Comintern Pact" under "The Tripartite Pact:
   Hungary"; bare rows "Thailand's alliance with Japan", "The Sino-Soviet treaty", "Canada in NATO as since 1949". AT:
   the rows of 1940-11 name the pact the timeline names; those three told or rewritten; cases in `trackText.test.ts`.
-  COMMIT: the notes of the Tripartite Pact's joinings name it as Hungary's does ("The Tripartite Pact: Romania",
+  adbc4b71: the notes of the Tripartite Pact's joinings name it as Hungary's does ("The Tripartite Pact: Romania",
   Slovakia, Bulgaria; the game's bloc is the Anti-Comintern Pact); "Thailand allies itself with Japan", "The
   Sino-Soviet treaty: the People's Republic of China allies itself with the Soviet Union", "NATO: Canada, a member
   since 1949". `trackText.test.ts`: the four 1940–41 rows the Tripartite Pact, every alliance row a sentence or a
