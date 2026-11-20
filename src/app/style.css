@@ -1137,6 +1137,9 @@ textarea,
 .relations-footer {
   margin-top: 0.35rem;
   min-height: 1.2em;
+  /* Its lines whole: in a low panel the graph gives the height, not the footer (R212, critic run 88, R88-N3: at 393 x 659
+     its two lines stood in one line's box, the second cut). */
+  flex: 0 0 auto;
 }
 .relations-untied {
   opacity: 0.7;

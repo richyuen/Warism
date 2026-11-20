@@ -203,9 +203,16 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     apart, the element at the legend's title the title, the bar gone while the legend is open and back, the opened
     bar's foot above the war row (red without: the two met at 393 x 659). 22 specs on the legend, the ranking, the
     landings and the first cue 83/83. Stands on ADR-760, R60a, R208; no ADR (ADR-914).
-- [ ] R212 **R88-N3: at 393 × 659 the relations footer's first line is cut** ("Click a nation to select it, a line to
+- [x] R212 **R88-N3: at 393 × 659 the relations footer's first line is cut** ("Click a nation to select it, a line to
   read it. · 24 nations with no tie shown are left out"; two lines at 393 × 852; `c88_rs_88905_400.log`). AT: the
   footer whole at 393 × 659, the graph's height as R185 and R195 have it.
+  - Done (HASH212): the footer does not shrink in its panel's column (`flex: 0 0 auto`); the graph gives the height.
+    `c88_relSaid 88905 400`: `cut` [] at 393 × 659, 393 × 852, 734 × 343, 852 × 393 and 2560 × 1305 (before `cut`
+    ["open"] at 393 × 659), `empty` [] and `out` []. A case in `relationsTap1938` crossing the five supported sizes and
+    back, a nation's panel opened and closed: the footer whole and in its panel with ties shown, wars hidden and none
+    shown, the panel in the view, the graph at least 100 px high (red without: cut at 393 × 659). heroesClear1938,
+    heroesRead1938, relations1938, relationsLabels1938, relationsNamed1938, relationsTap1938 34/34 (R185's and R195's
+    cases among them). No ADR (ADR-914).
 - [ ] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
   banners of one row never read alike while their wars differ; R174's and R183's cases as now.
 - **Critic run 89 (focused, on f27f48f5): no blocking issue, every score at its bar (stability 7 → 8, R88-B1 fixed on its

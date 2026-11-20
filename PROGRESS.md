@@ -126,3 +126,9 @@
   opens. A crossing case in `landingsBarPanel1938`. Run by hand: the 22 specs that read the legend, the ranking, the
   landings' bar or the first cue (83/83). The replay of `c88_sizes` wrote over the critic's `c88_sz_88903` JSON and
   shots; the JSON put back from a copy.
+
+## 2026-11-20 — R212: the relations footer whole at 393 × 659
+
+- The footer keeps its lines' height in a low panel. `c88_relSaid 88905 400` `cut` [] at the five supported sizes; a
+  crossing case in `relationsTap1938`. Run by hand: heroesClear1938, heroesRead1938, relations1938, relationsLabels1938,
+  relationsNamed1938, relationsTap1938 (34/34).

@@ -407,3 +407,44 @@ test('the empty relations graph says it is empty beside the kind tapped', async 
     for (const k of kinds.slice(1)) await page.getByTestId(`relations-kind-${k}`).click();
   }
 });
+
+// R212 (critic run 88, R88-N3; ADR-1141's sizes): at 393 × 659 the footer's two lines ("Click a nation to select it, a
+// line to read it. · 24 nations with no tie shown are left out") stood in one line's box, the second cut. The footer is
+// whole and inside its panel at the five supported sizes and back, with ties shown, a kind hidden and none shown, a
+// nation's panel opened and closed; the graph keeps a height to read.
+test('the relations footer is whole at the supported sizes', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 393, height: 659 });
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  const kinds = ['war', 'alliance', 'guarantee', 'puppet', 'truce'] as const;
+  const look = () =>
+    page.evaluate(() => {
+      const f = document.querySelector('[data-testid=relations-said]')!;
+      const fb = f.getBoundingClientRect();
+      const pb = document.querySelector('[data-testid=relations-panel]')!.getBoundingClientRect();
+      const g = document.querySelector('.relations-graph')!.getBoundingClientRect();
+      return { cut: f.scrollWidth > f.clientWidth + 1 || f.scrollHeight > f.clientHeight + 1, inPanel: fb.top >= pb.top - 1 && fb.bottom <= pb.bottom + 1 && fb.left >= pb.left - 1 && fb.right <= pb.right + 1, inView: pb.bottom <= innerHeight + 1, graph: g.height };
+    });
+  for (const [w, h] of [[393, 659], [393, 852], [734, 343], [852, 393], [2560, 1305], [393, 659]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    const at = `${w} × ${h}`;
+    const check = async (state: string): Promise<void> => {
+      const r = await look();
+      expect(r.cut, `${at}, ${state}: the footer whole`).toBe(false);
+      expect(r.inPanel, `${at}, ${state}: the footer in its panel`).toBe(true);
+      expect(r.inView, `${at}, ${state}: the panel in the view`).toBe(true);
+      expect(r.graph, `${at}, ${state}: the graph's height`).toBeGreaterThanOrEqual(100);
+    };
+    await check('ties shown');
+    await page.getByTestId('relations-kind-war').click();
+    await check('wars hidden');
+    for (const k of kinds.slice(1)) await page.getByTestId(`relations-kind-${k}`).click();
+    await check('none shown');
+    for (const k of kinds) await page.getByTestId(`relations-kind-${k}`).click();
+  }
+});
