@@ -129,7 +129,7 @@ these items are non-blocking, done as items. Each item on the war row or a panel
   a click on `nation-close` lands on `landing-go` or `landing-status`; R61-N1's case, mended there for a phone on its
   side, R60a). Outside the supported sizes (ADR-1141): non-blocking. AT: at 601, 640 and 700 × 800 with a landing
   ordered the element at the ×'s centre is the ×, and a click closes the panel; `landingsBarPanel1938` as now.
-  - Done (HASH207): beside an open nation's panel the bar's middle stands no further left than the panel's right edge
+  - Done (51d72ab0): beside an open nation's panel the bar's middle stands no further left than the panel's right edge
     and half the bar's least width (`left: max(50%, 28.6rem)`); on a desk with room that is the page's middle, as
     before. R203's cases in `landingsBarPanel1938`, now at 601, 640, 700 and 800 × 800: the element at the × is the ×,
     the bar right of the panel and in the view, the click closes the panel (red without at 601, 640 and 700: the bar's
