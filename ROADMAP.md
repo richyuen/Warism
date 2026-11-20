@@ -295,7 +295,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   world's placing of armies on its capitals' land), and how often it happens in seed 99's first year and in a
   60-nation random world. Likely origin: R84h (ADR-1065) made each piece of a nation's own of `HOME_KM2` or more its
   home (`homeNeighbours.test.ts`: 51401's second nation borders the third only by such a piece).
-  - Done (COMMIT): ADR-1146. A neighbour of a nation's home is one of `homeNeighbours`' at whose border its land men
+  - Done (4e7b0505): ADR-1146. A neighbour of a nation's home is one of `homeNeighbours`' at whose border its land men
     stand on the border's land (`homeByLand`; `armyLands`, `borderOnLands` in `massing.ts`), the one definition for
     `warTarget`'s cost, `acrossSea`'s lift, `beginMassing`, `unprepared`, `stillDeclares`, `landlessPowers` and
     `peaceWhy`; `noLift`'s touch by land only where a man of the declaring side stands. The cause is the rule's: of
