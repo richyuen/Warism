@@ -29,3 +29,10 @@
   R197's row clear of the legend). UI/UX 7; the rest 8 (diplomacyWarDepth, godMode, editorScenarios, statsHistory,
   performance afresh; emergentDynamics and stability by the rotation). Filed as Batch 55 (R203–R206); ADR-1140 proposed
   for the user. The loop stops until the user decides.
+
+## 2026-11-19 — ADR-1140 (b) and ADR-1141: the supported sizes (the user's decisions)
+
+- ADR-1140 (b): on a narrow desk the legend leaves the war row's band for the top left, as a phone's. ADR-1141: the
+  supported sizes are the iPhone 16 (393 × 659 and 393 × 852 upright, 734 × 343 and 852 × 393 sideways, with and without
+  Safari's bars) and a 1440p desk's window (2560 × 1305); only a defect there blocks. CRITIC_PROMPT.md changed; Batch
+  55's items are non-blocking, done next.

@@ -19,6 +19,11 @@ no score.
   finding.
 - Judge what a player experiences: clarity, feel, bugs, performance, whether the world is interesting
   to watch, whether zoom is seamless, whether the rules ever contradict each other.
+- **The supported sizes (ADR-1141, the user's decision).** Judge the page at these, in CSS px: the iPhone 16 upright
+  with Safari's bars 393 × 659 and without them 393 × 852; sideways with the bars 734 × 343 and without them 852 × 393
+  (Playwright's `iPhone 16` and `iPhone 16 landscape`: touch, a pixel ratio of 3); and a 1440p desk's browser window,
+  2560 × 1305. Only a defect at a supported size can be blocking or hold a score under its bar. You may look at other
+  sizes; what you find only there is a non-blocking issue.
 - Do not be fooled by tests passing. Tests prove the code matches itself.
 - Never praise without a concrete, verified reason. Note one or two real strengths at the end.
 - Judge the execution of the design, not the design. A behaviour that SPEC.md specifies or that
@@ -63,7 +68,8 @@ A run re-runs every named case of the last report, and scores afresh, exploring 
 - each dimension the last report scored under its bar or blocked on;
 - each dimension the diff since the last report's commit touches (`git diff --stat <commit> HEAD`), by the table
   below; a path in no row touches the dimension its feature is scored under;
-- `performance` whenever anything under `src/` changed: the tick of seed 99, the page's frame rate at three sizes
+- `performance` whenever anything under `src/` changed: the tick of seed 99, the page's frame rate at 2560 × 1305
+  (ADR-1141; it was three sizes)
   and the long watch, run alone on a quiet machine;
 - **the rotation:** the two dimensions longest without a fresh score in the last report's `fresh` (ties in the
   DIMENSIONS order), besides those above. A dimension scored afresh for any reason resets its clock, so each is

@@ -56,17 +56,18 @@ closes the panels beside it (ADR-1137 (d)).
 
 ## Batch 55 — critic run 87's findings (focused, on bbf47bca; one blocking issue, a regression; UI/UX 7)
 
-ADR-829's exit: R87-B1 is a regression by R200 (ticked since release-2026-11-19) of R197's row clear of the legend.
-ADR-1140 (proposed) waits on the user; no item of the UI/UX dimension is taken until the user decides. Each item on the war
-row or a panel's place crosses the sizes and opens and closes the panels beside it (ADR-1137 (d)).
+ADR-829's exit: R87-B1 is a regression by R200 (ticked since release-2026-11-19) of R197's row clear of the legend. The
+user chose ADR-1140 (b), and set the supported sizes (ADR-1141): R87-B1, at a desk of 800 px or less, is outside them, so
+these items are non-blocking, done as items. Each item on the war row or a panel's place crosses the five supported sizes
+(393 × 659, 393 × 852, 734 × 343, 852 × 393, 2560 × 1305) and back, the panels beside it opened and closed.
 - [ ] R203 **R87-B1: on a desk of 800 px or less the legend R200 folds, once opened, lies over the war row** (not counted
   again on opening: 247 to 329 sampled points covered at 700 × 800 in the sea, air and fallout modes, 121 to 203 at 780;
   after a recount fallout's banner still half under it, 193; the opened state kept across resizes). `c87_lo_84901.log`,
   `c87_ls_84901_700_*_w4000.log`, `c87lo_84901_d400_700x800_seaControl_open.png`, `c87ls_84901_700x800_fallout_back.png`.
-  AT: by the user's choice in ADR-1140; for its (a), the report's "seen fixed when": `c87_legendOpen 84901 400`
-  `rowOverLegend` 0 and `legendOverRow` 0 opened and back, every size and mode, `nudged` = `shown`; `WAIT=4000
-  c87_legendShot 84901 400 700 800 fallout` 0 both states; `c86_modeRow 84901 400 800` as R200; a case that reads the row
-  while the legend is open.
+  AT (ADR-1140 (b), the user's choice): on a desk of 800 px or less the legend, folded and opened, stands at the top left
+  as the phone's does and gives way to a nation's panel and History; `c87_legendOpen 84901 400` `rowOverLegend` 0 and
+  `legendOverRow` 0 opened and back, `nudged` = `shown`; `WAIT=4000 c87_legendShot 84901 400 700 800 fallout` 0 both
+  states; `c86_modeRow 84901 400 800` as R200; a case that reads the row while the legend is open.
 - [ ] R204 **R87-N2: on a desk of about 1100 to 1366 px the row jumps 24 to 44 px when a war on it changes** (R202's rule
   decides centre or band from the banners shown now; `c87_rowJitter 87601 300`: off the centre 40 % of the time at 1280 ×
   720). AT: `c87_rowJitter 87601 300` `moves` 0 wherever `countCh` is 0; R202's case as now.
