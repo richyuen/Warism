@@ -33,9 +33,13 @@ closes the panels beside it (ADR-1137 (d)).
     the narrow desks, open on the wide one, a war shown and the row over nothing; the legend opened and closed, a
     nation's panel opened and closed (red without: the legend not folded). 30 specs on the legend, the map modes and
     the banners 90/90.
-- [ ] R201 **R86-N1: with every relations kind hidden the footer says "Truces hidden" where it said "No ties of these
+- [x] R201 **R86-N1: with every relations kind hidden the footer says "Truces hidden" where it said "No ties of these
   kinds"** (R198's side effect; `critic/c86_rs_84903.log`). AT: the empty graph says it has nothing shown; a kind tapped
   is named as R198 has it.
+  - Done (COMMIT): an empty graph's footer says "No ties of these kinds." beside the kind just tapped ("Truces hidden · No
+    ties of these kinds."); with ties shown, the kind tapped alone as R198. A case in `relationsTap1938` hiding every kind
+    and showing Wars again at 568 × 320, 844 × 390, a desk and upright, a nation's panel opened and closed (ADR-1137 (d);
+    red without: "Truces hidden" alone). `relationsTap1938` 13/13.
 - [ ] R202 **The design objection: the desk's row centred in the free band leaves the bar's axis** (24 to 44 px on a wide
   desk, moving about 68 px when the map mode changes; R197). AT: on a desk with room the row on the bar's centre, its
   width limited by the band; R197's and R200's cases as then.

@@ -7,3 +7,7 @@
 ## 2026-11-19 — R200: a narrow desk folds the legend and shows a war in every map mode
 
 - At 800 px or less the desk's legend is folded to its title; the band measured at a banner's height; a crossing case.
+
+## 2026-11-19 — R201: the empty relations graph says it is empty
+
+- "Truces hidden · No ties of these kinds." with every kind hidden; a crossing case.

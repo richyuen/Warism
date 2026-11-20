@@ -458,7 +458,9 @@ export function RelationsPanel({ nations, wars, selected, onSelect, flagUrlOf, o
         </g>
       </svg>
       <footer class="relations-footer" data-testid="relations-said">
-        {said ?? (shown.edges.length === 0 ? t('relations.empty') : t('relations.hint'))}
+        {/* An empty graph says so, beside the kind just tapped (R201, critic run 86, R86-N1: with every kind hidden it said
+            "Truces hidden" alone, where it had said "No ties of these kinds."). */}
+        {shown.edges.length === 0 ? (said ? `${said} · ${t('relations.empty')}` : t('relations.empty')) : (said ?? t('relations.hint'))}
         {shown.untied > 0 && focus === 0 ? <span class="relations-untied"> · {t('relations.untied', { n: shown.untied })}</span> : null}
       </footer>
     </aside>

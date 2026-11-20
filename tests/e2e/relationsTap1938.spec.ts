@@ -378,3 +378,27 @@ test('a relations filter tapped says its kind at every size', async ({ page }) =
     }
   }
 });
+
+// R201 (critic run 86, R86-N1; ADR-1137 (d)): with every kind hidden the footer said "Truces hidden" alone, where it had
+// said "No ties of these kinds.". The empty graph says so beside the kind just tapped; one kind shown again, the footer
+// names it alone; at 568 × 320, 844 × 390, a desk and upright, a nation's panel opened and closed.
+test('the empty relations graph says it is empty beside the kind tapped', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?scenario=1938&paused=1&seed=4111');
+  await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
+  await page.evaluate(() => window.__warsim!.hud.toggleRelations());
+  const said = page.getByTestId('relations-said');
+  const kinds = ['war', 'alliance', 'guarantee', 'puppet', 'truce'] as const;
+  for (const [w, h] of [[568, 320], [844, 390], [1280, 720], [390, 844]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await page.waitForTimeout(300);
+    for (const k of kinds) await page.getByTestId(`relations-kind-${k}`).click();
+    await expect(said, `${w} × ${h}: every kind hidden`).toHaveText(/^Truces hidden · No ties of these kinds\./);
+    await page.getByTestId('relations-kind-war').click();
+    await expect(said, `${w} × ${h}: wars shown again`).toHaveText(/^Wars shown/);
+    await expect(said).not.toHaveText(/No ties/);
+    for (const k of kinds.slice(1)) await page.getByTestId(`relations-kind-${k}`).click();
+  }
+});
