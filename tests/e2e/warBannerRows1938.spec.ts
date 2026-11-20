@@ -499,3 +499,44 @@ test('a narrow desk folds the legend and shows a war in every map mode', async (
     }
   }
 });
+
+// R202 (critic run 86's design objection; ADR-1137 (d)): centred in the free band, the desk's row stood 16 to 44 px off the
+// bar's centre and moved with the map mode. On the bar's centre when the banners the band holds fit there too: at 1600 and
+// 1920 in every mode the row's middle the page's; a narrow desk still shows a war (R197); a nation's panel and History
+// opened and closed at 1600, a phone and back.
+test('a wide desk keeps the war row on the bar\'s centre in every map mode', async ({ page }) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-banner')).toHaveCount(3, { timeout: 20_000 });
+  const look = () =>
+    page.getByTestId('war-banners').evaluate((row) => {
+      const r = row.getBoundingClientRect();
+      const ui = row.parentElement!.getBoundingClientRect();
+      return { banners: row.querySelectorAll('[data-testid=war-banner]').length, off: r.left + r.width / 2 - (ui.left + ui.width / 2), inside: row.scrollWidth <= row.clientWidth };
+    });
+  for (const [w, h] of [[1600, 900], [700, 800], [1920, 1080], [390, 844], [1600, 900]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    if (w === 1600) {
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+      await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    }
+    for (const mode of ['political', 'seaControl', 'airControl', 'fallout'] as const) {
+      await page.evaluate((m) => window.__warsim!.hud.setMapMode(m), mode);
+      await page.waitForTimeout(400);
+      const r = await look();
+      expect(r.inside, `${w} × ${h} ${mode}: the row in its width`).toBe(true);
+      if (w >= 1600) {
+        expect(Math.abs(r.off), `${w} × ${h} ${mode}: on the bar's centre`).toBeLessThanOrEqual(1);
+        expect(r.banners, `${w} × ${h} ${mode}: three banners`).toBe(3);
+      } else if (w > 600) expect(r.banners, `${w} × ${h} ${mode}: a war shown`).toBeGreaterThanOrEqual(1);
+    }
+  }
+});

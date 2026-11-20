@@ -40,9 +40,18 @@ closes the panels beside it (ADR-1137 (d)).
     ties of these kinds."); with ties shown, the kind tapped alone as R198. A case in `relationsTap1938` hiding every kind
     and showing Wars again at 568 × 320, 844 × 390, a desk and upright, a nation's panel opened and closed (ADR-1137 (d);
     red without: "Truces hidden" alone). `relationsTap1938` 13/13.
-- [ ] R202 **The design objection: the desk's row centred in the free band leaves the bar's axis** (24 to 44 px on a wide
+- [x] R202 **The design objection: the desk's row centred in the free band leaves the bar's axis** (24 to 44 px on a wide
   desk, moving about 68 px when the map mode changes; R197). AT: on a desk with room the row on the bar's centre, its
   width limited by the band; R197's and R200's cases as then.
+  - Done (COMMIT): the row keeps every banner the free band holds, and stands on the bar's centre whenever those banners
+    fit in the width free on both sides of it alike (`freeBand`'s `even`); the band's middle only when the centre would cost
+    a banner. `c86_deskAttack 84901 400 wide`: at 1600, 1920 and 2560 off the centre by 0 px in all eleven map modes, three
+    banners (before 16 to 44 px, moving with the mode); at 1280 the political modes keep three banners in the band (16 to
+    44 px off, as the centre holds two), the sea, air and fallout modes two on the centre. `c85_deskRow` 84901 and 85903,
+    `c86_modeRow 84901 400`: `fit0` [], `covering` [] as R197 and R200. A case in `warBannerRows1938` crossing 1600 (a
+    nation's panel and History opened and closed), 700, 1920, a phone and back in four modes (ADR-1137 (d)): on the
+    centre within 1 px with three banners at 1600 and 1920, a war shown at 700 (red without: 44 px off at 1600).
+    54 specs on the banners, the legend, the map modes, the news and phones 173/173.
 - Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 85).
 
 ## Released

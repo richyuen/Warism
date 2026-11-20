@@ -11,3 +11,8 @@
 ## 2026-11-19 — R201: the empty relations graph says it is empty
 
 - "Truces hidden · No ties of these kinds." with every kind hidden; a crossing case.
+
+## 2026-11-19 — R202: a wide desk keeps the war row on the bar's centre
+
+- Centred whenever the banners the band holds fit there, the band's middle only when the centre costs a banner; a
+  crossing case. Batch 54 done; the critic next (ADR-1138).

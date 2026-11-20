@@ -95,7 +95,8 @@ function sizeRow(row: HTMLElement): void {
  * open, 16 px at 640, and the row showed "+3" alone): between the nearest of the page's boxes beside it at its height (the
  * news, the legend, an open panel), its centre and width in the page's px; null when one stands across the page's centre.
  */
-function freeBand(row: HTMLElement): { mid: number; width: number } | null {
+type Band = { mid: number; width: number; centre: number; even: number };
+function freeBand(row: HTMLElement): Band | null {
   const ui = row.parentElement;
   if (!ui) return null;
   const foot = row.getBoundingClientRect().bottom;
@@ -117,7 +118,9 @@ function freeBand(row: HTMLElement): { mid: number; width: number } | null {
   }
   // 4 px clear of each neighbour (at 8 a 601 px desk had 6 px too few for "Germany ⚔ Poland" and its "+2").
   const gap = 4;
-  return { mid: (left + right) / 2 - page.left, width: Math.max(0, right - left - 2 * gap) };
+  // `even`: the width free on both sides of the page's centre alike, where the bar's centre is (R202).
+  const even = Math.max(0, 2 * Math.min(cx - left, right - cx) - 2 * gap);
+  return { mid: (left + right) / 2 - page.left, width: Math.max(0, right - left - 2 * gap), centre: cx - page.left, even };
 }
 const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
 
@@ -199,10 +202,22 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     // "Nationalist Sp…" kept the phone's width with room to spare).
     el.style.maxWidth = '';
     el.style.left = '';
+    let free: Band | null = null;
+    let rule = Infinity;
+    // On the bar's centre when the banners the band holds fit there too (R202, critic run 86's design objection: centred
+    // in the band, the row stood 16 to 44 px off the bar's centre and moved 68 px with the map mode): the band's middle
+    // only when the centre would cost a banner (a narrow desk, R197).
+    const steady = (): void => {
+      if (free === null || free.width <= rule) return;
+      const even = Math.floor(free.even);
+      if (el.scrollWidth > even) return;
+      el.style.maxWidth = `${even}px`;
+      el.style.left = `${free.centre}px`;
+    };
     if (!opened && !phone) {
       // A desk's closed row in the band free beside it, if that is wider than its rule's room (R197).
-      const free = freeBand(el);
-      const rule = parseFloat(getComputedStyle(el).maxWidth);
+      free = freeBand(el);
+      rule = parseFloat(getComputedStyle(el).maxWidth);
       if (free !== null && !(free.width <= rule)) {
         // Whole px: a fraction rounded the row's width down and left its last 1 px past it (85905 at 680).
         el.style.maxWidth = `${Math.floor(free.width)}px`;
@@ -239,11 +254,16 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
       if (shown === 1 && el.scrollWidth > el.clientWidth) {
         el.classList.add('war-sized');
         sizeRow(el);
-        if (el.scrollWidth > el.clientWidth) setFit(0);
+        if (el.scrollWidth > el.clientWidth) {
+          setFit(0);
+          return;
+        }
       }
+      steady();
       return;
     }
     if (el.scrollWidth > el.clientWidth) setFit(shown - 1);
+    else steady();
   });
   if (wars.length === 0) return null;
   const side = (ids: number[]) => {
