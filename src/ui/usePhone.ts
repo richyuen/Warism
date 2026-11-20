@@ -7,9 +7,20 @@ import { useEffect, useState } from 'preact/hooks';
  */
 export const PHONE_QUERY = '(max-width: 600px), (max-height: 500px)';
 
+/**
+ * A desk's view too narrow for the legend opened beside the war row (R200, critic run 86, R86-N2: at 680 to 760 px the
+ * sea-control legend took 315 px of 700 and no war was shown): there the legend is folded to its title until clicked.
+ */
+export const NARROW_DESK_QUERY = '(max-width: 800px)';
+
 /** Whether the view is a phone's, kept as it changes (a rotation, a resize). */
 export function usePhone(): boolean {
-  const query = typeof window === 'undefined' ? null : window.matchMedia(PHONE_QUERY);
+  return useMedia(PHONE_QUERY);
+}
+
+/** Whether a media query matches, kept as it changes. */
+export function useMedia(text: string): boolean {
+  const query = typeof window === 'undefined' ? null : window.matchMedia(text);
   const [phone, setPhone] = useState(query?.matches ?? false);
   useEffect(() => {
     if (!query) return;

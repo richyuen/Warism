@@ -24,6 +24,7 @@ export function MapLegend({
   airHolders = [],
   airHover = null,
   phone = false,
+  fold = false,
 }: {
   mode: MapMode;
   /** The ground of T2 and T3 shown (PLAN 7.4f3): occupied land is a tint in the occupier's colour, not hatched. */
@@ -37,14 +38,17 @@ export function MapLegend({
   airHover?: { holder: string | null } | null;
   /** A phone's width: folded to its title until tapped. */
   phone?: boolean;
+  /** A narrow desk (R200): folded to its title until clicked, in its own place. */
+  fold?: boolean;
 }) {
+  const folds = phone || fold;
   const [open, setOpen] = useState(false);
   // What the units' signs say (ROADMAP R111): behind a "?" in the title, so the legend covers no more of the map until asked.
   const [signs, setSigns] = useState(false);
   const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
   return (
-    <aside class={phone ? 'map-legend foldable' : 'map-legend'} data-testid="map-legend" data-mode={mode} data-open={phone ? String(open) : undefined}>
-      {phone ? (
+    <aside class={folds ? 'map-legend foldable' : 'map-legend'} data-testid="map-legend" data-mode={mode} data-open={folds ? String(open) : undefined}>
+      {folds ? (
         <button type="button" class="legend-title legend-toggle" data-testid="legend-toggle" aria-expanded={open} title={t(open ? 'legend.fold' : 'legend.unfold')} onClick={() => setOpen(!open)}>
           {open ? '▾' : '▸'} {t(`mapMode.${mode}` as MessageKey)}
         </button>
@@ -56,7 +60,7 @@ export function MapLegend({
           </button>
         </div>
       )}
-      {phone && !open ? null : (
+      {folds && !open ? null : (
         <>
       {mode === 'diplomacy' && selected ? <div class="legend-selected">{selected}</div> : null}
       {legendFor(mode).map(([color, key]) => (
@@ -66,7 +70,7 @@ export function MapLegend({
         </div>
       ))}
       {/* What the units' signs say (ROADMAP R111): on every mode, the counters and markers are the same. A phone's opened legend has it. */}
-      {signs || phone ? (
+      {signs || folds ? (
         <div class="legend-row legend-units" data-testid="legend-units">
           <span>{t(groundShown ? 'legend.unitsClose' : 'legend.units')}</span>
         </div>

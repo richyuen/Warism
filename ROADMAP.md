@@ -18,11 +18,21 @@ Rules:
 
 Non-blocking: done after the release (ADR-1138), before the next critic run (ADR-1039). Each crosses the sizes and opens and
 closes the panels beside it (ADR-1137 (d)).
-- [ ] R200 **R86-N2: in the sea-control, air-control and fallout map modes a desk 680 to 760 px wide shows no war, "+5"
+- [x] R200 **R86-N2: in the sea-control, air-control and fallout map modes a desk 680 to 760 px wide shows no war, "+5"
   alone** (R197's side effect: those modes' legend is wider and the band too narrow; run 85's build showed one banner over
   the legend's corner). `critic/c86_mr2_*`, `c86ms_84901_700x800_seaControl*.png`. AT: `c86_modeRow` a war shown in
   every map mode at 680–760, nothing covered; R197's case as now. (Hearts of Iron IV's folded legend, the report's idea:
   one way to free the room.)
+  - Done (COMMIT): on a desk of 800 px or less the legend is folded to its title until clicked, in its own place, as a
+    phone's is (`NARROW_DESK_QUERY`, MapLegend's `fold`; opened, it shows its rows and the units' signs); the free band
+    measured a banner's height above the row's foot, whatever the row holds (with "+n" alone the legend fell out of it
+    and the banner came back 3 px over its corner). `c86_modeRow 84901 400`: `fit0` [], `stale` [], `covering` [] in
+    the political, sea-control, air-control, fallout and puppet modes (before: no war at 620–740 in three of them, 3–4 px
+    over the legend in two); `c84_rowShot 700x800` the banner whole beside "▸ Political". A case in
+    `warBannerRows1938` crossing 700, 680, 760, 1280, a phone and back in four modes (ADR-1137 (d)): the legend folded on
+    the narrow desks, open on the wide one, a war shown and the row over nothing; the legend opened and closed, a
+    nation's panel opened and closed (red without: the legend not folded). 30 specs on the legend, the map modes and
+    the banners 90/90.
 - [ ] R201 **R86-N1: with every relations kind hidden the footer says "Truces hidden" where it said "No ties of these
   kinds"** (R198's side effect; `critic/c86_rs_84903.log`). AT: the empty graph says it has nothing shown; a kind tapped
   is named as R198 has it.

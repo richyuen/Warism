@@ -17,7 +17,7 @@ import { displayName, t, type MessageKey } from '../ui/i18n';
 import { NationPanel } from '../ui/NationPanel';
 import { StatsRanking } from '../ui/StatsRanking';
 import { WarBanners } from '../ui/WarBanners';
-import { usePhone } from '../ui/usePhone';
+import { NARROW_DESK_QUERY, useMedia, usePhone } from '../ui/usePhone';
 import { Ticker } from '../ui/Ticker';
 import { LandingsBar } from '../ui/LandingsBar';
 import { NukeAlerts } from '../ui/NukeAlert';
@@ -76,6 +76,7 @@ export function App({
   const [scenarioStatus, setScenarioStatus] = useState('');
   // A phone's width (ADR-760): the ticker, the war banners and the legend take less of the map.
   const phone = usePhone();
+  const narrowDesk = useMedia(NARROW_DESK_QUERY);
   // The ranking (ROADMAP R94a): as the player left it; not chosen yet, closed on a desk and folded to its title on a phone.
   const statsShown = hud.showStats.value ?? phone;
   // On a phone, a God tool acting for the selected nation (Breakthrough, Territory) takes map clicks that its panel would
@@ -567,6 +568,7 @@ export function App({
       <MapLegend
         mode={hud.mapMode.value}
         phone={phone}
+        fold={narrowDesk}
         groundShown={hud.groundShown.value}
         selected={hud.selected.value ? nameOf(hud.selected.value) : null}
         seaHolders={hud.seaHolders.value.map((h) => ({ name: displayName(byId.get(h.id)?.name ?? `#${h.id}`), color: byId.get(h.id)?.color ?? 0x777777, zones: h.zones }))}

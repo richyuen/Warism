@@ -2566,19 +2566,6 @@ button.unit-icon.on {
     padding: 4px 8px;
     pointer-events: auto;
   }
-  .map-legend.foldable[data-open='false'] .legend-title {
-    margin-bottom: 0;
-  }
-  .legend-toggle {
-    display: block;
-    padding: 0;
-    background: none;
-    border: 0;
-    font: inherit;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-  }
   /* The ranking folded to its title too (ADR-760), top right: it took a third of the view. */
   .stats-ranking.folded {
     width: auto;
@@ -2601,6 +2588,21 @@ button.unit-icon.on {
   }
 }
 
+/* A legend folded to its title, a phone's or a narrow desk's (R200): the title its toggle. */
+.map-legend.foldable[data-open='false'] .legend-title {
+  margin-bottom: 0;
+}
+.legend-toggle {
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
 /* The nation under the mouse (PLAN 7.4f7). */
 #ui > .map-tooltip,
 .map-tooltip {

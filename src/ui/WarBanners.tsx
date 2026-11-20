@@ -98,7 +98,10 @@ function sizeRow(row: HTMLElement): void {
 function freeBand(row: HTMLElement): { mid: number; width: number } | null {
   const ui = row.parentElement;
   if (!ui) return null;
-  const at = row.getBoundingClientRect();
+  const foot = row.getBoundingClientRect().bottom;
+  // A banner's height above the row's foot, whatever the row holds now (R200: with "+n" alone the row was 19 px high,
+  // the legend's foot above it, and the banner came back over the legend's corner by 3 px).
+  const at = { top: foot - 32, bottom: foot };
   const page = ui.getBoundingClientRect();
   const cx = page.left + page.width / 2;
   let [left, right] = [page.left, page.right];
