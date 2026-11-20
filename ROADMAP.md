@@ -356,7 +356,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   tools/diag/landingInvariants.ts 90103 3517 120 90103 30 2 8` ends with 0 broken.
 - [x] R222 **R90-N2: the peace line's reasons never reach History** (89403: ten years of peace, two events). AT: History
   notes the peace's reason when first given and when it changes, on 89403 and one more seed, at the five supported sizes.
-  - Done (COMMIT): ADR-1149. `PeaceHeld`, told on the strategic AI's day when the peace line gives a reason not told
+  - Done (124f1104): ADR-1149. `PeaceHeld`, told on the strategic AI's day when the peace line gives a reason not told
     since the last war: "The world is at peace: none outmatches another" (89403, once in two years), "…rivals too far
     over the sea" (55404, day 91); none before 89401's and 90441's first wars (`peaceWhy.test`). `peaceLine.spec` at the
     five supported sizes: the row in History, whole and in the view (looked at 393 × 852, 734 × 343); 12/12. Seed 99's
