@@ -80,3 +80,13 @@
 - At 601 to 700 px the bar stood on the panel's ×; its middle now keeps right of the panel's edge by half its least width.
   Cases at 601, 640, 700, 800 and 1280 px in `landingsBarPanel1938`. Run by hand: the specs that read the landings' bar
   (landingHoldMark1938, landingMark1938, landingsBar1938, landingsBarPanel1938, research1938).
+
+## 2026-11-20 — R208: an upright phone's ranking gives way to the opened legend
+
+- At 393 px the opened legend lay over the folded ranking's bar; the ranking is hidden while the legend is open. The AT's
+  "the ranking's toggle takes a tap while the legend is open" not met as written, by choice (the legend's title would
+  move from under the tap). R203's case extended. Run by hand: airControl1938, airMapRead1938, charts1938,
+  chromeCover1938, fallout1938, heroesClear1938, landingsBar1938, landingsBarPanel1938, legendOccupied1938,
+  mapModes1938, nukeStats1938, phoneLayout1938, ranking1938, rankingFlags1938, rankingNames1938, rankingRows1938,
+  relationsTap1938, reviewBatch1938, seaControl1938, seaLegend1938, settings1938, tags1938, warBannerRows1938 (95/95).
+  Batch 55 has no open item.

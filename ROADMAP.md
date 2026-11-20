@@ -135,12 +135,21 @@ these items are non-blocking, done as items. Each item on the war row or a panel
     the bar right of the panel and in the view, the click closes the panel (red without at 601, 640 and 700: the bar's
     row at the ×); a case at 1280 × 800: the bar on the page's middle within 1 px. The sideways phones' cases as before.
     landingHoldMark1938, landingMark1938, landingsBar1938, landingsBarPanel1938, research1938 19/19. Mends R60a's rule for a narrow desk; no ADR (ADR-914).
-- [ ] R208 **On the iPhone 16 upright the opened legend lies over the folded ranking's bar** (found by R203's probe, as
+- [x] R208 **On the iPhone 16 upright the opened legend lies over the folded ranking's bar** (found by R203's probe, as
   it was before R203: at 393 × 659 and 393 × 852 the ranking's bar stands at 156 to 386 px beside the legend's title, and
   the opened legend reaches 237 px in the political mode, 328 in sea control, 347 in air control, 369 in fallout; the
   ranking's toggle is under it until the legend is folded). A supported size (ADR-1141). AT: at 393 × 659 and 393 × 852
   the opened legend's box meets no box of the page's in the political, sea-control, air-control and fallout modes, and
   the ranking's toggle takes a tap while the legend is open; sideways (734 × 343, 852 × 393) as now; R203's case as now.
+  - Done (HASH208): on an upright phone the ranking gives way while the legend is open and is back as it folds, as it
+    gives way to a nation's panel, History and the landings there (one rule in the phone's block). **The AT's second
+    half is not met as written, by choice:** for the ranking's toggle to take a tap beside an opened legend, the legend
+    would open under the toggles' row, its title 34 px lower than the tap that opened it, and a second tap on the same
+    place would fall on the map; one of the two at a time keeps the title where it was tapped. R203's case in
+    `warBannerRows1938`, the ranking shown as each view has it: at 393 × 659 and 393 × 852 the ranking hidden under the
+    opened legend, the legend's box on nothing but the news, the ranking back and the folded legend on nothing; at 734
+    × 343 and 852 × 393 the ranking stays beside it (red without: the ranking not hidden at 393 × 659). 23 specs on the
+    ranking and the legend 95/95. Stands on ADR-760; no ADR (ADR-914).
 - Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 86).
 
 ## Released

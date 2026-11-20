@@ -584,6 +584,8 @@ test('a narrow desk\'s legend stands at the top left, and opened lies over no wa
     await page.setViewportSize({ width: w, height: h });
     const phone = w <= 600 || h <= 500;
     const narrow = !phone && w <= 800;
+    // The ranking as each view has it unasked: folded to its bar on a phone, closed on a desk (R94a).
+    await page.evaluate((shown) => window.__warsim!.hud.toggleStats(!shown), phone);
     for (const mode of ['seaControl', 'fallout', 'political'] as const) {
       await page.evaluate((m) => window.__warsim!.hud.setMapMode(m), mode);
       await page.waitForTimeout(400);
@@ -608,6 +610,11 @@ test('a narrow desk\'s legend stands at the top left, and opened lies over no wa
       const opened = await look();
       expect([opened.rowOverLegend, opened.legendOverRow], `${at}: opened, the row and the legend apart`).toEqual([0, 0]);
       expect(opened.banners, `${at}: opened, the banners as folded`).toBe(folded.banners);
+      // An upright phone's ranking, folded beside the legend's title, gives way while the legend is open (R208: the
+      // opened legend lay over its bar) and is back as the legend folds; on its side there is room for both.
+      if (w <= 600) await expect(page.getByTestId('stats-ranking'), `${at}: the ranking gone under the opened legend`).toBeHidden();
+      else if (phone) await expect(page.getByTestId('stats-ranking'), `${at}: the ranking beside the opened legend`).toBeVisible();
+      if (phone) expect(opened.meets.filter((c) => c !== 'ticker'), `${at}: the opened legend on nothing but the news`).toEqual([]);
       // On a phone on its side the sea legend is higher than the room over the row: its rows scroll (734 × 343).
       expect(opened.foot, `${at}: the opened legend above the row`).toBeLessThanOrEqual(opened.rowTop);
       if (narrow) {
@@ -644,6 +651,11 @@ test('a narrow desk\'s legend stands at the top left, and opened lies over no wa
       }
       await toggle.click();
       await expect(page.getByTestId('map-legend')).toHaveAttribute('data-open', 'false');
+      if (phone) {
+        // Folded again: the ranking's toggle beside it takes a tap, and the legend's title is clear of it.
+        await expect(page.getByTestId('stats-ranking'), `${at}: the ranking back`).toBeVisible();
+        expect((await look()).meets, `${at}: the folded legend on nothing`).toEqual([]);
+      }
     }
   }
 });

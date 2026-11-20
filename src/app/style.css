@@ -2419,6 +2419,12 @@ button.unit-icon.on {
   #ui:has(.nation-panel, .history-panel, .landings-bar) .stats-ranking {
     display: none;
   }
+  /* And to the legend while it is open (R208, found by R203's probe: at 393 px the ranking's bar stands from 156 px
+     beside the legend's title, and the opened legend, 237 to 369 px wide, lay over it): one of the two at a time, the
+     ranking back as the legend folds. */
+  #ui:has(.map-legend.foldable[data-open='true']) .stats-ranking {
+    display: none;
+  }
   /* The landings stand where the ranking stood, the view's width; a nation's or a formation's panel there is first. */
   .landings-bar {
     left: 0.5rem;
