@@ -186,3 +186,8 @@
   10 of seed 7's 60); `homeNeighbours`, sea supply's home lands and the map's label read the city's cell now.
   `capitalLand.test.ts` (red before: 13 and 10 nations with no home; a scan for the old reader). Seed 99's pin as it
   was; the few-nation reads as after R217 (89401-89406 a war on 5 of 6). Supply +0.014 ms a tick.
+
+## 2026-11-20 — The critic scores performance by the rotation only (ADR-1147, the user's decision)
+
+- No fresh `performance` score for a change under `src/`, nor as a release condition; CRITIC_PROMPT.md and PROMPT.md
+  changed. Critic run 90 was started before, under the old text.

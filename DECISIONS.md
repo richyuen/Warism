@@ -5,6 +5,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1147 · 2026-11-20 · accepted, the user's decision · The critic scores performance by the rotation only
+
+- **Decision (the user's, 2026-11-20):** "take the src/ based performance scores out of the critic - it only needs to
+  score via the regular dimension rotation." A change under `src/` no longer makes the critic score `performance`
+  afresh, and a release no longer needs it scored afresh since the last release. It is scored afresh as any other
+  dimension: by the rotation (the two longest unscored, so once in seven runs at least), or when the last report scored
+  it under its bar or blocked on it; otherwise carried.
+- **Replaces** ADR-1138's clause (the user's decision then): `performance` afresh whenever anything under `src/`
+  changed, and in the release check when `src/` changed since the last release.
+- **Unchanged:** the builder's budgets (PROMPT.md goal 5, EACH ITEM step 8: a change to the sim or the drawing logs
+  its tick or frame time), and the release's `npm run bench -- G --gpu-only` (budgets PASS).
+- **Changed:** `CRITIC_PROMPT.md` ("EVERY RUN IS FOCUSED", the table's first row, the release line), `PROMPT.md`
+  (RELEASES step 3). Critic run 90 was started before this, under the old text.
+
 ## ADR-1146 · 2026-11-20 · accepted · A neighbour of a nation's home is one its men stand on the border's land of (R217)
 
 - **The case** (found tracing R216's 89404, three-nation random world): nation 2's whole army (4.2 M men) stands on its

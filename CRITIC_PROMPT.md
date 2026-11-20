@@ -68,19 +68,18 @@ A run re-runs every named case of the last report, and scores afresh, exploring 
 - each dimension the last report scored under its bar or blocked on;
 - each dimension the diff since the last report's commit touches (`git diff --stat <commit> HEAD`), by the table
   below; a path in no row touches the dimension its feature is scored under;
-- `performance` whenever anything under `src/` changed: the tick of seed 99, the page's frame rate at 2560 × 1305
-  (ADR-1141; it was three sizes)
-  and the long watch, run alone on a quiet machine;
 - **the rotation:** the two dimensions longest without a fresh score in the last report's `fresh` (ties in the
   DIMENSIONS order), besides those above. A dimension scored afresh for any reason resets its clock, so each is
-  judged afresh at least once in seven runs.
+  judged afresh at least once in seven runs. `performance` is scored afresh only so, by the rotation or under its bar
+  or blocked (ADR-1147, the user's decision: not for a change under `src/`); when it is, the tick of seed 99, the
+  page's frame rate at 2560 × 1305 (ADR-1141) and the long watch, run alone on a quiet machine.
 Every other score is carried, marked "carried", from the last report that scored it. A defect met in passing
 still counts. Every run, touched or not: the rule checkers on new seeds and `landingFuzz --seeds 15`, the
 page-error monkeys, and the 20-year hashes of plain 1938 seeds 7019 and 32019.
 
 | Changed paths | Dimensions touched |
 |---|---|
-| `src/sim/`, `data/`, `public/data/`, `src/worker/` | `diplomacyWarDepth`, `emergentDynamics`, `stability`, `naval`, `tanks`, `aircraft`, `aiNukes` (and `performance`) |
+| `src/sim/`, `data/`, `public/data/`, `src/worker/` | `diplomacyWarDepth`, `emergentDynamics`, `stability`, `naval`, `tanks`, `aircraft`, `aiNukes` |
 | `src/render/`, `src/app/MapView.ts`, `src/app/battleView.ts` | `mapVisuals`, `semanticZoom` |
 | `src/app/style.css`, `src/app/App.tsx`, `src/app/hud.ts`, `src/app/game.tsx`, `src/ui/i18n/` | `uiUxPolish`, `statsHistory`, `godMode`, `editorScenarios`, `diplomacyWarDepth` |
 | `src/ui/RelationsPanel.tsx`, `src/ui/relation*.ts` | `diplomacyWarDepth`, `uiUxPolish` |
@@ -89,9 +88,9 @@ page-error monkeys, and the 20-year hashes of plain 1938 seeds 7019 and 32019.
 | `src/ui/EditorPanel.tsx`, `FlagEditor.tsx`, `src/sim/editor.ts`, `src/sim/scenarioEdit.ts` | `editorScenarios`, `uiUxPolish` |
 | any other file under `src/ui/` or `src/app/` | `uiUxPolish` |
 
-A release needs one run with no blocking issue and every score at its bar, `performance` scored afresh when
-`src/` changed since the last release. Non-blocking issues do not hold it (ADR-1138): the builder fixes them before the release, and the next run judges them as touched (ADR-1139). Say at the top of the
-report which dimensions were scored afresh and why (blocked, under its bar, touched, performance, rotation).
+A release needs one run with no blocking issue and every score at its bar (`performance` carried as any other score,
+ADR-1147). Non-blocking issues do not hold it (ADR-1138): the builder fixes them before the release, and the next run judges them as touched (ADR-1139). Say at the top of the
+report which dimensions were scored afresh and why (blocked, under its bar, touched, rotation).
 
 # DIMENSIONS (score 0–10)
 7 is solid: a demanding player finds nothing worth leaving the game over. 10 is the best this genre

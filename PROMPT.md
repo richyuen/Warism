@@ -98,8 +98,8 @@ exception (step 3: no critic run after them). Then:
    Not for naval (ADR-833, the user's decision, 2026-11-06): its blocking issues and its non-blocking
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
-3. Focused runs until one has no blocking issue and every score at its bar, its performance scored afresh when
-   `src/` changed since the last release (ADR-1138, the user's decision): that run is the release check. Its
+3. Focused runs until one has no blocking issue and every score at its bar (ADR-1138; `performance` scored afresh only
+   by the rotation, ADR-1147, the user's decision): that run is the release check. Its
    non-blocking items, and those still open from earlier runs, are fixed **before the release, with no critic run
    after them** (ADR-1139, the user's decision): the next release's critic run judges them as touched files. Then:
    `npm run check:review` and `npm run bench -- G --gpu-only` (budgets PASS). No sweep is a release condition (ADR-1072, the user's
