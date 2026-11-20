@@ -397,7 +397,7 @@ Non-blocking, fixed before the release with no critic run after them (ADR-1139).
   tools/diag/landingInvariants.ts 31103 15101 120 31103 30,90 1` and the others end with 0 broken while `... 90103 3517
   120 90103 30 2 8` stays 0; and a kept division no longer lets a click pass while another of it waits past the bound
   (31157 3517 one group).
-  - Done (COMMIT): R221 kept a division in its earlier click when, an hour after a new order, it was still aboard the
+  - Done (d9272dae): R221 kept a division in its earlier click when, an hour after a new order, it was still aboard the
     same landing near the same water; after an order home or a march (water -1) a landing still has its id and water
     that hour, so each of the five was a division ordered home and kept (31103's 270, aboard t269's L4, ordered home at
     t455, broke t269's click at t485). Now only a new click that is itself a landing keeps it (90103's t162 click 3
