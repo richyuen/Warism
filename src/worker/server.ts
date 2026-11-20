@@ -95,6 +95,7 @@ import { upgradeState } from '../sim/core/upgrade';
 import { encodeSections, type Section } from '../sim/core/sections';
 import { collectSections } from '../sim/core/state';
 import { AssetStore } from './assets';
+import { capitalCells } from '../sim/systems/capitals';
 import { airOf, buildMapCaches, Domain, portSeaOf, seaOf, TILE, type World } from '../sim/world';
 import { airHolders } from '../sim/systems/airSuperiority';
 import type { AirZones } from '../sim/nav/airZones';
@@ -1003,8 +1004,10 @@ export class SimServer {
     this.labelNames = world.namesVersion;
     const capitals = new Map<number, number>();
     const nc = world.nations.cols;
+    // The capital city's cell: a shore city's coordinates lie in the sea (ROADMAP R218).
+    const caps = capitalCells(world);
     world.nations.forEach((id) => {
-      if (nc.living[id] === 1) capitals.set(id, Math.floor(nc.capitalY[id]!) * world.cells.w + Math.floor(nc.capitalX[id]!));
+      if (nc.living[id] === 1 && caps[id]! >= 0) capitals.set(id, caps[id]!);
     });
     const data = deriveNationLabels(world.cells.controller, world.cells.w, world.cells.h, true, capitals);
     const names: string[] = [];

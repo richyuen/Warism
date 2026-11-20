@@ -115,6 +115,25 @@ export function capitalCell(world: World, n: number): number {
   return city !== 0 ? cc.cell[city]! : Math.floor(nc.capitalY[n]!) * world.cells.w + Math.floor(nc.capitalX[n]!);
 }
 
+/**
+ * Every nation's capital cell (`capitalCell`) by id, in one pass over the cities; -1 for a nation with none (dead, or
+ * no coordinates). ROADMAP R218: a shore capital's coordinates lie in a sea cell (13 of 1938's nations, Rio among them;
+ * 10 of seed 7's random 60), and the readers that took the coordinates' cell found no land of the nation there.
+ */
+export function capitalCells(world: World): Int32Array {
+  const cc = world.cities.cols;
+  const nc = world.nations.cols;
+  const out = new Int32Array(world.nations.highWater + 1).fill(-1);
+  world.cities.forEach((ci) => {
+    const n = cc.capitalOf[ci]!;
+    if (n !== 0 && n < out.length && out[n] === -1) out[n] = cc.cell[ci]!;
+  });
+  world.nations.forEach((n) => {
+    if (out[n] === -1 && Number.isFinite(nc.capitalX[n]!) && Number.isFinite(nc.capitalY[n]!)) out[n] = Math.floor(nc.capitalY[n]!) * world.cells.w + Math.floor(nc.capitalX[n]!);
+  });
+  return out;
+}
+
 /** The nations at war with `n` (1 by id); null when there is none. */
 function enemiesOf(world: World, n: number): Uint8Array | null {
   const enemy = new Uint8Array(world.nations.highWater);

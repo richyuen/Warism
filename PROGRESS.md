@@ -179,3 +179,10 @@
   `peaceWhy` reads a realm refused for a lift, with its transports on order (`landlessPowers`), as "for now". Seven
   worlds reason-free in the month before their first war; `peaceWhy.test` 8/8, `peaceLine` 7/7 (by hand). The sweep
   suite 29/29; `farConquests 0` (8 seeds) far capitals 10.0 → 8.0; `c69_firstdecl 60` 0 of 61 over 6,000 km.
+
+## 2026-11-20 — R218: a capital's land is its city's cell
+
+- The user put R218 before the release, then a critic run. A shore capital's coordinates lie in the sea (13 of 1938's,
+  10 of seed 7's 60); `homeNeighbours`, sea supply's home lands and the map's label read the city's cell now.
+  `capitalLand.test.ts` (red before: 13 and 10 nations with no home; a scan for the old reader). Seed 99's pin as it
+  was; the few-nation reads as after R217 (89401-89406 a war on 5 of 6). Supply +0.014 ms a tick.

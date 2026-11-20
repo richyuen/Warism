@@ -32,6 +32,7 @@ import { nearestCellWhere } from '../data/ownership';
 import { PASSAGE_SNAP } from '../nav/lanes';
 import type { SeaZones } from '../nav/seaZones';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
+import { capitalCells } from './capitals';
 import { blocOf } from './supply';
 
 /** The zones each zone leads to: those it touches and the other ends of its passages; and which pairs only a passage joins, by its index (cached by the zones). */
@@ -290,15 +291,16 @@ function sameArray(a: ArrayLike<number> | null, b: ArrayLike<number> | null): bo
 function seaReach(world: World): Reach {
   reachStats.calls++;
   const comp = navOf(world).grid.component;
-  const w = world.cells.w;
   const nc = world.nations.cols;
   const blocOfNation = new Uint16Array(world.nations.highWater + 1);
   world.nations.forEach((n) => (blocOfNation[n] = blocOf(world, n)));
   /** Per nation: its bloc, and its capital's land if it lives. */
   const nations = new Int32Array(2 * blocOfNation.length);
+  // The capital city's cell, not the coordinates' (a shore city's are in the sea; ROADMAP R218).
+  const caps = capitalCells(world);
   world.nations.forEach((n) => {
     nations[2 * n] = blocOfNation[n]!;
-    if (nc.living[n] === 1) nations[2 * n + 1] = comp[Math.floor(nc.capitalY[n]!) * w + Math.floor(nc.capitalX[n]!)]!;
+    if (nc.living[n] === 1 && caps[n]! >= 0) nations[2 * n + 1] = comp[caps[n]!]!;
   });
   const holder = world.seaControl?.holder ?? null;
   const kept = reachKept.get(world);

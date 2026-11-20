@@ -1637,7 +1637,8 @@ production and research. `src/sim/ai/`.
   share of the world's strength plus its income plus its warheads, the start card's measure) and the seven largest
   navies. A target across the sea scores its utility less `SEA_KM_COST` (0.1) for each 1,000 km to its realm's capital
   from the nearest transport group, or to its nearest port if further (R78b). A neighbour of its home (`homeByLand`)
-  borders its capital's land or a piece of its own of `HOME_KM2` (500,000 km²) or more (`homeNeighbours`, R82d, R84h)
+  borders its capital's land (its capital city's cell, not the coordinates, which lie in the sea for a shore city; R218)
+  or a piece of its own of `HOME_KM2` (500,000 km²) or more (`homeNeighbours`, R82d, R84h)
   where some of its land men stand on the border's land (R217, ADR-1146: its army may walk there); any other land
   neighbour is one by a colony and costs `SEA_KM_COST` a 1,000 km between the capitals. For a nation with no land neighbour, or
   none by its home (R86c, ADR-1069), each target, by a colony or across the sea, less only the cost beyond its cheapest's

@@ -46,6 +46,7 @@ import { keyAt, seaKm, waterKeys } from '../systems/navalCombat';
 import { fleetMen, forceMen, seaHolder } from '../systems/seaControl';
 import { navOf, portSeaOf, seaOf, type World } from '../world';
 import { cellKm2ByRow } from '../landCounts';
+import { capitalCell } from '../systems/capitals';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
 import { armyLands, beginMassing, borderOnLands, massStep, unprepared } from './massing';
@@ -162,16 +163,17 @@ export const HOME_KM2 = 500_000;
 
 /**
  * The nations bordering `n`'s home (R82d): its land joined over its own land (the coarse graph's provinces) to its
- * capital's, and each other piece of its own of HOME_KM2 or more (R84h). A land neighbour of `n`'s that is not one
- * borders it only by a colony (France and Brazil by French Guiana). Every neighbour when its capital is on no land of
- * its own.
+ * capital's (its capital city's cell, `capitalCell`; R218), and each other piece of its own of HOME_KM2 or more (R84h).
+ * A land neighbour of `n`'s that is not one borders it only by a colony (France and Brazil by French Guiana). Null
+ * (every neighbour) when its capital's province is another's by its centre.
  */
 export function homeNeighbours(world: World, n: number): Set<number> | null {
   const g = navOf(world).graph;
   const owner = world.cells.owner;
-  const nc = world.nations.cols;
   const { w, h } = world.cells;
-  const cap = Math.min(h - 1, Math.max(0, Math.floor(nc.capitalY[n]!))) * w + ((Math.floor(nc.capitalX[n]!) % w) + w) % w;
+  // The capital city's cell (`capitalCell`), not the coordinates': a shore city's lie in the sea (ROADMAP R218: Rio's,
+  // Tallinn's, 10 of seed 7's random 60), and such a nation had no home, every neighbour taken as one.
+  const cap = capitalCell(world, n);
   const start = g.nodeOf[cap]!;
   const ownerOf = (node: number): number => {
     const c = g.centre[node] ?? -1;
@@ -220,9 +222,10 @@ export const HOME_PROBE: { areaOnly?: boolean } = {};
  * sea for the strategic AI (`warTarget`'s cost, `acrossSea`'s lift, `beginMassing`), the landings' (`landlessPowers`)
  * and the page (`peaceWhy`). Found on 89404 (three nations): nation 2's whole army on its capital's continent, its
  * borders all on a northern land its piece of which is home by its area (R84h); it began a massing there nine times in
- * ten years, each never ready (0 % of its men on the border's lands) and barred a year. A nation whose capital is on no
- * land of its own (`homeNeighbours` null: every neighbour home) has those of its neighbours (`neighbourMap`) at whose
- * border its men stand (89413's nation 3, its capital's cell held by none, began a massing on day 32 with none there).
+ * ten years, each never ready (0 % of its men on the border's lands) and barred a year. A nation whose capital is in
+ * a province another holds by its centre (`homeNeighbours` null: every neighbour home; Danzig, the Chinese Communists
+ * and Mengjiang in 1938) has those of its neighbours (`neighbourMap`) at whose border its men stand (89413's nation 3,
+ * its capital read in the sea until R218, began a massing on day 32 with none there).
  */
 export function homeByLand(world: World, n: number): Set<number> | null {
   const home = homeNeighbours(world, n);

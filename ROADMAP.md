@@ -278,7 +278,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 - Not taken: `heroPop`'s jumps (85905: 13; 88905: 8), the graph's 13 px jump (R196), R172's, R192's and ADR-1111's kept
   items (as run 87).
 
-## Batch 57 — found in R216's trace (filed after this release's tag, a new declaration rule wanting a critic run after it, ADR-1139; R217 put before the release by the user, 2026-11-20, ADR-1146)
+## Batch 57 — found in R216's trace (filed after this release's tag, a new declaration rule wanting a critic run after it, ADR-1139; R217 and R218 put before the release by the user, 2026-11-20, ADR-1146, with a critic run after them)
 
 - [x] R217 **A massing begun on a border no man of its army can walk to** (found tracing R216's 89404; three-nation
   random world, `.cache/massTrace.ts`, `.cache/armyLand.ts`). Nation 2's whole army (4.2 M men) stands on its home
@@ -313,10 +313,23 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     The 30 days before the first war reason-free on seven worlds; `peaceWhy.test` (89414 added) and `peaceLine` 7/7.
     Reads: the sweep suite 29/29, `farConquests 0` far capitals 10.0 → 8.0 a seed (Brazil's 0 of 8 both),
     `c69_firstdecl 60` 0 of 61 over 6,000 km (ADR-1146).
-- [ ] R218 (after this release's tag) **A random world's capital on a sea cell** (found in R217: seed 7's 60, 10 capitals on a cell no nation owns,
+- [x] R218 (before the release, the user's word, 2026-11-20) **A random world's capital on a sea cell** (found in R217: seed 7's 60, 10 capitals on a cell no nation owns,
   land 0; 89413, 2 of 3). `homeNeighbours` then finds no home (null: every neighbour home before R217; those its men
   stand by since). AT: every random world's capital on a land cell of its own at the start, on several seeds and sizes;
   the capitals' cities as now. First: where the capital point is set (the city's centre beside the coast).
+  - Done (COMMIT): the cause is the readers, not the placing: every capital city's own cell is land of its nation (1938
+    102 of 102, seed 7's 60 60, 89413 3), while the coordinates of a shore city lie in the sea (13 of 1938's: Brazil,
+    Estonia, Iceland, Panama, New Zealand…; 10 of seed 7's 60; 2 of 89413's). Three readers made a cell of them:
+    `homeNeighbours` (no home: every neighbour home), sea supply's bloc home lands (`seaReach`) and the map's label
+    (`deriveNationLabels`'s capital piece). They read the capital city's cell now (`capitalCell`, `capitalCells`). AT
+    as re-scoped: `capitalLand.test.ts`, on 1938 99, random 7 (60) and 89413 (3), each living nation's capital cell its
+    own land and a home but where its province is another's by its centre (Danzig, the Communists, Mengjiang), red
+    before (13 and 10 with no home); and no source of the sim, worker or shared code makes a cell of the coordinates
+    but `capitals.ts` (the old reader found). Seed 99's pin as it was (9aaa81c1), its year's wars and massings the same;
+    `fewNationWars 3 85401 6 10`, 51401 and 89404 as after R217; 89401-89406 a war on 5 of 6 (89403's near-equals at
+    peace, said); seed 7's 60 0 of 29 massings with no man there. `seaSupply1938`'s kept-answer test moves Italy's seat
+    to a city on Malta, as the game moves a capital (the coordinates alone are no longer read). Supply 0.206 →
+    0.220 ms a tick. No ADR (ADR-914: R82d's and R84h's "capital's land" read as stated).
 
 ## Released
 

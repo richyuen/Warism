@@ -168,10 +168,21 @@ describe('supply over sea (PLAN 4.4c)', () => {
     for (const z of zones) seaControlOf(w).holder[z] = ENG;
     expect(ask().made).toBe(true);
     const nc = w.nations.cols;
-    // Italy's capital on Malta's land: a home of another land.
+    // Italy's capital on Malta's land: a home of another land. Moved as the game moves it, its seat to a city there
+    // (the capital's land is its city's cell, R218: the coordinates of a shore city lie in the sea).
+    const cc = w.cities.cols;
+    let seat = 0;
+    let onMalta = 0;
+    w.cities.forEach((ci) => {
+      if (cc.capitalOf[ci] === ITA) seat = ci;
+      if (onMalta === 0 && navOf(w).grid.component[cc.cell[ci]!] === malta.comp) onMalta = ci;
+    });
+    expect(seat * onMalta, 'Rome and a city on Malta').toBeGreaterThan(0);
     const was = [nc.capitalX[ITA]!, nc.capitalY[ITA]!] as const;
+    [cc.capitalOf[seat], cc.capitalOf[onMalta]] = [0, ITA];
     [nc.capitalX[ITA], nc.capitalY[ITA]] = [malta.x, malta.y];
     expect(ask().made).toBe(true);
+    [cc.capitalOf[seat], cc.capitalOf[onMalta]] = [ITA, 0];
     [nc.capitalX[ITA], nc.capitalY[ITA]] = was;
     expect(ask().made).toBe(true);
     expect(ask().made).toBe(false);
