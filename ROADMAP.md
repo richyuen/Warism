@@ -225,7 +225,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 - [x] R214 **R89-N2: at 2560 × 1305, at world zoom, the band above the map's north edge is the sea's last row drawn out
   into faint vertical stripes** (`critic/shots/c89_edge_top.png`; a supported size). AT: the view beyond the map's north
   and south edges one flat sea colour at 2560 × 1305 and at the four phone sizes; the map's own rows as now.
-  - Done (HASH214): past the map's top and bottom rows the sea's depth goes over to the deep's one shade within
+  - Done (628cd6e7): past the map's top and bottom rows the sea's depth goes over to the deep's one shade within
     `EDGE_FADE_CELLS` (8), at T0 and T1 (the shade texture's edge row went on there) and in the ground's sea of T2 and
     T3 (`depthAt`). The least zoom shows the map at nine tenths of the view's height, so the band is a twentieth of
     the view at every size (65 px at 2560 × 1305), not at the desk alone. `tests/e2e/mapEdge1938.spec.ts` at the five
