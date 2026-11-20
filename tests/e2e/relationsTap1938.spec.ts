@@ -389,16 +389,21 @@ test('the empty relations graph says it is empty beside the kind tapped', async 
   await page.evaluate(() => window.__warsim!.hud.toggleRelations());
   const said = page.getByTestId('relations-said');
   const kinds = ['war', 'alliance', 'guarantee', 'puppet', 'truce'] as const;
-  for (const [w, h] of [[568, 320], [844, 390], [1280, 720], [390, 844]] as const) {
+  for (const [w, h] of [[568, 320], [844, 390], [1280, 720], [1600, 900], [390, 844]] as const) {
     await page.setViewportSize({ width: w, height: h });
     await page.evaluate(() => window.__warsim!.hud.onSelectNation(1));
     await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
     await page.waitForTimeout(300);
+    // With ties shown the footer counts the nations left out (those with no tie shown).
+    await expect(said, `${w} × ${h}: ties shown`).toHaveText(/nations with no tie shown are left out/);
     for (const k of kinds) await page.getByTestId(`relations-kind-${k}`).click();
-    await expect(said, `${w} × ${h}: every kind hidden`).toHaveText(/^Truces hidden · No ties of these kinds\./);
+    // R205 (critic run 87): the empty graph without the left-out count, which said the same again ("98 nations with no
+    // tie shown are left out" at 1600 px).
+    await expect(said, `${w} × ${h}: every kind hidden`).toHaveText('Truces hidden · No ties of these kinds.');
     await page.getByTestId('relations-kind-war').click();
     await expect(said, `${w} × ${h}: wars shown again`).toHaveText(/^Wars shown/);
     await expect(said).not.toHaveText(/No ties/);
+    await expect(said, `${w} × ${h}: wars shown again, the left-out count back`).toHaveText(/left out/);
     for (const k of kinds.slice(1)) await page.getByTestId(`relations-kind-${k}`).click();
   }
 });

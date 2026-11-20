@@ -68,3 +68,9 @@
   0 px off); the tick names f63f45c8; `c87_rowJitter 84901 400`, a second seed: no move without its count's change;
   ADR-1142's option not chosen without its unmeasured width. The replay of `c86_deskAttack 84901 400 wide` wrote over
   the critic's run-86 shots `c86da_84901_d400_wide_*.png` on disk (the probe's shots take no tag; not in git).
+
+## 2026-11-20 — R205: the empty relations graph without the left-out count
+
+- "No ties of these kinds." alone with every kind hidden; the count of nations left out only beside ties shown. R201's
+  case extended (1600 × 900, the count with ties); `c86_relSaid 84903 400` clean. Run by hand: heroesRead1938,
+  relations1938, relationsTap1938.
