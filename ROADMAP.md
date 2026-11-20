@@ -167,7 +167,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   12` one end hash `4108155890`; `pageHash.ts <base> 88901 1 76540321 10 3` "10 of 10 runs equal to headless every
   year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6"; a page case that steps 9,600 hours of 88901 in one
   message against the headless hash.
-  - Done (HASH209; ADR-1143): the cause is a miscompile of Chromium 153's Maglev, not a rule. `enemyDistance`'s
+  - Done (8c75a5fa; ADR-1143): the cause is a miscompile of Chromium 153's Maglev, not a rule. `enemyDistance`'s
     breadth-first loop called a closure that wrote the loop's own `tail` and `left`; entered by on-stack replacement,
     the compiled loop lost the writes, every target read the same steps, and at hour 4,983 Latvia's field capital went
     to the cell beside Riga (the worlds part there, in nation 7's capital alone). The loop writes them itself. Read by
