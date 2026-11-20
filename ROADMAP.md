@@ -184,14 +184,25 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     search's answers as before; the pin of seed 99 unchanged (the gate). Stands on ADR-5 and SPEC §2.6 (a line added),
     ADR-640 and PLAN 7.83d (the search's rule and its cut, both kept). Tick time not read: the loop runs when a
     nation's last city falls.
-- [ ] R210 **R88-N1: on the iPhone 16 upright with a landing ordered the landings' bar lies over the folded legend,
+- [x] R210 **R88-N1: on the iPhone 16 upright with a landing ordered the landings' bar lies over the folded legend,
   whole** (308 of 308 sampled points, the toggle takes no tap; the same on bbf47bca). AT: `c88_sizes 88903 0
   393x659,393x852` no `legend<landings` in the `landing` rows and the toggle opens. (Hearts of Iron IV's orders in one
   list at the screen's edge, the report's idea: a phone's landings as a row above the news would end this and R211.)
-- [ ] R211 **R88-N2: on the iPhone 16 sideways with a landing ordered the landings' bar lies over the opened legend** (231
+- [x] R211 **R88-N2: on the iPhone 16 sideways with a landing ordered the landings' bar lies over the opened legend** (231
   to 420 points, 1,365 to 1,792 with the bar's row opened; at 734 × 343 the opened row also over the war row and the
   news; R203's rule for the bar is a narrow desk's alone). AT: `c88_sizes 88903 0 734x343,852x393` no `legend<landings`
   and no `row<landings`.
+  - R210 and R211 done together (HASH210; one cause, the phone's landings' bar and its legend in one place): upright
+    the bar stands under the legend's title (`--landings-top`, 6.2 rem); on a phone the bar gives way while the legend
+    is open and is back as it folds, one of the two at a time as the ranking (R208); the bar's opened row ends above
+    the war row, its lines scrolled. `MODES=political,seaControl c88_sizes 88903 0 393x659,393x852,734x343,852x393`: no
+    `legend<landings` and no `row<landings` in any row, no "toggle press failed" (before 308 of 308 and 363 of 363
+    upright, the toggle's tap timed out; `row<landings 574`, `news<landings 342` at 734 x 343); what is left there is
+    R203's legend over the news (run 88's objection, not taken). A case in `landingsBarPanel1938` crossing the five
+    supported sizes and back with one landing, a nation's panel opened and closed at each: the bar and the legend
+    apart, the element at the legend's title the title, the bar gone while the legend is open and back, the opened
+    bar's foot above the war row (red without: the two met at 393 x 659). 22 specs on the legend, the ranking, the
+    landings and the first cue 83/83. Stands on ADR-760, R60a, R208; no ADR (ADR-914).
 - [ ] R212 **R88-N3: at 393 × 659 the relations footer's first line is cut** ("Click a nation to select it, a line to
   read it. · 24 nations with no tie shown are left out"; two lines at 393 × 852; `c88_rs_88905_400.log`). AT: the
   footer whole at 393 × 659, the graph's height as R185 and R195 have it.

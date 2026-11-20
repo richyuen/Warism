@@ -118,3 +118,11 @@
   717 bulk landing runs). Three new non-blocking issues filed in Batch 56 (R214 to R216) beside R210 to R213: fixed
   before the release, no critic run after (ADR-1139); then `check:review`, `bench G --gpu-only`, the tag, and the loop
   stops.
+
+## 2026-11-20 — R210, R211: a phone's landings' bar and its legend
+
+- Upright the bar under the legend's title; on a phone the bar gives way while the legend is open; its opened row ends
+  above the war row. `c88_sizes 88903 0` at the four phone sizes: no `legend<landings`, no `row<landings`, the toggle
+  opens. A crossing case in `landingsBarPanel1938`. Run by hand: the 22 specs that read the legend, the ranking, the
+  landings' bar or the first cue (83/83). The replay of `c88_sizes` wrote over the critic's `c88_sz_88903` JSON and
+  shots; the JSON put back from a copy.

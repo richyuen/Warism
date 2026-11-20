@@ -128,3 +128,86 @@ test('1280 × 800: the landings\' bar on the page\'s middle beside the nation pa
   await page.getByTestId('nation-close').click({ timeout: 5_000 });
   await expect(page.getByTestId('nation-panel')).toHaveCount(0);
 });
+
+// R210, R211 (critic run 88, R88-N1, R88-N2; ADR-1141's sizes): on the iPhone 16 upright the landings' bar lay over the
+// whole folded legend and its toggle took no tap; on its side the bar lay over the opened legend, and at 734 × 343 its
+// opened row over the war row. The bar stands under the legend's title upright; it gives way while the legend is open
+// and is back as it folds; its opened row ends above the war row. One landing, the five supported sizes crossed and back.
+test('a phone\'s landings\' bar and its legend: the title in reach, one of the two open at a time', async ({ page }) => {
+  test.setTimeout(240_000);
+  await page.setViewportSize({ width: 393, height: 659 });
+  await page.goto('/?scenario=1938&paused=1&seed=21103');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.hud.command({ kind: 'declareWar', attacker: a, defender: d }), { a: ENG, d: GER });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await page.evaluate((n) => window.__warsim!.view!.select(n), ENG);
+  await page.getByTestId('take-control').click();
+  await page.getByTestId('release-control').waitFor();
+  await page.evaluate((n) => {
+    const v = window.__warsim!.view!;
+    const sel = v.formationsOf(n).filter((id) => !v.formationAfloat(id)).map((id) => [id, Math.hypot(v.formationPos(id)![0] - 1023.5, v.formationPos(id)![1] - 275.5)] as const).sort((a, b) => a[1] - b[1]).slice(0, 4).map((d) => d[0]);
+    window.__warsim!.hud.commands(sel.map((id) => ({ kind: 'moveFormation', id, x: 1072.5, y: 259.5, nation: n })));
+  }, ENG);
+  await page.evaluate(() => window.__warsim!.sim.step(2));
+  const bar = page.getByTestId('landings-bar');
+  const legend = page.getByTestId('map-legend');
+  const toggle = page.getByTestId('legend-toggle');
+  const look = () =>
+    page.evaluate(() => {
+      const box = (s: string): DOMRect | null => document.querySelector(s)?.getBoundingClientRect() ?? null;
+      const b = box('[data-testid=landings-bar]')!;
+      const l = box('[data-testid=map-legend]')!;
+      const t = document.querySelector('[data-testid=legend-toggle]');
+      const tb = t?.getBoundingClientRect();
+      const row = box('[data-testid=war-banners]');
+      return {
+        // The element at the middle of the legend's title.
+        atToggle: tb ? t!.contains(document.elementFromPoint((tb.left + tb.right) / 2, (tb.top + tb.bottom) / 2)) : null,
+        meets: b.width > 0 && l.width > 0 && b.left < l.right - 1 && l.left < b.right - 1 && b.top < l.bottom - 1 && l.top < b.bottom - 1,
+        barFoot: b.bottom,
+        barRight: b.right,
+        barLeft: b.left,
+        rowTop: row ? row.top : innerHeight,
+      };
+    });
+  for (const [w, h] of [[393, 659], [393, 852], [734, 343], [852, 393], [2560, 1305], [393, 659]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    // A nation's panel opened and closed (the played nation's; upright the bar gives way to it).
+    await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), ENG);
+    await expect(page.getByTestId('nation-panel')).toBeVisible();
+    await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+    await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    const at = `${w} × ${h}`;
+    // A phone by its width or its height (`PHONE_QUERY`): its legend folds.
+    const folds = w <= 600 || h <= 500;
+    for (const mode of ['political', 'seaControl'] as const) {
+      await page.evaluate((m) => window.__warsim!.hud.setMapMode(m), mode);
+      await page.waitForTimeout(300);
+      await expect(bar, `${at} ${mode}: the bar shown`).toBeVisible();
+      const folded = await look();
+      expect(folded.meets, `${at} ${mode}: the bar and the legend apart`).toBe(false);
+      expect(folded.barLeft, `${at} ${mode}: the bar in the view`).toBeGreaterThanOrEqual(0);
+      expect(folded.barRight, `${at} ${mode}: the bar in the view`).toBeLessThanOrEqual(w);
+      if (!folds) {
+        await expect(toggle, `${at}: a desk's legend has no fold`).toHaveCount(0);
+        continue;
+      }
+      expect(folded.atToggle, `${at} ${mode}: the legend's title under the pointer`).toBe(true);
+      // Opened by a click on its title: the bar gives way; folded, the bar is back.
+      await toggle.click({ timeout: 5_000 });
+      await expect(legend).toHaveAttribute('data-open', 'true');
+      await expect(bar, `${at} ${mode}: the bar gone while the legend is open`).toBeHidden();
+      await toggle.click({ timeout: 5_000 });
+      await expect(legend).toHaveAttribute('data-open', 'false');
+      await expect(bar, `${at} ${mode}: the bar back`).toBeVisible();
+    }
+    // The bar's row opened: its foot above the war row, the legend's title still in reach; closed again.
+    await page.getByTestId('landing-toggle').first().click({ timeout: 5_000 });
+    await page.waitForTimeout(300);
+    const opened = await look();
+    expect(opened.barFoot, `${at}: the opened bar above the war row`).toBeLessThanOrEqual(opened.rowTop);
+    expect(opened.meets, `${at}: the opened bar and the legend apart`).toBe(false);
+    if (folds) expect(opened.atToggle, `${at}: the legend's title under the pointer beside the opened bar`).toBe(true);
+    await page.getByTestId('landing-toggle').first().click({ timeout: 5_000 });
+  }
+});

@@ -2425,8 +2425,12 @@ button.unit-icon.on {
   #ui:has(.map-legend.foldable[data-open='true']) .stats-ranking {
     display: none;
   }
-  /* The landings stand where the ranking stood, the view's width; a nation's or a formation's panel there is first. */
+  /* The landings stand where the ranking stood, the view's width; a nation's or a formation's panel there is first.
+     Under the legend's title, not on it (R210, critic run 88, R88-N1: at 393 px the bar lay over the whole folded
+     legend, and its toggle took no tap while a landing was on the bar). */
   .landings-bar {
+    --landings-top: 6.2rem;
+    top: var(--landings-top);
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
@@ -2609,6 +2613,20 @@ button.unit-icon.on {
   }
   #ui:has(.nation-panel, .history-panel) .map-legend.foldable {
     display: none;
+  }
+}
+/* A phone's landings and its opened legend, one at a time (R210, R211, critic run 88: on its side the bar lay over the
+   opened legend's corner, 231 to 420 sampled points; upright the legend opens where the bar stands): the bar gives way
+   while the legend is open and is back as it folds, as the ranking does (R208). The bar's opened row ends above the war
+   row, its lines scrolled (R211: at 734 x 343 it lay over 574 points of the row). */
+@media (max-width: 600px), (max-height: 500px) {
+  #ui:has(.map-legend.foldable[data-open='true']) .landings-bar {
+    display: none;
+  }
+  .landings-bar {
+    box-sizing: border-box;
+    max-height: calc(100% - var(--landings-top, 3.4rem) - var(--bar-top, 2.8rem) - 0.4rem - var(--banners-h, 2.2rem) - 0.4rem);
+    overflow-y: auto;
   }
 }
 /* A narrow desk's opened legend beside what stands at its height (R203): left of an open ranking (20 rem at most, top

@@ -2174,7 +2174,8 @@ builds).
 - **Landings bar** (`src/ui/LandingsBar.tsx`): the player's landings, a row each, top middle; it gives way to the
   History, Relations, Settings and Editor panels and a nuclear alert. On a short view (a phone on its side) it
   stands to the right of an open nation panel, never over its head (R60a). On a phone's width it gives way to the
-  nation panel.
+  nation panel and stands under the legend's title; on a phone it gives way while the legend is open, and its
+  opened row ends above the war row (R210, R211).
 - **Ticker** (`src/ui/Ticker.tsx`, bottom left, newest last, `role="log"`): the `TICKER_ROWS` (5) latest of
   `TICKER_KINDS` within `TICKER_HOURS` (720; a puppet freed among them, `PuppetReleased`, the cause of its "left its
   war" rows, R42d), deaths deduplicated, a peace with its annexation one row
