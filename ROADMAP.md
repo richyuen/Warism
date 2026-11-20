@@ -386,6 +386,22 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 - Kept as run 89: `heroPop`'s jumps (85905: 12), the opened legend over the news on a phone on its side, R172, R192,
   ADR-1111.
 
+## Batch 59 — critic run 91's findings (focused, on 4f5c5427; no blocking issue, every score 8: the release check)
+
+Non-blocking, fixed before the release with no critic run after them (ADR-1139).
+
+- [ ] R223 **R91-N1: R221's `slowClick` change turns five named landing runs from 0 broken to 1** (27037/3517 two
+  groups, 31103/15101 one and two, 31153/3517 two, 31165/3517 two; waits of 9–14 days against best ways of 2–7), and
+  lets 31157/3517 one group pass on a kept division's landing while 366 waits 14.3 days. AT: each of the five traced (a
+  slow voyage named and its cause fixed, or the checker's rule narrowed) so that `npx tsx
+  tools/diag/landingInvariants.ts 31103 15101 120 31103 30,90 1` and the others end with 0 broken while `... 90103 3517
+  120 90103 30 2 8` stays 0; and a kept division no longer lets a click pass while another of it waits past the bound
+  (31157 3517 one group).
+- [ ] R224 **R91-N2: random world 91415 (three nations) at peace fifteen years, its line "At peace for now" every day,
+  no reason and no History row** (no war, no massing; the same on `fc767d88`). AT: 91415's cause traced (which of
+  ADR-1145's "for now" causes holds), and either a war comes or the line names what it waits on (`npx tsx
+  critic/scripts/c90_peaceTruth.ts 3 91415 1 15`).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

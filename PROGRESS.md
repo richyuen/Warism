@@ -223,3 +223,9 @@
 - Bisect: R217 (`4e7b0505`). One day of 7019's year 20 took 194 ms (39 before), 90 ms in `inReach` from `callSides`.
   `inReach` on typed arrays, the same answer (hashes unchanged): that day's AI 167 → 81 ms; seed 99's AI longest day
   247 → 77 ms. The critic's probe twice: no sample under 58.8 fps.
+
+## 2026-11-20 — Critic run 91 (focused, on 4f5c5427): approve
+
+- Every score 8 (13 afresh, `semanticZoom` carried), 0 blocking; Batch 58 met its ATs. Non-blocking R91-N1 (R221's
+  checker on named landing runs) and R91-N2 (91415's silent fifteen-year peace) filed as Batch 59 (R223, R224).
+  A probe rewrote `critic/c85_critic_standoff.warsim-scenario` again; not committed.
