@@ -238,7 +238,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   nothing.** AT: `longStep1938` says that the world it stepped did send a capital to the field (red when the seed's
   world no longer does); a test that reads `src/sim` and `src/worker` for a loop whose bounds a closure of its function
   writes, 0 found, red on `enemyDistance` as it was before R209.
-  - Done (HASH215): `tests/unit/loopBounds.test.ts` reads every source of `src/sim`, `src/worker` and `src/shared`
+  - Done (9f65ba5a): `tests/unit/loopBounds.test.ts` reads every source of `src/sim`, `src/worker` and `src/shared`
     with the TypeScript parser (`loopBoundsScan.ts`) for a `for`, `while` or `do` loop whose condition reads a variable
     that a closure of the loop's function writes, the closure written in the loop or called by its name from it: none
     found. It finds `enemyDistance` as it was before R209 (`tests/fixtures/enemyDistanceBeforeR209.ts.txt`: the search
