@@ -23,7 +23,7 @@ closes the panels beside it (ADR-1137 (d)).
   the legend's corner). `critic/c86_mr2_*`, `c86ms_84901_700x800_seaControl*.png`. AT: `c86_modeRow` a war shown in
   every map mode at 680–760, nothing covered; R197's case as now. (Hearts of Iron IV's folded legend, the report's idea:
   one way to free the room.)
-  - Done (COMMIT): on a desk of 800 px or less the legend is folded to its title until clicked, in its own place, as a
+  - Done (fa44ea2b): on a desk of 800 px or less the legend is folded to its title until clicked, in its own place, as a
     phone's is (`NARROW_DESK_QUERY`, MapLegend's `fold`; opened, it shows its rows and the units' signs); the free band
     measured a banner's height above the row's foot, whatever the row holds (with "+n" alone the legend fell out of it
     and the banner came back 3 px over its corner). `c86_modeRow 84901 400`: `fit0` [], `stale` [], `covering` [] in
