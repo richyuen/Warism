@@ -32,9 +32,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
     four changes.
   - On a desk with room (1600, 1920, 2560 px) nothing changes: the row on the centre, 0 px off, three banners in all
     eleven map modes (`c86_deskAttack 84901 400 wide`, as R202).
-- **Not chosen:** the side from the row's widest case (three banners of 11 rem names never fit a centre under about
-  2700 px: R202's centre gone at 1600 and 1920); the row moved to the band and held there (one move with the count
-  unchanged, which the AT forbids).
+- **Not chosen:** the side from the row's widest case, the critic's first way (a name is cut at 11 rem, so the widest
+  three banners are far wider than those a game shows, and a row that fits the centre would stand in the band for
+  names it does not hold; not measured); the row moved to the band and held there (one move with the count unchanged,
+  which the AT forbids).
 
 ## ADR-1139 · 2026-11-19 · the user's decision · Non-blocking items fixed before the release and judged at the next; the loop stops after a release
 

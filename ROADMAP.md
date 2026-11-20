@@ -89,11 +89,13 @@ these items are non-blocking, done as items. Each item on the war row or a panel
 - [x] R204 **R87-N2: on a desk of about 1100 to 1366 px the row jumps 24 to 44 px when a war on it changes** (R202's rule
   decides centre or band from the banners shown now; `c87_rowJitter 87601 300`: off the centre 40 % of the time at 1280 ×
   720). AT: `c87_rowJitter 87601 300` `moves` 0 wherever `countCh` is 0; R202's case as now.
-  - Done (HASH204; ADR-1142): the row's side is chosen when the free band or the number of banners changes and held
+  - Done (f63f45c8; ADR-1142): the row's side is chosen when the free band or the number of banners changes and held
     until then (`rowStand`); held on the centre, a row that outgrows it gives a banner behind "+n", and that many banners
     come back in the band. `c87_rowJitter 87601 300` on the final code: `moves` 0 in the six cases where `countCh` is 0
     and in 820 × 800 political with its one, one move in the eighth with its count's change (1100 × 800 political,
-    3 → 2); the same on a pass before `outgrown`. The same eight cases for 60 s
+    3 → 2); the same on a pass before `outgrown`. On another seed, `c87_rowJitter 84901 400`: `moves` 0 in the four
+    cases where `countCh` is 0, five moves in the other four, each with its count's change (2 → 3, 3 → 2, 1 → 2). The
+    same eight cases of 87601 for 60 s
     (a scratch copy that also reads the band's edges): moves with the count unchanged 11 → 0, moves in all 12 → 3, count
     changes 1 → 4; the band's edges still in every case. The cost in ADR-1142: at 1280 × 720 political the row 44 px off
     the centre the whole time (47 %, jumping). R202's and R197's as then: `c86_deskAttack 84901 400 wide` 0 px off with
@@ -101,7 +103,10 @@ these items are non-blocking, done as items. Each item on the war row or a panel
     `c86_modeRow 84901 400` `stale` [], `fit0` [], `covering` []. `tests/unit/rowStand.test.ts` (6: the side over
     sweeps of widths, the drop, one banner, the slack). A case in `warBannerRows1938` at 1280 × 720: the Spanish war
     gives its place to Turkey and Iran's and the row stays (red without: 44 px), the map mode changed and back chooses
-    again, a war of long names takes a place and the row stays on the centre. 14 specs on the war row 72/72
+    again, a war of long names takes a place and the row stays on the centre, a banner behind "+n" (the branch that ran:
+    2 banners, 0 px off; the long row is 715 px against the centre's 712); then the five supported sizes crossed and
+    back, a nation's panel and History opened and closed, the row in its width and over nothing at each, three banners
+    on the centre at 2560 × 1305, a 1 px nudge at the end (ADR-1137 (d), ADR-1141). 14 specs on the war row 72/72
     (`director1938` seed 7 timed out loading in the run of all, green alone). A page rule, no sim rule (ADR-803 not
     read); no drawing code (goal 5 not read).
 - [ ] R205 **With every relations kind hidden at 1600 px the footer says "No ties of these kinds." and "98 nations with no

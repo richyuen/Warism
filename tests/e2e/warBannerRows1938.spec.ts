@@ -654,7 +654,7 @@ test('a narrow desk\'s legend stands at the top left, and opened lies over no wa
 // (the Spanish one) leaves the row for one of short names, then one of short names for one of long: with three banners
 // before and after the row stands where it stood; a change of map mode and back chooses again.
 test('a desk\'s war row keeps its side when a war on it gives its place to another', async ({ page }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(240_000);
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
@@ -713,4 +713,49 @@ test('a desk\'s war row keeps its side when a war on it gives its place to anoth
   // Three banners still: where it stood. Fewer: the count changed, and the side was chosen again for it.
   if (after.banners === centred.banners) expect(Math.abs(after.off - centred.off), 'three banners: the row where it stood').toBeLessThanOrEqual(2);
   else expect(Math.abs(after.off), 'a banner behind "+n": the row on the centre still').toBeLessThanOrEqual(1);
+  test.info().annotations.push({ type: 'the row that outgrew the centre', description: `${after.banners} banners, ${Math.round(after.off)} px off` });
+  // What the row holds does not outlast its band (ADR-1137 (d), ADR-1141): the five supported sizes crossed and back, a
+  // nation's panel and History opened and closed on the way; the row in its width and over nothing at each.
+  const clear = () =>
+    page.getByTestId('war-banners').evaluate((row) => {
+      const over = (a: DOMRect, b: DOMRect): boolean => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+      const items = [...row.children].map((c) => c.getBoundingClientRect());
+      const others = [...row.parentElement!.children].filter((c) => c !== row).map((c) => c.getBoundingClientRect()).filter((b) => b.width > 0 && b.height > 0);
+      return { inside: row.scrollWidth <= row.clientWidth + 1 && items.every((i) => i.left >= 0 && i.right <= innerWidth), over: items.filter((i) => others.some((o) => over(i, o))).length };
+    });
+  for (const [w, h] of [[393, 659], [393, 852], [734, 343], [852, 393], [2560, 1305], [1280, 720]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    if (w === 852 || w === 2560 || w === 1280) {
+      await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+      await expect(page.getByTestId('nation-panel')).toBeVisible();
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+      await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+      await expect(page.getByTestId('nation-panel')).toHaveCount(0);
+    }
+    await page.waitForTimeout(500);
+    const at = `${w} × ${h}`;
+    const c = await clear();
+    expect(c.inside, `${at}: the row in its width`).toBe(true);
+    expect(c.over, `${at}: the row over nothing`).toBe(0);
+    const r = await look();
+    expect(r.banners, `${at}: a war shown`).toBeGreaterThanOrEqual(1);
+    if (w === 2560) {
+      expect(r.banners, `${at}: three banners`).toBe(3);
+      expect(Math.abs(r.off), `${at}: on the bar's centre`).toBeLessThanOrEqual(1);
+    }
+    if (w === 1280) {
+      // Chosen afresh for this band: on the centre, or with its three banners in the band; no banner lost to a side held
+      // from before the crossing.
+      expect(Math.abs(r.off) <= 1 || r.banners === 3, `${at}: ${r.banners} banners ${Math.round(r.off)} px off`).toBe(true);
+      // A stale count shows as another after 1 px.
+      await page.setViewportSize({ width: w + 1, height: h });
+      await page.waitForTimeout(300);
+      await page.setViewportSize({ width: w, height: h });
+      await page.waitForTimeout(500);
+      const nudged = await look();
+      expect(nudged.banners, `${at}: nudged, the banners as shown`).toBe(r.banners);
+      expect(Math.abs(nudged.off - r.off), `${at}: nudged, where it stood`).toBeLessThanOrEqual(2);
+    }
+  }
 });

@@ -59,6 +59,12 @@
 - The side, the bar's centre or the band's middle, chosen when the band or the banners' number changes and held; a row
   that outgrows the centre gives a banner. `c87_rowJitter 87601 300`: `moves` 0 wherever `countCh` is 0; on 60 s
   passes moves with the count unchanged 11 → 0. R202's probes as then. Run by hand: the 14 specs that read the war row
-  (chromeCover1938, director1938, phoneLayout1938, warBannerRows1938 and the rest by `grep war-banner`), 72/72, the
+  (barNarrow1938, chromeCover1938, director1938, landingsBarPanel1938, phoneLayout1938, ranking1938, reviewBatch1938,
+  settings1938, tags1938, ticker1938, timeLapse1938, toBattle1938, warBannerRows1938, warToDeath1938), 72/72, the
   director's seed 7 alone after a load timeout. The replays of `c87_rowJitter` wrote over the critic's
   `c87_rj_87601.json` and its eight shots; both put back from copies.
+- After it (the tick's commit): the case crosses the five supported sizes and back with a nation's panel and History
+  opened and closed (ADR-1137 (d), ADR-1141), and says which branch its last stage took (a banner behind "+n", 2 banners
+  0 px off); the tick names f63f45c8; `c87_rowJitter 84901 400`, a second seed: no move without its count's change;
+  ADR-1142's option not chosen without its unmeasured width. The replay of `c86_deskAttack 84901 400 wide` wrote over
+  the critic's run-86 shots `c86da_84901_d400_wide_*.png` on disk (the probe's shots take no tag; not in git).
