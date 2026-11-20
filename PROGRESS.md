@@ -74,3 +74,9 @@
 - "No ties of these kinds." alone with every kind hidden; the count of nations left out only beside ties shown. R201's
   case extended (1600 × 900, the count with ties); `c86_relSaid 84903 400` clean. Run by hand: heroesRead1938,
   relations1938, relationsTap1938.
+
+## 2026-11-20 — R207: the landings' bar right of the nation panel on a narrow desk
+
+- At 601 to 700 px the bar stood on the panel's ×; its middle now keeps right of the panel's edge by half its least width.
+  Cases at 601, 640, 700, 800 and 1280 px in `landingsBarPanel1938`. Run by hand: the specs that read the landings' bar
+  (landingHoldMark1938, landingMark1938, landingsBar1938, landingsBarPanel1938, research1938).

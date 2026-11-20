@@ -1582,6 +1582,13 @@ textarea,
 #ui:has(.history-panel, .relations-panel, .settings-panel, .editor-panel, .nuke-alert) .landings-bar {
   display: none;
 }
+/* Right of an open nation's panel on a desk too narrow for both about the middle (R207, found by R203's case: at 601 to
+   about 700 px the bar's 18 rem stood on the panel's ×, and a click on it opened a landing): its middle no further left
+   than the panel's right edge (18.9 rem and 2 px, PLAN 3.12Rh4) and half its least width. Wider, the page's middle as
+   before: its width leaves that room by its rule. */
+#ui:has(.nation-panel) .landings-bar {
+  left: max(50%, 28.6rem);
+}
 .landings-bar ol,
 .landings-bar ul {
   margin: 0;

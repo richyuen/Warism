@@ -125,10 +125,16 @@ these items are non-blocking, done as items. Each item on the war row or a panel
     political legend's two lines crowd nothing there; open at the top left they would cover the map where a phone's are
     folded, and a legend open in one mode and folded in the next would change its size with the mode. One place and one
     state in every mode, as the phone's (ADR-760). (d) was the user's to choose and (b) was chosen.
-- [ ] R207 **On a desk 601 to about 700 px wide the landings' bar stands on the nation panel's ×** (found by R203's case:
+- [x] R207 **On a desk 601 to about 700 px wide the landings' bar stands on the nation panel's ×** (found by R203's case:
   a click on `nation-close` lands on `landing-go` or `landing-status`; R61-N1's case, mended there for a phone on its
   side, R60a). Outside the supported sizes (ADR-1141): non-blocking. AT: at 601, 640 and 700 × 800 with a landing
   ordered the element at the ×'s centre is the ×, and a click closes the panel; `landingsBarPanel1938` as now.
+  - Done (HASH207): beside an open nation's panel the bar's middle stands no further left than the panel's right edge
+    and half the bar's least width (`left: max(50%, 28.6rem)`); on a desk with room that is the page's middle, as
+    before. R203's cases in `landingsBarPanel1938`, now at 601, 640, 700 and 800 × 800: the element at the × is the ×,
+    the bar right of the panel and in the view, the click closes the panel (red without at 601, 640 and 700: the bar's
+    row at the ×); a case at 1280 × 800: the bar on the page's middle within 1 px. The sideways phones' cases as before.
+    landingHoldMark1938, landingMark1938, landingsBar1938, landingsBarPanel1938, research1938 19/19. Mends R60a's rule for a narrow desk; no ADR (ADR-914).
 - [ ] R208 **On the iPhone 16 upright the opened legend lies over the folded ranking's bar** (found by R203's probe, as
   it was before R203: at 393 × 659 and 393 × 852 the ranking's bar stands at 156 to 386 px beside the legend's title, and
   the opened legend reaches 237 px in the political mode, 328 in sea control, 347 in air control, 369 in fallout; the
