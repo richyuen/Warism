@@ -43,7 +43,7 @@ closes the panels beside it (ADR-1137 (d)).
 - [x] R202 **The design objection: the desk's row centred in the free band leaves the bar's axis** (24 to 44 px on a wide
   desk, moving about 68 px when the map mode changes; R197). AT: on a desk with room the row on the bar's centre, its
   width limited by the band; R197's and R200's cases as then.
-  - Done (COMMIT): the row keeps every banner the free band holds, and stands on the bar's centre whenever those banners
+  - Done (435feff5): the row keeps every banner the free band holds, and stands on the bar's centre whenever those banners
     fit in the width free on both sides of it alike (`freeBand`'s `even`); the band's middle only when the centre would cost
     a banner. `c86_deskAttack 84901 400 wide`: at 1600, 1920 and 2560 off the centre by 0 px in all eleven map modes, three
     banners (before 16 to 44 px, moving with the mode); at 1280 the political modes keep three banners in the band (16 to
