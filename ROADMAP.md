@@ -390,13 +390,23 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 
 Non-blocking, fixed before the release with no critic run after them (ADR-1139).
 
-- [ ] R223 **R91-N1: R221's `slowClick` change turns five named landing runs from 0 broken to 1** (27037/3517 two
+- [x] R223 **R91-N1: R221's `slowClick` change turns five named landing runs from 0 broken to 1** (27037/3517 two
   groups, 31103/15101 one and two, 31153/3517 two, 31165/3517 two; waits of 9–14 days against best ways of 2–7), and
   lets 31157/3517 one group pass on a kept division's landing while 366 waits 14.3 days. AT: each of the five traced (a
   slow voyage named and its cause fixed, or the checker's rule narrowed) so that `npx tsx
   tools/diag/landingInvariants.ts 31103 15101 120 31103 30,90 1` and the others end with 0 broken while `... 90103 3517
   120 90103 30 2 8` stays 0; and a kept division no longer lets a click pass while another of it waits past the bound
   (31157 3517 one group).
+  - Done (COMMIT): R221 kept a division in its earlier click when, an hour after a new order, it was still aboard the
+    same landing near the same water; after an order home or a march (water -1) a landing still has its id and water
+    that hour, so each of the five was a division ordered home and kept (31103's 270, aboard t269's L4, ordered home at
+    t455, broke t269's click at t485). Now only a new click that is itself a landing keeps it (90103's t162 click 3
+    cells off, which the sim kept on its landing, still kept). The five: 0 broken; 90103, 90121, 90123: 0. 31157 3517 one
+    group passes, not by a kept division hiding a slow one: 366 boarded L7, 367's landing, on its second voyage (aboard
+    at t2001), and the bound is the click's first division ashore (ADR-843; 367 at 7.8 days, best 7.3), a next voyage
+    told (R17b; `leftBehind` 0); the old checker broke it only by taking 367 from its click on a re-click one cell off.
+    The critic's 396 named setups and the 168 next-voyage seeds through `landingInvariants`: 2 of 558 broken, 30041
+    3517 one group and 31175 3517 one group, each the same on the checker before R221 (ADR-914's tail).
 - [ ] R224 **R91-N2: random world 91415 (three nations) at peace fifteen years, its line "At peace for now" every day,
   no reason and no History row** (no war, no massing; the same on `fc767d88`). AT: 91415's cause traced (which of
   ADR-1145's "for now" causes holds), and either a war comes or the line names what it waits on (`npx tsx

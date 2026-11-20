@@ -229,3 +229,8 @@
 - Every score 8 (13 afresh, `semanticZoom` carried), 0 blocking; Batch 58 met its ATs. Non-blocking R91-N1 (R221's
   checker on named landing runs) and R91-N2 (91415's silent fifteen-year peace) filed as Batch 59 (R223, R224).
   A probe rewrote `critic/c85_critic_standoff.warsim-scenario` again; not committed.
+
+## 2026-11-20 — R223: R221's keep only for a new click that is a landing (the slowClick checker)
+
+- R91-N1's five were divisions ordered home while aboard and kept. Narrowed; the five 0 broken, 90103 still 0. 558
+  named and next-voyage runs: 2 broken, both as before R221. 31157's 366 is a next voyage, outside the bound (ADR-843).

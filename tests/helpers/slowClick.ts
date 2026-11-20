@@ -57,9 +57,9 @@ export class SlowClicks {
   private open: Click[] = [];
   /**
    * Divisions a click of this hour takes from their earlier clicks, once its refusals are read (`hour`); with the
-   * landing each was aboard (its id), or -1.
+   * landing each was aboard (its id), or -1, and the new click's water (-1: no landing).
    */
-  private taken: { k: Click; id: number; aboard: number }[] = [];
+  private taken: { k: Click; id: number; aboard: number; water: number }[] = [];
   /** Clicks reckoned (a finite best way) and not (no way to reckon: not judged). */
   reckoned = 0;
   unreckoned = 0;
@@ -88,7 +88,10 @@ export class SlowClicks {
    * t118 click of 364 and 367; 364, aboard, clicked 2 cells off its beach at t162, sailed on in its landing and was
    * ashore 6.2 days after t118, while 367 was judged alone by 364's 6.6-day best): the click changed nothing of its
    * voyage, as R56a's same water. Not one whose landing a click sent elsewhere (a landing is redirected as one, its id
-   * kept): that voyage is the new click's.
+   * kept): that voyage is the new click's. Nor one whose new order is no landing (home, a march: ROADMAP R223, critic
+   * run 91's R91-N1: 31103's 270, aboard t269's landing, ordered home at t455 and kept, broke t269's click at t485;
+   * 27037, 31153, 31165 the same: a landing's water is the same in the hour after a home order, as after a click the
+   * sim keeps it on, so only a new click that is itself a landing is kept so).
    */
   click(w: World, ids: readonly number[], water: number, land = -1): void {
     for (const k of this.open)
@@ -98,7 +101,7 @@ export class SlowClicks {
           this.kept++;
           continue;
         }
-        this.taken.push({ k, id, aboard: w.embarked.has(id) ? (landingOfDivision(w, id)?.id ?? -1) : -1 });
+        this.taken.push({ k, id, aboard: w.embarked.has(id) ? (landingOfDivision(w, id)?.id ?? -1) : -1, water });
       }
     if (water < 0 || ids.length === 0) return;
     const best = clickBest(w, ids, water, land);
@@ -121,10 +124,11 @@ export class SlowClicks {
    */
   hour(w: World, landed: ReadonlySet<number>, refused: ReadonlySet<number>): void {
     const f = w.formations;
-    for (const { k, id, aboard } of this.taken) {
+    const r = w.atSize(SAME_LANDING_CELLS);
+    for (const { k, id, aboard, water } of this.taken) {
       if (refused.has(id)) continue;
-      const l = aboard >= 0 && w.embarked.has(id) ? landingOfDivision(w, id) : undefined;
-      if (l !== undefined && l.id === aboard && k.water >= 0 && near(w, l.water, k.water, w.atSize(SAME_LANDING_CELLS))) {
+      const l = aboard >= 0 && water >= 0 && k.water >= 0 && w.embarked.has(id) ? landingOfDivision(w, id) : undefined;
+      if (l !== undefined && l.id === aboard && near(w, l.water, k.water, r)) {
         this.kept++;
         continue;
       }
