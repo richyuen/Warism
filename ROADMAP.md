@@ -317,7 +317,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   land 0; 89413, 2 of 3). `homeNeighbours` then finds no home (null: every neighbour home before R217; those its men
   stand by since). AT: every random world's capital on a land cell of its own at the start, on several seeds and sizes;
   the capitals' cities as now. First: where the capital point is set (the city's centre beside the coast).
-  - Done (COMMIT): the cause is the readers, not the placing: every capital city's own cell is land of its nation (1938
+  - Done (0ee58e32): the cause is the readers, not the placing: every capital city's own cell is land of its nation (1938
     102 of 102, seed 7's 60 60, 89413 3), while the coordinates of a shore city lie in the sea (13 of 1938's: Brazil,
     Estonia, Iceland, Panama, New Zealand…; 10 of seed 7's 60; 2 of 89413's). Three readers made a cell of them:
     `homeNeighbours` (no home: every neighbour home), sea supply's bloc home lands (`seaReach`) and the map's label
