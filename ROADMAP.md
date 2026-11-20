@@ -112,7 +112,7 @@ these items are non-blocking, done as items. Each item on the war row or a panel
 - [x] R205 **With every relations kind hidden at 1600 px the footer says "No ties of these kinds." and "98 nations with no
   tie shown are left out"** (R201; the second says nothing new; `c87_rs_84903_400.log`). AT: the empty graph's footer
   without the left-out count; R201's case as now.
-  - Done (HASH205): the left-out count is said only beside a graph with ties shown (`RelationsPanel`'s footer). R201's
+  - Done (39ccc7a1): the left-out count is said only beside a graph with ties shown (`RelationsPanel`'s footer). R201's
     case in `relationsTap1938`, now at 1600 × 900 too: with every kind hidden the footer is "Truces hidden · No ties of
     these kinds." and no more (red without: "… · 102 nations with no tie shown are left out"), the count there with
     ties shown and back with Wars shown again. `c86_relSaid 84903 400`: that line at 568, 844 and 1600 px, `empty` [],
