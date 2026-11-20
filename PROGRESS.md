@@ -217,3 +217,9 @@
 - 90103's slowClick was the checker judging 367 by 364's best after 364's 2-cell re-click. Kept when still aboard the
   same landing near the same water. The critic's 15 seeds 0 of 90; a fresh 30 seeds 3 of 180, the same before (the
   tail ADR-914 keeps).
+
+## 2026-11-20 — R220: the heroes frame drop was a 167 ms strategic AI day (inReach on typed arrays)
+
+- Bisect: R217 (`4e7b0505`). One day of 7019's year 20 took 194 ms (39 before), 90 ms in `inReach` from `callSides`.
+  `inReach` on typed arrays, the same answer (hashes unchanged): that day's AI 167 → 81 ms; seed 99's AI longest day
+  247 → 77 ms. The critic's probe twice: no sample under 58.8 fps.

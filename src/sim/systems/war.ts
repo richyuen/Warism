@@ -137,10 +137,14 @@ export function isFounded(world: World, n: number): boolean {
 export const WAR_REACH_KM = 500;
 
 let reachScratch: Int16Array | null = null;
+let reachQueue: Int32Array | null = null;
 
 /**
  * Whether nation `x` controls land within WAR_REACH_KM of land the nations `of` control: a breadth-first spread from
- * theirs over land and sea alike, the map looping east-west, WAR_REACH_KM / km a cell steps out.
+ * theirs over land and sea alike, the map looping east-west, WAR_REACH_KM / km a cell steps out. In typed arrays, one
+ * queue, the nations by id (ROADMAP R220, critic run 90's R90-N3: two `callSides` of a declaration took 90 ms of one
+ * 167 ms day of the strategic AI on 7019's year 20, a `Set` asked and a four-cell array made at each of 2 M cells); the
+ * cells reached, and so the answer, as before.
  */
 export function inReach(world: World, of: readonly number[]): (x: number) => boolean {
   const { controller } = world.cells;
@@ -149,33 +153,53 @@ export function inReach(world: World, of: readonly number[]): (x: number) => boo
   const H = N / W;
   const R = Math.max(1, Math.round(WAR_REACH_KM / kmPerCell(W)));
   if (!reachScratch || reachScratch.length !== N) reachScratch = new Int16Array(N);
+  if (!reachQueue || reachQueue.length !== N) reachQueue = new Int32Array(N);
   const dist = reachScratch;
+  const queue = reachQueue;
   dist.fill(-1);
-  const set = new Set(of);
-  let frontier: number[] = [];
+  let top = 0;
+  for (const n of of) top = Math.max(top, n);
+  const mine = new Uint8Array(Math.max(top, world.nations.highWater) + 1);
+  for (const n of of) mine[n] = 1;
+  let tail = 0;
   for (let c = 0; c < N; c++) {
-    if (!set.has(controller[c]!)) continue;
+    if (mine[controller[c]!] !== 1) continue;
     dist[c] = 0;
-    frontier.push(c);
+    queue[tail++] = c;
   }
-  for (let d = 1; d <= R && frontier.length > 0; d++) {
-    const next: number[] = [];
-    for (const c of frontier) {
+  let head = 0;
+  for (let d = 1; d <= R && head < tail; d++) {
+    const end = tail;
+    for (; head < end; head++) {
+      const c = queue[head]!;
       const x = c % W;
       const y = (c - x) / W;
       const l = y * W + ((x + W - 1) % W);
       const r = y * W + ((x + 1) % W);
-      for (const q of [l, r, y > 0 ? c - W : -1, y < H - 1 ? c + W : -1]) {
-        if (q < 0 || dist[q] !== -1) continue;
-        dist[q] = d;
-        next.push(q);
+      if (dist[l] === -1) {
+        dist[l] = d;
+        queue[tail++] = l;
+      }
+      if (dist[r] === -1) {
+        dist[r] = d;
+        queue[tail++] = r;
+      }
+      if (y > 0 && dist[c - W] === -1) {
+        dist[c - W] = d;
+        queue[tail++] = c - W;
+      }
+      if (y < H - 1 && dist[c + W] === -1) {
+        dist[c + W] = d;
+        queue[tail++] = c + W;
       }
     }
-    frontier = next;
   }
-  const near = new Set<number>();
-  for (let c = 0; c < N; c++) if (dist[c] !== -1) near.add(controller[c]!);
-  return (x: number): boolean => near.has(x);
+  const near = new Uint8Array(mine.length);
+  for (let i = 0; i < tail; i++) {
+    const o = controller[queue[i]!]!;
+    if (o < near.length) near[o] = 1;
+  }
+  return (x: number): boolean => x >= 0 && x < near.length && near[x] === 1;
 }
 
 /** Leaders' puppets join their side. */

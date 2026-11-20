@@ -348,10 +348,19 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     days 16 → 0, so the 14 untraced among them too; days with reasons 65 % → 33 % of peace days; reads pure. Tests:
     `peaceWhy.test` (two cases, red before), `peaceLine.spec` 7/7 by hand. The page probe wrote over the critic's
     `c90_pw_90441.json`, `c90_pw_89401.json` and their shots (git-ignored, not restored).
-- [ ] R220 **R90-N3: with heroes, 7019's year-20 battle at 1,200 m/px drops one 4-second sample to 51.5–52.1 fps**
+- [x] R220 **R90-N3: with heroes, 7019's year-20 battle at 1,200 m/px drops one 4-second sample to 51.5–52.1 fps**
   (against 60.1 on `f27f48f5` beside it, 4 of 4; the tier's mean 56.8–57, run 89 59.7). AT: `TAG=x VW=2560 VH=1305 node
   critic/scripts/c85_pf_lookfps.mjs 7019 critic/c79_hseed7019_y20.bin` no sample under 58.5 fps in two runs; first,
   which commit since `f27f48f5` costs it (R214's shader, R217's formations pass, R218's capital cells).
+  - Done (COMMIT): the worker, not the draw. Bisected (each build probed alone): `2a438a2d` 60.1/60.1/58.8, R217's
+    `4e7b0505` 52.1 and after. From the save the sim's hours, both commits at once on separate cores: one day start
+    40 days on (hour 176,160) took 194 ms on HEAD, 39 ms before; `strategicAi` 167 ms of it, 90 ms in `inReach`
+    (`callSides` asking the side rule's 500 km reach, round by round, for the more declarations R217 lets through) and
+    20 ms in R217's `massPoints`. At Max that hour is a frame's worth of snapshots missed. `inReach` now spreads over
+    typed arrays (one queue, the nations by id) in place of a `Set` asked and a four-cell array made per cell: the same
+    cells reached, the same answer (7019's hash after 200 days and seed 99's pin as before). That day's `strategicAi`
+    167 → 81 ms; seed 99's year, `strategicAi` mean 0.32 → 0.17 ms, its longest 247 → 77 ms. The AT, two runs: lowest
+    1,200 m/px sample 58.9 and 58.8 (run 89's build 58.8 at the same spot), every other tier 59.2 or more. No ADR.
 - [x] R221 **R90-N1: one `slowClick` of 90 on new seeds** (90103, setup 3517). AT: `npx tsx
   tools/diag/landingInvariants.ts 90103 3517 120 90103 30 2 8` ends with 0 broken.
   - Done (f2c768aa): the checker's, not the sim's. t118's click of 364 and 367: 364, aboard, clicked 2 cells off its
