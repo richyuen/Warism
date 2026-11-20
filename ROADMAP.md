@@ -215,6 +215,9 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     cases among them). No ADR (ADR-914).
 - [ ] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
   banners of one row never read alike while their wars differ; R174's and R183's cases as now.
+  - Waits on the user (ADR-1144, proposed): the row reads as ADR-1136 (a), the user's choice, has it (the names to five
+    letters first, the counts whole): "Natio… ⚔ Portugal & 2" beside "Natio… & 1 ⚔ Italy & 2" at 393 px (38 px of
+    77 drawn), whole at 734 px. A better reading changes that order: the options are in the ADR. Not ticked.
 - **Critic run 89 (focused, on f27f48f5): no blocking issue, every score at its bar (stability 7 → 8, R88-B1 fixed on its
   four cases; the old build beside HEAD on 88901, 2 wrong of 24 against 0 of 74). The release check (ADR-1138): the
   items open here are fixed before the release, with no critic run after them (ADR-1139).** R210 to R213 kept as they

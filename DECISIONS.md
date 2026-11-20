@@ -5,6 +5,28 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1144 · 2026-11-20 · proposed, the user's decision · The phone's war row: a name cut to five letters while its counts stay (R213)
+
+- **The case** (critic runs 88 and 89, R88-N4, non-blocking): at 393 px, seed 88901 at day 400, the closed row reads
+  "Natio… ⚔ Portugal & 2" and "Natio… & 1 ⚔ Italy & 2" (Nationalist Spain leads two wars; 38 px of the name's 77 drawn in
+  each); on 89901 "Natio… ⚔ Portugal" beside "Soviet … ⚔ Japan". Sideways (734 px) the names are whole.
+- **Why it is the user's:** the row does what ADR-1136 (a), the user's choice, says: the long names give way first, each
+  down to its first five letters, and a banner's "& n" goes only when its names would go under five. R174, R183 and R193
+  pin that order (`warBannerRows1938`: "a long one five letters, the count whole"). A better reading of this row needs
+  that order changed, and the phone's war row has been through four laps (R174, R178, R183, R193; ADR-1135, ADR-1136).
+- **The options:**
+  - **(a) Keep it:** the two banners differ by their other side ("Portugal", "Italy"); R213 closed as not taken.
+  - **(b) The counts before the first word (recommended):** a long name gives way down to its first word ("Nationalist…",
+    "Soviet…"); then the banners drop their "& n", those with a long name first; only then do names go down to five
+    letters. The floor of five letters stays. This row would read "Nationalist… ⚔ Portugal" and "Nationalist… ⚔ Italy",
+    the counts in the banner's title and when the row is opened, as now. R183's and R193's cases change where they
+    say "the count whole".
+  - **(c) One banner under 400 px** (ADR-1136 (b), not chosen then): names and counts whole, one war at a glance.
+  - **(d) Short names in the data:** a second name for the few long ones ("Nat. Spain", "USSR", "UK"), used when a name
+    would be cut. Reads best; a list to keep for every scenario and the random world's names have none.
+- **Now:** R213 waits on this; the loop takes the items after it. The release waits for it (ADR-1139: the run's
+  non-blocking items are fixed, or closed by the user's word, before the tag).
+
 ## ADR-1143 · 2026-11-20 · accepted · A loop writes its own bounds: no closure it calls does (R209, a miscompile of Chromium 153)
 
 - **The case** (critic run 88, R88-B1): plain 1938 seed 88901, one `sim.step(9600)` in the page: the headless world

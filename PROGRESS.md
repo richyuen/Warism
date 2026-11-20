@@ -132,3 +132,9 @@
 - The footer keeps its lines' height in a low panel. `c88_relSaid 88905 400` `cut` [] at the five supported sizes; a
   crossing case in `relationsTap1938`. Run by hand: heroesClear1938, heroesRead1938, relations1938, relationsLabels1938,
   relationsNamed1938, relationsTap1938 (34/34).
+
+## 2026-11-20 — R213 waits on the user (ADR-1144, proposed)
+
+- The phone's row at 393 px cuts "Nationalist Spain" to "Natio…" in two banners with their "& n" whole: ADR-1136 (a)'s
+  order, the user's choice. Four options in ADR-1144; (b), the counts before a name is cut inside its first word,
+  recommended. The loop takes R214 to R216; the release waits for the answer.
