@@ -411,7 +411,7 @@ Non-blocking, fixed before the release with no critic run after them (ADR-1139).
   no reason and no History row** (no war, no massing; the same on `fc767d88`). AT: 91415's cause traced (which of
   ADR-1145's "for now" causes holds), and either a war comes or the line names what it waits on (`npx tsx
   critic/scripts/c90_peaceTruth.ts 3 91415 1 15`).
-  - Done (COMMIT): ADR-1150. Traced: nation 3 massed on nation 1 eleven times and gave up each, unseen; its nearest
+  - Done (0abb7312): ADR-1150. Traced: nation 3 massed on nation 1 eleven times and gave up each, unseen; its nearest
     border points over the water or in pockets shut in by 1's land refused every formation, and none moved in fifteen
     years. A formation refused at its nearest point now goes to one another was sent to that day (of none, each point
     once). War on day 587; reasons on 1,760 peace days. 20 three-nation worlds: wars 53 → 53, none within 30 days of a
