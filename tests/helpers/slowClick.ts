@@ -10,6 +10,7 @@
  * division's (R43a), the late march (R31f). R49-N5 (20661, 26.3 days for a 5-day crossing) and R50-N1 (20841, 39.6
  * for 4) are its cases. Used by the fuzz (`landingBreaks`) and the grid (`gridCase`).
  */
+import { near, SAME_LANDING_CELLS } from '../../src/sim/systems/amphibious';
 import { bestWayHours, landingOfDivision } from '../../src/sim/systems/landings';
 import { navOf, type World } from '../../src/sim/world';
 
@@ -54,8 +55,11 @@ interface Click {
 /** The clicks of one run and their bound; `out` gets each broken one once. */
 export class SlowClicks {
   private open: Click[] = [];
-  /** Divisions a click of this hour takes from their earlier clicks, once its refusals are read (`hour`). */
-  private taken: { k: Click; id: number }[] = [];
+  /**
+   * Divisions a click of this hour takes from their earlier clicks, once its refusals are read (`hour`); with the
+   * landing each was aboard (its id), or -1.
+   */
+  private taken: { k: Click; id: number; aboard: number }[] = [];
   /** Clicks reckoned (a finite best way) and not (no way to reckon: not judged). */
   reckoned = 0;
   unreckoned = 0;
@@ -79,6 +83,12 @@ export class SlowClicks {
    * run 58: 29043's 271 and 272, aboard, clicked onto the open sea beside their landing, refused `OpenSea` and ashore
    * with it, were taken from t1068's click, judged by 273 alone, left for the second voyage); so the takes wait for
    * the hour's refusals (`hour`).
+   * And one aboard that is still aboard the same landing after the click's hour, its water within SAME_LANDING_CELLS of
+   * the earlier click's (the sim's own "same landing", `sameLandingAs`; ROADMAP R221, critic run 90's R90-N1: 90103's
+   * t118 click of 364 and 367; 364, aboard, clicked 2 cells off its beach at t162, sailed on in its landing and was
+   * ashore 6.2 days after t118, while 367 was judged alone by 364's 6.6-day best): the click changed nothing of its
+   * voyage, as R56a's same water. Not one whose landing a click sent elsewhere (a landing is redirected as one, its id
+   * kept): that voyage is the new click's.
    */
   click(w: World, ids: readonly number[], water: number, land = -1): void {
     for (const k of this.open)
@@ -88,7 +98,7 @@ export class SlowClicks {
           this.kept++;
           continue;
         }
-        this.taken.push({ k, id });
+        this.taken.push({ k, id, aboard: w.embarked.has(id) ? (landingOfDivision(w, id)?.id ?? -1) : -1 });
       }
     if (water < 0 || ids.length === 0) return;
     const best = clickBest(w, ids, water, land);
@@ -111,7 +121,15 @@ export class SlowClicks {
    */
   hour(w: World, landed: ReadonlySet<number>, refused: ReadonlySet<number>): void {
     const f = w.formations;
-    for (const { k, id } of this.taken) if (!refused.has(id)) k.ids.delete(id);
+    for (const { k, id, aboard } of this.taken) {
+      if (refused.has(id)) continue;
+      const l = aboard >= 0 && w.embarked.has(id) ? landingOfDivision(w, id) : undefined;
+      if (l !== undefined && l.id === aboard && k.water >= 0 && near(w, l.water, k.water, w.atSize(SAME_LANDING_CELLS))) {
+        this.kept++;
+        continue;
+      }
+      k.ids.delete(id);
+    }
     this.taken = [];
     this.open = this.open.filter((k) => k.ids.size > 0);
     for (const k of this.open) {

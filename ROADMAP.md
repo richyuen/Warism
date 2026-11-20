@@ -352,8 +352,18 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   (against 60.1 on `f27f48f5` beside it, 4 of 4; the tier's mean 56.8–57, run 89 59.7). AT: `TAG=x VW=2560 VH=1305 node
   critic/scripts/c85_pf_lookfps.mjs 7019 critic/c79_hseed7019_y20.bin` no sample under 58.5 fps in two runs; first,
   which commit since `f27f48f5` costs it (R214's shader, R217's formations pass, R218's capital cells).
-- [ ] R221 **R90-N1: one `slowClick` of 90 on new seeds** (90103, setup 3517). AT: `npx tsx
+- [x] R221 **R90-N1: one `slowClick` of 90 on new seeds** (90103, setup 3517). AT: `npx tsx
   tools/diag/landingInvariants.ts 90103 3517 120 90103 30 2 8` ends with 0 broken.
+  - Done (COMMIT): the checker's, not the sim's. t118's click of 364 and 367: 364, aboard, clicked 2 cells off its
+    beach at t162, sailed on in its landing (L3) and was ashore 6.2 days after t118; taken from its click by that
+    re-click, it left 367 judged alone by 364's 6.6-day best (367's own way: its group back from Shanghai, 6.1 days,
+    then 7.5 days' sail from the north). `SlowClicks` keeps a division in its click when, after the click's hour, it is
+    still aboard the same landing and that landing's water is within SAME_LANDING_CELLS of the click's (R56a's "same
+    water", by the sim's own same-landing distance); a landing redirected elsewhere is the new click's (the first, wider
+    try kept those too and made 3 new breaks on 90121 and 90123). The case: 0 broken. `landingFuzz --seeds 15 --first
+    90101` (the critic's): 0 of 90 (run 90: 1). A fresh block, 30 seeds from 618599: 3 of 180 (1.7 %), each broken the
+    same on the checker before (618605 and 618625 Japan's 366/367, 618641 England's 270/277): ADR-914's tail, under its
+    5 %, not filed. No ADR (ADR-914: R56a's rule mended).
 - [x] R222 **R90-N2: the peace line's reasons never reach History** (89403: ten years of peace, two events). AT: History
   notes the peace's reason when first given and when it changes, on 89403 and one more seed, at the five supported sizes.
   - Done (124f1104): ADR-1149. `PeaceHeld`, told on the strategic AI's day when the peace line gives a reason not told

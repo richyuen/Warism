@@ -211,3 +211,9 @@
 
 - `PeaceHeld` rows: "The world is at peace: …" when the line's reason is first given or changes. `peaceWhy.test`,
   `peaceLine.spec` (12/12, the History row at the five sizes). Pin unchanged.
+
+## 2026-11-20 — R221: a division re-clicked onto its own landing stays in its click (the checker)
+
+- 90103's slowClick was the checker judging 367 by 364's best after 364's 2-cell re-click. Kept when still aboard the
+  same landing near the same water. The critic's 15 seeds 0 of 90; a fresh 30 seeds 3 of 180, the same before (the
+  tail ADR-914 keeps).
