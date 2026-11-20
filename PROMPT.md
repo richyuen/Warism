@@ -70,11 +70,12 @@ game's assets or code.
     (the bar, what moved, what is left) and the loop takes the next item. The cause found becomes a
     ROADMAP item of its own.
 
-# RELEASES (ADR-804, ADR-805, ADR-1138)
+# RELEASES (ADR-804, ADR-805, ADR-1138, ADR-1139)
 
 Items come in batches (a ROADMAP section). The critic runs only when no batch in ROADMAP.md has an open item
 (ADR-1039, the user's decision): a batch done while another is open goes on to that one's items, and a fix filed
-from a critic run is done with every other open item before the critic runs again. Then:
+from a critic run is done with every other open item before the critic runs again; a run's non-blocking items are the
+exception (step 3: no critic run after them). Then:
 1. Spawn the `critic` subagent with no hints (every run is focused, ADR-1138), wait for it, check that its report names HEAD, commit
    `critic/` with a line in PROGRESS.md (scores, blocking count). Git takes only its report, JSON,
    scripts and scenario files; its logs and dumps stay on disk (`.gitignore`, ADR-914). That commit carries `critic/`,
@@ -84,9 +85,8 @@ from a critic run is done with every other open item before the critic runs agai
    is not (ADR-843).
 2. Each blocking issue becomes a ROADMAP item before the release item; fix them, then the critic
    runs again. Each non-blocking issue of every run is filed too, with its AT, design objections named as
-   issues among them, but **does not hold a release** (ADR-1138, the user's decision): a batch's blocking items
-   are done first and the critic runs again with its non-blocking items still open; they are done after the
-   release, before the next critic run that follows it (ADR-1039).
+   issues among them: a batch's blocking items are done first and the critic runs again with its non-blocking
+   items still open (ADR-1138).
    **The exit (ADR-829).** The loop stops, and writes an ADR "proposed, the user's decision" that names
    the structural options (a redesign, taking the feature out of the release, the bar), when:
    - one dimension is under its bar, or blocks, in three critic runs in a row; or
@@ -99,7 +99,9 @@ from a critic run is done with every other open item before the critic runs agai
    ones are items, fixed, then the critic again, until it is at its bar; before each critic run the
    critic's own probes (`critic/scripts`) are replayed on the code and what they find is fixed first.
 3. Focused runs until one has no blocking issue and every score at its bar, its performance scored afresh when
-   `src/` changed since the last release (ADR-1138, the user's decision): that run is the release check. Then:
+   `src/` changed since the last release (ADR-1138, the user's decision): that run is the release check. Its
+   non-blocking items, and those still open from earlier runs, are fixed **before the release, with no critic run
+   after them** (ADR-1139, the user's decision): the next release's critic run judges them as touched files. Then:
    `npm run check:review` and `npm run bench -- G --gpu-only` (budgets PASS). No sweep is a release condition (ADR-1072, the user's
    decision): the nightly and weekly runs (`.github/workflows/nightly.yml`) sweep `main` on their own, and a red one
    is a ROADMAP item whenever it comes. A check that fails becomes a ROADMAP item, and so does each
@@ -108,6 +110,9 @@ from a critic run is done with every other open item before the critic runs agai
    `git push --tags`). In the tag's commit, DECISIONS.md's ADRs and PROGRESS.md's entries move to
    `docs/history/DECISIONS-<tag>.md` and `PROGRESS-<tag>.md`, as the batch's items move to `ROADMAP-<tag>.md`
    (ADR-918); the release's own PROGRESS entry goes last before the move.
+5. **After the tag the loop stops** (ADR-1139, the user's decision): it tells the user the release and asks what is
+   next. "continue" with nothing open asks the same. The next critic run comes when the next release is wanted, after
+   the user's next batch is done.
 
 A feature the user asks for during a batch joins the next batch, unless the user says it comes first.
 

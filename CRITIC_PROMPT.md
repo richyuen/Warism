@@ -84,7 +84,7 @@ page-error monkeys, and the 20-year hashes of plain 1938 seeds 7019 and 32019.
 | any other file under `src/ui/` or `src/app/` | `uiUxPolish` |
 
 A release needs one run with no blocking issue and every score at its bar, `performance` scored afresh when
-`src/` changed since the last release. Non-blocking issues do not hold it (ADR-1138). Say at the top of the
+`src/` changed since the last release. Non-blocking issues do not hold it (ADR-1138): the builder fixes them before the release, and the next run judges them as touched (ADR-1139). Say at the top of the
 report which dimensions were scored afresh and why (blocked, under its bar, touched, performance, rotation).
 
 # DIMENSIONS (score 0–10)

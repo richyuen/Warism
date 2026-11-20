@@ -16,3 +16,9 @@
 
 - Centred whenever the banners the band holds fit there, the band's middle only when the centre costs a banner; a
   crossing case. Batch 54 done; the critic next (ADR-1138).
+
+## 2026-11-19 — ADR-1139: non-blocking items before the release, judged at the next; the loop stops after a release
+
+- The user's decision, on the never-ending release/critic cycle: a release run's non-blocking items are fixed before
+  the tag with no critic run after them; the next release's run judges them as touched; after the tag the loop stops and
+  asks what is next. PROMPT.md and CRITIC_PROMPT.md changed. Run 87 (running) is the first under it.
