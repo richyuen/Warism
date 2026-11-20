@@ -350,22 +350,100 @@ test('the longest names give way first, at every size', async ({ page }) => {
       });
       const narrowestCut = Math.min(...cut.map((n) => n.clientWidth));
       const widerWhole = whole.filter((n) => n.clientWidth > narrowestCut + 1).map((n) => n.textContent);
-      // Cut above its five letters, a name is at the one cap: all such the same width.
-      const floor = (n: HTMLElement): number => {
+      // A name's first `k` letters and the ellipsis.
+      const letters = (n: HTMLElement, k: number): number => {
         g.font = getComputedStyle(n).font;
         const range = document.createRange();
         range.setStart(n.firstChild!, 0);
-        range.setEnd(n.firstChild!, 5);
+        range.setEnd(n.firstChild!, Math.min(k, n.firstChild!.textContent!.length));
         return range.getBoundingClientRect().width + g.measureText('…').width;
       };
+      const firstWord = (n: HTMLElement): number => {
+        const k = (n.textContent ?? '').search(/\s/);
+        return k < 0 ? Infinity : Math.max(letters(n, 5), letters(n, k));
+      };
+      // ADR-1144 (b) (the user's choice, R213): while a banner keeps its "& n", no name is cut inside its first word.
+      const counts = [...row.querySelectorAll<HTMLElement>('[data-testid=war-allies]')].some((a) => a.getBoundingClientRect().width > 0);
+      const inside = cut.filter((n) => n.clientWidth + 1 < firstWord(n));
+      const inWord = counts ? inside.map((n) => `${n.textContent}:${n.clientWidth}`) : [];
+      // Cut above its floor (its first word while no name is cut inside one, else its five letters), a name is at the one
+      // cap: all such the same width.
+      const floor = (n: HTMLElement): number => (inside.length === 0 ? Math.min(firstWord(n), n.scrollWidth) : letters(n, 5));
       const capped = cut.filter((n) => n.clientWidth > floor(n) + 2).map((n) => n.clientWidth);
       const spread = capped.length > 1 ? Math.max(...capped) - Math.min(...capped) : 0;
-      return { under: under.map((n) => n.textContent), widerWhole, spread, cut: cut.map((n) => `${n.textContent}:${n.clientWidth}`) };
+      return { under: under.map((n) => n.textContent), inWord, widerWhole, spread, cut: cut.map((n) => `${n.textContent}:${n.clientWidth}`) };
     });
     expect(r.under, `${w} × ${h}: under five letters`).toEqual([]);
+    expect(r.inWord, `${w} × ${h}: cut inside the first word while a count stands`).toEqual([]);
     expect(r.spread, `${w} × ${h}: names cut above their floor at one width (${r.cut.join(', ')})`).toBeLessThanOrEqual(1.5);
     expect(r.widerWhole, `${w} × ${h}: whole and wider than a name cut`).toEqual([]);
   }
+});
+
+// R213 (critic runs 88 and 89, R88-N4; ADR-1144 (b), the user's choice): at 393 px Nationalist Spain's two wars read
+// "Natio… ⚔ Portugal & 2" and "Natio… & 1 ⚔ Italy & 2", the name cut to five letters while the counts stood. Now a long
+// name gives way to its first word, then the counts go, and only then five letters: two banners of one row never read
+// alike while their wars differ, and the name reads "Nationalist…" at least; sideways the names whole.
+test('a phone\'s row: two wars of one nation read apart, the name to its first word before the counts', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.setViewportSize({ width: 393, height: 852 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ nsp, por, ita }) => {
+    // Italy first: a war on a partner leaves the wars fought beside it (`forceWar`), and would end the other.
+    window.__warsim!.sim.command({ kind: 'forceWar', attacker: nsp, defender: ita });
+    window.__warsim!.sim.command({ kind: 'forceWar', attacker: nsp, defender: por });
+  }, { nsp: id('NSP'), por: id('POR'), ita: id('ITA') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  // Peace in the others (Japan's and China's), so that the banners the row shows are Nationalist Spain's.
+  const wars = await page.evaluate(async (nsp) => {
+    const all = (await window.__warsim!.sim.inspect()).wars;
+    for (const x of all) if (!x.attackers.includes(nsp) && !x.defenders.includes(nsp)) window.__warsim!.sim.command({ kind: 'forcePeace', war: x.id });
+    window.__warsim!.sim.step(1);
+    return (await window.__warsim!.sim.inspect()).wars.map((x) => x.attackers.includes(nsp) || x.defenders.includes(nsp));
+  }, id('NSP'));
+  expect(wars.filter(Boolean).length, 'Nationalist Spain in two wars or more').toBeGreaterThanOrEqual(2);
+  expect(wars.every(Boolean), 'its wars alone').toBe(true);
+  for (const [w, h] of [[393, 852], [393, 659], [734, 343], [393, 852]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(400);
+    const r = await page.getByTestId('war-banners').evaluate((row) => {
+      const g = document.createElement('canvas').getContext('2d')!;
+      // A name as drawn: whole, or the letters that fit before its ellipsis.
+      const drawn = (n: HTMLElement): string => {
+        const text = n.textContent ?? '';
+        if (n.scrollWidth <= n.clientWidth + 1) return text;
+        g.font = getComputedStyle(n).font;
+        const room = n.clientWidth - g.measureText('…').width;
+        const range = document.createRange();
+        let k = 0;
+        while (k < text.length) {
+          range.setStart(n.firstChild!, 0);
+          range.setEnd(n.firstChild!, k + 1);
+          if (range.getBoundingClientRect().width > room + 0.5) break;
+          k++;
+        }
+        return `${text.slice(0, k).trimEnd()}…`;
+      };
+      const banners = [...row.querySelectorAll<HTMLElement>('[data-testid=war-banner]')];
+      return banners.map((b) => {
+        const parts = [...b.querySelectorAll<HTMLElement>('[data-testid=war-name], [data-testid=war-allies]')]
+          .filter((e) => e.getBoundingClientRect().width > 0)
+          .map((e) => (e.dataset.testid === 'war-name' ? drawn(e) : (e.textContent ?? '').trim()));
+        return { war: b.dataset.war ?? '', text: parts.join(' '), names: [...b.querySelectorAll<HTMLElement>('[data-testid=war-name]')].map((n) => ({ full: n.textContent ?? '', drawn: drawn(n) })) };
+      });
+    });
+    const nsp = r.flatMap((b) => b.names).filter((n) => n.full.startsWith('Nationalist'));
+    expect(nsp.length, `${w} × ${h}: Nationalist Spain's wars on the row (${r.map((b) => b.text).join(' | ')})`).toBeGreaterThanOrEqual(2);
+    for (const n of nsp) {
+      if (w > h) expect(n.drawn, `${w} × ${h}: whole sideways`).toBe(n.full);
+      else expect(n.drawn.replace('…', ''), `${w} × ${h}: "${n.drawn}" reads its first word`).toMatch(/^Nationalist/);
+    }
+    for (let i = 0; i < r.length; i++)
+      for (let j = i + 1; j < r.length; j++)
+        if (r[i]!.war !== r[j]!.war) expect(r[i]!.text, `${w} × ${h}: two wars read alike`).not.toBe(r[j]!.text);
+  }
+  await page.screenshot({ path: test.info().outputPath('r213-phone-row.png') });
 });
 
 // R194 (critic run 84, R84-N1; ADR-1137 (d)): on a desk 601 to 768 px wide one banner wider than its row spilled over the

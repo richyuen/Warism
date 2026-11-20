@@ -213,11 +213,18 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     shown, the panel in the view, the graph at least 100 px high (red without: cut at 393 × 659). heroesClear1938,
     heroesRead1938, relations1938, relationsLabels1938, relationsNamed1938, relationsTap1938 34/34 (R185's and R195's
     cases among them). No ADR (ADR-914).
-- [ ] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
+- [x] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
   banners of one row never read alike while their wars differ; R174's and R183's cases as now.
   - Waits on the user (ADR-1144, proposed): the row reads as ADR-1136 (a), the user's choice, has it (the names to five
     letters first, the counts whole): "Natio… ⚔ Portugal & 2" beside "Natio… & 1 ⚔ Italy & 2" at 393 px (38 px of
     77 drawn), whole at 734 px. A better reading changes that order: the options are in the ADR. Not ticked.
+  - Done (HASH213): ADR-1144 (b), the user's choice: a long name gives way down to its first word, then the banners
+    drop their counts, then the names go to five letters (`sizeRow`). `warBannerRows1938`'s new case: Nationalist Spain
+    at war with Italy and with Portugal, the others at peace; at 393 × 852 and 393 × 659 each of its names reads
+    "Nationalist" at least and no two banners of different wars read alike (as drawn: the letters before the ellipsis,
+    the counts shown); at 734 × 343 whole. It reads "Nationalist S… ⚔ Italy" beside "Nationalist S… ⚔ Portugal" at 393
+    (looked at). Red on the old order ("National…"), and R193's case with it ("cut inside the first word while a count
+    stands" at 390); R174's and R183's cases as now. `warBannerRows1938` and `phoneLayout1938`, 29/29, both projects.
 - **Critic run 89 (focused, on f27f48f5): no blocking issue, every score at its bar (stability 7 → 8, R88-B1 fixed on its
   four cases; the old build beside HEAD on 88901, 2 wrong of 24 against 0 of 74). The release check (ADR-1138): the
   items open here are fixed before the release, with no critic run after them (ADR-1139).** R210 to R213 kept as they

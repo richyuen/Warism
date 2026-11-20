@@ -2172,6 +2172,9 @@ builds).
   closed row stands on the bar's centre when its banners fit there, else in the middle of the band free beside it
   (R202); the side is chosen when the band or the number of banners changes and held until then, a row that outgrows
   the centre giving a banner behind "+N" (`rowStand`, ADR-1142).
+  A phone's closed row too short for its banners (`sizeRow`): the long names give way to their first word, the
+  longest first; then the banners drop their "& n", those with a long name first; only then do names go down to their
+  first five letters, never under (ADR-1144 (b), the user's choice; ADR-1136's floor).
 - **Landings bar** (`src/ui/LandingsBar.tsx`): the player's landings, a row each, top middle; it gives way to the
   History, Relations, Settings and Editor panels and a nuclear alert. On a short view (a phone on its side) it
   stands to the right of an open nation panel, never over its head (R60a). On a phone's width it gives way to the

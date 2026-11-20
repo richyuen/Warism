@@ -42,9 +42,10 @@ function lettersWidth(name: HTMLElement, n = Infinity): number {
 /**
  * A phone's closed row sized by ADR-1136 (a)'s order (R183; critic run 82, R82-B1: shrunk by the flexbox alike, a
  * name went under five letters while its "& n" stayed, "Sovi… & 3", "Que…"). Each banner measured as it would be with
- * room; if the row is short, the longest names give way first, each down to its first five letters and the
- * ellipsis at most (R193); if that is not enough, banners drop their allies' counts one at a time, those with a long name first, and
- * the names give way again. Set on the elements: `war-tight` on a banner without its counts, a long name's width.
+ * room; if the row is short, by ADR-1144 (b) (the user's choice, R213), the longest names give way first, each down
+ * to its first word and the ellipsis at most (R193's one cap); if that is not enough, banners drop their allies'
+ * counts one at a time, those with a long name first; only then do the names go on down to their first five letters.
+ * Set on the elements: `war-tight` on a banner without its counts, a long name's width.
  */
 function sizeRow(row: HTMLElement): void {
   const banners = [...row.querySelectorAll<HTMLElement>('[data-testid=war-banner]')];
@@ -52,12 +53,16 @@ function sizeRow(row: HTMLElement): void {
   for (const b of banners) b.classList.remove('war-tight');
   for (const n of row.querySelectorAll<HTMLElement>('[data-testid=war-name]')) n.style.width = '';
   row.classList.add('war-measuring');
-  type Name = { el: HTMLElement; full: number; give: number };
+  // `give`: down to its first five letters; `word`: down to its first word, when that is longer (ADR-1144 (b)).
+  type Name = { el: HTMLElement; full: number; give: number; word: number };
   const rows = banners.map((b) => {
     const names: Name[] = [...b.querySelectorAll<HTMLElement>('.war-name:not(.war-name-short)')].map((el) => {
       const full = el.getBoundingClientRect().width;
-      const least = Math.min(full, lettersWidth(el, 5) + ellipsisWidth(getComputedStyle(el).font) + 1);
-      return { el, full, give: Math.max(0, full - least) };
+      const dots = ellipsisWidth(getComputedStyle(el).font) + 1;
+      const least = Math.min(full, lettersWidth(el, 5) + dots);
+      const first = (el.textContent ?? '').search(/\s/);
+      const whole = first < 0 ? full : Math.min(full, Math.max(least, lettersWidth(el, first) + dots));
+      return { el, full, give: Math.max(0, full - least), word: Math.max(0, full - whole) };
     });
     const counts = [...b.querySelectorAll<HTMLElement>('[data-testid=war-allies]')].reduce((w, a) => w + a.getBoundingClientRect().width + parseFloat(getComputedStyle(a).marginLeft), 0);
     return { b, names, counts, width: b.getBoundingClientRect().width };
@@ -68,27 +73,33 @@ function sizeRow(row: HTMLElement): void {
   row.classList.remove('war-measuring');
   let short = rows.reduce((w, r) => w + r.width, 0) + others + gap * Math.max(0, children.length - 1) - row.clientWidth + 1;
   if (short <= 0) return;
-  const give = (): number => rows.reduce((w, r) => w + r.names.reduce((v, n) => v + n.give, 0), 0);
-  // The counts, while the names cannot give what is short: first those of a banner with a long name (whose names would go
-  // under five letters), then the others; the widest first.
+  const names = rows.flatMap((r) => r.names);
+  const give = (): number => names.reduce((v, n) => v + n.give, 0);
+  // What the names give without one cut inside its first word ("Nationalist…", "Soviet…").
+  const byWord = names.reduce((v, n) => v + n.word, 0);
+  // The counts, while the names cannot give what is short by their words (ADR-1144 (b), the user's choice; R213, critic
+  // runs 88 and 89: by ADR-1136 (a)'s order the names went to five letters with the counts whole, "Natio… ⚔ Portugal & 2"
+  // beside "Natio… & 1 ⚔ Italy & 2"): first those of a banner with a long name, then the others; the widest first.
   const long = (r: (typeof rows)[number]): number => (r.names.some((n) => n.give > 0) ? 0 : 1);
   for (const r of [...rows].sort((p, q) => long(p) - long(q) || q.counts - p.counts)) {
-    if (short <= give() || r.counts === 0) break;
+    if (short <= byWord) break;
+    if (r.counts === 0) continue;
     r.b.classList.add('war-tight');
     short -= r.counts;
   }
   if (short <= 0 || give() <= 0) return;
+  // Down to their first words while that is enough; with every count gone and the row still short, to five letters.
+  const floor = (n: Name): number => n.full - (short <= byWord ? n.word : n.give);
   // The longest give way first (R193, critic run 83's design objection: shrunk in proportion, "Kagosh…" lost as much as
-  // "Chukotka Auton…"): one cap for every long name, each kept to its five letters; the highest cap that fits.
-  const names = rows.flatMap((r) => r.names);
-  const at = (cap: number): number => names.reduce((w, n) => w + Math.max(0, n.full - Math.max(n.full - n.give, cap)), 0);
+  // "Chukotka Auton…"): one cap for every long name, each kept to its floor; the highest cap that fits.
+  const at = (cap: number): number => names.reduce((w, n) => w + Math.max(0, n.full - Math.max(floor(n), cap)), 0);
   let [lo, hi] = [0, Math.max(...names.map((n) => n.full))];
   for (let i = 0; i < 24; i++) {
     const mid = (lo + hi) / 2;
     if (at(mid) >= short) lo = mid;
     else hi = mid;
   }
-  for (const n of names) if (n.full > lo) n.el.style.width = `${Math.max(n.full - n.give, lo)}px`;
+  for (const n of names) if (n.full > lo) n.el.style.width = `${Math.max(floor(n), lo)}px`;
 }
 /**
  * The band a desk's row has free (R197, critic run 85, R85-N1: its `max-width` kept room for a left panel that was not

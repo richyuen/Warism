@@ -148,3 +148,8 @@
 
 - `loopBounds.test.ts`: no loop of the sim, the worker or the shared code has a bound written by a closure it calls;
   the old `enemyDistance` is found. `longStep1938` red when its seed sends no capital to the field (run by hand).
+
+## 2026-11-20 — R213: a phone's war row cuts a name to its first word before its counts (ADR-1144 (b))
+
+- The user chose (b). Nationalist Spain's two wars read "Nationalist S… ⚔ Italy" and "Nationalist S… ⚔ Portugal" at 393
+  px, not "Natio…" twice. New case in `warBannerRows1938`, red on the old order; R193's floor follows the rule.

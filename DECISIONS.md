@@ -5,7 +5,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
-## ADR-1144 · 2026-11-20 · proposed, the user's decision · The phone's war row: a name cut to five letters while its counts stay (R213)
+## ADR-1144 · 2026-11-20 · accepted, the user's decision: (b) · The phone's war row: a name cut to five letters while its counts stay (R213)
 
 - **The case** (critic runs 88 and 89, R88-N4, non-blocking): at 393 px, seed 88901 at day 400, the closed row reads
   "Natio… ⚔ Portugal & 2" and "Natio… & 1 ⚔ Italy & 2" (Nationalist Spain leads two wars; 38 px of the name's 77 drawn in
@@ -26,6 +26,13 @@ from AoC are tagged **[AoC-DEVIATION]**.
     would be cut. Reads best; a list to keep for every scenario and the random world's names have none.
 - **Now:** R213 waits on this; the loop takes the items after it. The release waits for it (ADR-1139: the run's
   non-blocking items are fixed, or closed by the user's word, before the tag).
+- **The user's decision (2026-11-20): (b).** `sizeRow` measures each long name's first word (with the ellipsis, never
+  under five letters): while the first words can give what the row is short, the counts stand and the names go down to
+  them by R193's one cap; else the banners drop their "& n" (those with a long name first, the widest first), and the
+  names go on to their first five letters only when every count is gone. ADR-1136 (a)'s order is replaced on this point;
+  its floor of five letters stays. A one-word name has no first word to give way to: it stays whole until the counts
+  are gone. R193's case reads a name's floor as its first word while no name is cut inside one, and is red when a name
+  is cut inside its first word with a count standing; R174's, R178's and R183's ask for five letters at least and stand.
 
 ## ADR-1143 · 2026-11-20 · accepted · A loop writes its own bounds: no closure it calls does (R209, a miscompile of Chromium 153)
 
