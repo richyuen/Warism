@@ -36,7 +36,7 @@ closes the panels beside it (ADR-1137 (d)).
 - [x] R201 **R86-N1: with every relations kind hidden the footer says "Truces hidden" where it said "No ties of these
   kinds"** (R198's side effect; `critic/c86_rs_84903.log`). AT: the empty graph says it has nothing shown; a kind tapped
   is named as R198 has it.
-  - Done (COMMIT): an empty graph's footer says "No ties of these kinds." beside the kind just tapped ("Truces hidden · No
+  - Done (c7a6c526): an empty graph's footer says "No ties of these kinds." beside the kind just tapped ("Truces hidden · No
     ties of these kinds."); with ties shown, the kind tapped alone as R198. A case in `relationsTap1938` hiding every kind
     and showing Wars again at 568 × 320, 844 × 390, a desk and upright, a nation's panel opened and closed (ADR-1137 (d);
     red without: "Truces hidden" alone). `relationsTap1938` 13/13.
