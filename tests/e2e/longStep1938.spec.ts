@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type {} from '../../src/app/testApi';
+import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../../tools/headless/assets';
@@ -17,14 +18,23 @@ import { loadAssets1938 } from '../../tools/headless/assets';
 const SEED = 88901;
 const HOURS = 9600;
 
-/** The headless world's state hash after HOURS, stepped a day at a time between the page's messages. */
-async function headless(): Promise<number> {
+/**
+ * The headless world's state hash after HOURS, stepped a day at a time between the page's messages, and the capitals
+ * it sent to the field on the way (`CapitalMoved` to no city: the move that runs `enemyDistance`'s search at war).
+ */
+async function headless(): Promise<{ hash: number; fields: number }> {
   const sim = new Sim({ scenario: '1938', seed: SEED, assets: loadAssets1938(SIZE_1938.w) });
+  let fields = 0;
   for (let h = 0; h < HOURS; h += 24) {
-    sim.step(24);
+    sim.step(24, (w) => {
+      const ev = w.out.events;
+      for (let i = 0; i < ev.length; i += 6) if (ev[i + 1] === EventKind.CapitalMoved && ev[i + 3] === 0) fields++;
+      ev.length = 0;
+      w.out.fires.length = 0;
+    });
     await new Promise((done) => setImmediate(done));
   }
-  return sim.hash() >>> 0;
+  return { hash: sim.hash() >>> 0, fields };
 }
 
 test('one step of 9,600 hours in the page ends in the headless world (seed 88901)', async ({ browser, baseURL }) => {
@@ -41,5 +51,8 @@ test('one step of 9,600 hours in the page ends in the headless world (seed 88901
     }
   };
   const [want, ...ends] = await Promise.all([headless(), one(), one(), one(), one()]);
-  expect(ends, 'each load\'s state hash at hour 9,600').toEqual([want, want, want, want]);
+  // The case sees the fault only in a world that sends a capital to the field (R215, critic run 89, R89-N3: a rule
+  // change that moved Latvia's day would have left it green and blind). Red here: choose a seed that does.
+  expect(want.fields, `seed ${SEED} sends a capital to the field within ${HOURS} hours`).toBeGreaterThan(0);
+  expect(ends, 'each load\'s state hash at hour 9,600').toEqual([want.hash, want.hash, want.hash, want.hash]);
 });

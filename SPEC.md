@@ -299,7 +299,8 @@ it is spent on.
   counts as they are, for a table as large as the loaded one (PLAN 2.7x).
 - A loop's own bounds and counters are written in the loop's function, never by a closure it calls (ADR-1143:
   with a closure doing it in `enemyDistance`, Chromium 153's Maglev made another world of the page's than the headless
-  one, read as the loop entered by on-stack replacement losing the closure's writes; `tests/e2e/longStep1938.spec.ts` steps 9,600 hours in one message against the headless hash).
+  one, read as the loop entered by on-stack replacement losing the closure's writes; `tests/e2e/longStep1938.spec.ts` steps 9,600 hours in one message against the headless hash;
+  `tests/unit/loopBounds.test.ts` reads the sim's and the worker's sources for such a loop, R215).
 - **State hash**: `hashSections` chains (name, dtype, length, xxhash32(data)) over every
   authoritative section (`World.parts()`: meta incl. tick and seed, RNG states, command log and
   pending commands, cell layers, entity tables). Events and derived outputs are excluded.

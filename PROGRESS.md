@@ -143,3 +143,8 @@
 
 - The edge row's depths no longer go on past the map: the deep's shade within 8 cells, at every tier. `mapEdge1938` at
   the five supported sizes (run by hand, red without); the whole browser suite by hand, 533/533.
+
+## 2026-11-20 — R215: ADR-1143's rule read from the source; the long step's pin says its world meets the loop
+
+- `loopBounds.test.ts`: no loop of the sim, the worker or the shared code has a bound written by a closure it calls;
+  the old `enemyDistance` is found. `longStep1938` red when its seed sends no capital to the field (run by hand).

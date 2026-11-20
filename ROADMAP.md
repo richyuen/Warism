@@ -234,10 +234,19 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     the band above and below the map at 2560 × 1305, flat. The whole browser suite 533/533 (the shader is every map
     spec's). Frame time not read here: one `mix` a sea pixel; `bench G --gpu-only` is the release's check. No ADR
     (ADR-914: a look mended, PLAN 4.7f's and R91's shades as they were on the map).
-- [ ] R215 **R89-N3 and the objection to ADR-1143: R209's pin is one event of one seed, and the rule is checked by
+- [x] R215 **R89-N3 and the objection to ADR-1143: R209's pin is one event of one seed, and the rule is checked by
   nothing.** AT: `longStep1938` says that the world it stepped did send a capital to the field (red when the seed's
   world no longer does); a test that reads `src/sim` and `src/worker` for a loop whose bounds a closure of its function
   writes, 0 found, red on `enemyDistance` as it was before R209.
+  - Done (HASH215): `tests/unit/loopBounds.test.ts` reads every source of `src/sim`, `src/worker` and `src/shared`
+    with the TypeScript parser (`loopBoundsScan.ts`) for a `for`, `while` or `do` loop whose condition reads a variable
+    that a closure of the loop's function writes, the closure written in the loop or called by its name from it: none
+    found. It finds `enemyDistance` as it was before R209 (`tests/fixtures/enemyDistanceBeforeR209.ts.txt`: the search
+    loop, `reach` writing `left` and `tail`), a closure written in the loop and a write through a destructuring, and
+    leaves alone a loop that writes its own bounds, a closure's own variables and a closure the loop does not call.
+    `longStep1938` counts the capitals its headless world sends to the field (`CapitalMoved` to no city) and is red
+    with none, saying to choose another seed; green on 88901 (run by hand). What the reading cannot see: a closure
+    reached through another call (a callback handed to a function in another file). SPEC §2.6's line names the test.
 - [ ] R216 **R89-N1: three of six new three-nation random worlds have no war in ten years** (`fewNationWars 3 89401 6
   10`: 89402, 89403, 89404; ADR-1129 keeps the rules, a peace of near-equals; on the page three years with 2 events).
   AT (the report's second way; the first, a war on 5 of 6, would change ADR-1129's rules): in a world of few nations with
