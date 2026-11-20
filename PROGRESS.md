@@ -191,3 +191,11 @@
 
 - No fresh `performance` score for a change under `src/`, nor as a release condition; CRITIC_PROMPT.md and PROMPT.md
   changed. Critic run 90 was started before, under the old text.
+
+## 2026-11-20 — critic run 90 (focused, on fc767d88): one blocking issue, diplomacyWarDepth 8 → 7
+
+- R90-B1: the peace line (R216) gives reasons days before the war they rule out (a lift on order outside `noLift`, a
+  truce near its end). Every dimension scored afresh (the diff touched every row); the rest 8, performance 8 (tick
+  1.886 ms). Non-blocking: R90-N1 (one slowClick of 90), R90-N2 (the peace not in History), R90-N3 (a heroes frame drop
+  to 52 fps). Filed as Batch 58 (R219 to R222). Left out for time: 38 of 396 landing setups, the stuck-return,
+  next-voyage, Malta and nuke sets. The run's probe rewrote `critic/c85_critic_standoff.warsim-scenario`; restored.

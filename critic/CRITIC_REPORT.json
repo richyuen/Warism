@@ -1,9 +1,9 @@
 {
- "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41",
+ "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
-  "diplomacyWarDepth": 8,
+  "diplomacyWarDepth": 7,
   "emergentDynamics": 8,
   "godMode": 8,
   "editorScenarios": 8,
@@ -19,62 +19,69 @@
  },
  "fresh": {
   "mapVisuals": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "diplomacyWarDepth": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "emergentDynamics": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "godMode": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "editorScenarios": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "statsHistory": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "uiUxPolish": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "performance": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "stability": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "semanticZoom": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "naval": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "tanks": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "aircraft": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   },
   "aiNukes": {
-   "run": 89,
-   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
+   "run": 90,
+   "commit": "fc767d886f1b98ec7a708e6023a1a350c337da00"
   }
  },
- "blocking": [],
- "timestamp": "2026-11-20T05:20:00-05:00"
+ "blocking": [
+  {
+   "id": "R90-B1",
+   "title": "The peace line (R216) says the peace holds 'even after ten years of peace' days before the war it rules out, and names the wrong rival",
+   "evidence": "critic/c90_pw_90441.log, critic/shots/c90pw_90441_d88.png, critic/shots/c90pw_90441_d98.png (two nations: 'Lagunes has no rival within its reach' to day 90, war on Western Australia day 98; critic/c90_reachCase_90441.log: transports at port day 91); critic/c90_pw_89401.log, critic/shots/c90pw_89401_d1595_crop.png, critic/c90_peaceCase_89401.log (a truce of 2 days left unnamed, war on its other party 7 days later); critic/c90_peaceTruth_wars.txt, critic/c90_pt*.log (bash critic/scripts/c90_peaceWars.sh: on 24 seeds, 16 of the 33 wars after a day with reasons came within 30 days, on 11 seeds; SPEC §2 says 'for now' when one may yet declare)",
+   "fix": "A realm held off only by a truce that ends or by a lift on order gives no reason ('for now') in every branch of peaceWhy, not only noLift; or the line names that rival and the truce's days left. Seen fixed when c90_peaceWeek.mjs 90441 2 88 98 and 89401 3 1595 1604 show 'for now' or the coming war's rival each day before the war, and on the same 24 seeds (c90_peaceTruth.ts 3 89401 4 10, 3 90411 6 10, 3 90431 8 10, 2 90441 6 10; c90_peaceWars.sh) no war comes within 30 days of a day whose reasons were a truce or 'no rival within its reach'."
+  }
+ ],
+ "timestamp": "2026-11-20T10:35:00-05:00"
 }

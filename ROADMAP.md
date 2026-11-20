@@ -331,6 +331,30 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     to a city on Malta, as the game moves a capital (the coordinates alone are no longer read). Supply 0.206 →
     0.220 ms a tick. No ADR (ADR-914: R82d's and R84h's "capital's land" read as stated).
 
+## Batch 58 — critic run 90's findings (focused, on fc767d88; one blocking issue; diplomacyWarDepth 7, the rest 8)
+
+- [ ] R219 **R90-B1: the peace line says the peace holds "even after ten years" days before the war it rules out**
+  (90441: "no rival within its reach" for both to day 90, transports at port on day 91, war on day 98; 89401: a truce
+  with 2 days left read as "bound", the next rival named, war on the truce's party 7 days on; 16 of 33 wars on 24 seeds
+  within 30 days of a day with reasons). AT (the report's "seen fixed when"): `node critic/scripts/c90_peaceWeek.mjs
+  90441 2 88 98` and `... 89401 3 1595 1604` read "for now" (or the coming war's rival) every day before the war; on
+  the 24 seeds (`c90_peaceTruth.ts 3 89401 4 10`, `3 90411 6 10`, `3 90431 8 10`, `2 90441 6 10`, then
+  `c90_peaceWars.sh`) no war within 30 days of a day whose reasons were a truce or "no rival within its reach"; the
+  14 untraced (`noLift` among them) traced, each a cause fixed or a war no reason can foresee (a revolt, a new nation).
+- [ ] R220 **R90-N3: with heroes, 7019's year-20 battle at 1,200 m/px drops one 4-second sample to 51.5–52.1 fps**
+  (against 60.1 on `f27f48f5` beside it, 4 of 4; the tier's mean 56.8–57, run 89 59.7). AT: `TAG=x VW=2560 VH=1305 node
+  critic/scripts/c85_pf_lookfps.mjs 7019 critic/c79_hseed7019_y20.bin` no sample under 58.5 fps in two runs; first,
+  which commit since `f27f48f5` costs it (R214's shader, R217's formations pass, R218's capital cells).
+- [ ] R221 **R90-N1: one `slowClick` of 90 on new seeds** (90103, setup 3517). AT: `npx tsx
+  tools/diag/landingInvariants.ts 90103 3517 120 90103 30 2 8` ends with 0 broken.
+- [ ] R222 **R90-N2: the peace line's reasons never reach History** (89403: ten years of peace, two events). AT: History
+  notes the peace's reason when first given and when it changes, on 89403 and one more seed, at the five supported sizes.
+- Design objection (diplomacyWarDepth, at its bar): ADR-1145 reads the AI at ten years' restlessness against today's
+  bonds; "until 22 May" would read better (a truce's days left, Hearts of Iron IV's way). Taken into R219 where a truce
+  holds the rival off; the line's frame otherwise the user's to overturn.
+- Kept as run 89: `heroPop`'s jumps (85905: 12), the opened legend over the news on a phone on its side, R172, R192,
+  ADR-1111.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

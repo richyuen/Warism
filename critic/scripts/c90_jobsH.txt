@@ -1,0 +1,28 @@
+npx tsx tools/diag/workerDeterminism.ts 90059 4380 24 critic/c90_wd_89059.json > critic/c90_wd_89059.log 2>&1
+npx tsx critic/scripts/c77_topArea.ts 90097 25 critic/c90_toparea_89097.json > critic/c90_toparea_89097.log 2>&1
+npx tsx critic/scripts/c77_farConquests.ts 0 90161,90163,90165,90167,90169 730 > critic/c90_farc.log 2>&1
+npx tsx tools/diag/nukeIntercepts.ts 90501 22 > critic/c90_nukeIntercepts_89501.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 90503 22 > critic/c90_nc_89503.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 90505 22 > critic/c90_nc_89505.log 2>&1
+npx tsx critic/scripts/c77_nukecount.ts 90507 22 > critic/c90_nc_89507.log 2>&1
+npx tsx tools/diag/heroBattle.ts 90081 3 > critic/c90_heroBattle_89081.log 2>&1
+npx tsx tools/diag/heroCeiling.ts 90181 3 > critic/c90_heroCeiling3_89181.log 2>&1
+npx tsx tools/diag/warOpening.ts critic/c90_warOpening.json --years 3 90211 90213 90215 > critic/c90_warOpening.log 2>&1
+npx tsx tools/diag/pragueFall.ts 90201 > critic/c90_prague_89201.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 90205 GER,POL 60 > critic/c90_fa_89205.log 2>&1
+npx tsx tools/diag/frontArrivals.ts 90207 JAP,CHI 60 > critic/c90_fa_89207.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 90401 6 10 > critic/c90_few3.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 2 90421 6 10 > critic/c90_few2.log 2>&1
+npx tsx critic/scripts/c77_firstdecl.ts 60 90821 90823 90825 90827 90829 90831 90833 90835 90837 90839 > critic/c90_firstdecl.log 2>&1
+npx tsx critic/scripts/c77_piles.ts 365 --plain 90139 90141 90143 90145 90147 > critic/c90_piles_p.log 2>&1
+npx tsx critic/scripts/c77_piles.ts 365 90149 90151 90153 90155 90157 > critic/c90_piles_h.log 2>&1
+npx tsx critic/scripts/c77_massTold.ts 3 90611 90613 90615 > critic/c90_massTold.log 2>&1
+npx tsx tools/diag/borderLog.ts --seed 90099 --years 20 > critic/c90_borderLog_89099.log 2>&1
+npx tsx tools/diag/heldAtEnd.ts 90311 > critic/c90_heldAtEnd_89311.log 2>&1
+npx tsx critic/scripts/c77_interceptTold.ts > critic/c90_interceptTold.log 2>&1
+npx tsx critic/scripts/c78_trackTexts.ts > critic/c90_trackTexts.log 2>&1
+npx tsx tools/diag/trackFronts.ts 90701 > critic/c90_tf_89701.log 2>&1
+npx tsx tools/diag/capitalMoves.ts critic/c90_capitalMoves.json 365 7019:critic/c90_seed7019_y20.bin 32019:critic/c90_seed32019_y20.bin > critic/c90_capitalMoves.log 2>&1
+npx tsx tools/diag/capitalFar.ts 7019 critic/c90_seed7019_y20.bin > critic/c90_capitalFar_7019.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 89401 6 10 > critic/c90_few3_89401.log 2>&1
+npx tsx tools/diag/fewNationWars.ts 3 85401 6 10 > critic/c90_few3_85401.log 2>&1
