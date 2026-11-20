@@ -354,7 +354,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   which commit since `f27f48f5` costs it (R214's shader, R217's formations pass, R218's capital cells).
 - [x] R221 **R90-N1: one `slowClick` of 90 on new seeds** (90103, setup 3517). AT: `npx tsx
   tools/diag/landingInvariants.ts 90103 3517 120 90103 30 2 8` ends with 0 broken.
-  - Done (COMMIT): the checker's, not the sim's. t118's click of 364 and 367: 364, aboard, clicked 2 cells off its
+  - Done (f2c768aa): the checker's, not the sim's. t118's click of 364 and 367: 364, aboard, clicked 2 cells off its
     beach at t162, sailed on in its landing (L3) and was ashore 6.2 days after t118; taken from its click by that
     re-click, it left 367 judged alone by 364's 6.6-day best (367's own way: its group back from Shanghai, 6.1 days,
     then 7.5 days' sail from the north). `SlowClicks` keeps a division in its click when, after the click's hour, it is
