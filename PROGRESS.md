@@ -109,3 +109,12 @@
   was read and what was taken from it (which statement the engine compiled wrongly was not read; why one long step is
   not explained). Four more seeds by `pageHash.ts`, ten loads each, a year in one message: 1307, 99, 20933, 51377, 10
   of 10 equal to headless. The gate of 8c75a5fa: `snapshot-perf.test.ts` red in the run of all, green alone.
+
+## 2026-11-20 — critic run 89 (focused, on f27f48f5): no blocking issue, every score at its bar; the release check
+
+- Stability 7 → 8 (R88-B1 fixed on its four cases; 74 loads of 74 at the headless world, the old build 2 wrong of 24);
+  every dimension 8 (mapVisuals, diplomacyWarDepth, emergentDynamics, godMode, performance, stability, naval, tanks,
+  aircraft, aiNukes afresh). The sim's course unchanged in Node (20-year hashes, seed 99's `ca4700f1`, 54 replay starts,
+  717 bulk landing runs). Three new non-blocking issues filed in Batch 56 (R214 to R216) beside R210 to R213: fixed
+  before the release, no critic run after (ADR-1139); then `check:review`, `bench G --gpu-only`, the tag, and the loop
+  stops.

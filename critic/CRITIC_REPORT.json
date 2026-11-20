@@ -1,5 +1,5 @@
 {
- "commit": "3e1ed78ebc14824d82aab955c040292d036adad2",
+ "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
@@ -10,7 +10,7 @@
   "statsHistory": 8,
   "uiUxPolish": 8,
   "performance": 8,
-  "stability": 7,
+  "stability": 8,
   "semanticZoom": 8,
   "naval": 8,
   "tanks": 8,
@@ -19,20 +19,20 @@
  },
  "fresh": {
   "mapVisuals": {
-   "run": 86,
-   "commit": "bd85eb1084e11cb3c208ce8c9a78345bb86e1ff0"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "diplomacyWarDepth": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "emergentDynamics": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "godMode": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "editorScenarios": {
    "run": 88,
@@ -47,41 +47,34 @@
    "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "performance": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "stability": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "semanticZoom": {
    "run": 88,
    "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "naval": {
-   "run": 88,
-   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "tanks": {
-   "run": 85,
-   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "aircraft": {
-   "run": 85,
-   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   },
   "aiNukes": {
-   "run": 85,
-   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+   "run": 89,
+   "commit": "f27f48f5a56b369987e352fdcff9510fd112ae41"
   }
  },
- "blocking": [
-  {
-   "id": "R88-B1",
-   "title": "One long step in the page (7,200 hours or more of plain 1938 seed 88901 in one message) ends in another world than the headless one: 8 of 18 loads on HEAD, 5 of 8 on bbf47bca, 7 of 10 in tools/diag/pageHash.ts; a running game holds (11 of 11); no player route found",
-   "evidence": "critic/c88_pageHash_88901.log (3 of 10 equal to headless); critic/c88_swm_88901.log (the same messages, two end hashes 3723997852 and 1699438925); critic/c88_sw_88901_400.log, c88_sw_wa_88901.log, c88_sw_wm_88901.log; critic/c88_swm_88901_{25,100,200,300}.log (0 of 8 at 600, 2,400 and 4,800 hours, 2 of 8 at 7,200); critic/c88_sw_ch_88901.log and c88_sw_ch200_88901.log (in steps: headless, 12 of 12); critic/c88_ph_88901.log and c88_ph_block_88901.log (running: headless, 11 of 11); critic/c88_swm87_88901_400.log (bbf47bca: 5 of 8); critic/c88_swm_88903_400.log (seed 88903: 0 of 8); critic/c88_headHash_88901.log",
-   "fix": "Find what the worker leaves undone in one long step that a pumped or chunked run does between hours, and do it by the tick; pin a page case of seed 88901. Seen fixed when: node critic/scripts/c88_sameWorldMsgs.mjs 88901 400 12 prints the one end hash 3723997852; ... 88901 300 12 the one hash 4108155890; npx tsx tools/diag/pageHash.ts <base> 88901 1 76540321 10 3 prints 10 of 10; node critic/scripts/c88_playHash.mjs 88901 9600 6 stays 6 of 6."
-  }
- ],
- "timestamp": "2026-11-20T01:40:00-05:00"
+ "blocking": [],
+ "timestamp": "2026-11-20T05:20:00-05:00"
 }

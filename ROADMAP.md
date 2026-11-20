@@ -197,6 +197,24 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   footer whole at 393 × 659, the graph's height as R185 and R195 have it.
 - [ ] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
   banners of one row never read alike while their wars differ; R174's and R183's cases as now.
+- **Critic run 89 (focused, on f27f48f5): no blocking issue, every score at its bar (stability 7 → 8, R88-B1 fixed on its
+  four cases; the old build beside HEAD on 88901, 2 wrong of 24 against 0 of 74). The release check (ADR-1138): the
+  items open here are fixed before the release, with no critic run after them (ADR-1139).** R210 to R213 kept as they
+  are; its own three:
+- [ ] R214 **R89-N2: at 2560 × 1305, at world zoom, the band above the map's north edge is the sea's last row drawn out
+  into faint vertical stripes** (`critic/shots/c89_edge_top.png`; a supported size). AT: the view beyond the map's north
+  and south edges one flat sea colour at 2560 × 1305 and at the four phone sizes; the map's own rows as now.
+- [ ] R215 **R89-N3 and the objection to ADR-1143: R209's pin is one event of one seed, and the rule is checked by
+  nothing.** AT: `longStep1938` says that the world it stepped did send a capital to the field (red when the seed's
+  world no longer does); a test that reads `src/sim` and `src/worker` for a loop whose bounds a closure of its function
+  writes, 0 found, red on `enemyDistance` as it was before R209.
+- [ ] R216 **R89-N1: three of six new three-nation random worlds have no war in ten years** (`fewNationWars 3 89401 6
+  10`: 89402, 89403, 89404; ADR-1129 keeps the rules, a peace of near-equals; on the page three years with 2 events).
+  AT (the report's second way; the first, a war on 5 of 6, would change ADR-1129's rules): in a world of few nations with
+  no war the page says that its nations are at peace and why, at the five supported sizes; `fewNationWars 3 85401 6 10`
+  as now.
+- Run 89's objection to ADR-1129 (a small world's AI tiring of peace by the year): not taken, a change of the rules
+  ADR-1129 kept; R216 takes the telling. Run 88's two stand as filed below.
 - Design objections (UI/UX at its bar; ADR-843 files those of a dimension under its bar, these for the record): the
   opened legend over the news on a phone on its side (R203's choice): not taken now, the legend above the news would
   be about 100 px high at 734 × 343; R208's hidden ranking toggle: not taken, the tick's reason holds (the title stays
