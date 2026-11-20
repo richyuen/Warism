@@ -8,8 +8,8 @@ const en = JSON.parse(readFileSync(path.resolve(import.meta.dirname, '../../src/
 // ROADMAP R216 (critic run 89, R89-N1; ADR-1145): three of six three-nation random worlds had no war in ten years and
 // the page said nothing of it. A world of few nations at peace says so, and why, in the war row's place: "At peace" and
 // the reason most of its realms share (89403: none outmatches another), each realm's reason opened by a tap; "for now"
-// when one may yet go to war (89404). At the five supported sizes (ADR-1141): in the view, over none of the page's other
-// boxes, closed and opened; gone when a war is declared; never in 1938.
+// when one may yet go to war (89418; 89404 before ROADMAP R217). At the five supported sizes (ADR-1141): in the view,
+// over none of the page's other boxes, closed and opened; gone when a war is declared; never in 1938.
 
 const SIZES = [[393, 659], [393, 852], [734, 343], [852, 393], [2560, 1305]] as const;
 const BOXES = ['topbar', 'bottombar', 'ticker', 'map-legend', 'stats-ranking', 'landings-bar', 'first-cue', 'order-news'];
@@ -77,11 +77,12 @@ for (const [w, h] of SIZES) {
   });
 }
 
-test('89404 (a war prepared): "At peace for now", no reason given', async ({ page }) => {
+test('89418 (a war prepared): "At peace for now", no reason given', async ({ page }) => {
   test.setTimeout(120_000);
-  await open(page, 89404, 393, 852);
-  // Its first massing begins on day 5 (`.cache/massTrace.ts`, ROADMAP R217).
-  await page.evaluate(() => window.__warsim!.sim.step(24 * 10));
+  await open(page, 89418, 393, 852);
+  // Its first massing begins on day 26 (`.cache/r217_case.ts`; 89404's, on day 5, was on a land none of its men stood
+  // on until ROADMAP R217).
+  await page.evaluate(() => window.__warsim!.sim.step(24 * 30));
   const line = page.getByTestId('war-peace');
   await expect(line).toHaveAttribute('data-why', '0', { timeout: 20_000 });
   await expect(page.getByTestId('war-peace-why')).toHaveText(en['peace.forNow']!);

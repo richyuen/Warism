@@ -137,7 +137,7 @@ import { neighbours4 } from '../nav/grid';
 import { airfield, levyFormation, queueFormation, refillable, refillFormation, shipyard } from '../systems/production';
 import { freeDecks, liveCarriers, manDecks } from '../systems/air';
 import { foldHollow } from './hollow';
-import { homeNeighbours, neighbourMap, PACIFIST_BELOW, seaPowers, strengths } from './strategic';
+import { homeByLand, neighbourMap, PACIFIST_BELOW, seaPowers, strengths } from './strategic';
 import { transportRoom } from '../systems/amphibious';
 import { passageOf } from '../systems/movement';
 import { frontReach } from './invasion';
@@ -914,7 +914,7 @@ export function outnumberedOnLand(world: World, own: ReadonlyMap<number, readonl
  * sunk to one or two, it carries no division, and no ship is refilled.
  */
 /**
- * The sea powers (`seaPowers`) that border no nation on land, or none by their home (`homeNeighbours`, R86c), and are no
+ * The sea powers (`seaPowers`) that border no nation on land, or none by their home (`homeByLand`, R86c, R217), and are no
  * pacifists (R85e, ADR-1068): with no land target,
  * their wars are across the sea, and the strategic AI's sea targets need a transport group at port (`seaTargetKm`), which
  * only a war ordered (`wantsTransport`).
@@ -923,7 +923,7 @@ export function landlessPowers(world: World): Set<number> {
   const nc = world.nations.cols;
   const nb = neighbourMap(world);
   const out = new Set<number>();
-  for (const n of seaPowers(world, strengths(world))) if (nc.aggression[n]! >= PACIFIST_BELOW && ((nb.get(n)?.size ?? 0) === 0 || homeNeighbours(world, n)?.size === 0)) out.add(n);
+  for (const n of seaPowers(world, strengths(world))) if (nc.aggression[n]! >= PACIFIST_BELOW && ((nb.get(n)?.size ?? 0) === 0 || homeByLand(world, n)?.size === 0)) out.add(n);
   return out;
 }
 

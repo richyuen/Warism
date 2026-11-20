@@ -278,9 +278,9 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 - Not taken: `heroPop`'s jumps (85905: 13; 88905: 8), the graph's 13 px jump (R196), R172's, R192's and ADR-1111's kept
   items (as run 87).
 
-## Batch 57 — found in R216's trace (after this release's tag: a new declaration rule wants a critic run after it, ADR-1139)
+## Batch 57 — found in R216's trace (filed after this release's tag, a new declaration rule wanting a critic run after it, ADR-1139; R217 put before the release by the user, 2026-11-20, ADR-1146)
 
-- [ ] R217 **A massing begun on a border no man of its army can walk to** (found tracing R216's 89404; three-nation
+- [x] R217 **A massing begun on a border no man of its army can walk to** (found tracing R216's 89404; three-nation
   random world, `.cache/massTrace.ts`, `.cache/armyLand.ts`). Nation 2's whole army (4.2 M men) stands on its home
   continent (navigation land 56, 362,792 cells, no other holder); its borders with 1 and 3 lie on a northern land of
   33,601 cells (land 4, held by all three, no man of any) and small islands. `homeNeighbours` counts them as home by
@@ -295,6 +295,23 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   world's placing of armies on its capitals' land), and how often it happens in seed 99's first year and in a
   60-nation random world. Likely origin: R84h (ADR-1065) made each piece of a nation's own of `HOME_KM2` or more its
   home (`homeNeighbours.test.ts`: 51401's second nation borders the third only by such a piece).
+  - Done (COMMIT): ADR-1146. A neighbour of a nation's home is one of `homeNeighbours`' at whose border its land men
+    stand on the border's land (`homeByLand`; `armyLands`, `borderOnLands` in `massing.ts`), the one definition for
+    `warTarget`'s cost, `acrossSea`'s lift, `beginMassing`, `unprepared`, `stillDeclares`, `landlessPowers` and
+    `peaceWhy`; `noLift`'s touch by land only where a man of the declaring side stands. The cause is the rule's: of
+    massings begun with no man on the border's lands, seed 99's first year 0 of 14, 60-nation worlds 1 of 30 (seed 7)
+    and 1 of 18 (60601), both armies that stood elsewhere, not never placed. 89404: 0 wars and 14 empty massings in ten
+    years → 6 wars (2 on 3 by a landing on day 138; until its lift `peaceWhy` reads nation 2 `noLift`). Checker: `mass`
+    in `diploInvariants` (no massing begun with no man there), a three-nation case 89404 (red before on day 5), seed 7's
+    60 red before on day 131; the other cases green. `fewNationWars 3 85401 6 10` as run 89 but 85406 (first war day
+    1197 → 1126); 51401 and 53401 6 of 6. `warOpening`, five seeds, three years: nothing held at day 30 10.1 → 7.7 %,
+    attacker none near 12.4 → 3.4 %, defender ahead 16.2 → 12.9 %. Pin f311b292 → 9aaa81c1 (the Soviet Union's war on
+    Mengjiang, a neighbour it touches nowhere, not declared). Tick +1.5 %. ADR-1145's "for now" world is 89418 now.
+    `peaceLine.spec.ts` run by hand. Found on the way: R218.
+- [ ] R218 **A random world's capital on a sea cell** (found in R217: seed 7's 60, 10 capitals on a cell no nation owns,
+  land 0; 89413, 2 of 3). `homeNeighbours` then finds no home (null: every neighbour home before R217; those its men
+  stand by since). AT: every random world's capital on a land cell of its own at the start, on several seeds and sizes;
+  the capitals' cities as now. First: where the capital point is set (the city's centre beside the coast).
 
 ## Released
 

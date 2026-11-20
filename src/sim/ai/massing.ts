@@ -9,8 +9,9 @@
  *
  * The strategic AI's choice of a war (`strategicAi`, as before: its utility, its draw, `firstNotOutnumbered`) begins a
  * massing where it declared (`beginMassing`), when the chooser is in no war, its army is the AI's to order, and it
- * holds land beside land the target holds. Else it declares at once, as before: a nation at war has its army on its
- * fronts by the operational AI, and a war over the sea is the landings'.
+ * holds land beside land the target holds, on a land some of its men stand on (ROADMAP R217, the strategic AI's
+ * `homeByLand`). Else it declares at once, as before: a nation at war has its army on its fronts by the operational AI,
+ * and a war over the sea is the landings'.
  *
  * Each day (`massStep`) for each nation massing, in the order of their numbers:
  * - It is given up when the nation or the target is dead, the nation is at war (its army is wanted there), the
@@ -126,13 +127,15 @@ export function massPoints(world: World, n: number, t: number): number[] {
 /**
  * Begins `n`'s massing against `t` on `day` (tick / 24), where the strategic AI would declare. False when it is to
  * declare at once, as before: it is in a war, its army is not its AI's, it holds no land beside `t`'s, or `t` is its
- * neighbour by a colony only (`atHome` false; Britain and the Netherlands on Borneo, France and they in Guiana). True when
- * it masses (or masses already, against whomever: one war is prepared at a time).
+ * neighbour by a colony only or on lands none of its men stand on (`atHome` false, the strategic AI's `homeByLand`;
+ * Britain and the Netherlands on Borneo, France and they in Guiana; R217). True when it masses (or masses already,
+ * against whomever: one war is prepared at a time).
  */
 export function beginMassing(world: World, n: number, t: number, day: number, atHome = true): boolean {
   if (MASS_PROBE.off) return false;
   if (world.massing.has(n)) return true;
-  // A neighbour by a colony only (`homeNeighbours`): a war across the sea to the strategic AI, and the landings'.
+  // A neighbour by a colony only, or on lands no man of its stands on (`homeByLand`): a war across the sea to the
+  // strategic AI, and the landings'.
   if (!atHome) return false;
   if (inWar(world, n) || !aiRuns(world, n, AiLayer.army)) return false;
   if (massPoints(world, n, t).length === 0) return false;
@@ -146,6 +149,29 @@ function away(world: World, x: number, y: number, c: number): number {
   let dx = Math.abs((c % w) + 0.5 - x);
   if (world.settings.loopingMap && dx > w / 2) dx = w - dx;
   return hypot(dx, Math.floor(c / w) + 0.5 - y);
+}
+
+/**
+ * The lands (`NavGrid.component`) on which a land formation of one of `nations` stands, as `standing` counts its men: no
+ * fleet, wing or formation aboard (ROADMAP R217: a border on a land none of them stands on is across the sea).
+ */
+export function armyLands(world: World, nations: readonly number[]): Set<number> {
+  const f = world.formations.cols;
+  const w = world.cells.w;
+  const comp = navOf(world).grid.component;
+  const of = new Set(nations);
+  const out = new Set<number>();
+  world.formations.forEach((id) => {
+    if (!of.has(f.nation[id]!) || world.isFleet(id) || world.isWing(id) || world.embarked.has(id)) return;
+    out.add(comp[Math.floor(f.y[id]!) * w + Math.floor(f.x[id]!)]!);
+  });
+  return out;
+}
+
+/** Whether a point of `n`'s border with `t` (`massPoints`) lies on one of `lands` (`armyLands`): its army may walk there. */
+export function borderOnLands(world: World, n: number, t: number, lands: ReadonlySet<number>): boolean {
+  const comp = navOf(world).grid.component;
+  return massPoints(world, n, t).some((p) => lands.has(comp[p]!));
 }
 
 interface Standing {

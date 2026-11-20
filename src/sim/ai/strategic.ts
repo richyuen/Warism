@@ -48,7 +48,7 @@ import { navOf, portSeaOf, seaOf, type World } from '../world';
 import { cellKm2ByRow } from '../landCounts';
 import { ATTACKERS } from '../wars';
 import { AiLayer, aiRuns } from './layers';
-import { beginMassing, massStep, unprepared } from './massing';
+import { armyLands, beginMassing, borderOnLands, massStep, unprepared } from './massing';
 import { LIFT_PROBE, noLift, sidesTouch } from './seaLift';
 
 export const STAGGER = 7;
@@ -208,6 +208,28 @@ export function homeNeighbours(world: World, n: number): Set<number> | null {
     const p = piece(node);
     if (p.km2 >= HOME_KM2) for (const b of p.borders) out.add(b);
   }
+  return out;
+}
+
+/** A probe's switch (R217's A/B): `areaOnly`, home is `homeNeighbours`' alone and a touch by land any, as before R217. Never set by the game. */
+export const HOME_PROBE: { areaOnly?: boolean } = {};
+
+/**
+ * The neighbours `n` may walk to war on (ROADMAP R217): those of its home (`homeNeighbours`) at whose border with it
+ * (`massPoints`) some of its land men stand on that border's land (`armyLands`). The one definition of a war across the
+ * sea for the strategic AI (`warTarget`'s cost, `acrossSea`'s lift, `beginMassing`), the landings' (`landlessPowers`)
+ * and the page (`peaceWhy`). Found on 89404 (three nations): nation 2's whole army on its capital's continent, its
+ * borders all on a northern land its piece of which is home by its area (R84h); it began a massing there nine times in
+ * ten years, each never ready (0 % of its men on the border's lands) and barred a year. A nation whose capital is on no
+ * land of its own (`homeNeighbours` null: every neighbour home) has those of its neighbours (`neighbourMap`) at whose
+ * border its men stand (89413's nation 3, its capital's cell held by none, began a massing on day 32 with none there).
+ */
+export function homeByLand(world: World, n: number): Set<number> | null {
+  const home = homeNeighbours(world, n);
+  if (HOME_PROBE.areaOnly || home?.size === 0) return home;
+  const lands = armyLands(world, [n]);
+  const out = new Set<number>();
+  for (const t of home ?? neighbourMap(world).get(n) ?? []) if (borderOnLands(world, n, t, lands)) out.add(t);
   return out;
 }
 
@@ -463,7 +485,7 @@ export function warTarget(world: World, n: number, neighbours: readonly number[]
   };
   // A land neighbour by a colony only (R82d, critic run 68's R68-N2: France on Brazil by French Guiana, taking Rio on 4
   // of 5 seeds of plain 1938) costs as a war across the sea: SEA_KM_COST for each 1,000 km between the two capitals.
-  const home = homeNeighbours(world, n);
+  const home = homeByLand(world, n);
   const colony = (t: number): number => (home === null || home.has(t) ? 0 : colonyWarCost(world, n, t));
   const reach = (): Map<number, number> => seaTargetKm(world, n, powers === undefined || powers.has(n) ? Infinity : SEA_REACH_KM);
   // A nation whose home borders no nation (R85e, ADR-1068; R86c, critic run 71, R71-N3: two-nation worlds whose
@@ -654,7 +676,7 @@ export function stillDeclares(world: World, n: number, t: number, blocs: Readonl
   if (!BLOC_PROBE.deterrenceOff && deterred(world, n, t, blocs)) return false;
   // Nor across the sea with no lift for it (R145, critic run 76's R76-B1): a massing's target may be a puppet whose
   // overlord, the war's defender, is no neighbour at home.
-  const home = homeNeighbours(world, n);
+  const home = homeByLand(world, n);
   const across = acrossSea(world, n, t, (d) => neighbourMap(world).get(n)?.has(d) === true, (d) => home === null || home.has(d));
   if (across && noLift(world, n, callSides(world, n, t))) return false;
   return PILE_PROBE.off === true || !outnumbered(world, n, t);
@@ -716,7 +738,7 @@ export function strategicAi(world: World): void {
       // Not a neighbour barred after a massing given up, nor, in a war already, one at whose border its army is not (R97b).
       let home: Set<number> | null | undefined;
       const atHome = (t: number): boolean => {
-        if (home === undefined) home = homeNeighbours(world, n);
+        if (home === undefined) home = homeByLand(world, n);
         return home === null || home.has(t);
       };
       const never = unprepared(world, n, neighbours, day, wars, atHome);

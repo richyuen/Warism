@@ -22,11 +22,12 @@ import { passageOf } from '../systems/movement';
 import { frontierOf } from '../systems/territory';
 import { navOf, type World } from '../world';
 import { playerHeld } from './layers';
+import { armyLands } from './massing';
 import { DEPLOY_RANGE_CELLS } from './operational';
 
 /** A probe's switch (`tools/diag/warOpening.ts --no-lift`): off, a war across the sea is declared as before R139. Never set by the game. */
-/** `off`: no lift asked (R139's A/B); `far`: a target across the sea asked its own lift after one refused (R147's A/B). */
-export const LIFT_PROBE: { off: boolean; far?: boolean } = { off: false };
+/** `off`: no lift asked (R139's A/B); `far`: a target across the sea asked its own lift after one refused (R147's A/B); `anyLand`: a touch on any land, as before R217. */
+export const LIFT_PROBE: { off: boolean; far?: boolean; anyLand?: boolean } = { off: false };
 
 /**
  * The free men of `n` that may march to a port where a transport group of its stands (the head of the file), and the
@@ -81,12 +82,18 @@ export function seaLift(world: World, n: number): { men: number; room: number } 
   return { men, room };
 }
 
-/** Whether a nation of side `a` holds land beside land a nation of side `b` holds (four neighbours, the map's loop taken). */
-export function sidesTouch(world: World, a: readonly number[], b: readonly number[]): boolean {
+/**
+ * Whether a nation of side `a` holds land beside land a nation of side `b` holds (four neighbours, the map's loop taken).
+ * With `lands`, only where the two cells' land (`NavGrid.component`) is one of them (ROADMAP R217: where side `a`'s men
+ * stand, `armyLands`).
+ */
+export function sidesTouch(world: World, a: readonly number[], b: readonly number[], lands?: ReadonlySet<number>): boolean {
   const A = new Set(a);
   const B = new Set(b);
   const { w, h, controller } = world.cells;
   const loop = world.settings.loopingMap;
+  const comp = lands === undefined ? undefined : navOf(world).grid.component;
+  const on = (i: number): boolean => comp === undefined || lands!.has(comp[i]!);
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       const i = y * w + x;
@@ -94,8 +101,8 @@ export function sidesTouch(world: World, a: readonly number[], b: readonly numbe
       const inA = A.has(c);
       if (!inA && !B.has(c)) continue;
       const other = inA ? B : A;
-      if (x + 1 < w ? other.has(controller[i + 1]!) : loop && other.has(controller[y * w]!)) return true;
-      if (y + 1 < h && other.has(controller[i + w]!)) return true;
+      if ((x + 1 < w ? other.has(controller[i + 1]!) : loop && other.has(controller[y * w]!)) && on(i)) return true;
+      if (y + 1 < h && other.has(controller[i + w]!) && on(i)) return true;
     }
   }
   return false;
@@ -103,12 +110,14 @@ export function sidesTouch(world: World, a: readonly number[], b: readonly numbe
 
 /**
  * Whether `n` may not declare on `t` for want of a lift (the head of the file): the sides `declareWar` would call
- * (`sides`) do not touch by land, and its free men that may march to its transports are fewer than the room of its
- * largest group at a port. Asked of the target the strategic AI chose, once a declaration is to be made.
+ * (`sides`) do not touch by land where a man of the declaring side stands (`armyLands`, ROADMAP R217: 89404's nation 2
+ * touched its neighbours only on a land none of its men stood on), and its free men that may march to its transports
+ * are fewer than the room of its largest group at a port. Asked of the target the strategic AI chose, once a
+ * declaration is to be made.
  */
 export function noLift(world: World, n: number, sides: [readonly number[], readonly number[]]): boolean {
   if (LIFT_PROBE.off) return false;
-  if (sidesTouch(world, sides[0], sides[1])) return false;
+  if (sidesTouch(world, sides[0], sides[1], LIFT_PROBE.anyLand ? undefined : armyLands(world, sides[0]))) return false;
   const { men, room } = seaLift(world, n);
   return men < room || room === 0;
 }

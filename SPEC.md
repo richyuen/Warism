@@ -1636,14 +1636,17 @@ production and research. `src/sim/ai/`.
   `SEA_REACH_KM`, 4000, of such a group, R74h). The powers (`seaPowers`, R76c): the seven of `worldPowers` (a
   share of the world's strength plus its income plus its warheads, the start card's measure) and the seven largest
   navies. A target across the sea scores its utility less `SEA_KM_COST` (0.1) for each 1,000 km to its realm's capital
-  from the nearest transport group, or to its nearest port if further (R78b); for a nation with no land neighbour, or
+  from the nearest transport group, or to its nearest port if further (R78b). A neighbour of its home (`homeByLand`)
+  borders its capital's land or a piece of its own of `HOME_KM2` (500,000 km²) or more (`homeNeighbours`, R82d, R84h)
+  where some of its land men stand on the border's land (R217, ADR-1146: its army may walk there); any other land
+  neighbour is one by a colony and costs `SEA_KM_COST` a 1,000 km between the capitals. For a nation with no land neighbour, or
   none by its home (R86c, ADR-1069), each target, by a colony or across the sea, less only the cost beyond its cheapest's
   (R85e, ADR-1068). A sea power at peace with no land neighbour, or none by its home, orders a
   transport group as a landing's want does (`landlessPowers`, R85e). It declares on the best with probability
   `DECLARE_P` (0.25) × aggression ÷ 100, unless the side `declareWar` would call against it (`callSides`) has over
   `PILE_REALMS` (4) realms (nations that are no puppet) for each of its own: then on its next best so judged, or none
   (R82f, ADR-1042). So too a target no land neighbour of its home (across the sea, or by a colony) when those sides
-  touch nowhere by land (`sidesTouch`) and fewer of its free men (standing, beyond `DEPLOY_RANGE_CELLS` of its own
+  touch nowhere by land where a man of the declaring side stands (`sidesTouch`, `armyLands`, R217) and fewer of its free men (standing, beyond `DEPLOY_RANGE_CELLS` of its own
   fronts) may march to a port where its transports stand than its largest group there holds (`noLift`, `seaLift`;
   R139, ADR-1119).
 - **Mass, then declare** (R97b, ADR-1089; `ai/massing.ts`): a nation in no war that so chooses a war on a neighbour
@@ -1653,7 +1656,9 @@ production and research. `src/sim/ai/`.
   `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war; a nation with no
   other living neighbour declares at that limit all the same (R123, ADR-1106). A nation at war
   declares a second war on a neighbour of its home only with `MASS_SECOND` (0.15) of its men at that border. A
-  neighbour by a colony only, and a target across the sea, are declared on at once. `World.massing` and
+  neighbour by a colony only (or on lands none of its men stand on, R217, so with a lift), and a target across the sea,
+  are declared on at once: no massing begins with no man of its nation on the border's lands (`mass` in
+  `diploInvariants`). `World.massing` and
   `World.massBarred`, saved. Test: `tests/unit/massing1938.test.ts`. **The target answers** (R103, ADR-1093): once
   `MASS_SEEN` (0.25) of the massing nation's men stand at the border, the target, if in no war, preparing none and
   its army its AI's, brings `MASS_SHARE` of its own formations to its side of it the same way; of two massing on

@@ -161,3 +161,14 @@
   with it, 46/46 on both projects (run by hand). `fewNationWars 3 85401 6 10` as run 89 read it.
 - Found tracing 89404: a massing begun on a border no man of its army can walk to, repeated for ten years. Filed as
   R217 in Batch 57, after this release's tag (a new declaration rule wants a critic run after it).
+
+## 2026-11-20 — R217: a neighbour of a nation's home is one its men stand on the border's land of (ADR-1146)
+
+- Put before the release by the user. One definition of "across the sea" (`homeByLand`): `warTarget`'s cost, the lift,
+  the massing, `landlessPowers`, `peaceWhy`; the lift's touch by land only where the declaring side has men. Massings
+  begun with no man on the border's lands: seed 99's year 0 of 14, 60-nation worlds 1 of 30 and 1 of 18, 89404 14 of 19.
+  89404: 0 wars → 6 in ten years. Checker `mass` (`diploInvariants`), a three-nation case, red before.
+- `warOpening` five seeds × 3 years: nothing held at day 30 10.1 → 7.7 %, attacker none near 12.4 → 3.4 %, defender
+  ahead 16.2 → 12.9 %. `fewNationWars 3 85401 6 10` as run 89 but 85406 (day 1197 → 1126). Pin f311b292 → 9aaa81c1.
+  Tick +1.5 % (strategicAi 0.275 → 0.332 ms). The gate's browser suite 465/465 (peaceLine with it).
+- Found: R218, random worlds' capitals on a sea cell (seed 7's 60: 10).

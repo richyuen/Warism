@@ -11,6 +11,7 @@
  * `--no-massing`: wars declared as before ROADMAP R97b (no army brought to the border first), for the comparison.
  * `--no-answer`: the target of a massing does nothing of it, as before ROADMAP R103.
  * `--no-lift`: a war across the sea is declared with no army to lift for it, as before ROADMAP R139.
+ * `--area-home`: home by its area alone and a touch by land on any land, as before ROADMAP R217 (`HOME_PROBE`).
  * `--lift-far`: after a target across the sea refused for want of a lift, the next across the sea asked its own, as
  *   before ROADMAP R147.
  * `--neighbours`: only the wars whose two leaders share a land border as the war begins (a war over a sea has no front
@@ -21,6 +22,7 @@ import { writeFileSync } from 'node:fs';
 import { MASS_DAYS, MASS_PROBE } from '../../src/sim/ai/massing';
 import { SHIFT_PROBE } from '../../src/sim/ai/operational';
 import { LIFT_PROBE } from '../../src/sim/ai/seaLift';
+import { HOME_PROBE } from '../../src/sim/ai/strategic';
 import { SIZE_1938, TAGS_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { loadAssets1938 } from '../headless/assets';
@@ -38,6 +40,10 @@ for (let i = 0; i < argv.length; i++) {
   else if (argv[i] === '--no-massing') MASS_PROBE.off = true;
   else if (argv[i] === '--no-answer') MASS_PROBE.noAnswer = true;
   else if (argv[i] === '--no-lift') LIFT_PROBE.off = true;
+  else if (argv[i] === '--area-home') {
+    HOME_PROBE.areaOnly = true;
+    LIFT_PROBE.anyLand = true;
+  }
   else if (argv[i] === '--lift-far') LIFT_PROBE.far = true;
   else if (argv[i] === '--invaded') SHIFT_PROBE.weight = Number(argv[++i]);
   else if (argv[i] === '--mass-days') MASS_PROBE.days = Number(argv[++i]);

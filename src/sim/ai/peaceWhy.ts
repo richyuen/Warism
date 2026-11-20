@@ -16,7 +16,7 @@ import { whyNotWar } from '../systems/war';
 import type { World } from '../world';
 import { AiLayer, aiRuns } from './layers';
 import {
-  acrossSea, blocsOf, DECLARE_AT, deterred, firstNotOutnumbered, homeNeighbours, neighbourMap, outnumbered,
+  acrossSea, blocsOf, DECLARE_AT, deterred, firstNotOutnumbered, homeByLand, neighbourMap, outnumbered,
   PACIFIST_BELOW, RESTLESS, SEA_REACH_KM, seaPowers, seaTargetKm, sides, strengths, warTarget, warUtility,
 } from './strategic';
 
@@ -67,7 +67,7 @@ export function peaceWhy(world: World): PeaceWhy | null {
       const until = world.massBarred.get(n * 65536 + t);
       if (until !== undefined && day < until) barred.add(t);
     }
-    const home = homeNeighbours(world, n);
+    const home = homeByLand(world, n);
     const atHome = (t: number): boolean => home === null || home.has(t);
     const attack = withAllies(n);
     const pick = (refused: ReadonlySet<number>): number => warTarget(world, n, neighbours, attack, defence, 0, RESTLESS, blocs, powers, new Set([...barred, ...refused]));

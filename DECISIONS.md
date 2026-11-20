@@ -5,6 +5,53 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1146 · 2026-11-20 · accepted · A neighbour of a nation's home is one its men stand on the border's land of (R217)
+
+- **The case** (found tracing R216's 89404, three-nation random world): nation 2's whole army (4.2 M men) stands on its
+  capital's continent (navigation land 56, no other holder); its borders with 1 and 3 lie on a northern land (land 4)
+  and small islands. Its piece of land 4 is home by its area (`HOME_KM2`, R84h, ADR-1065), so the strategic AI began a
+  massing there (`beginMassing`); with 0 % of its men on the border's lands it was never ready, was given up after
+  `MASS_DAYS` and barred its target a year: 14 of its massings in ten years with no man there (19 in all), no war.
+- **How often** (`.cache/r217_freq.ts`, massings begun with no man of the nation on the border's lands): seed 99's
+  first year 0 of 14; 60-nation random worlds, a year: seed 7 1 of 30 (58 on 28, day 131: 75,000 men elsewhere),
+  60601 1 of 18 (34 on 22, day 246); three-nation 89402 1 of 1, 89404 14 of 19. An army that walked away and one never
+  placed both: the cause is the rule's, not the random world's placing of armies, which a rule must meet either way.
+- **Decision.** One definition of "across the sea" (`homeByLand`, `src/sim/ai/strategic.ts`): a neighbour of `n`'s home
+  is one of `homeNeighbours`' (the capital's land and pieces of HOME_KM2 or more, unchanged) at whose border with it
+  (`massPoints`) some of its land men stand on that border's land (`armyLands`: no fleet, wing or formation aboard, as
+  `standing` counts them). A nation whose capital is on no land of its own (`homeNeighbours` null) has those of its
+  neighbours so placed (random worlds put capitals on a sea cell: seed 7's 60, 10 of them; ROADMAP R218). It is what
+  `warTarget` prices (a colony's cost otherwise, R82d), `acrossSea` asks the lift of (R139), `beginMassing` masses on,
+  `unprepared` reads, `stillDeclares` asks again, `landlessPowers` orders transports by (R85e) and `peaceWhy` tells.
+  And `noLift`'s touch by land counts only where a man of the declaring side stands on that land (`sidesTouch`'s
+  `lands`): on 89404 the sides touched on land 4, so without it a war would have been declared at once with no lift
+  and no man to fight it. Not `standing()` per candidate: one pass over the formations a call (R82f's +37 %).
+- **The checker** (ADR-804): `mass` in `tests/helpers/diploInvariants.ts`, no massing begun with no man of its nation on
+  its border's lands; `lift` judged by the same definition. A new case, the three-nation 89404 (red before on day 5);
+  seed 7's 60 red before on day 131. The six other cases green.
+- **Read** (A/B, `HOME_PROBE.areaOnly` with `LIFT_PROBE.anyLand` the rule before; `warOpening --area-home`):
+  - 89404, ten years: 0 wars and 14 empty massings → 6 wars (2 on 3 by a landing on day 138; then massings with
+    1.4–4.2 M men on the border, 2 on 1 day 1350, 1 on 3 day 3038 and others); until its lift, `peaceWhy` says nation 2
+    is refused for want of one (`noLift`), where it said "for now".
+  - `warOpening`, 1938, five seeds (58211, 58213, 58215, 61009, 61011), three years: wars 222 → 232; ran a month with
+    nothing held at day 30 16 of 159 (10.1 %) → 13 of 169 (7.7 %); border wars, attacker none near 12.4 % → 3.4 %
+    (ADR-1094's bar 15 %), defender ahead at day 30 16.2 % → 12.9 % (R97b's bar 15 %).
+  - `fewNationWars 3 85401 6 10`: run 89's six lines, but 85406: first war day 1197 → 1126, 2 → 4 wars. 51401 (R84h's
+    bar 5 of 6): 6 of 6 both, 51401 itself first war day 3015 → 102. 53401 (ADR-1068): 6 of 6 both.
+  - Tick (seed 99, first year, the two worlds alike to day 305; run at once on separate cores, `--affinity`): mean
+    2.940 → 2.984 ms (+1.5 %), strategicAi 0.275 → 0.332 ms, its slow calls 159 → 185.
+- **Stands on** ADR-1041 (R82d), ADR-1042, ADR-1065 (`homeNeighbours.test` unchanged, green), ADR-1068
+  (`landlessPowers.test`), ADR-1089 (`massing1938`), ADR-1106, ADR-1119 (`seaLift1938`, the `lift` checker), ADR-1129
+  (85401 above), ADR-1145 (`peaceWhy.test`, `peaceLine`: its "for now" world is 89418 now, a massing on day 26 with
+  1.96 M men there; 89404 gives its reason): green before and after.
+- **Pin:** seed 99's year `f311b292` → `9aaa81c1`. On day 305 the Soviet Union, at war already, declared on
+  Mengjiang (and so Japan), a neighbour by the provinces whose cells its own touch nowhere (no border point; the
+  second war's MASS_SECOND test skips such a neighbour); priced now as by a colony, it does not, and declares on
+  Britain on day 361.
+- **Process (the user's decision, 2026-11-20):** R217 was filed after this release's tag, a new declaration rule
+  wanting a critic run after it (ADR-1139); the user put it before the release ("Let's do R217 before the release").
+  Whether the release goes out with no critic run after this rule is asked with it.
+
 ## ADR-1145 · 2026-11-20 · accepted · A world of few nations at peace says so and why, by the AI's own terms (R216)
 
 - **The case** (critic run 89, R89-N1, non-blocking): three of six new three-nation random worlds had no war in ten

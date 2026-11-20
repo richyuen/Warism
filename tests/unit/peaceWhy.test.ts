@@ -49,15 +49,23 @@ describe('a world of few nations at peace and why (R216)', () => {
     expect(reasons(read(sim))).toBe('1:equal>2 2:noLift>1');
   });
 
-  it('89404: a war prepared, or one barred a year that it would choose again: no reason given (at peace for now)', () => {
-    const sim = world(89404, 3);
+  // 89404 was this case until R217: its massings were begun on a land none of its men stood on (ADR-1145's trace).
+  it('89418: a war prepared, or one barred a year that it would choose again: no reason given (at peace for now)', () => {
+    const sim = world(89418, 3);
     days(sim, 60);
     expect(sim.world.massing.size, 'a massing on day 60').toBeGreaterThan(0);
     expect(read(sim)).toEqual({ why: false, rows: [] });
-    days(sim, 305);
-    expect(sim.world.massing.size, 'none on day 365').toBe(0);
+    days(sim, 70);
+    expect(sim.world.wars.size, 'at peace on day 130').toBe(0);
+    expect(sim.world.massing.size, 'none on day 130').toBe(0);
     expect(sim.world.massBarred.size, 'its target barred').toBeGreaterThan(0);
     expect(read(sim)).toEqual({ why: false, rows: [] });
+  });
+
+  it('89404 (R217): the nation whose army stands on another land than its borders is refused for want of a lift', () => {
+    const sim = world(89404, 3);
+    days(sim, 60);
+    expect(reasons(read(sim))).toBe('1:equal>2 2:noLift>3 3:equal>2');
   });
 
   it('none for a world at war, or of more than three realms', () => {
