@@ -5,6 +5,34 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1145 · 2026-11-20 · accepted · A world of few nations at peace says so and why, by the AI's own terms (R216)
+
+- **The case** (critic run 89, R89-N1, non-blocking): three of six new three-nation random worlds had no war in ten
+  years (89402, 89403, 89404), and the page said nothing of it. ADR-1129 keeps the rules (two or three of near-equal
+  strength may keep the peace); the report's second way was taken: the page says that its nations are at peace, and why.
+- **Decision.** `peaceWhy` (`src/sim/ai/peaceWhy.ts`), a pure read the worker asks for the stats (`nationStats.peace`)
+  while the world has no war and `FEW_REALMS` (3) realms or fewer, at most once a game day. For each realm, the
+  strategic AI's own questions (`strategicAi`), its restlessness at the cap (RESTLESS, ten years of peace): its AI
+  off, pacifist (`PACIFIST_BELOW`), broke; its target by `warTarget` refused by `firstNotOutnumbered` for want of a lift
+  (`noLift`) or by the pile of realms (`outnumbered`); else, of those it may weigh, every one bound to it (`allied`, or
+  `bound` by a truce or an overlord), the best under DECLARE_AT (`equal`), or over it and too dear across the sea
+  (`far`). One realm that would declare even so, that prepares a war (R97b), or whose year's bar holds a target it
+  would choose again: no reason given, "At peace for now". A massing is not named: it is the nation's secret until seen
+  (ADR-1107).
+- **The page.** In the war row's place while there is no war: one line, "At peace" and the reason most realms share;
+  a tap opens the rule and each realm's reason above it (as the war row opens; the ticker above it by its height on a
+  phone). Not sized by the war row's effect.
+- **Why at the cap and not today's restlessness:** a reason given then holds while the world is as it is; a reason
+  today's figures gave would turn false as the years pass (89402: nation 2 clears the bar in year 9 at the cap, and
+  the line says "for now" from then).
+- **Read on** ADR-1129's traced worlds: 54425 `equal` both, 55404 `far`, `far`, `equal`, 59423 `equal` and `noLift`, as
+  it traced them; 89403 `equal` all three (from day 1: at hour 0 the third outmatches the first, "for now", and on day
+  1 the first two ally); 89404 "for now" (a massing, then its bar: ROADMAP R217 files why that massing never ends);
+  89401 never gives a reason in the month before its first war (day 894). The world's save the same bytes before and
+  after each read.
+- **Not taken:** a world of four or more realms (the critic's case and ADR-1129 are of two and three); the massing's
+  name (ADR-1107).
+
 ## ADR-1144 · 2026-11-20 · accepted, the user's decision: (b) · The phone's war row: a name cut to five letters while its counts stay (R213)
 
 - **The case** (critic runs 88 and 89, R88-N4, non-blocking): at 393 px, seed 88901 at day 400, the closed row reads

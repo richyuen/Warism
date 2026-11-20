@@ -2172,6 +2172,9 @@ builds).
   closed row stands on the bar's centre when its banners fit there, else in the middle of the band free beside it
   (R202); the side is chosen when the band or the number of banners changes and held until then, a row that outgrows
   the centre giving a banner behind "+N" (`rowStand`, ADR-1142).
+  A world of few nations (`FEW_REALMS`, 3 realms or fewer) with no war shows, in the row's place, "At peace" and why
+  (`peaceWhy`, ADR-1145: each realm's reason by the strategic AI's terms at its most restless; "for now" when one may
+  yet declare); a tap opens each realm's reason (R216).
   A phone's closed row too short for its banners (`sizeRow`): the long names give way to their first word, the
   longest first; then the banners drop their "& n", those with a long name first; only then do names go down to their
   first five letters, never under (ADR-1144 (b), the user's choice; ADR-1136's floor).

@@ -153,3 +153,11 @@
 
 - The user chose (b). Nationalist Spain's two wars read "Nationalist S… ⚔ Italy" and "Nationalist S… ⚔ Portugal" at 393
   px, not "Natio…" twice. New case in `warBannerRows1938`, red on the old order; R193's floor follows the rule.
+
+## 2026-11-20 — R216: a world of few nations at peace says so and why (ADR-1145)
+
+- `peaceWhy` (a pure read, the worker's stats) and the peace line in the war row's place. `peaceWhy.test.ts`;
+  `peaceLine.spec.ts` at the five supported sizes; `warBannerRows1938`, `phoneLayout1938`, `landingsBarPanel1938`
+  with it, 46/46 on both projects (run by hand). `fewNationWars 3 85401 6 10` as run 89 read it.
+- Found tracing 89404: a massing begun on a border no man of its army can walk to, repeated for ten years. Filed as
+  R217 in Batch 57, after this release's tag (a new declaration rule wants a critic run after it).

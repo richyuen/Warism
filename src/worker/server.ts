@@ -73,9 +73,11 @@ import {
   type OrderNews,
   type PlayerWing,
   type TrackNext,
+  type PeaceWhy,
   TRACK_AHEAD,
   VoyageState,
 } from '../shared/protocol';
+import { peaceWhy } from '../sim/ai/peaceWhy';
 import { geometryOf, SCENARIO_INFO } from '../shared/scenarios';
 import { decodeAdmin1, type Admin1Meta } from '../shared/admin1';
 import { foundedName, foundedNth, provinceLabel } from '../shared/nationNames';
@@ -877,7 +879,24 @@ export class SimServer {
     // The director's rows since the message before (ROADMAP R142).
     const director = this.newsFrom < 0 ? [] : directorRows(world, this.newsFrom, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? '');
     this.newsFrom = world.history.length;
-    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ...(this.undoHeld ? { godUndo: this.undoHeld.tick } : {}), ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, director, world: this.worldNo, wings: playerWings(world), ...trackNext(world) }, []);
+    this.post({ type: 'nationStats', tick: world.tick, nations, wars, dead, lives: this.lives.of(world), aiEnabled: world.settings.aiEnabled, nukesEnabled: world.settings.nukesEnabled, rules: { winnerTakesAll: world.settings.winnerTakesAll, revoltMode: world.settings.revoltMode, ceMode: world.settings.ceMode }, player: world.settings.player, playerAi: world.playerAi, edits: { undo: world.edits.undo.length, redo: world.edits.redo.length }, ...(this.undoHeld ? { godUndo: this.undoHeld.tick } : {}), ticker: tickerRows(world, (id) => this.nameOf(id), (v) => this.cityName(v), (d) => cities1938.cities[d]?.name ?? ''), news, strikes, director, world: this.worldNo, wings: playerWings(world), ...trackNext(world), ...this.peaceOf(world) }, []);
+  }
+
+  /** `peaceWhy`'s last reading and its key (the world, its day, its edits and the AI switch): asked once a day at most. */
+  private peaceKey = '';
+  private peaceRead: PeaceWhy | null = null;
+  /**
+   * A world of few nations at peace and why (R216, ADR-1145), for the war row's place; nothing for a world at war or of
+   * more realms (1938 pays its war count).
+   */
+  private peaceOf(world: World): { peace?: PeaceWhy } {
+    if (world.wars.size > 0) return {};
+    const key = `${this.worldNo}:${Math.floor(world.tick / 24)}:${world.edits.undo.length}:${world.settings.aiEnabled ? 1 : 0}:${world.settings.player}:${world.playerAi}`;
+    if (key !== this.peaceKey) {
+      this.peaceKey = key;
+      this.peaceRead = peaceWhy(world);
+    }
+    return this.peaceRead ? { peace: this.peaceRead } : {};
   }
 
   /**

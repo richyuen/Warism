@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
-import type { NationStat, WarStat } from '../shared/protocol';
+import type { NationStat, PeaceReason, PeaceWhy, WarStat } from '../shared/protocol';
 import { bannerOrder, heldRow, rowStand, type Held, type RowStand } from './bannerOrder';
-import { t } from './i18n';
+import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
 
 /**
@@ -141,7 +141,66 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
  * and brings the war's largest battle into view (`onBattle`, PLAN 2.14e). The swords are lit
  * while the war has a battle to go to and dim while it has none (PLAN 2.14f5b3, ADR-96).
  */
-export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, player = 0, tick = 0, world = 0 }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean; /** The nation played, 0 for none: its wars are the first banners (ROADMAP R121). */ player?: number; /** The stats' tick: how long a banner has held its place (ROADMAP R132). */ tick?: number; /** The stats' world number (a new game, a load). */ world?: number }) {
+/** Of several reasons on the closed line, the one most realms share; on a tie, the first of these (a war chosen and refused first). */
+const PEACE_ORDER: readonly PeaceReason[] = ['noLift', 'outnumbered', 'far', 'equal', 'allied', 'bound', 'pacifist', 'broke', 'aiOff'];
+
+/**
+ * A world of few nations at peace, in the war row's place (ROADMAP R216, ADR-1145; critic run 89, R89-N1: three of six
+ * three-nation worlds had no war in ten years and the page said nothing of it): "At peace" and the reason most of its
+ * realms share, or "for now" when one may yet go to war (`PeaceWhy.why`). Each realm's reason in its title, and opened
+ * by a tap above it, as the war row opens. Not sized by the war row's effect: one button, its own height told to the
+ * ticker (`--banners-h`), taken back when it goes.
+ */
+function PeaceLine({ peace, byId }: { peace: PeaceWhy; byId: Map<number, NationStat> }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = box.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ui = el.parentElement;
+    const set = (): void => ui?.style.setProperty('--banners-h', `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      ui?.style.removeProperty('--banners-h');
+    };
+  }, []);
+  const name = (id: number): string => {
+    const n = byId.get(id);
+    return n ? displayName(n.name) : '?';
+  };
+  let summary = t('peace.forNow');
+  if (peace.why && peace.rows.length > 0) {
+    const count = new Map<PeaceReason, number>();
+    for (const r of peace.rows) count.set(r.reason, (count.get(r.reason) ?? 0) + 1);
+    const top = [...count].sort((a, b) => b[1] - a[1] || PEACE_ORDER.indexOf(a[0]) - PEACE_ORDER.indexOf(b[0]))[0]![0];
+    summary = t(`peace.short.${top}` as MessageKey);
+  }
+  const line = (r: PeaceWhy['rows'][number]): string =>
+    r.reason === 'far' && r.t === 0 ? t('peace.row.farNone', { name: name(r.n) }) : t(`peace.row.${r.reason}` as MessageKey, { name: name(r.n), rival: name(r.t) });
+  const lines = peace.why ? [t('peace.rule'), ...peace.rows.map(line)] : [t('peace.forNowLong')];
+  return (
+    <div ref={box} class={open ? 'war-banners war-peace-row opened' : 'war-banners war-peace-row'} data-testid="war-peace-row">
+      {open ? (
+        <div class="war-peace-rows" data-testid="war-peace-rows">
+          {lines.map((l, i) => (
+            <p key={i}>{l}</p>
+          ))}
+        </div>
+      ) : null}
+      <button type="button" class="war-peace" data-testid="war-peace" data-why={peace.why ? '1' : '0'} aria-expanded={open} title={`${lines.join('\n')}\n${t(open ? 'peace.close' : 'peace.open')}`} onClick={() => setOpen(!open)}>
+        <span class="war-peace-head">{t('peace.head')}</span>
+        <span class="war-peace-why" data-testid="war-peace-why">
+          {summary}
+        </span>
+      </button>
+    </div>
+  );
+}
+
+export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, player = 0, tick = 0, world = 0, peace }: { wars: WarStat[]; byId: Map<number, NationStat>; onSelect: (id: number) => void; onBattle: (war: number) => void; phone?: boolean; /** The nation played, 0 for none: its wars are the first banners (ROADMAP R121). */ player?: number; /** The stats' tick: how long a banner has held its place (ROADMAP R132). */ tick?: number; /** The stats' world number (a new game, a load). */ world?: number; /** A world of few nations at peace and why (R216): said in the row's place while there is no war. */ peace?: PeaceWhy | undefined }) {
   const [opened, setOpened] = useState(false);
   // Their height, for the ticker to stand above them while they are opened on a phone (R156; R126 had it give way).
   const root = useRef<HTMLDivElement>(null);
@@ -291,7 +350,7 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     if (el.scrollWidth > el.clientWidth) setFit(shown - 1);
     else steady();
   });
-  if (wars.length === 0) return null;
+  if (wars.length === 0) return peace ? <PeaceLine peace={peace} byId={byId} /> : null;
   const side = (ids: number[]) => {
     const lead = byId.get(ids[0] ?? 0);
     const name = lead ? displayName(lead.name) : '?';

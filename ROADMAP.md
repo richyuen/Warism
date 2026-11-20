@@ -254,11 +254,21 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     `longStep1938` counts the capitals its headless world sends to the field (`CapitalMoved` to no city) and is red
     with none, saying to choose another seed; green on 88901 (run by hand). What the reading cannot see: a closure
     reached through another call (a callback handed to a function in another file). SPEC §2.6's line names the test.
-- [ ] R216 **R89-N1: three of six new three-nation random worlds have no war in ten years** (`fewNationWars 3 89401 6
+- [x] R216 **R89-N1: three of six new three-nation random worlds have no war in ten years** (`fewNationWars 3 89401 6
   10`: 89402, 89403, 89404; ADR-1129 keeps the rules, a peace of near-equals; on the page three years with 2 events).
   AT (the report's second way; the first, a war on 5 of 6, would change ADR-1129's rules): in a world of few nations with
   no war the page says that its nations are at peace and why, at the five supported sizes; `fewNationWars 3 85401 6 10`
   as now.
+  - Done (HASH216): ADR-1145. `peaceWhy` reads each realm's reason by the strategic AI's own terms at its most
+    restless; the war row's place says "At peace" and the reason most share ("none outmatches another" on 89403), a tap
+    opens each realm's; "for now" with no reason when one may yet declare (89404, 89402 from year 9). Read on ADR-1129's
+    worlds as it traced them (54425 near-equals, 55404 across the sea, 59423 no lift; `tests/unit/peaceWhy.test.ts`,
+    with the save the same bytes after each read and 89401 giving no reason in the month before its first war).
+    `tests/e2e/peaceLine.spec.ts` at the five supported sizes: the line and its reason whole, in the view and over no
+    other box, closed and opened; gone when a war is declared; "for now" on 89404; none in 1938 at peace (looked at:
+    393 × 852, 734 × 343, 2560 × 1305). `fewNationWars 3 85401 6 10`: run 89's six lines, the same (the sim does not
+    import `peaceWhy`). The worker asks it once a game day at most, and in 1938 reads only the war count. With
+    `warBannerRows1938`, `phoneLayout1938`, `landingsBarPanel1938`: 46/46 on both projects. Found on the way: R217.
 - Run 89's objection to ADR-1129 (a small world's AI tiring of peace by the year): not taken, a change of the rules
   ADR-1129 kept; R216 takes the telling. Run 88's two stand as filed below.
 - Design objections (UI/UX at its bar; ADR-843 files those of a dimension under its bar, these for the record): the
@@ -267,6 +277,24 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   under the tap). Both the user's to overturn.
 - Not taken: `heroPop`'s jumps (85905: 13; 88905: 8), the graph's 13 px jump (R196), R172's, R192's and ADR-1111's kept
   items (as run 87).
+
+## Batch 57 — found in R216's trace (after this release's tag: a new declaration rule wants a critic run after it, ADR-1139)
+
+- [ ] R217 **A massing begun on a border no man of its army can walk to** (found tracing R216's 89404; three-nation
+  random world, `.cache/massTrace.ts`, `.cache/armyLand.ts`). Nation 2's whole army (4.2 M men) stands on its home
+  continent (navigation land 56, 362,792 cells, no other holder); its borders with 1 and 3 lie on a northern land of
+  33,601 cells (land 4, held by all three, no man of any) and small islands. `homeNeighbours` counts them as home by
+  their area, so the strategic AI begins a massing there (`beginMassing`: the border has points); with 0 % of its men on
+  the border's lands it is never ready, is given up after `MASS_DAYS` and bars the target `MASS_BAR_DAYS`: nine
+  massings in ten years, no war (R123's `alone` is for one neighbour only). Nation 1's on 3 reach 44 % of the 50 %
+  five times (`MASS_READY`; a separate question). AT: the 89404 case has its war, or its peace for a reason the
+  rules state (R139's lift), in ten years; no massing begins with no man on its border's lands, checked on several
+  seeds (ADR-804's checker); seed 99's pin and `fewNationWars 3 85401 6 10` as now or the change logged; one
+  definition of "across the sea" for `warTarget`'s cost, `acrossSea`'s lift and `beginMassing` (not `standing()` in
+  the per-candidate pick: R82f's +37 %). First: where the cause belongs (the home rule, the massing, or the random
+  world's placing of armies on its capitals' land), and how often it happens in seed 99's first year and in a
+  60-nation random world. Likely origin: R84h (ADR-1065) made each piece of a nation's own of `HOME_KM2` or more its
+  home (`homeNeighbours.test.ts`: 51401's second nation borders the third only by such a piece).
 
 ## Released
 

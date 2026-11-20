@@ -2079,6 +2079,59 @@ input[type='range'] {
   border-color: var(--frame-trim);
   color: rgba(242, 244, 247, 0.72);
 }
+/* A world of few nations at peace, in the war row's place (R216, ADR-1145): one line, a banner's size in the quiet
+   banner's look; its reasons opened above it, the row's width, as the war row opens. */
+.war-peace {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.25rem 0.55rem;
+  background: var(--ui-gloss), linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.18));
+  background-color: rgb(34, 64, 60);
+  border: 1px solid rgba(150, 220, 200, 0.35);
+  border-radius: 0.3rem;
+  color: #eef6f2;
+  font: inherit;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.war-peace:hover {
+  filter: brightness(1.12);
+}
+.war-peace-head {
+  font-weight: 700;
+}
+.war-peace-why {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(238, 246, 242, 0.82);
+}
+.war-peace-row,
+.war-banners.war-peace-row.opened {
+  flex-direction: column;
+  align-items: center;
+}
+.war-peace-rows {
+  max-width: 28rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(24, 30, 34, 0.94);
+  border: 1px solid var(--frame-trim);
+  border-radius: 0.3rem;
+  color: #eef6f2;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  white-space: normal;
+}
+.war-peace-rows p {
+  margin: 0 0 0.25rem;
+}
+.war-peace-rows p:last-child {
+  margin-bottom: 0;
+}
 .war-score {
   height: 4px;
   border-radius: 2px;
@@ -2502,6 +2555,11 @@ button.unit-icon.on {
   }
   .war-banners.opened {
     flex-wrap: wrap;
+  }
+  /* The peace line where a phone's first banner stands (R216). */
+  .war-banners.war-peace-row,
+  .war-banners.war-peace-row.opened {
+    align-items: flex-start;
   }
   .war-banners:not(.opened) .war-banner {
     flex: 0 1 auto;

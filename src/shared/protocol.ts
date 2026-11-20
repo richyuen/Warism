@@ -495,7 +495,24 @@ export type FromWorker =
   /** Nation label curves (PLAN 1.29; LABEL_STRIDE records) and per-label names (i18n key, or '=' + literal). */
   | { type: 'labels'; data: Float64Array; names: string[] }
   /** Per-nation panel data and active wars (PLAN 1.31), at most once a second while ticks advance; the ticker's rows (PLAN 3.12c), the kinds of every major event since the message before (`news`, PLAN 3.12Rh2: the ticker's rows are the last five), and the number of the worker's world, which a new game or a load changes (PLAN 3.12d). */
-  | { type: 'nationStats'; tick: number; nations: NationStat[]; wars: WarStat[]; dead: { id: number; name: string; color: number }[]; lives: NationLife[]; aiEnabled: boolean; nukesEnabled: boolean; rules: WorldRules; player: number; playerAi: number; edits: { undo: number; redo: number }; godUndo?: number; ticker: TickerRow[]; news: number[]; strikes: TickerRow[]; director: TickerRow[]; world: number; wings: PlayerWing[]; trackNext?: TrackNext };
+  | { type: 'nationStats'; tick: number; nations: NationStat[]; wars: WarStat[]; dead: { id: number; name: string; color: number }[]; lives: NationLife[]; aiEnabled: boolean; nukesEnabled: boolean; rules: WorldRules; player: number; playerAi: number; edits: { undo: number; redo: number }; godUndo?: number; ticker: TickerRow[]; news: number[]; strikes: TickerRow[]; director: TickerRow[]; world: number; wings: PlayerWing[]; trackNext?: TrackNext; peace?: PeaceWhy };
+
+/**
+ * Why a realm of a world of few nations at peace declares no war (R216, ADR-1145; `peaceWhy`), by the strategic AI's
+ * own terms, its restlessness at the cap: its AI off, pacifist, broke; every rival bound to it (`allied`, or `bound` by
+ * a truce or an overlord); none it outmatches enough (`equal`); the one it would fight too dear across the sea (`far`);
+ * the one it chose refused for want of a lift (`noLift`) or the pile of realms against it (`outnumbered`).
+ */
+export type PeaceReason = 'aiOff' | 'pacifist' | 'broke' | 'allied' | 'bound' | 'equal' | 'far' | 'noLift' | 'outnumbered';
+/**
+ * A world of few nations at peace (R216): `why` true when no realm would declare even at its most restless, each realm's
+ * reason in `rows` (`t`: the rival it names, 0 for none); false when one may yet (its choice made, or a war prepared):
+ * at peace for now, no reason given.
+ */
+export interface PeaceWhy {
+  why: boolean;
+  rows: { n: number; reason: PeaceReason; t: number }[];
+}
 
 /** While the historical track runs (ROADMAP R62j1): its next event that has a name, and its hour. */
 export interface TrackNext {
