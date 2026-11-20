@@ -5,6 +5,37 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1142 · 2026-11-19 · accepted · The desk's war row holds its side while its band and its banners' number hold (R204)
+
+- **The case** (critic run 87, R87-N2): R202 put the desk's closed row on the bar's centre when its banners fit there and
+  in the free band's middle when the centre would cost a banner, and chose at every draw from the banners' widths. In a
+  running game a war on the row gives its place to one with longer or shorter names, and the row jumped 24 to 44 px with
+  the same three banners. On HEAD, 87601 at day 300, eight cases of 60 s at Speed ×5 (1280 × 720, 1366 × 768, 1100 × 800,
+  820 × 800; political and sea control): 12 sideways moves, 11 with the count unchanged (four of 44 px at 1280 × 720
+  political, six of 24 px at 1366 × 768 sea control). The band's edges did not move in any case: the side's choice alone
+  moved the row.
+- **The rule** (`rowStand`, `src/ui/bannerOrder.ts`): the side is chosen when the free band or the number of banners
+  shown changes, on the centre if the banners fit there, and held until one of them changes again (the band's edges have
+  `STAND_SLACK`, 2 px).
+  - Held in the band, the row stays there though its banners would now fit the centre.
+  - Held on the centre, a row that outgrows it gives a banner behind "+n" and stays on the centre. **This changes R202's
+    rule** ("the band's middle only when the centre would cost a banner"): there the row moved to keep the banner.
+  - That many banners coming back in the same band stand in the band (`outgrown`), so a banner goes once, not at each
+    long name. Another band (a map mode, a resize, a panel) forgets it.
+  - One banner that outgrows the centre goes to the band: a war is shown at every desk (R197).
+- **The cost, read** (the same eight cases, the final code, one pass of 60 s and one of the critic's 40 s):
+  - Moves with the count unchanged: 0 in every pass (11 on HEAD). Moves in all: 3 in the 60 s pass, each with a change of
+    the count (12 on HEAD); the count changed 4 times in eight minutes (1 on HEAD).
+  - At 1280 × 720 political the row holds three banners in the band, 44 px off the bar's centre the whole time (on HEAD
+    off it 47 % of the time, and jumping). At 1366 × 768 sea control three banners 92 % of the time (100 % on HEAD), the
+    count changed twice, and no move without it (six on HEAD); without `outgrown` the first passes read 66 to 68 % and
+    four changes.
+  - On a desk with room (1600, 1920, 2560 px) nothing changes: the row on the centre, 0 px off, three banners in all
+    eleven map modes (`c86_deskAttack 84901 400 wide`, as R202).
+- **Not chosen:** the side from the row's widest case (three banners of 11 rem names never fit a centre under about
+  2700 px: R202's centre gone at 1600 and 1920); the row moved to the band and held there (one move with the count
+  unchanged, which the AT forbids).
+
 ## ADR-1139 · 2026-11-19 · the user's decision · Non-blocking items fixed before the release and judged at the next; the loop stops after a release
 
 - **The case.** ADR-1138 let a release go with its run's non-blocking items open, done after it and before the next critic

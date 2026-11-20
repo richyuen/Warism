@@ -2163,7 +2163,10 @@ builds).
   "+N": the sides' leaders and allies ("& 2", R162), the score, swords lit while it has a battle; a click flies to the
   war's battle (up to `BATTLE_VIEW_MAX_M` 250 m/px). The row (`heldRow`): the played nation's wars, then those fought
   in ten days, by size; a place taken is held `HOLD_TICKS` (20 days, R132), but a war gone quiet yields to a fought
-  one (R148), and one with no battle for `STILL_TICKS` (3 days) to one in battle now behind "+N" (R161).
+  one (R148), and one with no battle for `STILL_TICKS` (3 days) to one in battle now behind "+N" (R161). A desk's
+  closed row stands on the bar's centre when its banners fit there, else in the middle of the band free beside it
+  (R202); the side is chosen when the band or the number of banners changes and held until then, a row that outgrows
+  the centre giving a banner behind "+N" (`rowStand`, ADR-1142).
 - **Landings bar** (`src/ui/LandingsBar.tsx`): the player's landings, a row each, top middle; it gives way to the
   History, Relations, Settings and Editor panels and a nuclear alert. On a short view (a phone on its side) it
   stands to the right of an open nation panel, never over its head (R60a). On a phone's width it gives way to the

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import type { NationStat, WarStat } from '../shared/protocol';
-import { bannerOrder, heldRow, type Held } from './bannerOrder';
+import { bannerOrder, heldRow, rowStand, type Held, type RowStand } from './bannerOrder';
 import { t } from './i18n';
 import { displayName } from './NationPanel';
 
@@ -163,6 +163,8 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
   useEffect(() => setFit(DESK_BANNERS), [wars.length]);
   /** The desk row's free width last measured: when it changes (a panel opened or closed), its banners are counted again (R197). */
   const room = useRef(-1);
+  /** The side the desk's row took, held while its band and its banners' number hold (R204, `rowStand`). */
+  const stand = useRef<RowStand | null>(null);
   /**
    * A resize lays the phone's row out again (R183: its sizes are set on the elements, not drawn from the stats); so does
    * a change of the row's own width there (its left and right are set: a panel opened beside it), counting its banners
@@ -206,14 +208,27 @@ export function WarBanners({ wars, byId, onSelect, onBattle, phone = false, play
     let rule = Infinity;
     // On the bar's centre when the banners the band holds fit there too (R202, critic run 86's design objection: centred
     // in the band, the row stood 16 to 44 px off the bar's centre and moved 68 px with the map mode): the band's middle
-    // only when the centre would cost a banner (a narrow desk, R197).
+    // only when the centre would cost a banner (a narrow desk, R197). The side chosen is held while the band and the
+    // number of banners hold (R204, `rowStand`: chosen at each draw, the row jumped when a name on it changed).
     const steady = (): void => {
-      if (free === null || free.width <= rule) return;
+      if (free === null || free.width <= rule) {
+        stand.current = null;
+        return;
+      }
       const even = Math.floor(free.even);
-      if (el.scrollWidth > even) return;
+      const banners = el.querySelectorAll('[data-testid=war-banner]').length;
+      const r = rowStand(stand.current, free, banners, el.scrollWidth <= even);
+      stand.current = r.stand;
+      if (r.stand.side === 'band') {
+        // The band as it was when the side was taken: its edges' px of slack do not walk the row.
+        el.style.left = `${r.stand.mid}px`;
+        return;
+      }
       el.style.maxWidth = `${even}px`;
       el.style.left = `${free.centre}px`;
+      if (r.drop) setFit(banners - 1);
     };
+    if (opened || phone) stand.current = null;
     if (!opened && !phone) {
       // A desk's closed row in the band free beside it, if that is wider than its rule's room (R197).
       free = freeBand(el);

@@ -84,3 +84,38 @@ export function heldRow(ranked: readonly WarStat[], shown: number, tick: number,
   placed.push(...fresh);
   return placed.map((id) => ({ id, since: since.get(id) ?? tick, contested: true }));
 }
+
+/** Where a desk's closed row stands: on the bar's centre, or in the middle of the band free beside it (R202). */
+export type RowSide = 'centre' | 'band';
+/**
+ * The side a row took, with what it was chosen for: the free band (its width and middle, px) and the banners shown.
+ * `outgrown`: the number of banners with which the row outgrew the centre in this band, 0 for never.
+ */
+export interface RowStand {
+  side: RowSide;
+  width: number;
+  mid: number;
+  banners: number;
+  outgrown: number;
+}
+/** The band's edges may move this many px (a legend's row a letter longer) and the row's side is still held. */
+export const STAND_SLACK = 2;
+/**
+ * The side of a desk's closed row (R204, critic run 87, R87-N2; ADR-1142): chosen when the band or the number of banners
+ * changes, on the centre if the banners fit there, and held until one of them changes again. R202 chose it at every
+ * draw from the banners' widths, and the row jumped 24 to 44 px when a war on it gave its place to one with longer or
+ * shorter names. Held on the centre, a row that has outgrown it gives a banner behind "+n" (`drop`) and stays; with one
+ * banner it goes to the band (a war is shown at every desk, R197). When that many banners come back in the same band
+ * they stand in the band, where they fit whatever their names: once, not a banner gone and back at each long name.
+ */
+export function rowStand(held: RowStand | null, band: { width: number; mid: number }, banners: number, fitsCentre: boolean): { stand: RowStand; drop: boolean } {
+  const sameBand = held !== null && Math.abs(held.width - band.width) <= STAND_SLACK && Math.abs(held.mid - band.mid) <= STAND_SLACK;
+  if (held === null || !sameBand) return { stand: { side: fitsCentre ? 'centre' : 'band', width: band.width, mid: band.mid, banners, outgrown: 0 }, drop: false };
+  if (held.banners !== banners) {
+    const tight = held.outgrown > 0 && banners >= held.outgrown;
+    return { stand: { ...held, side: fitsCentre && !tight ? 'centre' : 'band', banners }, drop: false };
+  }
+  if (held.side === 'band' || fitsCentre) return { stand: held, drop: false };
+  if (banners > 1) return { stand: { ...held, outgrown: banners }, drop: true };
+  return { stand: { ...held, side: 'band' }, drop: false };
+}

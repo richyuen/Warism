@@ -647,3 +647,70 @@ test('a narrow desk\'s legend stands at the top left, and opened lies over no wa
     }
   }
 });
+
+// R204 (critic run 87, R87-N2; ADR-1142): R202 chose the row's side, the bar's centre or the free band's middle, at every
+// draw from the banners' widths, and at 1100 to 1366 px the row jumped 24 to 44 px when a war on it gave its place to one
+// with longer or shorter names. The side is held while the band and the number of banners hold. A war of long names
+// (the Spanish one) leaves the row for one of short names, then one of short names for one of long: with three banners
+// before and after the row stands where it stood; a change of map mode and back chooses again.
+test('a desk\'s war row keeps its side when a war on it gives its place to another', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  const war = (a: string, d: string) => page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id(a), d: id(d) });
+  // The war one of the two is in, by the stats.
+  const warOf = (tag: string) => page.evaluate((n) => window.__warsim!.hud.stats.value!.wars.find((w) => w.attackers.includes(n) || w.defenders.includes(n))?.id ?? -1, id(tag));
+  const look = () =>
+    page.getByTestId('war-banners').evaluate((row) => {
+      const r = row.getBoundingClientRect();
+      const ui = row.parentElement!.getBoundingClientRect();
+      const banners = [...row.querySelectorAll('[data-testid=war-banner]')];
+      return { banners: banners.length, wars: banners.map((b) => Number(b.getAttribute('data-war'))), off: r.left + r.width / 2 - (ui.left + ui.width / 2), inside: row.scrollWidth <= row.clientWidth };
+    });
+  // Japan and China, Germany and Poland, the Spanish war (long names) on the row; Turkey and Iran behind "+1".
+  await war('GER', 'POL');
+  await war('TUR', 'IRN');
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toContainText('+1', { timeout: 20_000 });
+  const spain = await warOf('NSP');
+  const long = await look();
+  expect(long.banners, 'three banners').toBe(3);
+  expect(long.wars, 'the Spanish war on the row').toContain(spain);
+  expect(Math.abs(long.off), 'three banners with the Spanish war: in the band, off the centre').toBeGreaterThan(8);
+  // The Spanish war ends: Turkey and Iran take its place. Narrower, the row would fit the centre; it stays.
+  await page.evaluate((w) => window.__warsim!.sim.command({ kind: 'forcePeace', war: w }), spain);
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect.poll(async () => (await look()).wars, { timeout: 20_000 }).not.toContain(spain);
+  await page.waitForTimeout(400);
+  const short = await look();
+  expect(short.banners, 'three banners still').toBe(3);
+  expect(short.inside).toBe(true);
+  expect(Math.abs(short.off - long.off), 'the row where it stood').toBeLessThanOrEqual(2);
+  // Another map mode and back: the band changed, the side is chosen again, and three short banners fit the centre.
+  await page.evaluate(() => window.__warsim!.hud.setMapMode('seaControl'));
+  await page.waitForTimeout(400);
+  await page.evaluate(() => window.__warsim!.hud.setMapMode('political'));
+  await page.waitForTimeout(400);
+  const centred = await look();
+  expect(centred.banners).toBe(3);
+  expect(Math.abs(centred.off), 'chosen again: on the bar\'s centre').toBeLessThanOrEqual(1);
+  // A war of long names behind "+1" (the United States and the Dominican Republic); Turkey and Iran end, and it takes
+  // their place. The row has outgrown the centre: it stays there, and a banner goes behind "+n".
+  await war('USA', 'DOM');
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toContainText('+1', { timeout: 20_000 });
+  const held = await look();
+  expect(held.wars, 'the row as it was').toEqual(centred.wars);
+  expect(Math.abs(held.off - centred.off)).toBeLessThanOrEqual(2);
+  await page.evaluate((w) => window.__warsim!.sim.command({ kind: 'forcePeace', war: w }), await warOf('TUR'));
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect.poll(async () => (await page.evaluate(() => window.__warsim!.hud.stats.value!.wars.length)), { timeout: 20_000 }).toBe(3);
+  await page.waitForTimeout(400);
+  const after = await look();
+  expect(after.inside).toBe(true);
+  expect(after.banners, 'a war shown').toBeGreaterThanOrEqual(2);
+  // Three banners still: where it stood. Fewer: the count changed, and the side was chosen again for it.
+  if (after.banners === centred.banners) expect(Math.abs(after.off - centred.off), 'three banners: the row where it stood').toBeLessThanOrEqual(2);
+  else expect(Math.abs(after.off), 'a banner behind "+n": the row on the centre still').toBeLessThanOrEqual(1);
+});
