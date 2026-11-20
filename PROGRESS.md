@@ -199,3 +199,10 @@
   1.886 ms). Non-blocking: R90-N1 (one slowClick of 90), R90-N2 (the peace not in History), R90-N3 (a heroes frame drop
   to 52 fps). Filed as Batch 58 (R219 to R222). Left out for time: 38 of 396 landing setups, the stuck-return,
   next-voyage, Malta and nuke sets. The run's probe rewrote `critic/c85_critic_standoff.warsim-scenario`; restored.
+
+## 2026-11-20 — R219: the peace line gives no reason that ends before its cap (ADR-1148)
+
+- R90-B1 fixed: a lift on its way, or a rival held off only by a truce, reads "for now". 24 seeds: wars within 30 days
+  of a reason 16 → 0; reasons on 33 % of peace days (65 % before). The critic's page cases read "for now" to the war.
+  `peaceWhy.test` (red before), `peaceLine` 7/7. My replay of `c90_peaceWeek.mjs` overwrote the critic's
+  `c90_pw_*.json` and shots of those two seeds (ignored files; no copy kept).

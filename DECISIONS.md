@@ -5,6 +5,26 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1148 · 2026-11-20 · accepted · The peace line gives no reason that ends before its cap (R219)
+
+- **The case** (critic run 90, R90-B1, blocking; diplomacyWarDepth 8 → 7): the line said the peace held "even after ten
+  years of peace" days before the war it ruled out. 90441: "no rival within its reach" for both nations to day 90, their
+  first transport groups at port on day 91, war on day 98. 89401: a truce with 2 days left read as a bond, the next
+  rival named, war on the truce's party on day 1604. On 24 seeds, 16 of 33 wars within 30 days of a day with reasons.
+- **Cause:** ADR-1145 reads each realm at the cap of restlessness but against today's bonds and reach. A truce lasts
+  TRUCE_TICKS (two years), and a lift on order grows the reach within months; R217's follow-up covered the lift in the
+  `noLift` branch only, and R217 made such realms (sea powers whose army stands away from their borders) more common.
+- **Decision.** `peaceWhy` gives no reason ("for now") for a realm in any branch when (a) its lift is on its way: no
+  transport group at a port, and one in training, one at sea, or it is a sea power that orders one at peace
+  (`landlessPowers`); or (b) a rival is held off only by a truce (no bond, not deterred) and its utility at the cap is
+  over DECLARE_AT. Not taken: the truce's days left in the line (the report's other way, Hearts of Iron IV's): a reason
+  that runs out in days is no reason "even after ten years".
+- **Read** (`critic/scripts/c90_peaceTruth.ts` on the report's 24 seeds, ten years): wars after a day with reasons 33 →
+  1 (2,186 days after it), within 30 days 16 → 0; days with reasons 37,525 → 18,767 of 57,474 at peace (the same
+  peace days: the read is pure, every hash the same). The page (`c90_peaceWeek.mjs`): 90441 days 88-97 and 89401 days
+  1595-1603 "At peace for now", then the war. `peaceWhy.test`: the two cases, red before; ADR-1145's own cases as they
+  were (54425 equal, 55404 far, 59423 noLift: a group at port and no men to march to it).
+
 ## ADR-1147 · 2026-11-20 · accepted, the user's decision · The critic scores performance by the rotation only
 
 - **Decision (the user's, 2026-11-20):** "take the src/ based performance scores out of the critic - it only needs to

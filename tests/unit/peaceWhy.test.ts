@@ -78,6 +78,24 @@ describe('a world of few nations at peace and why (R216)', () => {
     expect(read(many)).toBeNull();
   });
 
+  // R219 (critic run 90, R90-B1): what holds a peace today and ends before the cap gives no reason. 90441: "no rival
+  // within its reach" for both to day 90, their transports at port on day 91, war on day 98. 89401: a truce with 2 days
+  // left read as a bond and the next rival named, war on the truce's party on day 1604.
+  for (const [seed, nations, from, war] of [[90441, 2, 80, 98], [89401, 3, 1590, 1604]] as const)
+    it(`${seed}: no reason given in the days before its war on day ${war} (a lift on its way, a truce near its end)`, { timeout: 180_000 }, () => {
+      const sim = world(seed, nations);
+      days(sim, from);
+      const given: number[] = [];
+      for (let d = from; d < war - 1; d++) {
+        expect(sim.world.wars.size, `at peace on day ${d}`).toBe(0);
+        if (read(sim)?.why) given.push(d);
+        days(sim, 1);
+      }
+      expect(given).toEqual([]);
+      days(sim, 2);
+      expect(sim.world.wars.size, `at war by day ${war}`).toBeGreaterThan(0);
+    });
+
   // 89414 (R217): its nation 1 was told refused for want of a lift to day 90, its transports on order, and at war on day 98.
   for (const seed of [89401, 89414])
     it(`a reason given holds: ${seed} gives none in the month before its first war`, { timeout: 120_000 }, () => {

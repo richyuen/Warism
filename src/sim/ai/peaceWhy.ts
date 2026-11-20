@@ -4,8 +4,12 @@
  * near-equal strength may keep the peace. This tells it, by the strategic AI's own terms (`strategicAi`), asked of each
  * realm with its restlessness at the cap (RESTLESS: ten years of peace), so that a reason given does not turn false as
  * the years pass. When one realm would declare even so (its target chosen and not refused, or a war it prepares, or a
- * target barred for a year that it would choose again, or a lift it wants on order), no reason is given: the peace is
- * for now.
+ * target barred for a year that it would choose again), no reason is given: the peace is for now. So too, in every
+ * branch (R219, critic run 90's R90-B1), when what holds it today ends before the cap: a lift on its way (no transport
+ * group at a port, and one in training, at sea, or one it orders at peace, `landlessPowers`: its reach grows; 90441 told
+ * "no rival within its reach" to day 90, its transports at port on day 91, war on day 98), or a truce (TRUCE_TICKS, two
+ * years) with a rival it would fight once the truce is out (89401: the truce with 2 days left read as a bond and the
+ * next rival named, war on the truce's party 7 days on).
  *
  * A pure read: no state of the world is written (the bars of `World.massBarred` are read here, not through `unprepared`,
  * which forgets those past their day), and nothing is drawn. Asked by the worker for the page's stats only while the
@@ -13,9 +17,9 @@
  */
 import { Refusal } from '../../shared/commands';
 import type { PeaceReason, PeaceWhy } from '../../shared/protocol';
-import { whyNotWar } from '../systems/war';
+import { bond, whyNotWar } from '../systems/war';
 import type { World } from '../world';
-import { transportGroupsAtPort } from '../systems/amphibious';
+import { transportGroupsAtPort, transportRoom } from '../systems/amphibious';
 import { landlessPowers } from './economic';
 import { AiLayer, aiRuns } from './layers';
 import {
@@ -47,6 +51,26 @@ export function peaceWhy(world: World): PeaceWhy | null {
   const row = (n: number, reason: PeaceReason, t = 0): void => {
     rows.push({ n, reason, t });
   };
+  /**
+   * Whether `n`'s lift is on its way (R219; R217 for `noLift` alone): no transport group of its at a port, and one in
+   * training, one at sea (a fleet with room), or a sea power that orders one at peace (`landlessPowers`, R85e: 89414's
+   * nation 1 told "no lift" to day 90, at war on day 98).
+   */
+  const liftComing = (n: number): boolean => {
+    if (transportGroupsAtPort(world, n).length > 0) return false;
+    if ((landless ??= landlessPowers(world)).has(n)) return true;
+    const rules = world.rules;
+    let coming = false;
+    world.production.forEach((id) => {
+      if (coming || world.production.cols.nation[id] !== n) return;
+      coming = rules?.templates[world.production.cols.template[id]!]?.elements.some((e) => rules.units[e.unit]?.cls === 'tp') === true;
+    });
+    if (!coming)
+      world.formations.forEach((id) => {
+        if (!coming && world.formations.cols.nation[id] === n && world.isFleet(id) && transportRoom(world, id) > 0) coming = true;
+      });
+    return coming;
+  };
   for (const n of realms) {
     if (!world.settings.aiEnabled || !aiRuns(world, n, AiLayer.diplomacy)) {
       row(n, 'aiOff');
@@ -65,7 +89,21 @@ export function peaceWhy(world: World): PeaceWhy | null {
       row(n, 'broke');
       continue;
     }
+    // A lift on its way (R219): its reach, and every reason read from it, is about to change.
+    if (liftComing(n)) {
+      why = false;
+      continue;
+    }
     const neighbours = [...(nb.get(n) ?? [])].sort((a, b) => a - b);
+    const reach = seaTargetKm(world, n, powers.has(n) ? Infinity : SEA_REACH_KM);
+    // A rival held off only by a truce (R219): out within two years, before the cap; one it would fight then is a war to come.
+    const truced = [...new Set([...neighbours, ...reach.keys()])].some(
+      (t) => t !== n && nc.living[t] === 1 && whyNotWar(world, n, t) === Refusal.Truce && bond(world, n, t) === Refusal.None && !deterred(world, n, t, blocs) && warUtility(world, n, t, withAllies(n), defence(t), 0, RESTLESS).u > DECLARE_AT,
+    );
+    if (truced) {
+      why = false;
+      continue;
+    }
     const barred = new Set<number>();
     for (const t of neighbours) {
       const until = world.massBarred.get(n * 65536 + t);
@@ -79,17 +117,11 @@ export function peaceWhy(world: World): PeaceWhy | null {
     if (best !== 0) {
       // Chosen: declared unless the pile of realms or the want of a lift refuses it and every one after it.
       const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : pick(refused)), (x) => acrossSea(world, n, x, (d) => neighbours.includes(d), atHome));
-      // Refused for want of a lift with none at a port, and a sea power that orders one at peace (`landlessPowers`, R85e):
-      // its transports are coming, and it declares then (R217: 89414's nation 1 told so to day 90, at war on day 98).
-      const coming = (): boolean => transportGroupsAtPort(world, n).length === 0 && (landless ??= landlessPowers(world)).has(n);
       if (t !== 0) why = false;
-      else if (outnumbered(world, n, best)) row(n, 'outnumbered', best);
-      else if (coming()) why = false;
-      else row(n, 'noLift', best);
+      else row(n, outnumbered(world, n, best) ? 'outnumbered' : 'noLift', best);
       continue;
     }
     // None over the bar: of those it may weigh (its neighbours and those it could land on), the best by its utility.
-    const reach = seaTargetKm(world, n, powers.has(n) ? Infinity : SEA_REACH_KM);
     const among = [...new Set([...neighbours, ...reach.keys()])].filter((t) => t !== n && nc.living[t] === 1).sort((a, b) => a - b);
     let [bestT, bestU, boundT, allied, mayYet] = [0, -Infinity, 0, false, false];
     for (const t of among) {

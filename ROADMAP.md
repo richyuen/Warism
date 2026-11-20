@@ -333,7 +333,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 
 ## Batch 58 — critic run 90's findings (focused, on fc767d88; one blocking issue; diplomacyWarDepth 7, the rest 8)
 
-- [ ] R219 **R90-B1: the peace line says the peace holds "even after ten years" days before the war it rules out**
+- [x] R219 **R90-B1: the peace line says the peace holds "even after ten years" days before the war it rules out**
   (90441: "no rival within its reach" for both to day 90, transports at port on day 91, war on day 98; 89401: a truce
   with 2 days left read as "bound", the next rival named, war on the truce's party 7 days on; 16 of 33 wars on 24 seeds
   within 30 days of a day with reasons). AT (the report's "seen fixed when"): `node critic/scripts/c90_peaceWeek.mjs
@@ -341,6 +341,13 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   the 24 seeds (`c90_peaceTruth.ts 3 89401 4 10`, `3 90411 6 10`, `3 90431 8 10`, `2 90441 6 10`, then
   `c90_peaceWars.sh`) no war within 30 days of a day whose reasons were a truce or "no rival within its reach"; the
   14 untraced (`noLift` among them) traced, each a cause fixed or a war no reason can foresee (a revolt, a new nation).
+  - Done (COMMIT): ADR-1148. `peaceWhy` gives no reason, in any branch, for a realm whose lift is on its way (no
+    group at a port; one in training, at sea, or ordered at peace by `landlessPowers`) or that holds off a rival it
+    would fight only by a truce (two years, ends before the cap). The page: 90441 days 88-97 and 89401 days 1595-1603
+    "At peace for now", then the war. The 24 seeds: wars after a day with reasons 33 → 1 (2,186 days on), within 30
+    days 16 → 0, so the 14 untraced among them too; days with reasons 65 % → 33 % of peace days; reads pure. Tests:
+    `peaceWhy.test` (two cases, red before), `peaceLine.spec` 7/7 by hand. The page probe wrote over the critic's
+    `c90_pw_90441.json`, `c90_pw_89401.json` and their shots (git-ignored, not restored).
 - [ ] R220 **R90-N3: with heroes, 7019's year-20 battle at 1,200 m/px drops one 4-second sample to 51.5–52.1 fps**
   (against 60.1 on `f27f48f5` beside it, 4 of 4; the tier's mean 56.8–57, run 89 59.7). AT: `TAG=x VW=2560 VH=1305 node
   critic/scripts/c85_pf_lookfps.mjs 7019 critic/c79_hseed7019_y20.bin` no sample under 58.5 fps in two runs; first,
