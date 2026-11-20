@@ -341,7 +341,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   the 24 seeds (`c90_peaceTruth.ts 3 89401 4 10`, `3 90411 6 10`, `3 90431 8 10`, `2 90441 6 10`, then
   `c90_peaceWars.sh`) no war within 30 days of a day whose reasons were a truce or "no rival within its reach"; the
   14 untraced (`noLift` among them) traced, each a cause fixed or a war no reason can foresee (a revolt, a new nation).
-  - Done (COMMIT): ADR-1148. `peaceWhy` gives no reason, in any branch, for a realm whose lift is on its way (no
+  - Done (bdd4bec1): ADR-1148. `peaceWhy` gives no reason, in any branch, for a realm whose lift is on its way (no
     group at a port; one in training, at sea, or ordered at peace by `landlessPowers`) or that holds off a rival it
     would fight only by a truce (two years, ends before the cap). The page: 90441 days 88-97 and 89401 days 1595-1603
     "At peace for now", then the war. The 24 seeds: wars after a day with reasons 33 → 1 (2,186 days on), within 30
