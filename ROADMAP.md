@@ -259,7 +259,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   AT (the report's second way; the first, a war on 5 of 6, would change ADR-1129's rules): in a world of few nations with
   no war the page says that its nations are at peace and why, at the five supported sizes; `fewNationWars 3 85401 6 10`
   as now.
-  - Done (HASH216): ADR-1145. `peaceWhy` reads each realm's reason by the strategic AI's own terms at its most
+  - Done (2a438a2d): ADR-1145. `peaceWhy` reads each realm's reason by the strategic AI's own terms at its most
     restless; the war row's place says "At peace" and the reason most share ("none outmatches another" on 89403), a tap
     opens each realm's; "for now" with no reason when one may yet declare (89404, 89402 from year 9). Read on ADR-1129's
     worlds as it traced them (54425 near-equals, 55404 across the sea, 59423 no lift; `tests/unit/peaceWhy.test.ts`,
