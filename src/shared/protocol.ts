@@ -504,6 +504,16 @@ export type FromWorker =
  * the one it chose refused for want of a lift (`noLift`) or the pile of realms against it (`outnumbered`).
  */
 export type PeaceReason = 'aiOff' | 'pacifist' | 'broke' | 'allied' | 'bound' | 'equal' | 'far' | 'noLift' | 'outnumbered';
+/** The reasons in the order a tie of the headline is broken (R216), and `PeaceHeld`'s code (R222: its index). */
+export const PEACE_ORDER: readonly PeaceReason[] = ['noLift', 'outnumbered', 'far', 'equal', 'allied', 'bound', 'pacifist', 'broke', 'aiOff'];
+/** The reason most realms share, ties by PEACE_ORDER, and how many share it; null for no reason given (R216, R222). */
+export function peaceHeadline(p: { why: boolean; rows: readonly { reason: PeaceReason }[] } | null): { reason: PeaceReason; count: number } | null {
+  if (!p?.why || p.rows.length === 0) return null;
+  const count = new Map<PeaceReason, number>();
+  for (const r of p.rows) count.set(r.reason, (count.get(r.reason) ?? 0) + 1);
+  const [reason, n] = [...count].sort((a, b) => b[1] - a[1] || PEACE_ORDER.indexOf(a[0]) - PEACE_ORDER.indexOf(b[0]))[0]!;
+  return { reason, count: n };
+}
 /**
  * A world of few nations at peace (R216): `why` true when no realm would declare even at its most restless, each realm's
  * reason in `rows` (`t`: the rival it names, 0 for none); false when one may yet (its choice made, or a war prepared):

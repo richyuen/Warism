@@ -16,7 +16,10 @@
  * world has no war and FEW_REALMS realms or fewer.
  */
 import { Refusal } from '../../shared/commands';
-import type { PeaceReason, PeaceWhy } from '../../shared/protocol';
+import { EventKind } from '../../shared/events';
+import { isDayStart } from '../../shared/calendar';
+import { PEACE_ORDER, peaceHeadline, type PeaceReason, type PeaceWhy } from '../../shared/protocol';
+import { HISTORY_STRIDE } from '../history';
 import { bond, whyNotWar } from '../systems/war';
 import type { World } from '../world';
 import { transportGroupsAtPort, transportRoom } from '../systems/amphibious';
@@ -145,4 +148,29 @@ export function peaceWhy(world: World): PeaceWhy | null {
     else row(n, 'far');
   }
   return why ? { why, rows } : { why, rows: [] };
+}
+
+/**
+ * A world of few nations at peace gives its reason to History (ROADMAP R222, ADR-1149; critic run 90's R90-N2: a world
+ * kept at peace ten years held two events, its reasons only in the line): `PeaceHeld` on a day start when the peace
+ * line's headline (`peaceHeadline` of `peaceWhy`) is given and is not the one last told since the world's last war.
+ * Nothing in a world at war or of more than FEW_REALMS realms (`peaceWhy` null: 1938 never). Run after the strategic AI
+ * in the same system (`sim.ts`): a war it declares that hour is told, not a peace.
+ */
+export function notePeace(world: World): void {
+  // The strategic AI's day (`strategicAi`): its reasons are that AI's.
+  if (!world.settings.aiEnabled || !isDayStart(world.tick) || world.steered || world.wars.size > 0) return;
+  const top = peaceHeadline(peaceWhy(world));
+  if (!top) return;
+  const code = PEACE_ORDER.indexOf(top.reason);
+  const rows = world.history.rows;
+  for (let i = rows.length - HISTORY_STRIDE; i >= 0; i -= HISTORY_STRIDE) {
+    const kind = rows[i + 1];
+    if (kind === EventKind.WarDeclared) break;
+    if (kind === EventKind.PeaceHeld) {
+      if (rows[i + 2] === code) return;
+      break;
+    }
+  }
+  world.out.emit(world.tick, EventKind.PeaceHeld, code, top.count, NaN, NaN);
 }

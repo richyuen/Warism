@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { peaceWhy } from '../../src/sim/ai/peaceWhy';
+import { EventKind } from '../../src/shared/events';
+import { PEACE_ORDER } from '../../src/shared/protocol';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { Sim } from '../../src/sim/sim';
 import { assets1938 } from '../helpers/earth';
@@ -110,4 +112,29 @@ describe('a world of few nations at peace and why (R216)', () => {
       expect(first, 'its first war').toBeGreaterThan(0);
       expect(given.filter((d) => d > first - 30), `days a reason was given (first war on day ${first})`).toEqual([]);
     });
+
+  // R222 (critic run 90, R90-N2): the peace's reason told to History (`PeaceHeld`), once while it holds, again when it
+  // changes, and never in the days a war may yet come.
+  const told = (sim: Sim): string[] => {
+    const r = sim.world.history.rows;
+    const out: string[] = [];
+    for (let i = 0; i < r.length; i += 6) if (r[i + 1] === EventKind.PeaceHeld || r[i + 1] === EventKind.WarDeclared) out.push(r[i + 1] === EventKind.PeaceHeld ? `${PEACE_ORDER[r[i + 2]!]}x${r[i + 3]}` : 'war');
+    return out;
+  };
+  it('History: 89403 told once "none outmatches another" in two years; 55404 "too far" from day 91', { timeout: 180_000 }, () => {
+    const a = world(89403, 3);
+    days(a, 730);
+    expect(told(a)).toEqual(['equalx3']);
+    const b = world(55404, 3);
+    days(b, 365);
+    expect(told(b)).toEqual(['farx2']);
+  });
+
+  it('History: 89401 and 90441 tell no peace before their first war', { timeout: 180_000 }, () => {
+    for (const [seed, n, d] of [[89401, 3, 180], [90441, 2, 100]] as const) {
+      const sim = world(seed, n);
+      days(sim, d);
+      expect(told(sim)[0], `${seed}`).toBe('war');
+    }
+  });
 });

@@ -75,6 +75,7 @@ export const HISTORY_KINDS: ReadonlySet<number> = new Set<number>([
   // An army seen gathered at a border (ROADMAP R122).
   EventKind.MassingSeen,
   EventKind.MassingCalledOff,
+  EventKind.PeaceHeld,
   // Its events by their names (ROADMAP R62j1).
   EventKind.TrackEvent,
 ]);

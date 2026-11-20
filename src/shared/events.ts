@@ -318,6 +318,12 @@ export const EventKind = {
    * point of the border where there is one still, else NaN.
    */
   MassingCalledOff: 85,
+  /**
+   * A world of few nations at peace gives its reason, or a new one (ROADMAP R222, ADR-1149; critic run 90's R90-N2): a,
+   * the reason most of its realms share (`PEACE_ORDER`'s index); b, how many realms share it. Told on a day start when
+   * the peace line's headline (`peaceHeadline`) is given and differs from the last told since the last war.
+   */
+  PeaceHeld: 86,
 } as const;
 
 /** Why a nation joined a war (`WarJoined`'s y). */

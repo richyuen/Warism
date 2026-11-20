@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
-import type { NationStat, PeaceReason, PeaceWhy, WarStat } from '../shared/protocol';
+import { peaceHeadline, type NationStat, type PeaceWhy, type WarStat } from '../shared/protocol';
 import { bannerOrder, heldRow, rowStand, type Held, type RowStand } from './bannerOrder';
 import { t, type MessageKey } from './i18n';
 import { displayName } from './NationPanel';
@@ -141,9 +141,6 @@ const hex = (c: number): string => `#${c.toString(16).padStart(6, '0')}`;
  * and brings the war's largest battle into view (`onBattle`, PLAN 2.14e). The swords are lit
  * while the war has a battle to go to and dim while it has none (PLAN 2.14f5b3, ADR-96).
  */
-/** Of several reasons on the closed line, the one most realms share; on a tie, the first of these (a war chosen and refused first). */
-const PEACE_ORDER: readonly PeaceReason[] = ['noLift', 'outnumbered', 'far', 'equal', 'allied', 'bound', 'pacifist', 'broke', 'aiOff'];
-
 /**
  * A world of few nations at peace, in the war row's place (ROADMAP R216, ADR-1145; critic run 89, R89-N1: three of six
  * three-nation worlds had no war in ten years and the page said nothing of it): "At peace" and the reason most of its
@@ -171,13 +168,8 @@ function PeaceLine({ peace, byId }: { peace: PeaceWhy; byId: Map<number, NationS
     const n = byId.get(id);
     return n ? displayName(n.name) : '?';
   };
-  let summary = t('peace.forNow');
-  if (peace.why && peace.rows.length > 0) {
-    const count = new Map<PeaceReason, number>();
-    for (const r of peace.rows) count.set(r.reason, (count.get(r.reason) ?? 0) + 1);
-    const top = [...count].sort((a, b) => b[1] - a[1] || PEACE_ORDER.indexOf(a[0]) - PEACE_ORDER.indexOf(b[0]))[0]![0];
-    summary = t(`peace.short.${top}` as MessageKey);
-  }
+  const top = peaceHeadline(peace);
+  const summary = top ? t(`peace.short.${top.reason}` as MessageKey) : t('peace.forNow');
   const line = (r: PeaceWhy['rows'][number]): string =>
     r.reason === 'far' && r.t === 0 ? t('peace.row.farNone', { name: name(r.n) }) : t(`peace.row.${r.reason}` as MessageKey, { name: name(r.n), rival: name(r.t) });
   const lines = peace.why ? [t('peace.rule'), ...peace.rows.map(line)] : [t('peace.forNowLong')];

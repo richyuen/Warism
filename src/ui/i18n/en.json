@@ -1329,6 +1329,8 @@
   "history.BlocAid": "{a} aids {b} against the other bloc",
   "history.MassingSeen": "{a} is massing its army on the border of {b}",
   "history.MassingCalledOff": "{a} has called off its massing on the border of {b}",
+  "history.PeaceHeld": "The world is at peace: {reason}",
+  "history.type.PeaceHeld": "Peace holds",
   "history.TrackEnded.intervention": "History's course ended at your first intervention, and the world goes its own way",
   "history.TrackEnded.free": "History's course left at the start of your game, and the world goes its own way",
   "history.type.NationBorn": "Nation born",

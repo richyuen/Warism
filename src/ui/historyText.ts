@@ -1,5 +1,6 @@
 import { Bond, EventKind } from '../shared/events';
 import { convoyTake, HISTORY_ROLES, kindName, nukeStrike, nukeToll, seaSide, type HistoryRow, type NukeToll } from '../shared/history';
+import { PEACE_ORDER } from '../shared/protocol';
 import { displayName, t, type MessageKey } from './i18n';
 import en from './i18n/en.json';
 
@@ -133,6 +134,11 @@ export function historyText(r: HistoryRow): string {
   const decided = r.kind === EventKind.NukeDecided ?{ near: r.near ? t('history.strikeNear', { city: displayName(r.near) }) : '', weighed: t(nukeWeighed(r.b / 1000)) } : {};
   // An event of the historical track: its name (ROADMAP R62j1).
   if (r.kind === EventKind.TrackEvent || r.as === 'track') return trackText(r);
+  // A world of few nations at peace and its reason (ROADMAP R222): the peace line's own short reason.
+  if (r.kind === EventKind.PeaceHeld) {
+    const reason = PEACE_ORDER[r.a];
+    return t('history.PeaceHeld', { reason: reason ? t(`peace.short.${reason}` as MessageKey) : '' });
+  }
   const chosen = offshore ? `${key}.offshore` : !r.bn && rb !== 'number' && rb !== 'side' && none in en ? none : key;
   // A name that takes a plural verb (R84j; critic run 69: "Contras was annexed by Nicaragua"): the message's `.plural`.
   const plural = ra === 'nation' && pluralName(r.an) && `${chosen}.plural` in en ? `${chosen}.plural` : chosen;

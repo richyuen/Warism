@@ -131,6 +131,8 @@ export const HISTORY_ROLES: Readonly<Record<number, readonly [HistoryRole, Histo
   [EventKind.BlocAid]: ['nation', 'nation'],
   [EventKind.MassingSeen]: ['nation', 'nation'],
   [EventKind.MassingCalledOff]: ['nation', 'nation'],
+  // A world of few nations at peace and its reason (ROADMAP R222): the reason's code, how many realms share it.
+  [EventKind.PeaceHeld]: ['number', 'number'],
 };
 
 /**
@@ -172,6 +174,7 @@ export const HISTORY_PLACED: ReadonlySet<number> = new Set<number>([
   EventKind.TrackEvent,
 ]);
 export const HISTORY_UNPLACED: ReadonlySet<number> = new Set<number>([
+  EventKind.PeaceHeld,
   EventKind.Bankruptcy,
   EventKind.NationEliminated,
   EventKind.WarDeclared,

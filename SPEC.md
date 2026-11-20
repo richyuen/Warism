@@ -2181,7 +2181,9 @@ builds).
   A world of few nations (`FEW_REALMS`, 3 realms or fewer) with no war shows, in the row's place, "At peace" and why
   (`peaceWhy`, ADR-1145: each realm's reason by the strategic AI's terms at its most restless; "for now" when one may
   yet declare, or when what holds one today ends before then: a lift on its way, a truce with a rival it would fight,
-  R219, ADR-1148); a tap opens each realm's reason (R216).
+  R219, ADR-1148); a tap opens each realm's reason (R216). History tells it too (`PeaceHeld`, R222, ADR-1149): "The world
+  is at peace:" and the line's reason, on the strategic AI's day when it is given and is not the one last told since the
+  world's last war.
   A phone's closed row too short for its banners (`sizeRow`): the long names give way to their first word, the
   longest first; then the banners drop their "& n", those with a long name first; only then do names go down to their
   first five letters, never under (ADR-1144 (b), the user's choice; ADR-1136's floor).

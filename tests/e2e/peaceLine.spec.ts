@@ -77,6 +77,27 @@ for (const [w, h] of SIZES) {
   });
 }
 
+// ROADMAP R222 (critic run 90, R90-N2): the peace's reason reaches History, in the line's own words, once while it holds.
+for (const [w, h] of SIZES) {
+  test(`${w} × ${h}: History tells the peace and its reason (89403)`, async ({ page }) => {
+    test.setTimeout(120_000);
+    await open(page, 89403, w, h);
+    await page.evaluate(() => window.__warsim!.sim.step(24 * 30));
+    await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) >= 24 * 30, null, { timeout: 60_000 });
+    const btn = page.getByTestId('history-btn');
+    await btn.scrollIntoViewIfNeeded();
+    await btn.click();
+    await expect(page.getByTestId('history-panel')).toBeVisible();
+    const said = en['history.PeaceHeld']!.replace('{reason}', en['peace.short.equal']!);
+    const row = page.getByTestId('history-row').filter({ hasText: said });
+    await expect(row).toHaveCount(1, { timeout: 20_000 });
+    await row.scrollIntoViewIfNeeded();
+    const box = (await row.boundingBox())!;
+    expect(box.x >= 0 && box.y >= 0 && box.x + box.width <= w + 0.5 && box.y + box.height <= h + 0.5, `the row in the view: ${JSON.stringify(box)}`).toBe(true);
+    await page.screenshot({ path: test.info().outputPath(`peace-history-${w}x${h}.png`) });
+  });
+}
+
 test('89418 (a war prepared): "At peace for now", no reason given', async ({ page }) => {
   test.setTimeout(120_000);
   await open(page, 89418, 393, 852);

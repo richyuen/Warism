@@ -206,3 +206,8 @@
   of a reason 16 → 0; reasons on 33 % of peace days (65 % before). The critic's page cases read "for now" to the war.
   `peaceWhy.test` (red before), `peaceLine` 7/7. My replay of `c90_peaceWeek.mjs` overwrote the critic's
   `c90_pw_*.json` and shots of those two seeds (ignored files; no copy kept).
+
+## 2026-11-20 — R222: a world of few nations' peace and its reason in History (ADR-1149)
+
+- `PeaceHeld` rows: "The world is at peace: …" when the line's reason is first given or changes. `peaceWhy.test`,
+  `peaceLine.spec` (12/12, the History row at the five sizes). Pin unchanged.

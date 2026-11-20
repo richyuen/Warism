@@ -5,6 +5,25 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1149 · 2026-11-20 · accepted · A world of few nations' peace and its reason in History (R222)
+
+- **The case** (critic run 90, R90-N2, non-blocking): a world kept at peace ten years (89403) held two events in History;
+  the peace's reasons lived only in the line (R216, ADR-1145).
+- **Decision.** A new history kind, `PeaceHeld` (86): a, the headline's reason (`PEACE_ORDER`'s index, the line's own
+  tie rule, now `peaceHeadline` in `shared/protocol.ts`); b, how many realms share it. Told on the strategic AI's day
+  (`notePeace`, run in the same system after `strategicAi`, `sim.ts`: a war declared that hour is told, not a peace)
+  when `peaceWhy` gives a reason and its headline is not the one last told since the world's last war (read back from
+  the log, no new state). Text: "The world is at peace: {the line's short reason}". Unplaced (no point of the map);
+  not in the ticker.
+- **Why in the sim, not the worker:** History is state, saved and hashed (PLAN 1.34a); a row the worker added would be
+  gone on a load. `peaceWhy` is a pure read (its save the same bytes, `peaceWhy.test`), so only the log changes: the
+  few-nation worlds' hashes move, 1938's do not (`peaceWhy` null for more than three realms; seed 99's pin as it was).
+  It runs once a day in a world of three realms or fewer at peace.
+- **Read:** 89403 "none outmatches another" once on 1 January 1938 and nothing more in two years; 55404 "rivals too far
+  over the sea" on day 91; 54425 "none outmatches another" on day 91; 89401 and 90441 nothing before their first wars.
+  `peaceLine.spec` at the five supported sizes: the row in History, whole and in the view (looked at: 393 × 852,
+  734 × 343).
+
 ## ADR-1148 · 2026-11-20 · accepted · The peace line gives no reason that ends before its cap (R219)
 
 - **The case** (critic run 90, R90-B1, blocking; diplomacyWarDepth 8 → 7): the line said the peace held "even after ten

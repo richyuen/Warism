@@ -15,6 +15,7 @@ import { allianceSystem } from './systems/alliances';
 import { economicAi, peaceShare, startAir } from './ai/economic';
 import { operationalAiOf } from './ai/operational';
 import { strategicAi } from './ai/strategic';
+import { notePeace } from './ai/peaceWhy';
 import { invasionAi } from './ai/invasion';
 import { navalAi } from './ai/naval';
 import { airAi } from './ai/air';
@@ -46,6 +47,12 @@ import { economySystem, monthlyAccounts, UPKEEP_SCALE } from './systems/economy'
 import { createRandomWorld } from './randomWorld';
 import { createToyWorld, TOY_SYSTEMS } from './toy';
 import { buildMapCaches, type World } from './world';
+
+/** The strategic AI's day, then a world of few nations' peace told to History (ROADMAP R222): one system, its name kept. */
+function strategicAndPeace(world: World): void {
+  strategicAi(world);
+  notePeace(world);
+}
 
 /** The systems of the 1938 rules by name, in their order (several are closures without one). */
 // A year played free with heroes on places 1938's (R83b); the placer is given here, where scenario1938.ts is loaded.
@@ -120,7 +127,7 @@ export class Sim {
         // SPEC §2.5 order: production and economy (3), supply (4), land movement (7),
         // engagement and combat (8), territory (9).
         // AI decides first (SPEC §2.5 step 2), on the state left by the previous tick.
-        this.systems = [buffSystem, strategicAi, operationalAiOf(ECONOMY_TABLES_1938), invasionAi, navalAi, airAi, productionSystem, researchSystem, nuclearSystem, economicAi(ECONOMY_TABLES_1938, BUILD_MIX_1938), economySystem(ECONOMY_TABLES_1938), efficiencySystem, supplySystem, repatriationSystem, movementSystem, amphibiousSystem, airSystem, retreatSystem, combatSystem, playerOrderSystem, navalCombatSystem, bombardmentSystem, seaControlSystem, orgLossSystem, territorySystem, capitalsSystem, warSystem, allianceSystem, puppetSystem, revoltSystem, collapseSystem, heroSystem, statsSystem];
+        this.systems = [buffSystem, strategicAndPeace, operationalAiOf(ECONOMY_TABLES_1938), invasionAi, navalAi, airAi, productionSystem, researchSystem, nuclearSystem, economicAi(ECONOMY_TABLES_1938, BUILD_MIX_1938), economySystem(ECONOMY_TABLES_1938), efficiencySystem, supplySystem, repatriationSystem, movementSystem, amphibiousSystem, airSystem, retreatSystem, combatSystem, playerOrderSystem, navalCombatSystem, bombardmentSystem, seaControlSystem, orgLossSystem, territorySystem, capitalsSystem, warSystem, allianceSystem, puppetSystem, revoltSystem, collapseSystem, heroSystem, statsSystem];
         this.systemNames = SYSTEM_NAMES_1938;
         break;
       }
