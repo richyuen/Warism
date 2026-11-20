@@ -352,7 +352,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   (against 60.1 on `f27f48f5` beside it, 4 of 4; the tier's mean 56.8–57, run 89 59.7). AT: `TAG=x VW=2560 VH=1305 node
   critic/scripts/c85_pf_lookfps.mjs 7019 critic/c79_hseed7019_y20.bin` no sample under 58.5 fps in two runs; first,
   which commit since `f27f48f5` costs it (R214's shader, R217's formations pass, R218's capital cells).
-  - Done (COMMIT): the worker, not the draw. Bisected (each build probed alone): `2a438a2d` 60.1/60.1/58.8, R217's
+  - Done (b6767004): the worker, not the draw. Bisected (each build probed alone): `2a438a2d` 60.1/60.1/58.8, R217's
     `4e7b0505` 52.1 and after. From the save the sim's hours, both commits at once on separate cores: one day start
     40 days on (hour 176,160) took 194 ms on HEAD, 39 ms before; `strategicAi` 167 ms of it, 90 ms in `inReach`
     (`callSides` asking the side rule's 500 km reach, round by round, for the more declarations R217 lets through) and
