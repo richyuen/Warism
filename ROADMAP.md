@@ -54,6 +54,31 @@ closes the panels beside it (ADR-1137 (d)).
     54 specs on the banners, the legend, the map modes, the news and phones 173/173.
 - Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 85).
 
+## Batch 55 — critic run 87's findings (focused, on bbf47bca; one blocking issue, a regression; UI/UX 7)
+
+ADR-829's exit: R87-B1 is a regression by R200 (ticked since release-2026-11-19) of R197's row clear of the legend.
+ADR-1140 (proposed) waits on the user; no item of the UI/UX dimension is taken until the user decides. Each item on the war
+row or a panel's place crosses the sizes and opens and closes the panels beside it (ADR-1137 (d)).
+- [ ] R203 **R87-B1: on a desk of 800 px or less the legend R200 folds, once opened, lies over the war row** (not counted
+  again on opening: 247 to 329 sampled points covered at 700 × 800 in the sea, air and fallout modes, 121 to 203 at 780;
+  after a recount fallout's banner still half under it, 193; the opened state kept across resizes). `c87_lo_84901.log`,
+  `c87_ls_84901_700_*_w4000.log`, `c87lo_84901_d400_700x800_seaControl_open.png`, `c87ls_84901_700x800_fallout_back.png`.
+  AT: by the user's choice in ADR-1140; for its (a), the report's "seen fixed when": `c87_legendOpen 84901 400`
+  `rowOverLegend` 0 and `legendOverRow` 0 opened and back, every size and mode, `nudged` = `shown`; `WAIT=4000
+  c87_legendShot 84901 400 700 800 fallout` 0 both states; `c86_modeRow 84901 400 800` as R200; a case that reads the row
+  while the legend is open.
+- [ ] R204 **R87-N2: on a desk of about 1100 to 1366 px the row jumps 24 to 44 px when a war on it changes** (R202's rule
+  decides centre or band from the banners shown now; `c87_rowJitter 87601 300`: off the centre 40 % of the time at 1280 ×
+  720). AT: `c87_rowJitter 87601 300` `moves` 0 wherever `countCh` is 0; R202's case as now.
+- [ ] R205 **With every relations kind hidden at 1600 px the footer says "No ties of these kinds." and "98 nations with no
+  tie shown are left out"** (R201; the second says nothing new; `c87_rs_84903_400.log`). AT: the empty graph's footer
+  without the left-out count; R201's case as now.
+- [ ] R206 **The design objection: R200 folds the legend on every narrow desk in every mode,** the political mode's two
+  lines too, which never crowded the row. Taken with R203 as ADR-1140's choice decides (folding only the wide legends,
+  or when the band is short, is the report's way). (Europa Universalis IV's legend in the map-mode button's tooltip, the
+  report's idea: ADR-1140 (d).)
+- Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 86).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

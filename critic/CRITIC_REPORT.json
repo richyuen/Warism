@@ -1,5 +1,5 @@
 {
- "commit": "bd85eb1084e11cb3c208ce8c9a78345bb86e1ff0",
+ "commit": "bbf47bca2f55ae024291361f85fe5db530005c26",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
@@ -8,7 +8,7 @@
   "godMode": 8,
   "editorScenarios": 8,
   "statsHistory": 8,
-  "uiUxPolish": 8,
+  "uiUxPolish": 7,
   "performance": 8,
   "stability": 8,
   "semanticZoom": 8,
@@ -17,6 +17,71 @@
   "aircraft": 8,
   "aiNukes": 8
  },
- "blocking": [],
- "timestamp": "2026-11-19T18:35:00-05:00"
+ "fresh": {
+  "mapVisuals": {
+   "run": 86,
+   "commit": "bd85eb1084e11cb3c208ce8c9a78345bb86e1ff0"
+  },
+  "diplomacyWarDepth": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "emergentDynamics": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "godMode": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "editorScenarios": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "statsHistory": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "uiUxPolish": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "performance": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "stability": {
+   "run": 87,
+   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+  },
+  "semanticZoom": {
+   "run": 85,
+   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+  },
+  "naval": {
+   "run": 85,
+   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+  },
+  "tanks": {
+   "run": 85,
+   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+  },
+  "aircraft": {
+   "run": 85,
+   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+  },
+  "aiNukes": {
+   "run": 85,
+   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+  }
+ },
+ "blocking": [
+  {
+   "id": "R87-B1",
+   "title": "On a desk of 800 px or less, the legend R200 folds lies over the war row once opened; the row is not counted again (R197's recount claim), and in fallout it stays half under the legend after a full recount",
+   "evidence": "critic/c87_lo_84901.log (700x800: legendOverRow 247 sea, 285 air, 329 fallout, 89 puppets; 780x800: 121 to 203); critic/c87_ls_84901_700_fallout_w4000.log and _seaControl_w4000.log (alone, 4 s wait: 329 and 247; fallout after a 1280 round trip 193); critic/shots/c87lo_84901_d400_700x800_seaControl_open.png; critic/shots/c87ls_84901_700x800_fallout_back.png; run 86's build: 3 cells in fallout at 700 (critic/c86_mr2_84901_5411.log)",
+   "fix": "Count the row again when the legend opens or closes (its box is a wall of the free band), and make the band's measure exclude any box that overlaps the row's height (fallout's case). Seen fixed when node critic/scripts/c87_legendOpen.mjs 84901 400 gives rowOverLegend 0 and legendOverRow 0 in the opened and back states at every size and mode with nudged equal to shown, WAIT=4000 node critic/scripts/c87_legendShot.mjs 84901 400 700 800 fallout gives legendOverRow 0, and c86_modeRow 84901 400 800 stays fit0 [] covering []."
+  }
+ ],
+ "timestamp": "2026-11-19T21:25:00-05:00"
 }

@@ -1,236 +1,300 @@
-# Critic report, run 86 (focused): run 85's unfinished parts and Batch 53 (R197, R198), on `bd85eb10`
+# Critic report, run 87 (focused): Batch 54 (R200 to R202), on `bbf47bca`
 
 ## The run
 
-- **Mode: focused.** The spawning message asks for no full run. Its first job is ROADMAP R199: finish what run 85 (full,
-  incomplete, on `a9736eb5`) left out, namely lane E from its 7th case and the performance chain.
-- **Commit judged:** `bd85eb1084e11cb3c208ce8c9a78345bb86e1ff0`, HEAD at the start.
-- **Last report:** run 85, full but incomplete, on `a9736eb5`.
-- **Time:** 17:25 to about 18:35 by the machine's clock.
-- **Left out for time:** nothing that the spawning message or R199 asks for. Lane G, lane E2 and the performance chain all
-  ran to the end, every stage exiting 0.
-  - Not done: `landingFuzz` on new seeds, and the heroes' and sea probes. The sim is unchanged, so run 85's figures carry.
-  - Not done: R197 in a running game in a non-political mode.
-  - Not done: a figure-by-figure read of lane E's new-seed cases. They are judged by exit code and `errors` [] only.
+- **Mode: focused** (ADR-1138: every run).
+- **Commit judged:** `bbf47bca2f55ae024291361f85fe5db530005c26`, HEAD at the start (`critic/c87_commit.txt`).
+- **Last report:** run 86, focused, on `bd85eb10` (the release check of release-2026-11-19).
+- **Time:** 20:00 to about 21:25 by the machine's clock.
+- **Left out for time:**
+  - **Run 86's lane E2 cases not re-run on HEAD:**
+    - `dirHand 68957` (390 × 844) and `phoneTicker 85903`.
+    - `deathTitle 7019` at 844 × 390, and `deathTitle 85905`.
+    - `trackRows` 1941 and 1949, and `rw2 85965`.
+    - `bannerRank 85901`, `bannerFlip 85903`, and `tlDead` on 32019's save.
+    - New seeds 87941 to 87961 stood in for some of them (Stats and history). The page diff does not touch History or the
+      ticker.
+  - **The kept `heroPop 85905` was not re-run.**
+  - Not done: R200 in a running game on a touch desk.
+  - Not done: the editor and God Mode at a narrow desk with the legend opened. The 760 × 800 monkey covered them only
+    by chance.
 
-### What changed since run 85
+### What changed since run 86
 
-- `git diff --stat a9736eb5 HEAD -- src/sim data public/data tools` is empty.
-- The page diff is `src/ui/WarBanners.tsx` (R197), `src/ui/RelationsPanel.tsx` and `src/ui/i18n/en.json` (R198).
-- So run 85's sim results carry: its checkers, `landingFuzz`, sea battles, nukes and the 20-year hashes.
-  - **Sim unchanged, carried (ADR-917):** every bulk set run 85 carried.
-  - **Plain 1938 unchanged, carried (ADR-959):** run 85's 20-year saves of 7019 (`ab927e1b`) and 32019 (`c3520016`), and
-    the sim is unchanged.
+- `git diff --stat bd85eb10 HEAD -- src/sim data public/data` is empty, so the sim is unchanged.
+- **The page diff:**
+  - `src/ui/MapLegend.tsx`, `src/ui/usePhone.ts`, `src/app/App.tsx` and `src/app/style.css` (R200: a desk of 800 px or
+    less folds the legend).
+  - `src/ui/RelationsPanel.tsx` (R201: the empty graph says so).
+  - `src/ui/WarBanners.tsx` (R202: the row on the bar's centre).
+- **Sim unchanged, carried (ADR-917):** every bulk set run 86 carried.
+- **The every-run jobs ran anyway** (ADR-1138):
+  - Plain 1938 7019 ends at `ab927e1b` and 32019 at `c3520016` after 20 years, as in runs 79 to 86
+    (`critic/c87_seed7019_save.log`, `critic/c87_seed32019_save.log`).
+  - Checkers, `landingFuzz` and monkeys: see the Verdict.
 
 ### Scored afresh, and why
 
-- `mapVisuals` and `uiUxPolish`: the war row (R197).
-- `diplomacyWarDepth` and `uiUxPolish`: the relations panel (R198).
-- `statsHistory`: lane E's History and time-lapse cases, left out by run 85, ran this time. Some of them are judged by their
-  exit code and errors alone; the Stats and history section says which.
-- `performance`: run 85 carried it from run 84, and R199 asks for it afresh.
-- **Every other dimension is carried from run 85**, marked "carried".
+| Dimension | Why |
+|---|---|
+| `uiUxPolish` | touched: `MapLegend.tsx`, `usePhone.ts`, `WarBanners.tsx`, `RelationsPanel.tsx`, `App.tsx`, `style.css` |
+| `diplomacyWarDepth` | touched: `RelationsPanel.tsx` (R201), and `App.tsx` and `style.css` |
+| `statsHistory`, `godMode`, `editorScenarios` | touched: `App.tsx` and `style.css` |
+| `performance` | `src/` changed: the chain, run alone |
+| `emergentDynamics`, `stability` | **the rotation** |
+
+- **How the rotation was worked out:** run 86's JSON has no `fresh` record, so this run rebuilds it from the reports.
+  - Run 85 (full, `a9736eb5`) scored every dimension afresh but `performance`.
+  - Run 86 (`bd85eb10`) scored `mapVisuals`, `diplomacyWarDepth`, `statsHistory`, `uiUxPolish` and `performance`.
+  - Of the dimensions this diff does not touch, seven were last fresh in run 85: `emergentDynamics`, `stability`,
+    `semanticZoom`, `naval`, `tanks`, `aircraft` and `aiNukes`. In DIMENSIONS order the first two are `emergentDynamics`
+    and `stability`.
+- **Carried:**
+  - `mapVisuals`: from run 86. The legend is under `src/ui/`, so it touches `uiUxPolish` by the table.
+  - `semanticZoom`, `naval`, `tanks`, `aircraft` and `aiNukes`: from run 85, with the sim unchanged.
 
 ### Setup
 
-- **HEAD's build:** `critic/c85b_dist` (`sh critic/scripts/c85_build2.sh`, build exit 0, replay starts copied), served on
-  127.0.0.1:5411.
-- **Run 85's build:** `critic/c85_dist` (`a9736eb5`), served on 5410 only for the cases whose figure moved (R86-N1, R86-N2).
-  It was stopped after them.
-- **Order, as the spawning message asks:**
-  1. `c85_build2.sh`.
-  2. `c85_laneG.sh` and `c85_laneE2.sh` together, all exit 0.
-  3. My probes and checkers.
-  4. `c85_chainPerf2.sh` alone on a quiet machine, started 18:00:39 with only the 5411 server running.
-     - The first launch of the chain was stopped while it was still waiting on the lanes. Its lock was removed, and it was
-       started again after my probes, so that nothing ran beside it.
-- **At the end:** both preview servers, every browser and every job were stopped by process. No listener is left on 5410
-  or 5411, and the chain's lock `critic/c85_perf.lock` is removed.
+- **HEAD's build:** `critic/c87_dist` (`sh critic/scripts/c87_build.sh`, build exit 0, replay starts copied from
+  `critic/c85_starts`), served on 127.0.0.1:5421.
+- **Run 86's build** (`critic/c85b_dist`, `bd85eb10`) was served on 5422 for one case only. The chain's QHD and 4K
+  frame means read about 1.3 fps under run 86's, so `critic/scripts/c87_pfAB.sh` ran that case on both builds, A B A B,
+  alone after the chain.
+- **Order:**
+  1. The sim jobs: `c87_long.sh` (the 20-year saves, `landingFuzz --seeds 15 --first 87101`, six checker runs).
+  2. The page lanes at the same time:
+     - `c87_laneA.sh`: run 86's R86-N1, R86-N2 and wide-desk cases.
+     - `c87_laneB.sh` and `c87_laneE.sh`: run 86's lane G, lane K and lane E2 cases, on the same seeds.
+     - `c87_laneC.sh`: God Mode, the editor and History on new seeds 87xxx.
+     - `c87_laneD.sh` and `c87_laneW.sh`: the rotation's cases.
+     - `c87_laneM.sh`: the monkeys.
+     - My new probes.
+  3. `c87_chainPerf.sh`, gated on every lane's done file. It started at 20:32:44 with no other job of mine running.
 - **New scripts:**
-  - `critic/scripts/c86_deskAttack.mjs`: R197 off its case.
-    - It narrows from 1100 to 600 px at device scale 1, 1.25 and 1.5.
-    - It tries four wide desks in all 11 map modes, sweeps the mouse over the map, and counts the row's mutations at rest.
-  - `critic/scripts/c86_modeRow.mjs`: R197 in each map mode, from 1100 to 600 px and back, with a nudge and the legend's
-    cells covered. `c86_modeShot.mjs` takes one shot of it.
-  - `critic/scripts/c86_relSaid.mjs`: R198 off its case. It hides every kind in turn, shows them again, and taps a nation
-    then a filter, at 568 × 320, 844 × 390 and 1600 × 900.
-  - `critic/scripts/c86_laneK.sh`: run 85's named phone-row cases again. R197 now clears the row's inline `left` and
-    `max-width` on every layout.
-  - `critic/scripts/c86_checkers.sh` and `c86_checkers2.sh`: 12 checker runs on new seeds.
-  - `critic/scripts/c86_scan.mjs`: page errors in every output of this run.
+  - `critic/scripts/c87_legendOpen.mjs`: R200 off its case. The folded legend is opened on a narrow desk in six modes at
+    four sizes: is the row recounted, who covers whom, and what a widen-and-back and a nudge do.
+  - `critic/scripts/c87_legendShot.mjs`: one picture of that, before and after a resize round trip.
+  - `critic/scripts/c87_rowJitter.mjs`: R202 off its case, in a running game. The row's centre is read every 100 ms for
+    40 s at four desk sizes in two modes.
+  - `critic/scripts/c87_scan.mjs`: page errors in every output of this run.
+- **At the end:** both preview servers (5421, 5422), every browser and every job I started were stopped by process, and no
+  listener is left on either port. The idle preview on 4174 is not mine and was left alone.
 
 ## Verdict
 
-**Batch 53 fixes both of its cases:**
-- **R197 (R85-N1):**
-  - `c85_deskRow 84901 400 800` and `85903 700 900` give `fit0` [], `covering` [], `overflow` [] and `stale` [] at every
-    step (`critic/c85b_dr_84901_400_800_5411.log`, `critic/c85b_dr_85903_700_900_5411.log`).
-  - Run 85 had 0 banners from 620 to 660 px on 84901, and from 620 to 700 px on 85903.
-  - The same holds on 85901, 85905 and the random world 85965 (`critic/c85b_dr_*_5411.log`).
-- **R198 (R85-N2):** `c85_explore 84901 400` at 568 × 320 touch. Each filter tapped says its kind: "Wars hidden",
-  "Alliances hidden", "Guarantees hidden", "Puppets hidden" and "Truces hidden", with the line counts as in run 85 (88, 99,
-  111, 76, 102) (`critic/c85ex_84901_d400_c85b_5411.json`).
+**Batch 54 fixes its three cases:**
+- **R200 (R86-N2):** `c86_modeRow` 85901 (sea control, air control, fallout) and 84901 (all five modes) give `fit0` [],
+  `stale` [] and `covering` [] in every mode (`critic/c87_mr_*.log`).
+  - Run 86 had no war at 620 to 740 px in three modes.
+- **R201 (R86-N1):** `c86_relSaid 84903 400` gives `empty` [] at 568, 844 and 1600 px. With every kind hidden the footer
+  reads "Truces hidden · No ties of these kinds." (`critic/c87_rs_84903_400.log`).
+- **R202 (the design objection):**
+  - `c86_deskAttack 84901 400 wide`: 0 px off the centre at 1600, 1920 and 2560 px in all 11 modes, with three banners.
+  - At 1280 px: 16 to 44 px off in the political modes (three banners), and 0 px in the sea, air and fallout modes (two
+    banners), as R202's tick says (`critic/c87_da_84901_400.log`).
 
-**No blocking issue.**
+**One blocking issue: R87-B1 (R200 off its route).** On a desk of 800 px or less, the legend R200 folds lies over the
+war row once the player opens it. The row is not counted again when the legend opens, which contradicts R197's ticked
+"recounts when the band moves". In the fallout mode, the row stays half under the legend even after a full recount
+(Blocking issues).
 
-**The rule checkers on new seeds:** 12 runs, five years each, 0 broken.
-- `diploInvariants`: 86001, 86007, 86005 (heroes), 86011 (heroes), and random diplomacy 86003 and 86009.
-- `worldInvariants`: 86051, 86057, 86053 (heroes), 86059 (heroes), and the random world 86055 and 86061.
-- Evidence: `critic/c86_diploinv_*.log`, `critic/c86_wi_*.log`.
+**The rule checkers on new seeds:** 6 runs of five years each, 0 broken.
+- `diploInvariants`: 87001, 87005 (heroes) and random 87003.
+- `worldInvariants`: 87051, 87053 (heroes) and the random world 87055.
+- Evidence: `critic/c87_diploinv_*.log`, `critic/c87_wi_*.log`.
 
-**Page errors:** 0 in all 155 outputs of this run (`node critic/scripts/c86_scan.mjs`).
+**`landingFuzz --seeds 15 --first 87101`:** 0 of 90 runs broken, `slowClick` included (`critic/c87_landingFuzz.log`).
 
-**Two new non-blocking issues:**
-- **R86-N1 (R198's side effect):** with every kind hidden, the empty graph's footer says "Truces hidden" where run 85's
-  build said "No ties of these kinds."
-- **R86-N2 (R197's side effect):** in the sea-control, air-control and fallout map modes, a 680 to 760 px desk shows no war
-  again. Run 85's build showed one there, over the legend's corner by a few px.
+**Monkeys:** four on new seeds, heroes on, 1,020 s in all, 0 page errors, none hung, and the tick moving at the end.
+- 1600 × 900, 390 × 844 touch, 844 × 390 touch, and 760 × 800, a narrow desk with the folded legend.
+- Evidence: `critic/c87_monkey.*.log`.
 
-**Scores:** every dimension 8.
-- `performance` is scored afresh from run 85's chain, run alone: 8, as in run 81.
-- R199 is met: lane E's cases and performance are both scored afresh, not carried.
+**Page errors:** 0 in all 145 outputs of this run (`node critic/scripts/c87_scan.mjs`).
+
+**A new non-blocking issue:**
+- **R87-N2 (R202's rule in a running game):** at 1280 × 720 and 1100 × 800, the row jumps 44 px sideways when a war on it
+  changes, though the window does not.
+
+**Scores:**
+- `uiUxPolish` is 7: it would be 8 without R87-B1, as run 83 scored R83-B1.
+- Every other dimension is 8.
 
 ## Scores
 
-### Map visuals and readability: **8** (scored afresh: R197)
-- **Tested:**
-  - Five `deskRow` routes on four 1938 seeds and the random world.
-  - `c86_deskAttack 84901 400`: three device scales, four wide desks in all 11 modes, a mouse sweep, and the row at rest.
-  - `c86_modeRow` on 84901 and 85901 in four modes on both builds.
-- **Evidence for 8:**
-  - **On a desk in the political mode, the war row now shows a war at every 20 px step from 1100 to 600 px.**
-    - At 640 × 800: "United Kingdom & 13 ⚔ Italy & 3 +33" and "+4", with `overflow` 0 and nothing under it
-      (`critic/c85b_rw_84901_400_620x900_640x800_683x768_700x800_768x1024_5411.log`).
-    - At 1024 × 768 the row now holds two banners where run 85 had one (`critic/c86_pd_83903_*_5411.log`).
-  - **Fractional scales lose nothing:** at device scale 1.25 and 1.5, from 1100 to 600 px, the row shows the same count as
-    at 1. There is no stale fit, no overflow and no cover (`critic/c86_da_84901.log`, "dpr summary"). R197 dropped the
-    overflow's 1 px tolerance, and this was the case where that could have hurt.
-  - **No flicker where measured.** These are paused games only; a running game in a non-political mode was not tried.
-    - Sweeping the mouse over 88 and 160 points of land and sea, in the political, sea-control and air-control modes at 700
-      and 1280 px, leaves the row unchanged ("changes":0).
-    - In the political mode at rest, the row has 0 mutations in 4 s at 640, 700 and 1280 px (`critic/c86_da_84901.log`).
-- **Not 9:**
-  - R86-N2: in the sea-control and air-control modes a 680 to 740 px desk shows no war
-    (`critic/shots/c86mr_84901_d400_h800_seaControl_700.png`).
-  - On a wide desk the row now sits in the band between the news and the legend, not over the bar's middle. At 1280 × 720 it
-    is 44 px right of the centre in the political mode and 24 to 44 px left of it in the sea, air and fallout modes. So the
-    row moves about 68 px sideways, and loses a banner (3 to 2), when the map mode changes (`critic/c86_da_84901.log`,
-    "wide"; `critic/shots/c86da_84901_d400_wide_1280x720_political.png`).
-  - The kept items of run 85: hero plates over labels (ADR-1111), and the ring over "Pari" (R172).
+### Map visuals and readability: **8** (carried from run 86)
+- In passing: R87-B1 is a legend over the war row. It is scored under `uiUxPolish`.
 
-### Diplomacy, war, alliances, puppets, revolts: **8** (scored afresh: R198)
-- **Checkers:** 12 runs on new seeds, 0 broken (Verdict).
-- **R198 on its case (Verdict).** Off its case (`c86_relSaid 84903 400`, `critic/c86_rs_84903.log`):
+### Diplomacy, war, alliances, puppets, revolts: **8** (scored afresh: R201; `App.tsx`, `style.css`)
+- **Checkers:** 6 runs on new seeds, 0 broken (Verdict).
+- **R201 on its case and off it** (`critic/c87_rs_84903_400.log`):
   - At 568 × 320, 844 × 390 and 1600 × 900, hiding each kind and showing it again names it each time.
-  - The footer is never cut and never leaves the panel or the view.
-  - At 1600 px the line keeps its count, for example "Wars hidden · 26 nations with no tie shown are left out".
-- **Run 85's relations cases on HEAD:**
-  - `relSide 84903`: `withBad` 1, `withDead` 1, `minGraph` 123, as on run 85's HEAD (`critic/c85b_rs_84903_400_5411.log`).
-  - `relFoot 84903`: the footer is inside the panel at all 33 steps (`critic/c85b_rf_84903_400_5411.log`).
-  - `graphSize 68901 568 320`: 123 px with 5 names, as run 85 (`critic/c85b_gs_68901_568_320_5411.log`).
+  - With all kinds hidden, the footer says "Truces hidden · No ties of these kinds.", and at 1600 px "… · 98 nations
+    with no tie shown are left out".
+  - The footer is never cut and never leaves the panel.
+- **Run 86's relations cases on HEAD, the same as run 86:**
+  - `relSide 84903`: `withBad` 1, `withDead` 1, `minGraph` 123 (`critic/c87_rsd_84903_400.log`).
+  - `relFoot 84903`: inside the panel at all 33 steps (`critic/c87_rf_84903_400.log`).
+  - `graphSize 68901 568 320`: 123 px with 5 names, median 13 px (`critic/c87_gs_68901_568_320.log`).
+- **The war's rules in a forced war** (`fw2_forcewar 87935`, `critic/c87_fw2_forcewar.87935.log`): the alliances and
+  sides read as expected, with 0 errors.
 - **Not 9:**
-  - R86-N1: the empty graph says "Truces hidden", not that it is empty
-    (`critic/shots/c86rs_84903_d400_568x320_alloff.png`).
-  - A kind's line replaces a selected nation's name in the footer: "Germany", then a tap on Wars gives "Wars hidden", while
-    the nation stays selected. This is a small loss, not judged a defect.
-  - The 13 px graph jump of R196 (kept).
+  - At 1600 px, the empty graph's footer says both "No ties of these kinds." and "98 nations with no tie shown are left
+    out". The second line is redundant when nothing is shown.
+  - Kept from run 86: a kind's line replaces the selected nation's name, and R196's 13 px graph jump.
 
-### Emergent world dynamics: **8** (carried from run 85; sim unchanged)
+### Emergent world dynamics: 8 (carried) → **8** (scored afresh: the rotation)
+- **A 12-year page watch on a new seed** (`long_watch2 87943`, plain): `ok []` and 58.8 to 60 fps each year
+  (`critic/c87_long_watch2.87943_12__plain.log`).
+  - By 16 January 1950 France holds a band across West and Central Africa.
+  - Three wars are on the row: Japan and China, France and a "Free Bamingui-Bangoran Prefecture", and the United States
+    and Britain (`critic/shots/c85lwplain_87943_y12_world.png`).
+  - At 250 m/px, a French and a rebel division meet on a burning front with an order arrow
+    (`critic/shots/c85lwplain_87943_zoom_00250.png`).
+- **No runaway:** `topArea 87097` over 25 years ends with France at 20.0 %, the Soviet Union 19.9 % and the United
+  States 10.4 %, with 70 nations living (`critic/c87_toparea_87097.log`).
+  - France leaps from outside the top five to 16.4 % in year 8, the year Canada (6.84 %) leaves the top five and the
+    United States grows from 6.97 to 9.76 %.
+- **`farConquests`:** 30.2 capitals taken per 100 nations in two years, 8.0 of them far (`critic/c87_farc.log`).
+  - Run 85 had 26.1 and 9.8, on other seeds (85161 to 85169), so the two are not compared.
+- **A 3-nation world (`x_few 87403`):** 2 wars in year 1, then none in years 2 and 3 (`critic/c87_x_few.87403_3_3.log`).
+- **Not 9:**
+  - 87097's last ten years are nearly still. The top five hardly move from year 16 to 25 (France 19.86 to 19.98 %), and
+    the first three change place 3 times in 25 years against 85097's 9 (new seeds, not compared).
+    - Brazil's and Australia's areas stand still for 18 years each.
+    - A world that settles into two blocs of 20 % for a decade is less worth watching than its first half.
+  - A 3-nation world falls quiet after year 1.
 
-### God Mode: **8** (carried from run 85; page diff outside it)
+### God Mode: **8** (scored afresh: `App.tsx`, `style.css`)
+- **`a_god_nuke 87917`:** a hydrogen bomb on Paris.
+  - The alert reads "3,329,000 civilians killed; 47,440 men and 162 guns lost" with Go to, and the cloud stands in its
+    ring (`critic/shots/c85a_87917_14_paris_h_2h.png`). The toll is the same as on run 85's 85917: on day one it comes
+    from Paris alone.
+- **Tools, all exit 0 with 0 page errors** (`critic/c87_laneC.out`):
+  - `q_god_tools 87919`: Prague razed is named in the ticker.
+  - `fw2_forcewar 87935`.
+  - `undo2 87211`: nuke, revolt, nation, city and raze, each undone.
+  - `godpeace 1942 JAP`: says why the replay ends.
+- **Not 9:**
+  - The ring still reads "Pari" (R172) in the shot above.
+  - With God Mode on at 1600 px, the war row, the God toolbar and the bar stack in the bottom 90 px. The row also lies
+    over the "Burgos" label.
 
-### Editor and scenarios: **8** (carried from run 85)
+### Editor and scenarios: **8** (scored afresh: `App.tsx`, `style.css`)
+- **`x_editor 87443`** paints three cells to Germany, undoes, redoes, exports 591,880 bytes, and loads the file back with
+  the paint (`loaded owners`) (`critic/c87_x_editor.87443.log`).
+- **`g_editor 87921`:** fleets are placed for Germany and Britain with no refusal, and the nuclear rows by kind read
+  right (`critic/c87_g_editor.87921.log`).
+- **`os2_scen`:** the standoff file is offered and loads (`critic/c87_os2_scen.*.log`).
+- **The page's save (`saveload_page 87937`):** `same` and `same2` are true.
+- **Continue (`x_continue 87415`):** `sameAfter` true.
+- **Not 9:** as in run 85.
 
-### Stats and history: **8** (scored afresh: lane E's History and time-lapse cases ran)
-- **All 36 cases of `c85_laneE2.sh` exit 0, with 0 page errors** (`critic/c85_laneE2.out`).
-- **Same seeds as run 81, compared:**
-  - `phoneTicker 64903` and `bannerFlip` ×3 are identical.
-  - `tlDead` on run 76's save differs by one hour of run (96 against 95).
-  - `rw2 64965`, `bannerRank 57901` and `bannerHourly 57901` differ in small war-score and men figures, and in the row's
-    order. These are page runs at game speed, not stepped, so they are not deterministic. For example, in `bannerRank`, 14
-    banner-days of a quiet war were shown while a war with a battle was behind "+n", against run 81's 7 of about 440.
-  - None of these differences moves a score.
-- **New seeds (`timeLapse`, `tlMonths`, `histPlace`, `tlMore`, `rw2 85965`, `bannerRank 85901`):** judged by their exit
-  code and `errors` [] only, not by each figure.
-- **`trackRows` 1940, 1941 and 1949:**
-  - 396 rows in 1940.
-  - "30 August 1940 The Second Vienna Award to Hungary" is found. "alliance" and "Tripartite" are not found in 1940, as in
-    run 80 (`critic/c85_trackRows.1940_365.log` against `critic/c80_trackRows.1940_365.log`).
-- **`tlDead` on run 76's 7019 year-20 save** at 1600 × 900 and 390 × 844, and on run 85's 32019 save (28 dead nations):
-  `errors` [] (`critic/c85_tlDead.*.log`).
-- **`timeLapse` 85941 and 85945 (390 × 844), `tlMonths 85947`, `histPlace 85961`, `tlMore cell 85943`:** `errors` [].
-- **`deathTitle`** at three sizes on 7019 and on 85905: "China fights to the death: no peace is made…", 7 to 8 lines, not cut,
-  on screen (`critic/c85_deathTitle.*.log`).
-- **Banners over time:**
-  - `bannerFlip` on 57901, 58901 and 57903 gives the same figures as run 81 on the same seeds. For example, 57901 changes
-    8 times with its shortest tenure 1017 ms (run 81: 1018) (`critic/c85_bannerFlip.*.log`, `critic/c81_bannerFlip.*.log`).
-  - `bannerHourly 57901`: 2 changes, 0 of them back.
-  - `bannerLoad 85901` at days 90 and 150: the row is the same across a load, with 0 changes in 72 h.
-  - `bannerRank 85901`: 6 banner-days of a quiet war shown while a war with a battle was behind "+n", out of 415.
-- **Not 9:** `trackTexts` still reads 65 of 168 track rows as bare notes (run 85, sim unchanged).
+### Stats and history: **8** (scored afresh: `App.tsx`, `style.css`; lane E2's cases again on the same seeds)
+- **28 cases of `c87_laneE.sh` and lane C's History cases, all exit 0 with 0 errors.**
+- **Same seeds as run 86, compared:**
+  - `bannerFlip` 57901, 58901 and 57903 give 8, 4 and 5 changes, the same as run 86. 57901's shortest tenure is
+    1017 ms both times.
+  - `bannerRank 57901`: taking Nationalist Spain puts its war first, and releasing it gives back the row as before.
+  - `dirHand` on 59955 (390 × 844 touch) and 85955 (desk): every act hands the camera back, with `cutsAfterAct` 0 and
+    the camera moved 0 px.
+  - `deathTitle 7019` at two sizes, `trackRows 1940`, `tlDead` at two sizes, `phoneTicker 64903`, `bannerHourly`,
+    `bannerLoad` at days 90 and 150, `tlMore`, `p_phone` and `bannerOwn 1942 GER`: `errors` [].
+- **New seeds:** `timeLapse` 87941 and 87945 (390 × 844), `tlMonths 87947` and `histPlace 87961` give `errors` [].
+  - The time-lapse bar reads "Play from January 1938 … February 1939" with its slider, clear of the war row
+    (`critic/shots/c85tl_head_87941_1600x900_7playing.png`).
+- **Not 9:** `trackTexts` still reads 65 of 168 track rows as bare notes (sim unchanged, carried).
 
-### UI/UX and polish: **8** (scored afresh: R197, R198)
-- **Batch 53's two cases are fixed (Verdict).**
-- **Run 85's kept cases hold on HEAD:**
-  - `phoneRow` ×2: `stale` 0, `overflowSamples` 0, `under5` 0, p95 16.7 ms (`critic/c86_pr_*_5411.log`; run 85: the same,
-    p95 16.8).
-  - `phoneToDesk` ×3: the same counts on phones. Desks now show more banners, for example 2 where run 85 had 1 at 1024 × 768.
-  - `rotate`: 0 stale (`critic/c86_rot_68901_400_GER_20_5411.log`).
-  - `crossWidth 85901` across 600 and 601 px, and `84901` steps: 0 stale and 0 overflow steps.
-  - `deskFit 68901` with a nation's panel opened and closed: 0 covered, "+2" clickable.
-  - `moreClick` at 1024, 620 and 640: clicked and opened (`critic/c85b_*_5411.log`).
-- **Lane E's page cases:**
-  - `dirHand` ×4, on 59955, 68957 and 85955 at 390 × 844 touch and on a desk: each of the 6 acts hands the camera back
-    (the director off after it, `cutsAfterAct` 0, the camera moved 0 px). Evidence: `critic/c85_dirHand.*.log`.
-  - `phoneTicker` ×2, `p_phone` and `bannerOwn 1942 GER`: exit 0, with 0 errors.
-- **Not 9:** R86-N1, R86-N2, the row off the bar's centre on a wide desk, and R192 (kept).
+### UI/UX and polish: 8 → **7** (scored afresh: R200, R201, R202; R87-B1 blocking)
+- **Batch 54's cases are fixed on their own routes (Verdict).** This would be 8 without R87-B1.
+- **Run 86's kept cases on HEAD, the same figures:**
+  - `deskRow` on 84901, 85901, 85903, 85905 and random 85965: `fit0` [], `stale` [], `overflow` [] and `covering` [] at
+    every step (`critic/c87_dr_*.log`).
+  - `rowShot 84901` ×5: `overflow` 0, `under` [].
+  - `crossWidth` 85901 and 84901: 0 stale and 0 overflow steps, with the same `deskCut` as run 86 (5 and 3).
+  - `deskFit 68901`: 0 covered, "+2" clickable.
+  - `moreClick` at 1024, 620 and 640: opened.
+  - `phoneRow` ×2: `stale` 0, p95 16.8 and 16.7 ms.
+  - `phoneToDesk` ×3: identical to run 86 (`critic/c86_pd_*_5411.log`).
+  - `rotate`: 0 stale.
+- **R200 off its case:** `c87_legendOpen 84901 400` at 700 × 800, 780 × 800, 760 × 560 and 640 × 520, in six modes
+  (`critic/c87_lo_84901.log`).
+  - Folded, the legend leaves the row a war in every case.
+  - **Opened, it covers the banner (R87-B1).**
+  - The toggle's click does not reach the map: the selection is unchanged.
+- **R202 in a running game:** `c87_rowJitter 87601 300` (`critic/c87_rj_87601.log`).
+  - Of 8 cases of 40 s, 5 hold the row still.
+  - The other 3 move it sideways 24 to 44 px, 4 times in all, when the war in a slot changes (R87-N2).
+- **What the bar needs:** `node critic/scripts/c87_legendOpen.mjs 84901 400` and `c87_legendShot.mjs 84901 400 700 800
+  fallout` must give `legendOverRow` 0 in the opened and back states, at every size and mode. R200's case must stay as
+  now.
+- **Not 9:** R87-B1, R87-N2, and R192 (kept).
 
-### Performance: 8 (carried) → **8** (scored afresh: run 85's chain, run alone)
-- **The run:** `sh critic/scripts/c85_chainPerf2.sh`, from 18:00:39 to 18:26:17 on a quiet machine, with only the 5411
-  server running. Every stage exits 0 (`critic/c85_pf.status`). It is compared with run 81, the last run to score this
-  afresh.
+### Performance: **8** (scored afresh: `src/` changed; the chain run alone)
+- **The run:** `sh critic/scripts/c87_chainPerf.sh`, from 20:32:44 to 20:58:27, with no other job of mine running. Every
+  stage exits 0 (`critic/c87_pf.status`). It is compared with run 86's chain (`critic/c85_*.log`).
 - **The tick of seed 99 over five years:**
-  - Plain: 1.851 ms mean, hash `ca4700f1` (`critic/c85_tick99.log`). Run 81: 1.834 ms, the same hash.
-  - With heroes: 1.645 ms, hash `494ed033` (`critic/c85_tick99h.log`). Run 81: 1.639 ms, the same hash.
-- **Frames on 7019's year-20 world, at the battle spot, from 3,000 to 30 m/px in both looks** (`critic/c85_pf_lookfps*.log`,
+  - Plain: 1.833 ms mean, hash `ca4700f1` (`critic/c87_tick99.log`). Run 86: 1.851 ms, the same hash.
+  - With heroes: 1.646 ms, hash `494ed033` (`critic/c87_tick99h.log`). Run 86: 1.645 ms, the same hash.
+- **Frames on 7019's year-20 world, at the battle spot, from 3,000 to 30 m/px in both looks** (`critic/c87_pf_lookfps*.log`,
   summed by `node critic/scripts/c86_pfsum.mjs`):
 
-  | Size | Least mean fps | Highest p95 | Worst frame | Run 81 |
+  | Size | Least mean fps | Highest p95 | Worst frame | Run 86 |
   |---|---|---|---|---|
-  | 1600 × 900 | 58.9 | 18.2 ms | 123 ms | 59.3, 18.3, 111 |
-  | 2560 × 1440 | 58.9 | 18.3 ms | 116 ms | 59.4, 18.2, 121 |
-  | 3840 × 2160 | 58.8 | 18.3 ms | 148 ms | 59.4, 18.2, 122 |
-  | With heroes (run 79's save) | 59.1 | 18.2 ms | 120 ms | 57.8, 18.1, 113 |
+  | 1600 × 900 | 59.0 | 18.2 ms | 114 ms | 58.9, 18.2, 123 |
+  | 2560 × 1440 | 57.6 | 18.2 ms | 124 ms | 58.9, 18.3, 116 |
+  | 3840 × 2160 | 57.5 | 18.4 ms | 114 ms | 58.8, 18.3, 148 |
+  | With heroes (run 79's save) | 57.9 | 18.4 ms | 113 ms | 59.1, 18.2, 120 |
 
-- **`lookFps 7019`:**
-  - Forced 58.7 to 59.7 frames/s at every tier (least 58.0), and a draw of 0.9 to 2.7 ms (`critic/c85_lookfps.log`).
-  - Run 81: 59.2 to 59.9, with draws of 1 to 2.7 ms.
-- **The individual tier, `x_indfps 64111`:** 59.1 to 59.9 fps, p95 16.7 to 16.8 ms, with 6,246 individuals drawn at Max
-  speed (`critic/c85_xi.log`). Run 81: 59.5 to 60, p95 16.8.
-- **Touch (`tm_touch`):** 59.1 fps with 267 ticks/s and nothing selected (`critic/c85_tm_touch.alone.log`). Run 81: 59.4 and
-  267.
-- **A 12-year watch on the page alone (`long_watch2 64945`, heroes on):** 59.1 to 59.8 fps each year and `ok []`
-  (`critic/c85_lw_64945_alone.log`). Run 81: 58.6 to 60, with the same game speed year by year.
-- **Run 79's 7019 year-20 save** loads and runs a year at 1.841 ms a tick, ending at hash `07e768a6` as in run 81 (1.810 ms)
-  (`critic/c85_loadold_7019.log`).
-- **The time-lapse of 20 years** plays from January 1938 to December 1957 with `errors` [] (`critic/c85_tm_lapse20.log`), as
-  in run 81.
+- **The QHD and 4K means fell by about 1.3 fps, evenly across every tier,** the 3,000 m/px world view included, where the
+  page diff draws nothing new.
+  - **A/B on the same world, alone after the chain** (`critic/scripts/c87_pfAB.sh`, `critic/c87_pfab_*.log`):
+
+    | Arm | Run 86's build (5422) | HEAD (5421) |
+    |---|---|---|
+    | 1 | 58.8 fps least mean, p95 18.1, worst 125 | 58.8, p95 18.5, worst 127 |
+    | 2 | 59.1, p95 18.3, worst 128 | 59.1, p95 18.1, worst 123 |
+
+  - Both builds give the same figures, so the chain's 57.5 to 57.6 was the machine at that moment, not R200 to R202. It
+    moves no score (ADR-917).
+  - The row also makes 0 mutations at rest at 640, 700 and 1280 px (`critic/c87_da_84901_400.log`, "idle"). The R202
+    measure does not run each frame.
+- **`lookFps 7019`:** forced 59.0 to 59.8 frames/s at every tier (least 58.0), and a draw of 0.8 to 2.8 ms
+  (`critic/c87_lookfps.log`). Run 86: 58.7 to 59.7.
+- **The individual tier, `x_indfps 64111`:** 59.3 to 60 fps, p95 16.7 to 16.8 ms, with 6,246 individuals drawn at Max
+  speed (`critic/c87_xi.log`). Run 86: 59.1 to 59.9.
+- **Touch (`tm_touch`):** 59.6 fps with 266 ticks/s and nothing selected (`critic/c87_tm_touch.alone.log`). Run 86: 59.1
+  and 267.
+- **A 12-year watch on the page alone (`long_watch2 64945`, heroes on):** 59.1 to 60 fps each year, `ok []`
+  (`critic/c87_lw_64945_alone.log`). Run 86: 59.1 to 59.8.
+- **Run 79's 7019 year-20 save** loads and runs a year at 1.871 ms a tick, ending at hash `07e768a6` as in runs 81 and 86
+  (`critic/c87_loadold_7019.log`).
+- **The time-lapse of 20 years** plays with `errors` [] (`critic/c87_tm_lapse20.log`).
 - **Not 9:**
-  - The worst single frame at the battle spot is 116 to 148 ms at every size. That is no better than run 81 (111 to 122),
-    and at 4K it is one frame worse.
-  - Least means sit 0.4 to 0.6 fps (0.7 to 1 %) under run 81 at every size. The heroes' figure went up by 1.3 fps.
-  - On the same hashes, the unchanged sim's tick reads 0.9 % (plain) and 1.7 % (run 79's save) slower than run 81.
-  - With the sim unchanged, these figures are the machine's spread between runs, not a regression.
-- **No change moves the score:** the page diff is the war row and the relations footer, and the tick and every frame figure
-  stand within about 1 % of run 81.
+  - The worst single frame at the battle spot is still 113 to 128 ms at every size, on both builds.
+  - The battle spot's least means sit about 1 fps under 60 at QHD (58.8 to 59.1 on both builds).
 
-### Stability: **8** (carried from run 85)
-- In passing: 0 page errors in 155 outputs. The 12 checker runs end normally. The R197 row shows no render loop (0 mutations
-  at rest).
+### Stability: 8 (carried) → **8** (scored afresh: the rotation)
+- **0 page errors** in 145 outputs. The four monkeys ran 1,020 s with 0 errors and never hung, and the page answered
+  throughout (`critic/c87_monkey.*.log`).
+  - The 760 × 800 monkey ran on a narrow desk, where the folded legend's toggle is among the buttons it clicks.
+  - It made 677 UI acts and 326 clicks, and the tick went from 153 to 11,355.
+  - The 390 × 844 monkey's tick falls back to 0 several times. Its URL shows why: it chose a Large map in the settings
+    (`size=L`), which starts a new world. This is not a fault (`critic/c85_mky_87811_390x844_touch.json`).
+- **Determinism:**
+  - `workerDeterminism 87059` (a new seed) ends at `84e44286` on all four arms (plain, quiet, start, every)
+    (`critic/c87_wd_87059.log`).
+  - Plain 1938's 20-year hashes repeat runs 79 to 86: `ab927e1b` and `c3520016`.
+  - The page's save and load (`saveload_page 87937`) and Continue (`x_continue 87415`) give the same state.
+- **Rules:** 6 checker runs and 90 `landingFuzz` runs on new seeds, 0 broken.
+- **Not 9:** a stale row when the legend opens (R87-B1, scored under `uiUxPolish`) is a missed recount in the page
+  layer.
 
-### Semantic zoom to unit level: **8** (carried from run 85)
+### Semantic zoom to unit level: **8** (carried from run 85; sim and render unchanged)
+- In passing: at 250 m/px in 1950, divisions on a burning front read with their names and an order arrow
+  (`critic/shots/c85lwplain_87943_zoom_00250.png`).
 
 ### Naval warfare: **8** (carried from run 85; sim unchanged)
+- In passing: `landingFuzz` on 15 new seeds, 0 of 90 broken.
 
 ### Tanks: **8** (carried from run 85; sim unchanged)
 
@@ -240,94 +304,95 @@
 
 ## Blocking issues
 
-None.
-
-**Why R86-N2 does not block,** by the test runs 82 and 83 blocked on (R82-B2, R83-B1: a ticked claim that holds only on its
-own route):
-- **R197's claim is the band**, "a desk's closed row takes the band free between the page's boxes beside it … the news,
-  the legend". In the sea-control mode the row does take that band: 127 px between x 238 and x 373 at 700 px. The claim is
-  true there. The band is simply too narrow for one sized banner.
-- **What remains is R85-N1's own symptom** (no war on a narrow desk, non-blocking in run 85), in four of eleven modes and
-  over 60 to 100 px more of width.
-  - The old build showed a war there only by lying over the legend's corner, as it did at every width from 680 to 1020 px.
-  - HEAD clears that cover, except in fallout at 680 to 720 px and air control on 84901 at 680 px.
-- **No player quits over it:** it needs a half-screen desk and a non-default map mode, and "+n" opens the full list.
-- **R86-N1** is footer wording, and is non-blocking.
+1. **R87-B1 (UI, a desk of 800 px or less with the folded legend opened; R200 off its route): the opened legend lies
+   over the war row's banner, and the row is not counted again.**
+   - **On opening, the row is not recounted** (`critic/c87_lo_84901.log`).
+     - At 700 × 800, the legend covers 247 sampled points of the row in sea control, 285 in air control, 329 in fallout
+       and 89 in puppets.
+     - At 780 × 800 it still covers 121 to 203 points in the sea, air and fallout modes.
+     - Picture: `critic/shots/c87lo_84901_d400_700x800_seaControl_open.png`. "Italy & 3 +33" sits under "Sea control".
+     - **Not a timing artefact:** run alone after every other job, with 4 s after the click, the figures are the same:
+       fallout 329, sea control 247 (`critic/c87_ls_84901_700_*_w4000.log`).
+   - **After a resize** (1280 px and back), the row is recounted:
+     - In sea control, air control and puppets it falls to "+5" alone. This is R86-N2's symptom, with the legend open.
+     - In fallout at 700 × 800 it keeps its banner, still half under the legend: 193 points
+       (`critic/c87_ls_84901_700_fallout.log`, `critic/shots/c87ls_84901_700x800_fallout_back.png`, where "United Ki…
+       Italy" is cut by the legend's box).
+   - **The opened state is kept** across a widening past 800 px and back (`back open true`). A player who opened it once
+     meets the covered row again after any resize.
+   - **Fix:** recount the row when the legend opens or closes (its box is one of the band's walls). Never let the free
+     band's measure miss a box that overlaps the row's height, which is fallout's case.
+   - **Against run 86's build:** its legend never folded. At 700 × 800 its row covered 3 sampled cells of the fallout
+     legend, and in sea and air control it showed "+5" alone with nothing covered (`critic/c86_mr2_84901_5411.log`).
+     HEAD with the legend open covers 329 cells, and 193 after a recount.
+   - **Why it blocks,** by R83-B1's test ("the claim holds on its own route … and not on another"):
+     - R197's tick says the desk row "recounts when the band moves". Opening the legend moves the band's right wall (the
+       legend grows from its title to its full box), and the row is not counted again.
+     - R200's tick says the free band is measured "whatever the row holds" and that the row lies "over nothing". After a
+       full recount in fallout, the band measure still puts the banner half under the legend.
+     - R200's own case opens and closes the legend, but never reads the row while it is open.
+     - **Who meets it:** every player on a half-screen desk who clicks the folded legend to read it, which is the one
+       thing the fold asks of them. It is commoner than R83-B1's narrow-and-widen route, and run 83 blocked on that.
+     - It is not R86-N2's case. There, R197's band claim was true and the band was only too narrow. Here the recount
+       claim is false, and the banner is drawn under a box.
+   - **Seen fixed when:**
+     - `node critic/scripts/c87_legendOpen.mjs 84901 400` gives `rowOverLegend` 0 and `legendOverRow` 0 in the `opened`
+       and `back` states, at every size and mode, with `nudged` equal to `shown`.
+     - `WAIT=4000 node critic/scripts/c87_legendShot.mjs 84901 400 700 800 fallout` gives `legendOverRow` 0 in both
+       states.
+     - `c86_modeRow 84901 400 800` stays at `fit0` [] and `covering` [] (R200's case).
 
 ## Non-blocking issues (prioritised)
 
-1. **R86-N2 (UI, a desk 680 to 760 px wide in the sea-control, air-control or fallout map mode; R197's side effect): no war
-   shown, "+5" alone.**
-   - **`c86_modeRow`** (1100 to 600 px and back, with a nudge; `critic/c86_mr2_*_5411.log`, `critic/c86_mr2_*_5410.log`):
+1. **R87-N2 (UI, a desk of about 1100 to 1366 px, a running game; R202's rule): the row jumps sideways when a war on it
+   changes.**
+   - `c87_rowJitter 87601 300` (`critic/c87_rj_87601.log`), 40 s at Speed ×5:
+     - At 1280 × 720 in the political mode, the row moves 44 px off the centre and back twice, with the same count
+       (3 → 3). Only the war in slot 2 changed (wars 15 → 13, then 13 → 16).
+     - The row is off the centre 40 % of the time.
+     - At 1100 × 800 political it moves 44 px; at 1366 × 768 sea control, 24 px.
+   - The page shows the row at the centre or in the band's middle depending on the names' lengths, so it moves when a
+     name changes.
+   - **Fix:** decide centre or band from the row's widest case (the band's width), not from the banners shown now; or
+     keep the side the row stood on while the count holds.
+   - **Seen fixed when:** `c87_rowJitter 87601 300` gives `moves` 0 in every case where `countCh` is 0.
+2. **The relations footer at 1600 px with every kind hidden** says "No ties of these kinds." and "98 nations with no tie
+   shown are left out" together. The second line says nothing new (`critic/c87_rs_84903_400.log`).
+3. **Kept from run 86:** the graph's 13 px jump (R196), `heroPop` on 85905, and R172, R192 and ADR-1111.
 
-     | Seed, mode | HEAD: 0 banners at (px) | Run 85's build: 0 banners at (px) |
-     |---|---|---|
-     | 84901, sea control | 620 to 700 | 620 to 660 |
-     | 84901, air control | 620 to 720 | 620 to 660 |
-     | 85901, sea control | 620 to 720 | 620 to 660 |
-     | 85901, air control | 620 to 740 | 620 to 660 |
-     | 85901, fallout | 620 to 680, 740, 760 | 620 to 660 |
-     | 84901, fallout | 620 to 660, 740 | 620 to 660 |
-     | 84901, puppets | 620 | 620 to 660 |
-     | 85901, puppets | 620 to 640 | 620 to 660 |
+## Run 86's cases re-run
 
-   - None of these are stale fits.
-   - **Why:** R197 sizes the row by the band between the news and the legend, and in these modes the legend is 315 to
-     356 px wide.
-     - At 700 × 800 in the sea-control mode, the news ends at x 238 and the legend starts at x 373. The band is 127 px and
-       the sized banner does not fit, so the row is "+5" alone.
-     - Run 85's build showed "United Ki… ⚔ Italy" there, over the legend's rounded corner by about 3 sampled cells
-       (`critic/shots/c86ms_84901_700x800_seaControl.png` against `critic/shots/c86ms_84901_700x800_seaControl_5410.png`).
-   - **Political mode, the default, is fixed (Verdict).** The cover was a few px of a rounded corner.
-     - In the fallout mode HEAD still covers 3 cells of the legend at 680 to 720 px.
-     - In the air-control mode on 84901, it still covers 4 cells at 680 px.
-   - **Fix:** in these modes let the row lie over the legend's empty lower-left corner as before, or move or shorten the
-     legend when the row has no room. Or fall back to the phone's row (two short banners) when the band is under one sized
-     banner.
-   - **Seen fixed when:** `node critic/scripts/c86_modeRow.mjs 85901 400 800 seaControl,airControl,fallout` shows `fit0`
-     no wider than the political mode's (none) and `covering` [].
-2. **R86-N1 (Relations, every size; R198's side effect): with every kind hidden, the footer says "Truces hidden" (the last
-   kind tapped) instead of "No ties of these kinds."**
-   - HEAD: `critic/c86_rs_84903.log`, at 568, 844 and 1600 px.
-   - Run 85's build said "No ties of these kinds." on the same step (`critic/c86_rs_84903_5410.log`).
-   - The graph is empty and nothing on it says so (`critic/shots/c86rs_84903_d400_568x320_alloff.png`).
-   - **Fix:** when no line is left, say both, for example "Truces hidden: no ties of these kinds."
-   - **Seen fixed when:** `c86_relSaid 84903 400` gives `empty` [] at all three sizes.
-3. **The row's place on a wide desk follows the legend** (R197): it is 24 to 44 px off the bar's centre, and moves about
-   68 px sideways with one banner fewer when the map mode changes at 1280 × 720 (`critic/c86_da_84901.log`, "wide").
-4. **Kept from run 85:** the graph's 13 px jump (R196), `heroPop` on 85905, and R172, R192 and ADR-1111.
-
-## Run 85's cases re-run
-
-| Run 85 case | Run 85 (`a9736eb5`) | HEAD (`bd85eb10`) | Evidence |
+| Run 86 case | Run 86 (`bd85eb10`) | HEAD (`bbf47bca`) | Evidence |
 |---|---|---|---|
-| R85-N1 `deskRow 84901 400 800` | `fit0` 620 to 660 | **fixed**: `fit0` [], `covering` [] | `critic/c85b_dr_84901_400_800_5411.log` |
-| R85-N1 `deskRow 85903 700 900` | `fit0` 620 to 700 | **fixed** | `critic/c85b_dr_85903_700_900_5411.log` |
-| R85-N1 `deskRow` 85901, 85905, random 85965 | `fit0` 620 to 660/680 | **fixed**: `fit0` [] | `critic/c85b_dr_*_5411.log` |
-| R85-N1 `crossWidth 85901` 600/601 | 601: 0 banners, "+3" | 1 banner, 0 stale | `critic/c85b_cw_85901_*_5411.log` |
-| R85-N2 `explore 84901` 568 × 320 | "Click a nation…" on every tap | **fixed**: "Wars hidden" and so on | `critic/c85ex_84901_d400_c85b_5411.json` |
-| R194 `rowShot 84901` ×5 | `ov` 0, `under` [] | the same | `critic/c85b_rw_*_5411.log` |
-| R195 `graphSize 68901` | 123 px, 5 names | the same | `critic/c85b_gs_*_5411.log` |
-| R196 `relFoot 84903` | inside at all sizes | the same | `critic/c85b_rf_*_5411.log` |
-| `relSide 84903` | bad 1, dead 1 | the same | `critic/c85b_rs_*_5411.log` |
-| `moreClick` ×3, `deskFit 68901` | opened, 0 covered | the same | `critic/c85b_mc_*`, `critic/c85b_df_*` |
-| `phoneRow` ×2, `phoneToDesk` ×3, `rotate` | 0 stale, p95 16.8 ms | 0 stale, p95 16.7 ms | `critic/c86_{pr,pd,rot}_*_5411.log` |
-| Lane E, from the 7th case | not run | run, 36 cases, all exit 0 | `critic/c85_laneE2.out` |
-| Performance chain | not run (carried) | run alone: tick 1.851 ms `ca4700f1`, frames 58.8 to 59.1 fps least mean | `critic/c85_pf.status` |
-| Checkers, `landingFuzz`, bulk sets, 20-year hashes | 0 broken; `ab927e1b`, `c3520016` | sim unchanged, carried; 12 new checker runs 0 broken | `critic/c86_*inv*.log` |
+| R86-N2 `c86_modeRow 85901` sea, air, fallout | `fit0` 620 to 760 | **fixed**: `fit0` [], `covering` [] | `critic/c87_mr_85901_*.log` |
+| R86-N2 `c86_modeRow 84901` five modes | `fit0` 620 to 720 in three | **fixed** | `critic/c87_mr_84901_*.log` |
+| R86-N1 `c86_relSaid 84903` | "Truces hidden" on an empty graph | **fixed**: `empty` [] at 3 sizes | `critic/c87_rs_84903_400.log` |
+| Non-blocking 3: `c86_deskAttack 84901 wide` | 24 to 44 px off at 1280, moving with the mode | 0 px at 1600+; 1280 as R202 says | `critic/c87_da_84901_400.log` |
+| `deskAttack` dpr, hover, idle | no fewer, no stale | the same (`dpr summary` all []) | `critic/c87_da_84901_400.log` |
+| `deskRow` ×5 | `fit0` [] | the same | `critic/c87_dr_*.log` |
+| `rowShot`, `crossWidth` ×2, `deskFit`, `moreClick` ×3 | as run 86 | the same | `critic/c87_{rw,cw,df,mc}_*.log` |
+| `relSide`, `relFoot`, `graphSize` | bad 1, dead 1, 123 px | the same | `critic/c87_{rsd,rf,gs}_*.log` |
+| `phoneRow` ×2, `phoneToDesk` ×3, `rotate` | 0 stale, p95 16.7 | the same | `critic/c87_{pr,pd,rot}_*.log` |
+| Lane E2 (bannerFlip ×3, bannerRank, dirHand ×2, …) | exit 0, figures as listed | the same figures | `critic/c87_laneE.out` |
+| Performance chain | tick 1.851 ms `ca4700f1`; QHD 58.9 fps | tick 1.833 ms `ca4700f1`; QHD 57.6 in the chain, 58.8 to 59.1 in the A/B on both builds | `critic/c87_pf.status`, `critic/c87_pfab_*.log` |
+| 20-year hashes 7019, 32019 | `ab927e1b`, `c3520016` (carried) | run again: the same | `critic/c87_seed*_save.log` |
+| Checkers, `landingFuzz` | 12 runs 0 broken (fuzz carried) | 6 runs and 90 fuzz runs, 0 broken | `critic/c87_*inv*.log`, `critic/c87_landingFuzz.log` |
 
 ## Design objections (none blocking)
 
-- **Centring the desk's row in the band (R197) rather than on the page.** The row leaves the bar's axis and moves with the
-  legend. A fixed centre with a band-limited width would read steadier.
+- **R200 folds the legend on every desk of 800 px or less, in every mode,** including the political mode, whose legend is
+  two lines and never crowded the row there (R197 had fixed it).
+  - A player on a half-screen desk now has to click to read the political legend's two lines.
+  - Folding only the wide legends (sea, air, fallout), or folding when the band is short, would cost less.
 
 ## Ideas from other games (not scored)
 
-- **Hearts of Iron IV** folds its map-mode legend to a single chip. A folded legend in the sea and air modes would free the
-  row's room on a narrow desk (R86-N2).
+- **Europa Universalis IV** keeps its map-mode legend inside the map-mode button's tooltip. The legend never sits in the
+  bottom band at all, which would end R86-N2 and R87-B1 together.
 
 ## Strengths (verified)
 
-- **R197 fixes run 85's narrow-desk row on all five worlds.** It holds at device scales 1.25 and 1.5, and does not flicker
-  under a moving mouse or at rest.
-- **The rules hold:** 12 checker runs on new seeds give 0 broken, and there are 0 page errors in 155 outputs.
+- **Batch 54 fixes all three of run 86's cases on their seeds, and keeps every other case of run 86's figures.** That is
+  the row on five worlds, phones, rotation, relations and lane E2, the same figures to the banner.
+- **The world holds its rules:** 6 checker runs, 90 landing runs and four monkeys on new seeds, with 0 broken and 0 page
+  errors. Plain 1938 repeats its 20-year hashes for the ninth run.
