@@ -141,7 +141,7 @@ these items are non-blocking, done as items. Each item on the war row or a panel
   ranking's toggle is under it until the legend is folded). A supported size (ADR-1141). AT: at 393 × 659 and 393 × 852
   the opened legend's box meets no box of the page's in the political, sea-control, air-control and fallout modes, and
   the ranking's toggle takes a tap while the legend is open; sideways (734 × 343, 852 × 393) as now; R203's case as now.
-  - Done (HASH208): on an upright phone the ranking gives way while the legend is open and is back as it folds, as it
+  - Done (638aae49): on an upright phone the ranking gives way while the legend is open and is back as it folds, as it
     gives way to a nation's panel, History and the landings there (one rule in the phone's block). **The AT's second
     half is not met as written, by choice:** for the ranking's toggle to take a tap beside an opened legend, the legend
     would open under the toggles' row, its title 34 px lower than the tap that opened it, and a second tap on the same
