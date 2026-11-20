@@ -174,6 +174,12 @@ export const FAR_SEA_DEEP = 0.8;
 export const FAR_RELIEF = 0.12;
 export const FAR_EDGE = 0.84;
 export const FAR_EDGE_BAND = 1;
+/**
+ * Past the map's top and bottom rows the sea is the deep's one shade, reached this many cells from the edge (ROADMAP
+ * R214, critic run 89, R89-N2: the edge row's depths went on past the map, and the band the least zoom shows above and
+ * below it was the Arctic's last row drawn out into vertical stripes).
+ */
+export const EDGE_FADE_CELLS = 8;
 /** How much steeper than it is the land is lit at T0 and T1, and how soon a slope's light is at its most. */
 export const FAR_RELIEF_SCALE = 12;
 export const FAR_RELIEF_GAIN = 2.2;

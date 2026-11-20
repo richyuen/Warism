@@ -222,9 +222,18 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   four cases; the old build beside HEAD on 88901, 2 wrong of 24 against 0 of 74). The release check (ADR-1138): the
   items open here are fixed before the release, with no critic run after them (ADR-1139).** R210 to R213 kept as they
   are; its own three:
-- [ ] R214 **R89-N2: at 2560 × 1305, at world zoom, the band above the map's north edge is the sea's last row drawn out
+- [x] R214 **R89-N2: at 2560 × 1305, at world zoom, the band above the map's north edge is the sea's last row drawn out
   into faint vertical stripes** (`critic/shots/c89_edge_top.png`; a supported size). AT: the view beyond the map's north
   and south edges one flat sea colour at 2560 × 1305 and at the four phone sizes; the map's own rows as now.
+  - Done (HASH214): past the map's top and bottom rows the sea's depth goes over to the deep's one shade within
+    `EDGE_FADE_CELLS` (8), at T0 and T1 (the shade texture's edge row went on there) and in the ground's sea of T2 and
+    T3 (`depthAt`). The least zoom shows the map at nine tenths of the view's height, so the band is a twentieth of
+    the view at every size (65 px at 2560 × 1305), not at the desk alone. `tests/e2e/mapEdge1938.spec.ts` at the five
+    supported sizes: rows of the picture 2 and 6 px from the view's top and bottom, over the map's width, one colour
+    (a spread of 2 of 255 at most), north and south alike (red without at all five: the Arctic's stripes). Looked at:
+    the band above and below the map at 2560 × 1305, flat. The whole browser suite 533/533 (the shader is every map
+    spec's). Frame time not read here: one `mix` a sea pixel; `bench G --gpu-only` is the release's check. No ADR
+    (ADR-914: a look mended, PLAN 4.7f's and R91's shades as they were on the map).
 - [ ] R215 **R89-N3 and the objection to ADR-1143: R209's pin is one event of one seed, and the rule is checked by
   nothing.** AT: `longStep1938` says that the world it stepped did send a capital to the field (red when the seed's
   world no longer does); a test that reads `src/sim` and `src/worker` for a loop whose bounds a closure of its function

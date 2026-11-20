@@ -138,3 +138,8 @@
 - The phone's row at 393 px cuts "Nationalist Spain" to "Natio…" in two banners with their "& n" whole: ADR-1136 (a)'s
   order, the user's choice. Four options in ADR-1144; (b), the counts before a name is cut inside its first word,
   recommended. The loop takes R214 to R216; the release waits for the answer.
+
+## 2026-11-20 — R214: past the map's north and south edges the sea is one colour
+
+- The edge row's depths no longer go on past the map: the deep's shade within 8 cells, at every tier. `mapEdge1938` at
+  the five supported sizes (run by hand, red without); the whole browser suite by hand, 533/533.

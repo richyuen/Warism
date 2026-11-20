@@ -18,7 +18,7 @@ import { AIR_CONTESTED_COLOR, AIR_HELD_TINT, FALLOUT_COLOR, FALLOUT_FADE, FALLOU
 
 const AIR_CONTESTED_RGB = [16, 8, 0].map((s) => (((AIR_CONTESTED_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
 const FALLOUT_RGB = [16, 8, 0].map((s) => (((FALLOUT_COLOR >> s) & 255) / 255).toFixed(3)).join(', ');
-import { OCCUPIED_BAND_CAST, OCCUPIED_BAND_DUTY, OCCUPIED_BAND_PX, OCCUPIED_GAP_CAST, OLD_BORDER, OLD_BORDER_DASH_PX, OLD_BORDER_PX, BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_BAND_PX, FRONT_BAND_RGB, FRONT_CASE, FRONT_CASE_PX, FRONT_CASE_RGB, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
+import { EDGE_FADE_CELLS, OCCUPIED_BAND_CAST, OCCUPIED_BAND_DUTY, OCCUPIED_BAND_PX, OCCUPIED_GAP_CAST, OLD_BORDER, OLD_BORDER_DASH_PX, OLD_BORDER_PX, BORDER_BAND, BORDER_CAST, FAR_EDGE, FAR_EDGE_BAND, FAR_RELIEF, FAR_SEA_DEEP, FAR_SEA_SHALLOW, FRONT_BAND_PX, FRONT_BAND_RGB, FRONT_CASE, FRONT_CASE_PX, FRONT_CASE_RGB, FRONT_CORE_PX, FRONT_CORE_RGB, FRONT_GLOW, FRONT_GLOW_PX, FRONT_GLOW_RGB, FRONT_NATIONS, GROUND_CAST, HATCH_AT_GROUND, OCCUPIED_CAST, SEA_DEEP, SEA_DEPTH_FULL, SEA_DEPTH_KNEE, SEA_SHALLOW } from './ground';
 
 export const MAP_VS = `#version 300 es
 precision highp float;
@@ -130,12 +130,15 @@ float heightAt(ivec2 c) {
   return max(float(texelFetch(uElevation, c, 0).r), 0.0);
 }
 
-// Depth of the sea in a cell, m (PLAN 4.7f): the elevation below 0; past the top and bottom rows, the edge row's.
+// Depth of the sea in a cell, m (PLAN 4.7f): the elevation below 0; past the top and bottom rows, the edge row's going
+// over to the deep's within EDGE_FADE_CELLS (ROADMAP R214: the edge row alone drew its depths out into stripes).
 float depthAt(ivec2 c) {
   c = wrapCell(c);
   if (c.x < 0 || c.x >= uMapSize.x) return 0.0;
+  int past = max(-c.y, c.y - (uMapSize.y - 1));
   c.y = clamp(c.y, 0, uMapSize.y - 1);
-  return max(-float(texelFetch(uElevation, c, 0).r), 0.0);
+  float d = max(-float(texelFetch(uElevation, c, 0).r), 0.0);
+  return past > 0 ? mix(d, ${SEA_DEPTH_FULL.toFixed(1)}, min(1.0, float(past) / ${EDGE_FADE_CELLS.toFixed(1)})) : d;
 }
 
 // The sea's brightness by its depth at a point, bilinear over the four cells about it (\`seaShade\`).
@@ -378,6 +381,8 @@ void main() {
   far *= 1.0 - uDetail;
 #endif
   vec2 shade = far > 0.0 ? texture(uShade, luv).rg : vec2(0.502, 0.0);
+  // Past the map's top and bottom the sea is the deep's shade (ROADMAP R214): the texture's edge row would go on there.
+  shade.g = mix(shade.g, 1.0, clamp(max(-cellPos.y, cellPos.y - float(uMapSize.y)) / ${EDGE_FADE_CELLS.toFixed(1)}, 0.0, 1.0));
   vec3 seaFill = pal(0u) * mix(1.0, mix(${FAR_SEA_SHALLOW.toFixed(3)}, ${FAR_SEA_DEEP.toFixed(3)}, shade.g), far);
 
   vec3 col;
