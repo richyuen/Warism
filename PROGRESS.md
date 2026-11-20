@@ -90,3 +90,11 @@
   mapModes1938, nukeStats1938, phoneLayout1938, ranking1938, rankingFlags1938, rankingNames1938, rankingRows1938,
   relationsTap1938, reviewBatch1938, seaControl1938, seaLegend1938, settings1938, tags1938, warBannerRows1938 (95/95).
   Batch 55 has no open item.
+
+## 2026-11-20 — critic run 88 (focused, on 3e1ed78e): one blocking issue, stability 7
+
+- R88-B1: one long `sim.step` in the page ends in another world than the headless one on seed 88901 (8 of 18 loads; the
+  same on bbf47bca; no player route found). UI/UX 7 → 8 (R87-B1 fixed, 329 → 0); stability 8 → 7; the rest 8
+  (diplomacyWarDepth, godMode, editorScenarios, statsHistory, performance, semanticZoom, naval afresh). Four non-blocking
+  issues (R88-N1 to N4). Filed as Batch 56 (R209 to R213). No exit of ADR-829: not a regression of an item ticked since
+  the release, and stability under its bar for the first run.

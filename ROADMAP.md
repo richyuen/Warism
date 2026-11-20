@@ -152,6 +152,41 @@ these items are non-blocking, done as items. Each item on the war row or a panel
     ranking and the legend 95/95. Stands on ADR-760; no ADR (ADR-914).
 - Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 86).
 
+## Batch 56 — critic run 88's findings (focused, on 3e1ed78e; one blocking issue; stability 7, the rest 8)
+
+Batch 55 fixed on run 87's probes (R203, R204, R205, R208; R207 not re-run at its own sizes, the × the × at the five
+supported ones). The blocking item first, then the critic again with the non-blocking ones open (ADR-1138). Each item on
+the war row or a panel's place crosses the five supported sizes and back, the panels beside it opened and closed.
+- [ ] R209 **R88-B1 (blocking, stability; not of Batch 55, the same on bbf47bca): one long `sim.step` in the page ends in
+  another world than the seed's headless one.** Plain 1938 seed 88901, `sim.step(9600)` in one message: the headless
+  `3723997852` in 10 loads of 18 and `1699438925` in 8, from the same messages; 7,200 hours 2 of 8 wrong; 4,800 or less,
+  chunked steps and a running game hold; seed 88903 holds. `tools/diag/pageHash.ts` on 88901: 3 of 10 equal to headless.
+  No player route found (nothing in `src/app` or `src/ui` sends `step`); it blocks as a broken checker and against SPEC
+  §2.6. The cause not found; the critic's lead: what the worker does between hours by the clock (the snapshot, the
+  labels, the statistics). AT: `c88_sameWorldMsgs 88901 400 12` one end hash `3723997852`; `c88_sameWorldMsgs 88901 300
+  12` one end hash `4108155890`; `pageHash.ts <base> 88901 1 76540321 10 3` "10 of 10 runs equal to headless every
+  year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6"; a page case that steps 9,600 hours of 88901 in one
+  message against the headless hash.
+- [ ] R210 **R88-N1: on the iPhone 16 upright with a landing ordered the landings' bar lies over the folded legend,
+  whole** (308 of 308 sampled points, the toggle takes no tap; the same on bbf47bca). AT: `c88_sizes 88903 0
+  393x659,393x852` no `legend<landings` in the `landing` rows and the toggle opens. (Hearts of Iron IV's orders in one
+  list at the screen's edge, the report's idea: a phone's landings as a row above the news would end this and R211.)
+- [ ] R211 **R88-N2: on the iPhone 16 sideways with a landing ordered the landings' bar lies over the opened legend** (231
+  to 420 points, 1,365 to 1,792 with the bar's row opened; at 734 × 343 the opened row also over the war row and the
+  news; R203's rule for the bar is a narrow desk's alone). AT: `c88_sizes 88903 0 734x343,852x393` no `legend<landings`
+  and no `row<landings`.
+- [ ] R212 **R88-N3: at 393 × 659 the relations footer's first line is cut** ("Click a nation to select it, a line to
+  read it. · 24 nations with no tie shown are left out"; two lines at 393 × 852; `c88_rs_88905_400.log`). AT: the
+  footer whole at 393 × 659, the graph's height as R185 and R195 have it.
+- [ ] R213 **R88-N4: at 393 px two banners of one war row both read "Natio…"** (Nationalist Spain in two wars). AT: two
+  banners of one row never read alike while their wars differ; R174's and R183's cases as now.
+- Design objections (UI/UX at its bar; ADR-843 files those of a dimension under its bar, these for the record): the
+  opened legend over the news on a phone on its side (R203's choice): not taken now, the legend above the news would
+  be about 100 px high at 734 × 343; R208's hidden ranking toggle: not taken, the tick's reason holds (the title stays
+  under the tap). Both the user's to overturn.
+- Not taken: `heroPop`'s jumps (85905: 13; 88905: 8), the graph's 13 px jump (R196), R172's, R192's and ADR-1111's kept
+  items (as run 87).
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

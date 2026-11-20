@@ -1,5 +1,5 @@
 {
- "commit": "bbf47bca2f55ae024291361f85fe5db530005c26",
+ "commit": "3e1ed78ebc14824d82aab955c040292d036adad2",
  "mode": "focused",
  "scores": {
   "mapVisuals": 8,
@@ -8,9 +8,9 @@
   "godMode": 8,
   "editorScenarios": 8,
   "statsHistory": 8,
-  "uiUxPolish": 7,
+  "uiUxPolish": 8,
   "performance": 8,
-  "stability": 8,
+  "stability": 7,
   "semanticZoom": 8,
   "naval": 8,
   "tanks": 8,
@@ -23,44 +23,44 @@
    "commit": "bd85eb1084e11cb3c208ce8c9a78345bb86e1ff0"
   },
   "diplomacyWarDepth": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "emergentDynamics": {
    "run": 87,
    "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
   },
   "godMode": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "editorScenarios": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "statsHistory": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "uiUxPolish": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "performance": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "stability": {
-   "run": 87,
-   "commit": "bbf47bca2f55ae024291361f85fe5db530005c26"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "semanticZoom": {
-   "run": 85,
-   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "naval": {
-   "run": 85,
-   "commit": "a9736eb57c0784175f29cb0035c6b940912875b7"
+   "run": 88,
+   "commit": "3e1ed78ebc14824d82aab955c040292d036adad2"
   },
   "tanks": {
    "run": 85,
@@ -77,11 +77,11 @@
  },
  "blocking": [
   {
-   "id": "R87-B1",
-   "title": "On a desk of 800 px or less, the legend R200 folds lies over the war row once opened; the row is not counted again (R197's recount claim), and in fallout it stays half under the legend after a full recount",
-   "evidence": "critic/c87_lo_84901.log (700x800: legendOverRow 247 sea, 285 air, 329 fallout, 89 puppets; 780x800: 121 to 203); critic/c87_ls_84901_700_fallout_w4000.log and _seaControl_w4000.log (alone, 4 s wait: 329 and 247; fallout after a 1280 round trip 193); critic/shots/c87lo_84901_d400_700x800_seaControl_open.png; critic/shots/c87ls_84901_700x800_fallout_back.png; run 86's build: 3 cells in fallout at 700 (critic/c86_mr2_84901_5411.log)",
-   "fix": "Count the row again when the legend opens or closes (its box is a wall of the free band), and make the band's measure exclude any box that overlaps the row's height (fallout's case). Seen fixed when node critic/scripts/c87_legendOpen.mjs 84901 400 gives rowOverLegend 0 and legendOverRow 0 in the opened and back states at every size and mode with nudged equal to shown, WAIT=4000 node critic/scripts/c87_legendShot.mjs 84901 400 700 800 fallout gives legendOverRow 0, and c86_modeRow 84901 400 800 stays fit0 [] covering []."
+   "id": "R88-B1",
+   "title": "One long step in the page (7,200 hours or more of plain 1938 seed 88901 in one message) ends in another world than the headless one: 8 of 18 loads on HEAD, 5 of 8 on bbf47bca, 7 of 10 in tools/diag/pageHash.ts; a running game holds (11 of 11); no player route found",
+   "evidence": "critic/c88_pageHash_88901.log (3 of 10 equal to headless); critic/c88_swm_88901.log (the same messages, two end hashes 3723997852 and 1699438925); critic/c88_sw_88901_400.log, c88_sw_wa_88901.log, c88_sw_wm_88901.log; critic/c88_swm_88901_{25,100,200,300}.log (0 of 8 at 600, 2,400 and 4,800 hours, 2 of 8 at 7,200); critic/c88_sw_ch_88901.log and c88_sw_ch200_88901.log (in steps: headless, 12 of 12); critic/c88_ph_88901.log and c88_ph_block_88901.log (running: headless, 11 of 11); critic/c88_swm87_88901_400.log (bbf47bca: 5 of 8); critic/c88_swm_88903_400.log (seed 88903: 0 of 8); critic/c88_headHash_88901.log",
+   "fix": "Find what the worker leaves undone in one long step that a pumped or chunked run does between hours, and do it by the tick; pin a page case of seed 88901. Seen fixed when: node critic/scripts/c88_sameWorldMsgs.mjs 88901 400 12 prints the one end hash 3723997852; ... 88901 300 12 the one hash 4108155890; npx tsx tools/diag/pageHash.ts <base> 88901 1 76540321 10 3 prints 10 of 10; node critic/scripts/c88_playHash.mjs 88901 9600 6 stays 6 of 6."
   }
  ],
- "timestamp": "2026-11-19T21:25:00-05:00"
+ "timestamp": "2026-11-20T01:40:00-05:00"
 }
