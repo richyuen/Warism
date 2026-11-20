@@ -157,7 +157,7 @@ these items are non-blocking, done as items. Each item on the war row or a panel
 Batch 55 fixed on run 87's probes (R203, R204, R205, R208; R207 not re-run at its own sizes, the × the × at the five
 supported ones). The blocking item first, then the critic again with the non-blocking ones open (ADR-1138). Each item on
 the war row or a panel's place crosses the five supported sizes and back, the panels beside it opened and closed.
-- [ ] R209 **R88-B1 (blocking, stability; not of Batch 55, the same on bbf47bca): one long `sim.step` in the page ends in
+- [x] R209 **R88-B1 (blocking, stability; not of Batch 55, the same on bbf47bca): one long `sim.step` in the page ends in
   another world than the seed's headless one.** Plain 1938 seed 88901, `sim.step(9600)` in one message: the headless
   `3723997852` in 10 loads of 18 and `1699438925` in 8, from the same messages; 7,200 hours 2 of 8 wrong; 4,800 or less,
   chunked steps and a running game hold; seed 88903 holds. `tools/diag/pageHash.ts` on 88901: 3 of 10 equal to headless.
@@ -167,6 +167,20 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   12` one end hash `4108155890`; `pageHash.ts <base> 88901 1 76540321 10 3` "10 of 10 runs equal to headless every
   year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6"; a page case that steps 9,600 hours of 88901 in one
   message against the headless hash.
+  - Done (HASH209; ADR-1143): the cause is a miscompile of Chromium 153's Maglev, not a rule. `enemyDistance`'s
+    breadth-first loop called a closure that wrote the loop's own `tail` and `left`; entered by on-stack replacement,
+    the compiled loop lost the writes, every target read the same steps, and at hour 4,983 Latvia's field capital went
+    to the cell beside Riga (the worlds part there, in nation 7's capital alone). The loop writes them itself. Read by
+    the engine's flags: `--no-use-osr`, `--no-maglev`, `--single-threaded` 8 of 8 right each; Maglev for
+    `enemyDistance` alone 3 wrong of 24, for all but it 24 right of 24. On the fix: one step of 9,600 hours, 32 loads of
+    32 at `3723997852` (before 4 of 8, 5 of 8, 9 of 16 wrong); `c88_sameWorldMsgs 88901 400 12` one end hash
+    `3723997852`; `c88_sameWorldMsgs 88901 300 12` one end hash `4108155890`; `pageHash.ts <base> 88901 1 76540321 10 3`
+    "10 of 10 runs equal to headless every year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6".
+    `tests/e2e/longStep1938.spec.ts`: four loads at once, 9,600 hours in one message each, against the headless hash
+    (red without: one load of four at `1699438925`). `capitalsDistance.test.ts` and `capitals.test.ts` 21/21: the
+    search's answers as before; the pin of seed 99 unchanged (the gate). Stands on ADR-5 and SPEC §2.6 (a line added),
+    ADR-640 and PLAN 7.83d (the search's rule and its cut, both kept). Tick time not read: the loop runs when a
+    nation's last city falls.
 - [ ] R210 **R88-N1: on the iPhone 16 upright with a landing ordered the landings' bar lies over the folded legend,
   whole** (308 of 308 sampled points, the toggle takes no tap; the same on bbf47bca). AT: `c88_sizes 88903 0
   393x659,393x852` no `legend<landings` in the `landing` rows and the toggle opens. (Hearts of Iron IV's orders in one

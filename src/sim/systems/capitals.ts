@@ -166,24 +166,40 @@ export function enemyDistance(world: World, enemy: Uint8Array, targets: readonly
   if (out) {
     for (const t of targets) isTarget[t] = 1;
     let left = targets.length;
-    // The four neighbours inline (the order of `neighbours4`), as the pass is over the grid.
+    // The four neighbours inline (the order of `neighbours4`), as the pass is over the grid. No closure writes
+    // `tail` or `left` (R209, critic run 88, R88-B1; ADR-1143): the loop's own bounds are written in the loop. With a
+    // `reach` closure doing it, Chromium 153's Maglev, entering this loop by on-stack replacement, lost the writes:
+    // every target read -1 steps, and a field capital went to the cell nearest the lost one (seed 88901, hour 4,983).
     const wrap = world.settings.loopingMap;
     const last = w * h - w;
-    const reach = (cell: number, d: number): void => {
-      dist[cell] = d;
-      queue[tail++] = cell;
-      if (isTarget[cell] === 1) left--;
-    };
     for (let head = 0; head < tail && left > 0; head++) {
       const c = queue[head]!;
       const d = dist[c]! + 1;
       const x = c % w;
-      if (c >= w && dist[c - w] === -1) reach(c - w, d);
-      if (c < last && dist[c + w] === -1) reach(c + w, d);
+      const up = c >= w ? c - w : -1;
+      if (up >= 0 && dist[up] === -1) {
+        dist[up] = d;
+        queue[tail++] = up;
+        if (isTarget[up] === 1) left--;
+      }
+      const down = c < last ? c + w : -1;
+      if (down >= 0 && dist[down] === -1) {
+        dist[down] = d;
+        queue[tail++] = down;
+        if (isTarget[down] === 1) left--;
+      }
       const l = x > 0 ? c - 1 : wrap ? c + w - 1 : -1;
-      if (l >= 0 && dist[l] === -1) reach(l, d);
+      if (l >= 0 && dist[l] === -1) {
+        dist[l] = d;
+        queue[tail++] = l;
+        if (isTarget[l] === 1) left--;
+      }
       const r = x < w - 1 ? c + 1 : wrap ? c - w + 1 : -1;
-      if (r >= 0 && dist[r] === -1) reach(r, d);
+      if (r >= 0 && dist[r] === -1) {
+        dist[r] = d;
+        queue[tail++] = r;
+        if (isTarget[r] === 1) left--;
+      }
     }
     for (let i = 0; i < targets.length; i++) {
       out[i] = dist[targets[i]!]!;

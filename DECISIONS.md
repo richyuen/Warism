@@ -5,6 +5,40 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1143 · 2026-11-20 · accepted · A loop writes its own bounds: no closure it calls does (R209, a miscompile of Chromium 153)
+
+- **The case** (critic run 88, R88-B1): plain 1938 seed 88901, one `sim.step(9600)` in the page: the headless world
+  (`3723997852`) in about half the loads and another (`1699438925`) in the rest, from the same messages; the save before
+  the step the same bytes in every load.
+- **What was read** (the page's worker posting its hashes from inside the one step; a build not minified; Chromium
+  153.0.8010.12, Playwright's):
+  - The worlds part at hour 4,983, in `nations.capitalX` and `capitalY` of nation 7 alone: Riga, Latvia's one city, is
+    taken, and its field capital goes to (1171.5, 225.5) headless, the controlled cell farthest from the enemy, and to
+    (1147.5, 228.5) in the other world, the cell nearest the lost capital: what `farthestFieldCell` picks when every
+    target has the same steps.
+  - `--js-flags=--no-use-osr`, `--no-maglev` and `--single-threaded`: the headless world in 8 loads of 8 each;
+    `--no-turbofan`: the other world in 3 of 8. `--maglev-filter=enemyDistance` (Maglev for that function alone): the
+    other world in 3 of 24; `--maglev-filter=-enemyDistance`: the headless world in 24 of 24. `--trace-osr`: the entry
+    into `enemyDistance`'s breadth-first loop by on-stack replacement in all 5 wrong loads of 12 and in none of the 7
+    right.
+  - The loop, `for (head = 0; head < tail && left > 0; head++)`, called a closure, `reach`, that wrote `tail` and
+    `left`. JavaScript leaves no room for two readings: the compiled loop lost the closure's writes. It is the
+    engine's fault, met by a loop that is cold until a nation's last city falls and then runs over the grid at once.
+  - Why one long step: a worker busy for 20 s installs little optimised code but by on-stack replacement; a game that
+    runs, or is stepped in chunks, comes to the loop with the function compiled the ordinary way. No player route was
+    found, as the critic said; none is ruled out (any Chromium of this V8 may enter the loop that way).
+  - Not the cause: the worker's host (`workerDeterminism 88901 9600 9600`: all four arms `ddf7b29c`), a NaN in `dmath`
+    (none in 9,600 hours), the lane cache built before or after the step (the same hash at hours 0, 1 and 100), the
+    step's one loop in the worker (sliced into calls of 240 ticks: 9 wrong of 16).
+- **The rule:** a loop's own bounds and counters are written in the loop's function, never by a closure the loop
+  calls. `enemyDistance` writes `tail` and `left` at its four neighbours inline; its answers are as before
+  (`capitalsDistance.test.ts` against the full pass; the pin of seed 99 unchanged).
+- **Searched:** `src/sim` and `src/worker` for a local closure that advances a counter of its enclosing function: no
+  other found (by pattern, 157 local closures; not a proof). The page case below is the watch: a second loop of this
+  kind shows as a second world.
+- **Pinned:** `tests/e2e/longStep1938.spec.ts`: four loads at once, each 9,600 hours of 88901 in one message, against
+  the headless hash (red without the fix in 1 load of 4; a load shows the fault about 45 % of the time).
+
 ## ADR-1142 · 2026-11-19 · accepted · The desk's war row holds its side while its band and its banners' number hold (R204)
 
 - **The case** (critic run 87, R87-N2): R202 put the desk's closed row on the bar's centre when its banners fit there and

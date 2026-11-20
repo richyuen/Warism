@@ -98,3 +98,10 @@
   (diplomacyWarDepth, godMode, editorScenarios, statsHistory, performance, semanticZoom, naval afresh). Four non-blocking
   issues (R88-N1 to N4). Filed as Batch 56 (R209 to R213). No exit of ADR-829: not a regression of an item ticked since
   the release, and stability under its bar for the first run.
+
+## 2026-11-20 — R209: one long step in the page ends in the headless world (ADR-1143)
+
+- R88-B1's cause: Chromium 153's Maglev, entering `enemyDistance`'s loop by on-stack replacement, lost the writes of the
+  closure the loop called; a field capital went to the wrong cell at hour 4,983 of 88901. The loop writes its own bounds.
+  32 loads of 32 right; the critic's four probes as the AT asks; `longStep1938` pins it (run by hand, red without).
+  The replays wrote over the critic's `c88_swm_88901_*` and `c88_ph_88901_*` JSON; put back from copies.
