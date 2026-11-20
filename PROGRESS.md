@@ -234,3 +234,8 @@
 
 - R91-N1's five were divisions ordered home while aboard and kept. Narrowed; the five 0 broken, 90103 still 0. 558
   named and next-voyage runs: 2 broken, both as before R221. 31157's 366 is a next voyage, outside the bound (ADR-843).
+
+## 2026-11-20 — R224: a massing's refused formation goes to a point another reached (ADR-1150)
+
+- 91415's fifteen-year "for now" was eleven unseen massings whose army never moved (nearest points unreachable). Now
+  war on day 587. A/B on 40 few-nation worlds: wars 53 → 53 (three), unchanged (two), 0 within 30 days of a reason.

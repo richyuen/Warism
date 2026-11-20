@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { peaceWhy } from '../../src/sim/ai/peaceWhy';
+import { MASS_PROBE } from '../../src/sim/ai/massing';
 import { EventKind } from '../../src/shared/events';
 import { PEACE_ORDER } from '../../src/shared/protocol';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -136,5 +137,28 @@ describe('a world of few nations at peace and why (R216)', () => {
       days(sim, d);
       expect(told(sim)[0], `${seed}`).toBe('war');
     }
+  });
+
+  // R224 (critic run 91, R91-N2): 91415's nation 3 massed on 1 eleven times in fifteen years and sent no formation,
+  // each one's nearest border point over the water or in a pocket shut in by 1's land. A formation refused at its
+  // nearest point is sent to one another reached: the war comes in its second massing.
+  it('91415: a massing whose nearest points are refused sends its army by another; at war by day 600, none with the nearest alone', { timeout: 240_000 }, () => {
+    const at = (nearestOnly: boolean): number => {
+      MASS_PROBE.nearestOnly = nearestOnly;
+      try {
+        const sim = world(91415, 3);
+        for (let d = 0; d < 600; d++) {
+          if (sim.world.wars.size > 0) return d;
+          days(sim, 1);
+        }
+        return -1;
+      } finally {
+        delete MASS_PROBE.nearestOnly;
+      }
+    };
+    expect(at(true)).toBe(-1);
+    const d = at(false);
+    expect(d).toBeGreaterThan(0);
+    expect(d).toBeLessThan(600);
   });
 });

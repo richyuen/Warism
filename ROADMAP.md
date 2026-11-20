@@ -407,10 +407,15 @@ Non-blocking, fixed before the release with no critic run after them (ADR-1139).
     told (R17b; `leftBehind` 0); the old checker broke it only by taking 367 from its click on a re-click one cell off.
     The critic's 396 named setups and the 168 next-voyage seeds through `landingInvariants`: 2 of 558 broken, 30041
     3517 one group and 31175 3517 one group, each the same on the checker before R221 (ADR-914's tail).
-- [ ] R224 **R91-N2: random world 91415 (three nations) at peace fifteen years, its line "At peace for now" every day,
+- [x] R224 **R91-N2: random world 91415 (three nations) at peace fifteen years, its line "At peace for now" every day,
   no reason and no History row** (no war, no massing; the same on `fc767d88`). AT: 91415's cause traced (which of
   ADR-1145's "for now" causes holds), and either a war comes or the line names what it waits on (`npx tsx
   critic/scripts/c90_peaceTruth.ts 3 91415 1 15`).
+  - Done (COMMIT): ADR-1150. Traced: nation 3 massed on nation 1 eleven times and gave up each, unseen; its nearest
+    border points over the water or in pockets shut in by 1's land refused every formation, and none moved in fifteen
+    years. A formation refused at its nearest point now goes to one another was sent to that day (of none, each point
+    once). War on day 587; reasons on 1,760 peace days. 20 three-nation worlds: wars 53 → 53, none within 30 days of a
+    reason; two-nation worlds unchanged; pin unchanged.
 
 ## Released
 

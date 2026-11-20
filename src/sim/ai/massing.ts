@@ -69,7 +69,7 @@ export const MASS_SECOND = 0.15;
 export const MASS_SEEN = 0.25;
 
 /** A probe's switch (`tools/diag/warOpening.ts --no-massing`; a test): off, wars are declared as before R97b; `noAnswer`, the target does nothing of a massing, as before R103. Never set by the game. */
-export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean; alone?: boolean; againOff?: boolean } = { off: false };
+export const MASS_PROBE: { off: boolean; days?: number; second?: number; noAnswer?: boolean; alone?: boolean; againOff?: boolean; nearestOnly?: boolean } = { off: false };
 
 /** Whether `n` is in a war. */
 function inWar(world: World, n: number): boolean {
@@ -318,7 +318,7 @@ export function massStep(world: World, day: number, still: (n: number, t: number
       over(n, t);
       continue;
     }
-    gather(world, n, mine);
+    gather(world, n, mine, points);
     // Seen: told of, once (ROADMAP R122).
     if (men > 0 && menNear >= MASS_SEEN * men && !world.massTold.has(n)) {
       world.massTold.add(n);
@@ -335,7 +335,7 @@ export function massStep(world: World, day: number, still: (n: number, t: number
     // By now `by` may have declared on another, or `t` been declared on: a nation at war has its fronts.
     if (!world.massing.has(by) || world.massing.has(t) || nc.living[t] !== 1 || inWar(world, t) || !aiRuns(world, t, AiLayer.army)) continue;
     const points = massPoints(world, t, by);
-    if (points.length > 0) gather(world, t, standing(world, t, points).mine);
+    if (points.length > 0) gather(world, t, standing(world, t, points).mine, points);
   }
 }
 
@@ -344,15 +344,39 @@ export function massStep(world: World, day: number, still: (n: number, t: number
  * of the rest are ordered to their nearest points (`askMove`); one refused, in a fight, on the player's order or going
  * home is left where it is.
  */
-function gather(world: World, n: number, mine: Standing['mine']): void {
+function gather(world: World, n: number, mine: Standing['mine'], allPoints: readonly number[]): void {
   const f = world.formations.cols;
   const want = Math.ceil(MASS_SHARE * mine.length);
   let have = mine.filter((x) => x.near <= MASS_NEAR_CELLS || x.marching).length;
   if (have >= want) return;
   const pass = passageOf(world, n);
   const rest = mine.filter((x) => x.near > MASS_NEAR_CELLS && !x.marching && f.retreat[x.id] === 0 && f.home[x.id] === 0 && f.engaged[x.id] !== 1 && !playerHeld(world, x.id)).sort((a, b) => a.near - b.near || a.id - b.id);
+  // A point its nearest refused: the next one asked is a point some formation was sent to today, or, of none yet, a point
+  // not yet asked today, each once (ROADMAP R224, critic run 91's R91-N2: 91415's nation 3, its nearest points over the
+  // water or in pockets of its land shut in by its target's, sent none of 169 formations in fifteen years, its massing
+  // given up eleven times; one point of eleven took them).
+  const reached: number[] = [];
+  const asked = new Set<number>();
+  const refused: Standing['mine'] = [];
   for (const x of rest) {
     if (have >= want) break;
-    if (askMove(world, x.id, x.point, pass) === 'ok') have++;
+    asked.add(x.point);
+    if (askMove(world, x.id, x.point, pass) === 'ok') {
+      have++;
+      if (!reached.includes(x.point)) reached.push(x.point);
+    } else refused.push(x);
+  }
+  if (MASS_PROBE.nearestOnly === true) return;
+  for (const x of refused) {
+    if (have >= want) break;
+    const ok = reached.length > 0 ? reached : undefined;
+    const tryAt = ok ?? allPoints.filter((p) => !asked.has(p));
+    if (tryAt.length === 0) break;
+    const to = tryAt.reduce((b, p) => (away(world, f.x[x.id]!, f.y[x.id]!, p) < away(world, f.x[x.id]!, f.y[x.id]!, b) ? p : b));
+    asked.add(to);
+    if (askMove(world, x.id, to, pass) === 'ok') {
+      have++;
+      if (!reached.includes(to)) reached.push(to);
+    }
   }
 }

@@ -1652,7 +1652,8 @@ production and research. `src/sim/ai/`.
   R139, ADR-1119).
 - **Mass, then declare** (R97b, ADR-1089; `ai/massing.ts`): a nation in no war that so chooses a war on a neighbour
   of its home does not declare at once. It brings `MASS_SHARE` (0.7) of its land formations on the border's land to
-  within `MASS_NEAR_CELLS` (15) of the border and declares when `MASS_READY` (0.5) of its men there stand so, if it
+  within `MASS_NEAR_CELLS` (15) of the border (each sent to its nearest point; refused there, to a point another was
+  sent to that day, or, of none yet, to each point not yet asked once: R224, ADR-1150) and declares when `MASS_READY` (0.5) of its men there stand so, if it
   would still declare that day (`whyNotWar`, its gold, the pile, the blocs' deterrence). It gives the war up after
   `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war; a nation with no
   other living neighbour declares at that limit all the same (R123, ADR-1106). A nation at war

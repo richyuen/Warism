@@ -5,6 +5,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1150 · 2026-11-20 · accepted · A massing's formation refused at its nearest point goes to one another reached (R224)
+
+- **The case** (critic run 91, R91-N2, non-blocking): random world 91415 (three nations) at peace fifteen years, its
+  peace line "for now" every day. Traced: nation 3 (169-197 formations) massed on nation 1 (14-36) eleven times, each
+  given up after MASS_DAYS and barred a year (unseen, so untold: `MassingSeen` only when its men come). `gather` sent each
+  formation to its nearest point by the crow's flight; for nation 3 those were over the water (`NoPort`) or in pockets
+  of its land shut in by nation 1's (`NoRoute`), so every order was refused and none of its army moved in fifteen
+  years. One point of eleven took them. The line was true (a war prepared each time), and the AI was stuck.
+- **Decision.** In `gather`, after the nearest-point orders, a formation refused there is sent to the nearest of the
+  points another formation was sent to that day; of none yet, to the nearest point not yet asked that day, each once.
+  At most one extra search per point a day while too few are gathered; none when the nearest are taken.
+  `MASS_PROBE.nearestOnly` keeps the rule before.
+- **Read.** 91415: the army marches (34 % of its men at the border by day 110 in the first massing, short of
+  MASS_READY), war in the second, day 587; reasons on 1,760 of its peace days (none before). 20 three-nation worlds
+  from 91401 × 10 years, before → after: wars 53 → 53 (91415 0 → 2, 91408 and 91413 3 → 2), worlds with no war 2 → 1,
+  days at peace with a reason 18,122 → 21,585; wars within 30 days of a reason 0 → 0. 20 two-nation worlds: the same.
+  Seed 99's pin as it was. `peaceWhy.test` 91415.
+
 ## ADR-1149 · 2026-11-20 · accepted · A world of few nations' peace and its reason in History (R222)
 
 - **The case** (critic run 90, R90-N2, non-blocking): a world kept at peace ten years (89403) held two events in History;
