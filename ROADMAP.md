@@ -192,7 +192,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   to 420 points, 1,365 to 1,792 with the bar's row opened; at 734 × 343 the opened row also over the war row and the
   news; R203's rule for the bar is a narrow desk's alone). AT: `c88_sizes 88903 0 734x343,852x393` no `legend<landings`
   and no `row<landings`.
-  - R210 and R211 done together (HASH210; one cause, the phone's landings' bar and its legend in one place): upright
+  - R210 and R211 done together (55b31e41; one cause, the phone's landings' bar and its legend in one place): upright
     the bar stands under the legend's title (`--landings-top`, 6.2 rem); on a phone the bar gives way while the legend
     is open and is back as it folds, one of the two at a time as the ranking (R208); the bar's opened row ends above
     the war row, its lines scrolled. `MODES=political,seaControl c88_sizes 88903 0 393x659,393x852,734x343,852x393`: no
