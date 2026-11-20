@@ -218,7 +218,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   - Waits on the user (ADR-1144, proposed): the row reads as ADR-1136 (a), the user's choice, has it (the names to five
     letters first, the counts whole): "Natio… ⚔ Portugal & 2" beside "Natio… & 1 ⚔ Italy & 2" at 393 px (38 px of
     77 drawn), whole at 734 px. A better reading changes that order: the options are in the ADR. Not ticked.
-  - Done (HASH213): ADR-1144 (b), the user's choice: a long name gives way down to its first word, then the banners
+  - Done (52eeb7e1): ADR-1144 (b), the user's choice: a long name gives way down to its first word, then the banners
     drop their counts, then the names go to five letters (`sizeRow`). `warBannerRows1938`'s new case: Nationalist Spain
     at war with Italy and with Portugal, the others at peace; at 393 × 852 and 393 × 659 each of its names reads
     "Nationalist" at least and no two banners of different wars read alike (as drawn: the letters before the ellipsis,
