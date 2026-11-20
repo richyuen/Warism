@@ -2,6 +2,28 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-20 — small worlds that say why they keep the peace, and armies that find their way to a war
+
+**New**
+- **Why the peace holds.** In a world of two or three nations at peace, the war row says so and why ("none outmatches
+  another", "rivals too far over the sea"), or "for now" when a war may yet come; a tap opens each nation's reason.
+  History keeps a row of it.
+
+**Changed**
+- A nation goes to war by land only where its army stands on that land; elsewhere it needs the ships to carry it. Fewer
+  wars open with nobody near the front.
+- An army gathering at a border it cannot reach by its nearest way takes another: a strong nation no longer gathers
+  and gives up, year after year, with no war.
+- A random world's capitals stand on their city, never in the sea.
+- The AI's days are lighter: a busy late world with heroes keeps its frame rate.
+
+**Fixes**
+- On a narrow desk the legend folds to its title and, opened, covers no war; the war row no longer jumps as wars change.
+- Phones: the landings' bar, the legend and the ranking no longer lie over each other upright or sideways; the relations
+  footer is whole; two banners of one row never read alike.
+- Past the map's north and south edges the sea is one flat colour.
+- A long run stepped at once in the page ends in the same world as the seed's own.
+
 ## release-2026-11-19 — a director's camera, the borders' time-lapse, and a game that fits a phone
 
 **New**
