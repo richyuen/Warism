@@ -2,6 +2,35 @@
 
 What each release of Warism brought, for players. Play it at https://richyuen.github.io/Warism/
 
+## release-2026-11-19 — a director's camera, the borders' time-lapse, and a game that fits a phone
+
+**New**
+- **The director.** A camera switch in the bottom bar: it flies to a new war's front, a major battle, a nuclear strike
+  or a capital taken, stays a few seconds and goes on. Any pan, zoom or click hands the camera back to you.
+- **The borders' time-lapse.** In History, play the map month by month from the start of the game to now. A nation
+  gone by now is marked so, and saves from before still play from their own start.
+- **A row of History takes you to its place:** a battle, an annexation, a strike, a capital or a revolt.
+- **"Go to country"** in a nation's menu flies to its capital, and keeps it in view beside the nation's panel.
+- **The relations graph on a phone,** held sideways too: it stands beside the nation's panel, every filter can be
+  reached, and a filter tapped says what it shows or hides.
+
+**Changed**
+- A war across the sea needs the ships to carry an army there: no more first wars 9,000 km away with no way to reach
+  them, and fewer wars in which nothing is taken.
+- A massing called off is not told again weeks later; small worlds of two or three nations may keep the peace.
+- The war banners: allies read "& 2" beside the score; the longest names give way first and keep five letters at
+  least; on a narrow desk the row fits between the news and the legend; opened, each banner is its own height.
+- On a phone, History, Relations and the Ranking open beside or in place of a nation's panel, upright and sideways,
+  and nothing covers the bottom bar's buttons.
+- History names the pacts as the timeline does ("The Tripartite Pact: Romania").
+
+**Fixes**
+- A graphics error at 2560 × 1440.
+- The time-lapse shows the month it names; the director no longer flies under an open panel.
+- Heroes no longer leap as you zoom with the wheel.
+- Many phone layout fixes: names no longer cut to a letter or two, nothing hidden under another panel when the window
+  is turned or resized.
+
 ## release-2026-11-17 — the map's new look, fronts you can read, and wars that open at their fronts
 
 **New**
