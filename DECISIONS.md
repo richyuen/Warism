@@ -48,6 +48,16 @@ from AoC are tagged **[AoC-DEVIATION]**.
   Mengjiang (and so Japan), a neighbour by the provinces whose cells its own touch nowhere (no border point; the
   second war's MASS_SECOND test skips such a neighbour); priced now as by a colony, it does not, and declares on
   Britain on day 361.
+- **After it (the follow-up commit): ADR-1145's promise mended.** With the rule, worlds whose sea powers wait for a
+  lift read `noLift` while their transports are on order (`landlessPowers`): 89414's nation 1 to day 90, at war on day
+  98; 89415's nation 3 to day 90, at war on day 112 (before R217 both "for now"). `peaceWhy` now gives no reason, "for
+  now", for a realm refused for want of a lift that has no transport group at a port and is one of `landlessPowers`
+  (59423's nation 2, a group at port and no men that may march to it, still `noLift`). No reason in the 30 days
+  before the first war on 89401, 89404, 89408, 89409, 89414, 89415, 89416 (`peaceWhy.test`: 89414 added, red
+  without). Further reads: the ten-year sweep suite 29/29; `farConquests 0` on 6161, 41161-41167: Brazil's capital
+  taken on 0 of 8 both ways, far capitals 10.0 → 8.0 a seed (ADR-1041: 9.8), taken 26.9 → 24.4; `c69_firstdecl 60` on
+  41821-41839 (odd): 0 of 61 over 6,000 km; 1938's sea powers with home neighbours by area but none by their men, seed
+  99, 36 monthly samples: the Netherlands 2, Sweden 1 (land powers: Yemen 20, Paraguay 9, Luxembourg 7).
 - **Process (the user's decision, 2026-11-20):** R217 was filed after this release's tag, a new declaration rule
   wanting a critic run after it (ADR-1139); the user put it before the release ("Let's do R217 before the release").
   Whether the release goes out with no critic run after this rule is asked with it.

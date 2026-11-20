@@ -4,7 +4,8 @@
  * near-equal strength may keep the peace. This tells it, by the strategic AI's own terms (`strategicAi`), asked of each
  * realm with its restlessness at the cap (RESTLESS: ten years of peace), so that a reason given does not turn false as
  * the years pass. When one realm would declare even so (its target chosen and not refused, or a war it prepares, or a
- * target barred for a year that it would choose again), no reason is given: the peace is for now.
+ * target barred for a year that it would choose again, or a lift it wants on order), no reason is given: the peace is
+ * for now.
  *
  * A pure read: no state of the world is written (the bars of `World.massBarred` are read here, not through `unprepared`,
  * which forgets those past their day), and nothing is drawn. Asked by the worker for the page's stats only while the
@@ -14,6 +15,8 @@ import { Refusal } from '../../shared/commands';
 import type { PeaceReason, PeaceWhy } from '../../shared/protocol';
 import { whyNotWar } from '../systems/war';
 import type { World } from '../world';
+import { transportGroupsAtPort } from '../systems/amphibious';
+import { landlessPowers } from './economic';
 import { AiLayer, aiRuns } from './layers';
 import {
   acrossSea, blocsOf, DECLARE_AT, deterred, firstNotOutnumbered, homeByLand, neighbourMap, outnumbered,
@@ -40,6 +43,7 @@ export function peaceWhy(world: World): PeaceWhy | null {
   const powers = seaPowers(world, str);
   const rows: PeaceWhy['rows'] = [];
   let why = true;
+  let landless: Set<number> | undefined;
   const row = (n: number, reason: PeaceReason, t = 0): void => {
     rows.push({ n, reason, t });
   };
@@ -75,8 +79,13 @@ export function peaceWhy(world: World): PeaceWhy | null {
     if (best !== 0) {
       // Chosen: declared unless the pile of realms or the want of a lift refuses it and every one after it.
       const t = firstNotOutnumbered(world, n, (refused) => (refused.size === 0 ? best : pick(refused)), (x) => acrossSea(world, n, x, (d) => neighbours.includes(d), atHome));
+      // Refused for want of a lift with none at a port, and a sea power that orders one at peace (`landlessPowers`, R85e):
+      // its transports are coming, and it declares then (R217: 89414's nation 1 told so to day 90, at war on day 98).
+      const coming = (): boolean => transportGroupsAtPort(world, n).length === 0 && (landless ??= landlessPowers(world)).has(n);
       if (t !== 0) why = false;
-      else row(n, outnumbered(world, n, best) ? 'outnumbered' : 'noLift', best);
+      else if (outnumbered(world, n, best)) row(n, 'outnumbered', best);
+      else if (coming()) why = false;
+      else row(n, 'noLift', best);
       continue;
     }
     // None over the bar: of those it may weigh (its neighbours and those it could land on), the best by its utility.

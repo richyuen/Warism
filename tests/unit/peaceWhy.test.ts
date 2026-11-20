@@ -62,10 +62,13 @@ describe('a world of few nations at peace and why (R216)', () => {
     expect(read(sim)).toEqual({ why: false, rows: [] });
   });
 
-  it('89404 (R217): the nation whose army stands on another land than its borders is refused for want of a lift', () => {
+  // R217: nation 2's army stands on another land than its borders: a war across the sea, its transports on order.
+  it('89404 (R217): a lift on order is a war to come, no reason given; the war comes', { timeout: 120_000 }, () => {
     const sim = world(89404, 3);
     days(sim, 60);
-    expect(reasons(read(sim))).toBe('1:equal>2 2:noLift>3 3:equal>2');
+    expect(read(sim)).toEqual({ why: false, rows: [] });
+    days(sim, 90);
+    expect(sim.world.wars.size, 'at war by day 150').toBeGreaterThan(0);
   });
 
   it('none for a world at war, or of more than three realms', () => {
@@ -75,16 +78,18 @@ describe('a world of few nations at peace and why (R216)', () => {
     expect(read(many)).toBeNull();
   });
 
-  it('a reason given holds: 89401 gives none in the month before its first war (day 894)', { timeout: 120_000 }, () => {
-    const sim = world(89401, 3);
-    const given: number[] = [];
-    let first = -1;
-    for (let d = 0; d < 1000 && first < 0; d++) {
-      if (d % 10 === 0 && read(sim)?.why) given.push(d);
-      days(sim, 1);
-      if (sim.world.wars.size > 0) first = d + 1;
-    }
-    expect(first, 'its first war').toBeGreaterThan(0);
-    expect(given.filter((d) => d > first - 30), `days a reason was given (first war on day ${first})`).toEqual([]);
-  });
+  // 89414 (R217): its nation 1 was told refused for want of a lift to day 90, its transports on order, and at war on day 98.
+  for (const seed of [89401, 89414])
+    it(`a reason given holds: ${seed} gives none in the month before its first war`, { timeout: 120_000 }, () => {
+      const sim = world(seed, 3);
+      const given: number[] = [];
+      let first = -1;
+      for (let d = 0; d < 1000 && first < 0; d++) {
+        if (d % 5 === 0 && read(sim)?.why) given.push(d);
+        days(sim, 1);
+        if (sim.world.wars.size > 0) first = d + 1;
+      }
+      expect(first, 'its first war').toBeGreaterThan(0);
+      expect(given.filter((d) => d > first - 30), `days a reason was given (first war on day ${first})`).toEqual([]);
+    });
 });

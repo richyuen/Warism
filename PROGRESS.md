@@ -172,3 +172,10 @@
   ahead 16.2 → 12.9 %. `fewNationWars 3 85401 6 10` as run 89 but 85406 (day 1197 → 1126). Pin f311b292 → 9aaa81c1.
   Tick +1.5 % (strategicAi 0.275 → 0.332 ms). The gate's browser suite 465/465 (peaceLine with it).
 - Found: R218, random worlds' capitals on a sea cell (seed 7's 60: 10).
+
+## 2026-11-20 — R217, after it: a lift on order is "for now"
+
+- With R217 89414 and 89415 told `noLift` to day 90 and went to war on days 98 and 112 (ADR-1145's promise broken):
+  `peaceWhy` reads a realm refused for a lift, with its transports on order (`landlessPowers`), as "for now". Seven
+  worlds reason-free in the month before their first war; `peaceWhy.test` 8/8, `peaceLine` 7/7 (by hand). The sweep
+  suite 29/29; `farConquests 0` (8 seeds) far capitals 10.0 → 8.0; `c69_firstdecl 60` 0 of 61 over 6,000 km.

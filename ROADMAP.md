@@ -308,7 +308,12 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
     attacker none near 12.4 → 3.4 %, defender ahead 16.2 → 12.9 %. Pin f311b292 → 9aaa81c1 (the Soviet Union's war on
     Mengjiang, a neighbour it touches nowhere, not declared). Tick +1.5 %. ADR-1145's "for now" world is 89418 now.
     `peaceLine.spec.ts` run by hand. Found on the way: R218.
-- [ ] R218 **A random world's capital on a sea cell** (found in R217: seed 7's 60, 10 capitals on a cell no nation owns,
+  - After it (COMMIT2): `peaceWhy` gives no reason for a realm refused for want of a lift whose transports are on order
+    (`landlessPowers`, no group at a port): 89414 and 89415 read `noLift` to day 90 and went to war on days 98 and 112.
+    The 30 days before the first war reason-free on seven worlds; `peaceWhy.test` (89414 added) and `peaceLine` 7/7.
+    Reads: the sweep suite 29/29, `farConquests 0` far capitals 10.0 → 8.0 a seed (Brazil's 0 of 8 both),
+    `c69_firstdecl 60` 0 of 61 over 6,000 km (ADR-1146).
+- [ ] R218 (after this release's tag) **A random world's capital on a sea cell** (found in R217: seed 7's 60, 10 capitals on a cell no nation owns,
   land 0; 89413, 2 of 3). `homeNeighbours` then finds no home (null: every neighbour home before R217; those its men
   stand by since). AT: every random world's capital on a land cell of its own at the start, on several seeds and sizes;
   the capitals' cities as now. First: where the capital point is set (the city's centre beside the coast).
