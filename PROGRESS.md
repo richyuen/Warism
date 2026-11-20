@@ -46,3 +46,10 @@
   phoneLayout1938, reviewBatch1938, seaControl1938, seaLegend1938, tags1938, warBannerRows1938, landingsBar1938,
   landingsBarPanel1938. R206 not taken (one place and state in every mode). R207 filed: the landings' bar on the nation
   panel's × at 601 to 700 px.
+- After it (the tick's commit): the first cue's rule back in the phone's block (24a04c8c moved it for a narrow desk on a
+  reason the probe did not bear: the cue's edge at 150 px, the title's at 125); the tick names 24a04c8c; R208 filed: on
+  the iPhone 16 upright the opened legend over the folded ranking's bar, as before R203. Also run by hand on the final
+  tree, with the 15: contactLine1938, countryballs1938, editor1938, editorDrag1938, flagGone1938, formationFight1938,
+  mapview, nukeRuins1938, nukeYield1938, shipMarks1938, wrecksHeld1938 (90/90). The replay of `c87_legendShot` wrote
+  over the critic's two shots `c87ls_84901_700x800_fallout_opened.png` and `_back.png` on disk (the probe takes no tag;
+  not in git): they now show the fixed build, the defect is in the report and its log.
