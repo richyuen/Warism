@@ -18,15 +18,19 @@ from AoC are tagged **[AoC-DEVIATION]**.
     target has the same steps.
   - `--js-flags=--no-use-osr`, `--no-maglev` and `--single-threaded`: the headless world in 8 loads of 8 each;
     `--no-turbofan`: the other world in 3 of 8. `--maglev-filter=enemyDistance` (Maglev for that function alone): the
-    other world in 3 of 24; `--maglev-filter=-enemyDistance`: the headless world in 24 of 24. `--trace-osr`: the entry
-    into `enemyDistance`'s breadth-first loop by on-stack replacement in all 5 wrong loads of 12 and in none of the 7
-    right.
-  - The loop, `for (head = 0; head < tail && left > 0; head++)`, called a closure, `reach`, that wrote `tail` and
-    `left`. JavaScript leaves no room for two readings: the compiled loop lost the closure's writes. It is the
-    engine's fault, met by a loop that is cold until a nation's last city falls and then runs over the grid at once.
-  - Why one long step: a worker busy for 20 s installs little optimised code but by on-stack replacement; a game that
-    runs, or is stepped in chunks, comes to the loop with the function compiled the ordinary way. No player route was
-    found, as the critic said; none is ruled out (any Chromium of this V8 may enter the loop that way).
+    other world in 3 of 24; `--maglev-filter=-enemyDistance`: the headless world in 24 of 24. `--trace-osr`: an entry
+    into `enemyDistance` by on-stack replacement at bytecode offset 390 in all 5 wrong loads of 12 and in none of the
+    7 right (its entries at 272 and 767 in both).
+  - **Read above; taken from it, not read:** that offset 390 is the breadth-first loop (the function's loops in order
+    are the scan, a `for…of` over the targets, the search and two more); that what went wrong in it is the writes of
+    the closure it called, `reach`, to the loop's own `tail` and `left` (`for (head = 0; head < tail && left > 0;
+    head++)`); and what steps the targets then got (equal ones, by the cell chosen: the nearest the lost capital is
+    `farthestFieldCell`'s tie). JavaScript leaves no room for two answers from that function, so the fault is the
+    engine's; which statement it compiled wrongly was not read.
+  - **Not explained:** why one long step. Two steps of 4,800 posted together went wrong (3 of 8) and forty of 240
+    posted together did not (8 of 8); 15 s idle before the step, or a save and load, 8 of 8 right each. The timing of
+    the compiler's work between the worker's tasks decides it; no more was read. No player route was found, as the
+    critic said; none is ruled out.
   - Not the cause: the worker's host (`workerDeterminism 88901 9600 9600`: all four arms `ddf7b29c`), a NaN in `dmath`
     (none in 9,600 hours), the lane cache built before or after the step (the same hash at hours 0, 1 and 100), the
     step's one loop in the worker (sliced into calls of 240 ticks: 9 wrong of 16).

@@ -168,8 +168,9 @@ export function enemyDistance(world: World, enemy: Uint8Array, targets: readonly
     let left = targets.length;
     // The four neighbours inline (the order of `neighbours4`), as the pass is over the grid. No closure writes
     // `tail` or `left` (R209, critic run 88, R88-B1; ADR-1143): the loop's own bounds are written in the loop. With a
-    // `reach` closure doing it, Chromium 153's Maglev, entering this loop by on-stack replacement, lost the writes:
-    // every target read -1 steps, and a field capital went to the cell nearest the lost one (seed 88901, hour 4,983).
+    // `reach` closure doing it, a page's world left the headless one in Chromium 153 (seed 88901, hour 4,983: a field
+    // capital on the cell nearest the lost one), by Maglev's code for this function alone; read as the compiled loop,
+    // entered by on-stack replacement, losing the closure's writes.
     const wrap = world.settings.loopingMap;
     const last = w * h - w;
     for (let head = 0; head < tail && left > 0; head++) {

@@ -168,14 +168,17 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
   year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6"; a page case that steps 9,600 hours of 88901 in one
   message against the headless hash.
   - Done (8c75a5fa; ADR-1143): the cause is a miscompile of Chromium 153's Maglev, not a rule. `enemyDistance`'s
-    breadth-first loop called a closure that wrote the loop's own `tail` and `left`; entered by on-stack replacement,
-    the compiled loop lost the writes, every target read the same steps, and at hour 4,983 Latvia's field capital went
-    to the cell beside Riga (the worlds part there, in nation 7's capital alone). The loop writes them itself. Read by
+    breadth-first loop called a closure that wrote the loop's own `tail` and `left`; at hour 4,983 Latvia's field
+    capital went to the cell beside Riga (the worlds part there, in nation 7's capital alone), read as the compiled
+    loop, entered by on-stack replacement, losing those writes (ADR-1143 says what was read and what was taken from it). The loop writes them itself. Read by
     the engine's flags: `--no-use-osr`, `--no-maglev`, `--single-threaded` 8 of 8 right each; Maglev for
     `enemyDistance` alone 3 wrong of 24, for all but it 24 right of 24. On the fix: one step of 9,600 hours, 32 loads of
-    32 at `3723997852` (before 4 of 8, 5 of 8, 9 of 16 wrong); `c88_sameWorldMsgs 88901 400 12` one end hash
+    32 at `3723997852` (before 4, 5, 6 and 4 wrong of 8 in four plain runs); `c88_sameWorldMsgs 88901 400 12` one end hash
     `3723997852`; `c88_sameWorldMsgs 88901 300 12` one end hash `4108155890`; `pageHash.ts <base> 88901 1 76540321 10 3`
     "10 of 10 runs equal to headless every year"; `c88_playHash 88901 9600 6` "same as headless: 6 of 6".
+    Other seeds, `pageHash.ts` a year in one message, ten loads each, against `workerDeterminism`'s `plain` arm: 1307
+    (`d8edd859`, the control run 88 left out), 99 (`f311b292`), 20933 (`5dee739e`) and 51377 (`d55bbddd`), 10 of 10
+    each. The spec steps the headless world itself (no hash kept by hand).
     `tests/e2e/longStep1938.spec.ts`: four loads at once, 9,600 hours in one message each, against the headless hash
     (red without: one load of four at `1699438925`). `capitalsDistance.test.ts` and `capitals.test.ts` 21/21: the
     search's answers as before; the pin of seed 99 unchanged (the gate). Stands on ADR-5 and SPEC §2.6 (a line added),

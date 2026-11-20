@@ -298,8 +298,8 @@ it is spent on.
   it is not serialized or hashed, and the sim does not read it (PLAN 2.7o). A load leaves the
   counts as they are, for a table as large as the loaded one (PLAN 2.7x).
 - A loop's own bounds and counters are written in the loop's function, never by a closure it calls (ADR-1143:
-  Chromium 153's Maglev, entering such a loop by on-stack replacement, lost the closure's writes, and the page's world
-  left the headless one; `tests/e2e/longStep1938.spec.ts` steps 9,600 hours in one message against the headless hash).
+  with a closure doing it in `enemyDistance`, Chromium 153's Maglev made another world of the page's than the headless
+  one, read as the loop entered by on-stack replacement losing the closure's writes; `tests/e2e/longStep1938.spec.ts` steps 9,600 hours in one message against the headless hash).
 - **State hash**: `hashSections` chains (name, dtype, length, xxhash32(data)) over every
   authoritative section (`World.parts()`: meta incl. tick and seed, RNG states, command log and
   pending commands, cell layers, entity tables). Events and derived outputs are excluded.

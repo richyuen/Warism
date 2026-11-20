@@ -105,3 +105,7 @@
   closure the loop called; a field capital went to the wrong cell at hour 4,983 of 88901. The loop writes its own bounds.
   32 loads of 32 right; the critic's four probes as the AT asks; `longStep1938` pins it (run by hand, red without).
   The replays wrote over the critic's `c88_swm_88901_*` and `c88_ph_88901_*` JSON; put back from copies.
+- After it (the tick's commit): `longStep1938` steps the headless world itself; the comment, ADR-1143 and SPEC say what
+  was read and what was taken from it (which statement the engine compiled wrongly was not read; why one long step is
+  not explained). Four more seeds by `pageHash.ts`, ten loads each, a year in one message: 1307, 99, 20933, 51377, 10
+  of 10 equal to headless. The gate of 8c75a5fa: `snapshot-perf.test.ts` red in the run of all, green alone.
