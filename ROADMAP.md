@@ -206,7 +206,7 @@ the war row or a panel's place crosses the five supported sizes and back, the pa
 - [x] R212 **R88-N3: at 393 × 659 the relations footer's first line is cut** ("Click a nation to select it, a line to
   read it. · 24 nations with no tie shown are left out"; two lines at 393 × 852; `c88_rs_88905_400.log`). AT: the
   footer whole at 393 × 659, the graph's height as R185 and R195 have it.
-  - Done (HASH212): the footer does not shrink in its panel's column (`flex: 0 0 auto`); the graph gives the height.
+  - Done (d15ae683): the footer does not shrink in its panel's column (`flex: 0 0 auto`); the graph gives the height.
     `c88_relSaid 88905 400`: `cut` [] at 393 × 659, 393 × 852, 734 × 343, 852 × 393 and 2560 × 1305 (before `cut`
     ["open"] at 393 × 659), `empty` [] and `out` []. A case in `relationsTap1938` crossing the five supported sizes and
     back, a nation's panel opened and closed: the footer whole and in its panel with ties shown, wars hidden and none
