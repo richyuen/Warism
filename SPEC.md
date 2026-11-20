@@ -2108,7 +2108,9 @@ builds).
   for is disabled and the largest that fits is used (`appliedUiScale`, again on resize), the choice kept;
   85 % below that. The bottom bar wraps what does not fit; the History and Relations panels take
   what the side panels leave; in a low view the centre panels scroll. A phone (`PHONE_QUERY`) folds the
-  ranking and legend and shows fewer banners and ticker rows.
+  ranking and legend and shows fewer banners and ticker rows. A desk of 800 px or less (`NARROW_DESK_QUERY`) folds the
+  legend too; folded and opened it stands at the top left as a phone's, gives way to a nation's panel and History, and
+  ends above the war row, its rows scrolled (ADR-1140 (b)).
 - **Autosave** (`src/app/autosave.ts`): every `AUTOSAVE_SECONDS` (60) of real time while the game runs,
   and when the page is hidden.
 

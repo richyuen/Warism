@@ -13,7 +13,8 @@ const SEA_HOLDERS_SHOWN = 8;
  * same of the air: who holds how many zones (the contested as one row), and the zone under the
  * cursor.
  * `phone` (a phone's width; the user's choice of 2026-10-29, ADR-760): folded to its title, top
- * left, and a tap on the title opens it.
+ * left, and a tap on the title opens it. A narrow desk's (`fold`, R200) the same, in the same place (R203, ADR-1140 (b):
+ * opened in the bottom band it lay over the war row).
  */
 export function MapLegend({
   mode,
@@ -38,7 +39,7 @@ export function MapLegend({
   airHover?: { holder: string | null } | null;
   /** A phone's width: folded to its title until tapped. */
   phone?: boolean;
-  /** A narrow desk (R200): folded to its title until clicked, in its own place. */
+  /** A narrow desk (R200): folded to its title until clicked; at the top left as a phone's (R203, ADR-1140 (b)). */
   fold?: boolean;
 }) {
   const folds = phone || fold;

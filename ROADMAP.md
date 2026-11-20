@@ -60,7 +60,7 @@ ADR-829's exit: R87-B1 is a regression by R200 (ticked since release-2026-11-19)
 user chose ADR-1140 (b), and set the supported sizes (ADR-1141): R87-B1, at a desk of 800 px or less, is outside them, so
 these items are non-blocking, done as items. Each item on the war row or a panel's place crosses the five supported sizes
 (393 × 659, 393 × 852, 734 × 343, 852 × 393, 2560 × 1305) and back, the panels beside it opened and closed.
-- [ ] R203 **R87-B1: on a desk of 800 px or less the legend R200 folds, once opened, lies over the war row** (not counted
+- [x] R203 **R87-B1: on a desk of 800 px or less the legend R200 folds, once opened, lies over the war row** (not counted
   again on opening: 247 to 329 sampled points covered at 700 × 800 in the sea, air and fallout modes, 121 to 203 at 780;
   after a recount fallout's banner still half under it, 193; the opened state kept across resizes). `c87_lo_84901.log`,
   `c87_ls_84901_700_*_w4000.log`, `c87lo_84901_d400_700x800_seaControl_open.png`, `c87ls_84901_700x800_fallout_back.png`.
@@ -68,16 +68,42 @@ these items are non-blocking, done as items. Each item on the war row or a panel
   as the phone's does and gives way to a nation's panel and History; `c87_legendOpen 84901 400` `rowOverLegend` 0 and
   `legendOverRow` 0 opened and back, `nudged` = `shown`; `WAIT=4000 c87_legendShot 84901 400 700 800 fallout` 0 both
   states; `c86_modeRow 84901 400 800` as R200; a case that reads the row while the legend is open.
+  - Done (HASH203): the folded legend's place and its giving way to a nation's panel and History are the phone's rules on a
+    desk of 800 px or less too (`style.css`, one block for `PHONE_QUERY` and `NARROW_DESK_QUERY`); nothing of the legend
+    is in the row's band, so the row needs no recount. Its height ends above the war row, its rows scrolled (found by the
+    case at a supported size: on the iPhone 16 sideways, 734 × 343 and 852 × 393, the phone's opened sea legend lay over
+    the row, 2,203 points, and at 343 over the bar). Beside it on a narrow desk: the first cue under the toggles as a
+    phone's (at 601 to 670 px its edge stood on the title), the opened legend left of an open ranking and of the
+    landings' bar, its lines wrapped. `MODES=political,seaControl,airControl,fallout,puppets c87_legendOpen 84901 400`:
+    `rowOverLegend` 0 and `legendOverRow` 0 opened and back, `nudged` = `shown`, in all 20 cases (700 × 800, 780 × 800,
+    760 × 560, 640 × 520); its diplomacy leg selects a nation, whose panel the legend now gives way to as the AT asks,
+    and the probe waits on a toggle that is gone (the case below reads that state). `WAIT=4000 c87_legendShot 84901 400
+    700 800 fallout`: `legendOverRow` 0 opened and after 1280 and back. `c86_modeRow 84901 400 800`: `fit0` [], `stale`
+    [], `covering` [] in five modes. A case in `warBannerRows1938` crossing 700 × 800, the five supported sizes, 780 ×
+    800, 640 × 520 and back in three modes: the legend at the top left, the row read by the element at its points both
+    ways while the legend is open, the legend's foot above the row, on nothing of the page's on a narrow desk, a 1 px
+    nudge, a nation's panel, History and the ranking opened and closed (red without: the legend at 508 px). Three cases
+    in `landingsBarPanel1938` (601, 700, 800 px: the opened legend left of the landings' bar). 15 specs on the legend,
+    the war row, the first cue and the landings 65/65 before the two new cases. No sim or drawing code changed (goal 5
+    not read). Stands on ADR-760, ADR-1140 (b), ADR-1141; SPEC §"The least view" says the narrow desk's fold.
 - [ ] R204 **R87-N2: on a desk of about 1100 to 1366 px the row jumps 24 to 44 px when a war on it changes** (R202's rule
   decides centre or band from the banners shown now; `c87_rowJitter 87601 300`: off the centre 40 % of the time at 1280 ×
   720). AT: `c87_rowJitter 87601 300` `moves` 0 wherever `countCh` is 0; R202's case as now.
 - [ ] R205 **With every relations kind hidden at 1600 px the footer says "No ties of these kinds." and "98 nations with no
   tie shown are left out"** (R201; the second says nothing new; `c87_rs_84903_400.log`). AT: the empty graph's footer
   without the left-out count; R201's case as now.
-- [ ] R206 **The design objection: R200 folds the legend on every narrow desk in every mode,** the political mode's two
+- [x] R206 **The design objection: R200 folds the legend on every narrow desk in every mode,** the political mode's two
   lines too, which never crowded the row. Taken with R203 as ADR-1140's choice decides (folding only the wide legends,
   or when the band is short, is the report's way). (Europa Universalis IV's legend in the map-mode button's tooltip, the
   report's idea: ADR-1140 (d).)
+  - Not taken (with R203, HASH203): by ADR-1140 (b) the folded legend is out of the row's band in every mode, so the
+    political legend's two lines crowd nothing there; open at the top left they would cover the map where a phone's are
+    folded, and a legend open in one mode and folded in the next would change its size with the mode. One place and one
+    state in every mode, as the phone's (ADR-760). (d) was the user's to choose and (b) was chosen.
+- [ ] R207 **On a desk 601 to about 700 px wide the landings' bar stands on the nation panel's ×** (found by R203's case:
+  a click on `nation-close` lands on `landing-go` or `landing-status`; R61-N1's case, mended there for a phone on its
+  side, R60a). Outside the supported sizes (ADR-1141): non-blocking. AT: at 601, 640 and 700 × 800 with a landing
+  ordered the element at the ×'s centre is the ×, and a click closes the panel; `landingsBarPanel1938` as now.
 - Not taken: the graph's 13 px jump (R196), `heroPop` on 85905, R172's, R192's and ADR-1111's kept items (as run 86).
 
 ## Released

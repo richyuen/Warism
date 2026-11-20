@@ -36,3 +36,13 @@
   supported sizes are the iPhone 16 (393 × 659 and 393 × 852 upright, 734 × 343 and 852 × 393 sideways, with and without
   Safari's bars) and a 1440p desk's window (2560 × 1305); only a defect there blocks. CRITIC_PROMPT.md changed; Batch
   55's items are non-blocking, done next.
+
+## 2026-11-19 — R203: a narrow desk's legend at the top left, as a phone's (ADR-1140 (b))
+
+- The phone's place and giving way for the folded legend on a desk of 800 px or less; its height ends above the war row
+  (a phone on its side, 734 × 343: the opened sea legend lay over the row and the bar). `c87_legendOpen`, `c87_legendShot`
+  and `c86_modeRow` 0 covered; a crossing case in `warBannerRows1938`, three in `landingsBarPanel1938`; run by hand:
+  airControl1938, airMapRead1938, chromeCover1938, fallout1938, heroesClear1938, legendOccupied1938, mapModes1938,
+  phoneLayout1938, reviewBatch1938, seaControl1938, seaLegend1938, tags1938, warBannerRows1938, landingsBar1938,
+  landingsBarPanel1938. R206 not taken (one place and state in every mode). R207 filed: the landings' bar on the nation
+  panel's × at 601 to 700 px.

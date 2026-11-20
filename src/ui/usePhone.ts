@@ -9,7 +9,8 @@ export const PHONE_QUERY = '(max-width: 600px), (max-height: 500px)';
 
 /**
  * A desk's view too narrow for the legend opened beside the war row (R200, critic run 86, R86-N2: at 680 to 760 px the
- * sea-control legend took 315 px of 700 and no war was shown): there the legend is folded to its title until clicked.
+ * sea-control legend took 315 px of 700 and no war was shown): there the legend is folded to its title until clicked, at
+ * the top left as a phone's (R203, ADR-1140 (b)). The style sheet's `(max-width: 800px)` blocks, which this must match.
  */
 export const NARROW_DESK_QUERY = '(max-width: 800px)';
 

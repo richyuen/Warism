@@ -540,3 +540,110 @@ test('a wide desk keeps the war row on the bar\'s centre in every map mode', asy
     }
   }
 });
+
+// R203 (critic run 87, R87-B1; ADR-1140 (b), the user's choice; ADR-1141's sizes): on a desk of 800 px or less the legend
+// R200 folds lay, once opened, over the war row (247 to 329 sampled points at 700 × 800 in the sea, air and fallout modes),
+// and the row was not counted again. The narrow desk's legend stands at the top left as a phone's does, folded and opened:
+// the row read while the legend is open, by the element at its points both ways; a 1 px nudge leaves the banners as they
+// were; the legend gives way to a nation's panel and History and comes back; the five supported sizes crossed and back.
+test('a narrow desk\'s legend stands at the top left, and opened lies over no war', async ({ page }) => {
+  test.setTimeout(300_000);
+  await page.setViewportSize({ width: 700, height: 800 });
+  await page.goto('/?scenario=1938&paused=1&seed=1938');
+  await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null, null, { timeout: 60_000 });
+  await page.evaluate(({ a, d }) => window.__warsim!.sim.command({ kind: 'declareWar', attacker: a, defender: d }), { a: id('GER'), d: id('POL') });
+  await page.evaluate(() => window.__warsim!.sim.step(1));
+  await expect(page.getByTestId('war-more')).toBeVisible({ timeout: 20_000 });
+  const look = () =>
+    page.evaluate(() => {
+      const row = document.querySelector('[data-testid=war-banners]');
+      const legend = document.querySelector('[data-testid=map-legend]')!;
+      // The points of `outer` at which the element shown is `inner`'s.
+      const hit = (outer: Element | null, inner: Element | null): number => {
+        if (!outer || !inner) return 0;
+        const r = outer.getBoundingClientRect();
+        let n = 0;
+        for (let x = r.left + 1; x < r.right - 1; x += 2) for (let y = r.top + 1; y < r.bottom - 1; y += 2) if (inner.contains(document.elementFromPoint(x, y))) n++;
+        return n;
+      };
+      const l = legend.getBoundingClientRect();
+      const meets = (b: DOMRect): boolean => l.left < b.right - 1 && b.left < l.right - 1 && l.top < b.bottom - 1 && b.top < l.bottom - 1;
+      return {
+        banners: row?.querySelectorAll('[data-testid=war-banner]').length ?? 0,
+        rowOverLegend: hit(legend, row),
+        legendOverRow: hit(row, legend),
+        left: l.left,
+        foot: l.bottom,
+        rowTop: row?.getBoundingClientRect().top ?? innerHeight,
+        // The page's other boxes the legend's box meets.
+        meets: [...legend.parentElement!.children].filter((c) => c !== legend && c.getBoundingClientRect().width > 0 && meets(c.getBoundingClientRect())).map((c) => c.className.toString().split(' ')[0]),
+      };
+    });
+  const toggle = page.getByTestId('legend-toggle');
+  for (const [w, h] of [[700, 800], [393, 659], [393, 852], [734, 343], [852, 393], [2560, 1305], [780, 800], [640, 520], [700, 800]] as const) {
+    await page.setViewportSize({ width: w, height: h });
+    const phone = w <= 600 || h <= 500;
+    const narrow = !phone && w <= 800;
+    for (const mode of ['seaControl', 'fallout', 'political'] as const) {
+      await page.evaluate((m) => window.__warsim!.hud.setMapMode(m), mode);
+      await page.waitForTimeout(400);
+      const at = `${w} × ${h} ${mode}`;
+      if (!phone && !narrow) {
+        // A wide desk's legend open in its place, bottom right, the row clear of it (R197).
+        await expect(toggle, `${at}: no fold`).toHaveCount(0);
+        const r = await look();
+        expect(r.banners, `${at}: three banners`).toBe(3);
+        expect([r.rowOverLegend, r.legendOverRow], `${at}: the row and the legend apart`).toEqual([0, 0]);
+        continue;
+      }
+      await expect(page.getByTestId('map-legend'), `${at}: the legend folded`).toHaveAttribute('data-open', 'false');
+      const folded = await look();
+      expect(folded.left, `${at}: the legend at the left`).toBeLessThan(20);
+      expect(folded.foot, `${at}: the folded legend at the top`).toBeLessThan(100);
+      if (narrow) expect(folded.banners, `${at}: a war shown`).toBeGreaterThanOrEqual(1);
+      await toggle.click();
+      await expect(page.getByTestId('map-legend')).toHaveAttribute('data-open', 'true');
+      await expect(page.locator('.map-legend .legend-row').first()).toBeVisible();
+      await page.waitForTimeout(600);
+      const opened = await look();
+      expect([opened.rowOverLegend, opened.legendOverRow], `${at}: opened, the row and the legend apart`).toEqual([0, 0]);
+      expect(opened.banners, `${at}: opened, the banners as folded`).toBe(folded.banners);
+      // On a phone on its side the sea legend is higher than the room over the row: its rows scroll (734 × 343).
+      expect(opened.foot, `${at}: the opened legend above the row`).toBeLessThanOrEqual(opened.rowTop);
+      if (narrow) {
+        expect(opened.meets, `${at}: the opened legend on nothing of the page's`).toEqual([]);
+        // A stale count shows as another after 1 px.
+        await page.setViewportSize({ width: w + 1, height: h });
+        await page.waitForTimeout(300);
+        await page.setViewportSize({ width: w, height: h });
+        await page.waitForTimeout(500);
+        const nudged = await look();
+        expect(nudged.banners, `${at}: nudged, the banners as shown`).toBe(opened.banners);
+        expect([nudged.rowOverLegend, nudged.legendOverRow], `${at}: nudged, apart`).toEqual([0, 0]);
+      }
+      if (w === 700 && mode === 'seaControl') {
+        // Opened, it gives way to a nation's panel and to History, and stands open again as each closes; the ranking
+        // opened beside it meets neither.
+        await page.evaluate((n) => window.__warsim!.hud.onSelectNation(n), id('GER'));
+        await expect(page.getByTestId('nation-panel')).toBeVisible();
+        await expect(page.getByTestId('map-legend'), `${at}: gone under a nation's panel`).toBeHidden();
+        await page.evaluate(() => window.__warsim!.hud.onSelectNation(0));
+        await expect(page.getByTestId('map-legend')).toBeVisible();
+        await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+        await expect(page.getByTestId('map-legend'), `${at}: gone under History`).toBeHidden();
+        await page.evaluate(() => window.__warsim!.hud.toggleHistory());
+        await expect(page.getByTestId('map-legend')).toHaveAttribute('data-open', 'true');
+        await page.evaluate(() => window.__warsim!.hud.toggleStats(false));
+        await expect(page.getByTestId('stats-ranking')).toBeVisible();
+        await page.waitForTimeout(300);
+        const beside = await look();
+        expect(beside.meets, `${at}: the opened legend beside the ranking`).toEqual([]);
+        expect([beside.rowOverLegend, beside.legendOverRow], `${at}: with the ranking, apart`).toEqual([0, 0]);
+        await page.evaluate(() => window.__warsim!.hud.toggleStats(true));
+        await expect(page.getByTestId('stats-ranking')).toHaveCount(0);
+      }
+      await toggle.click();
+      await expect(page.getByTestId('map-legend')).toHaveAttribute('data-open', 'false');
+    }
+  }
+});

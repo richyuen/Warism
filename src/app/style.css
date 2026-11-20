@@ -2545,10 +2545,6 @@ button.unit-icon.on {
   #ui:has(.war-banners.opened) .ticker.compact {
     bottom: calc(var(--bar-top, 2.8rem) + 0.4rem + var(--banners-h, 2.2rem) + 0.3rem);
   }
-  /* The first cue under the ranking's and the legend's toggles, not on them (R73-N6). */
-  #ui > .first-cue {
-    top: 6.6rem;
-  }
   #ui:has(.war-banners) .ticker.compact {
     bottom: calc(var(--bar-top, 2.8rem) + 0.4rem + 2.2rem);
   }
@@ -2556,15 +2552,6 @@ button.unit-icon.on {
      row of History), as the landings give way to them. */
   #ui:has(.history-panel, .relations-panel, .settings-panel, .editor-panel) .war-banners {
     display: none;
-  }
-  .map-legend.foldable {
-    top: 3.4rem;
-    left: 0.5rem;
-    right: auto;
-    bottom: auto;
-    min-width: 0;
-    padding: 4px 8px;
-    pointer-events: auto;
   }
   /* The ranking folded to its title too (ADR-760), top right: it took a third of the view. */
   .stats-ranking.folded {
@@ -2583,8 +2570,45 @@ button.unit-icon.on {
     font-weight: 700;
     cursor: pointer;
   }
+}
+/* The folded legend's place, a phone's (ADR-760) and a narrow desk's (R203, critic run 87, R87-B1; ADR-1140 (b), the
+   user's choice: in the bottom band the legend R200 folds lay, once opened, over the war row): top left under the
+   bar, folded and opened, giving way to a nation's panel and History there. `NARROW_DESK_QUERY` and `PHONE_QUERY`. */
+@media (max-width: 800px), (max-height: 500px) {
+  .map-legend.foldable {
+    top: 3.4rem;
+    left: 0.5rem;
+    right: auto;
+    bottom: auto;
+    min-width: 0;
+    padding: 4px 8px;
+    pointer-events: auto;
+    /* Opened, its foot above the war row (R203: on a phone on its side, 734 × 343, the sea legend's 280 px reached over
+       the row and the bar): no lower than the row's top, its rows scrolled; over the news while it is open, as a
+       nation's panel there. */
+    box-sizing: border-box;
+    max-height: calc(100% - 3.4rem - var(--bar-top, 2.8rem) - 0.4rem - var(--banners-h, 2.2rem) - 0.4rem);
+    overflow-y: auto;
+  }
   #ui:has(.nation-panel, .history-panel) .map-legend.foldable {
     display: none;
+  }
+  /* The first cue under the ranking's and the legend's toggles, not on them (R73-N6; a narrow desk's too, R203: at 601
+     to about 670 px the cue's left edge stood on the legend's title). */
+  #ui > .first-cue {
+    top: 6.6rem;
+  }
+}
+/* A narrow desk's opened legend beside what stands at its height (R203): left of an open ranking (20 rem at most, top
+   right) and of the landings (18 rem and its padding, top middle), its lines wrapped; a phone's ranking folds and its landings give way. */
+@media (min-width: 601px) and (max-width: 800px) and (min-height: 501px) {
+  #ui:has(.stats-ranking) .map-legend.foldable {
+    max-width: calc(100% - 22rem);
+    box-sizing: border-box;
+  }
+  #ui:has(.landings-bar) .map-legend.foldable {
+    max-width: calc(50% - 10.4rem - 12px);
+    box-sizing: border-box;
   }
 }
 
