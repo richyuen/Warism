@@ -285,6 +285,14 @@ export class MapView {
   groundShown = false;
   /** Told when `groundShown` changes. */
   onGroundShown: ((shown: boolean) => void) | null = null;
+  /**
+   * Called once when the browser takes the WebGL context away (iOS Safari does under memory pressure, or with the
+   * page in the background): the map's textures and buffers are gone, and nothing drawn on it shows any more while
+   * the labels' 2D canvases go on moving. The game saves and boots again from the save (`game.tsx`).
+   */
+  onContextLost: (() => void) | null = null;
+  /** The WebGL context was lost: the map is not drawn again in this page. */
+  contextLost = false;
   /** Whether the instances are drawn (off: the ground without them; tests of the ground's texture). */
   instances = true;
   /** Whether the element sprites and figures are drawn (off: tests read the ground they stand on). */
@@ -341,6 +349,14 @@ export class MapView {
       if (m) this.cityLabels.recall(m);
       this.labelMemories.clear();
       this.dirty = true;
+    });
+    canvas.addEventListener('webglcontextlost', (e) => {
+      // Asked for back (preventDefault), though the view does not rebuild its GPU state in place: the page boots again.
+      e.preventDefault();
+      if (this.contextLost) return;
+      this.contextLost = true;
+      console.warn('Warism: the WebGL context was lost');
+      this.onContextLost?.();
     });
     this.controlGrid = new Uint16Array(geo.w * geo.h);
     this.ownerGrid = new Uint16Array(geo.w * geo.h);
@@ -3382,6 +3398,7 @@ export class MapView {
    * alone, back to back (PLAN 7.1l4, ADR-407).
    */
   drawWebGl(now: number): void {
+    if (this.contextLost) return;
     const dpr = window.devicePixelRatio || 1;
     const cam = this.controller.cam;
     // The ground of T2 and T3 comes and goes with the zoom, a blend through the end of T1 (PLAN
