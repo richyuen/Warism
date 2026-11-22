@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import type {} from '../../src/app/testApi';
 
 // ADR-1152: a touch screen's WebGL map is drawn at most at 2 px per CSS px and keeps no copy of its frame (iOS takes
@@ -16,7 +16,7 @@ const read = () => {
   };
 };
 
-const boot = async (page: import('@playwright/test').Page): Promise<void> => {
+const boot = async (page: Page): Promise<void> => {
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.hud.worker.value ?? null) !== null, null, { timeout: 60_000 });
   await page.waitForFunction(() => window.__warsim!.view!.frames > 0 && document.querySelector<HTMLCanvasElement>('canvas.map-nations')!.width > 1);
