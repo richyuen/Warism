@@ -9,7 +9,7 @@ import { Hud } from './hud';
 import { MapView } from './MapView';
 import { PlayerControl } from './player';
 import type { GameOptions } from '../shared/gameOptions';
-import { loadFailedUrl, optionsFromUrl, startFailedUrl, withLooping, yearStartOptions } from './gameUrl';
+import { continueUrl, loadFailedUrl, optionsFromUrl, startFailedUrl, withLooping, yearStartOptions } from './gameUrl';
 import { startFromYear } from './replayStart';
 import { importScenarioFile, readStagedScenario } from './scenarioFiles';
 import { saveScreenshot, Settings } from './settings';
@@ -20,6 +20,7 @@ import { newStrikes, nextAlerts } from '../shared/nukeAlert';
 import type { Heard } from '../shared/sound';
 import { installTestApi } from './testApi';
 import { MAP_MODES } from '../shared/mapModes';
+import type { Camera } from '../render/camera';
 
 /**
  * Boots a game of `scenarioId` (the sim worker, the map view on `canvas`, the HUD in `uiRoot`).
@@ -28,6 +29,8 @@ import { MAP_MODES } from '../shared/mapModes';
  * file), ?view=0 (no map view; tests that only drive the sim worker use it).
  */
 /** The keys of the map modes, in the order of the button (PLAN 7.4f1). */
+/** sessionStorage: the camera at a lost WebGL context, for the boot from the save that follows. */
+const CAMERA_AFTER_LOSS = 'warism.cameraAfterLoss';
 const MODE_KEYS = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0'];
 
 export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement | null, params: URLSearchParams, scenarioId: ScenarioId): Promise<void> {
@@ -334,6 +337,35 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   const autosave = new Autosave(sim, scenarioId, () => ({ seed: seed.value, options: setup.value }));
   // Sound (PLAN 3.12d): the cue of what the ticker tells; a browser allows it after the first press.
   const sound = new Sound();
+  // A lost WebGL context (iOS Safari takes it under memory pressure): the map froze while its names went on moving.
+  // The view does not rebuild its GPU state in place; the game is saved and boots again from the save, at the same
+  // view. Before the game has started (`started`) a save could overwrite the player's with a world not yet loaded:
+  // the page only boots again.
+  let started = false;
+  if (view) {
+    view.onContextLost = () => {
+      try {
+        sessionStorage.setItem(CAMERA_AFTER_LOSS, JSON.stringify(view.controller.cam));
+      } catch {
+        // No storage: the game boots at its usual view.
+      }
+      const boot = (url: string | null): void => {
+        const go = (): void => (url === null ? location.reload() : location.replace(url));
+        if (!document.hidden) return go();
+        const onShown = (): void => {
+          if (document.hidden) return;
+          document.removeEventListener('visibilitychange', onShown);
+          go();
+        };
+        document.addEventListener('visibilitychange', onShown);
+      };
+      if (!started) return boot(null);
+      void autosave.saveNow().then(
+        () => boot(continueUrl({ scenario: scenarioId, seed: seed.value, options: setup.value })),
+        () => boot(null),
+      );
+    };
+  }
   for (const type of ['pointerdown', 'keydown'] as const) window.addEventListener(type, () => sound.unlock(), { capture: true });
   sim.onStats((m) => sound.onTicker(m.ticker, m.world, m.news));
   const settings = new Settings(view, sound);
@@ -433,6 +465,15 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
     }
   }
   autosave.start(() => !hud.paused.value);
+  started = true;
+  // Booted again after a lost WebGL context: the view the player had.
+  try {
+    const cam = sessionStorage.getItem(CAMERA_AFTER_LOSS);
+    sessionStorage.removeItem(CAMERA_AFTER_LOSS);
+    if (cam && view && params.get('continue') === '1') view.controller.set(JSON.parse(cam) as Camera);
+  } catch {
+    // No storage, or not a camera: the usual view.
+  }
   // Persisted speed and pause (PLAN 1.8). ?paused=1 paused the start at boot (above, R70c); not forced again here, or a
   // Resume pressed while the world was building would be undone (ROADMAP R74a, critic run 65 R65-N7).
   hud.apply();
