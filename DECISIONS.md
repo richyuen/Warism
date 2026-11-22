@@ -5,6 +5,20 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1152 · 2026-11-22 · accepted · A touch screen's map at most at 2 px per CSS px, and no kept frame (the user's decision)
+
+- **The case.** ADR-1151 makes a lost WebGL context recoverable; it does not make it rarer. iOS takes the context under
+  memory pressure, and the map's drawing buffer is the largest thing in it a frame: an iPhone's screen at 3 px per CSS px
+  (1179 × 2556), kept a second time by `preserveDrawingBuffer`.
+- **Decision** (the user chose both, 2026-11-22). On a touch screen (`(hover: none) and (pointer: coarse)`: phones and
+  tablets) the WebGL map is drawn at most at PHONE_GL_DPR = 2 px per CSS px (`MapView.glDpr`: the canvas, the map's,
+  the ground's and the sprites' passes), 2.25 times fewer px on an iPhone; and its context keeps no copy of the frame
+  (`preserveDrawingBuffer: false`). The names' and flags' 2D canvases keep the screen's own px: text stays sharp. The
+  screenshot (`captureMap`) draws in its own task, as it did, and composes at the names' px, the map stretched to them.
+  A desk keeps both as before: its tests read the map's pixels after a frame.
+- **Consequences.** On a phone at 3 px the map's colours and borders are a little softer than its names; at 2 px or
+  less nothing changes but the kept frame. `tests/e2e/phoneGpu1938.spec.ts` reads both on an emulated iPhone and a desk.
+
 ## ADR-1151 · 2026-11-22 · accepted · A lost WebGL context saves the game and boots again from the save
 
 - **The case** (the user, on an iPhone): after a while of play or zoom the map stopped moving while the nation and city
