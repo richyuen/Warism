@@ -172,6 +172,8 @@ const MAX_INDIVIDUALS = 60_000;
 /** A wreck is drawn the size of its element's sprite, at most this (CSS px): at T3 the sprite's size is not a size any more. */
 const WRECK_MAX_PX = 30;
 
+/** The most WebGL px per CSS px on a touch screen (ADR-1152). */
+const PHONE_GL_DPR = 2;
 /** Label typeface (system UI stack: every script renders). */
 const LABEL_FONT = MAP_FONT;
 /** The nation names are measured at this size and scaled (a width is linear in the size). */
@@ -293,6 +295,17 @@ export class MapView {
   onContextLost: (() => void) | null = null;
   /** The WebGL context was lost: the map is not drawn again in this page. */
   contextLost = false;
+  /** No mouse to hover with: a phone's or a tablet's screen (ADR-1152). */
+  readonly touchScreen: boolean;
+
+  /**
+   * The WebGL map's px per CSS px: the screen's, at most PHONE_GL_DPR on a touch screen (ADR-1152: an iPhone's 3 is
+   * 2.25 times the GPU memory of 2). The names' canvases keep the screen's own, sharp.
+   */
+  get glDpr(): number {
+    const dpr = window.devicePixelRatio || 1;
+    return this.touchScreen ? Math.min(dpr, PHONE_GL_DPR) : dpr;
+  }
   /** Whether the instances are drawn (off: the ground without them; tests of the ground's texture). */
   instances = true;
   /** Whether the element sprites and figures are drawn (off: tests read the ground they stand on). */
@@ -325,7 +338,11 @@ export class MapView {
     /** The largest texture to make, px; 0 the GPU's (tests: a weaker GPU, PLAN 7.1l9). */
     maxTexture = 0,
   ) {
-    const gl = canvas.getContext('webgl2', { antialias: false, preserveDrawingBuffer: true });
+    // A touch screen's GPU is a phone's or a tablet's (ADR-1152): iOS takes the context away under memory pressure
+    // (ADR-1151). Its map is drawn at most at PHONE_GL_DPR, and the frame drawn is not kept once shown (the screenshot
+    // draws in its own task, `captureMap`). Elsewhere it is kept: tests read the map's pixels after a frame.
+    this.touchScreen = typeof matchMedia === 'function' && matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const gl = canvas.getContext('webgl2', { antialias: false, preserveDrawingBuffer: !this.touchScreen });
     if (!gl) throw new Error('WebGL2 is required');
     this.gl = gl;
     setSizeScale(geo.scale ?? 1);
@@ -1952,7 +1969,7 @@ export class MapView {
   private drawSprites(cam: Camera, now: number): void {
     const unitsIn = this.shares.elements;
     if (unitsIn <= 0.01 || !this.sprites) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = this.glDpr;
     const t = this.tickProgress(now);
     const offs = wrapOffsets(cam, this.geo, this.canvas.clientWidth, SEAM_MARGIN);
     const figures = this.shares.individuals;
@@ -3293,7 +3310,7 @@ export class MapView {
 
   /** Matches the backing store to the CSS size; returns true when it changed. */
   private resize(): boolean {
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = this.glDpr;
     const w = Math.max(1, Math.round(this.canvas.clientWidth * dpr));
     const h = Math.max(1, Math.round(this.canvas.clientHeight * dpr));
     if (this.canvas.width === w && this.canvas.height === h) return false;
@@ -3399,7 +3416,7 @@ export class MapView {
    */
   drawWebGl(now: number): void {
     if (this.contextLost) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = this.glDpr;
     const cam = this.controller.cam;
     // The ground of T2 and T3 comes and goes with the zoom, a blend through the end of T1 (PLAN
     // 7.34a, ADR-532; until then with the sprites' share of the handover, PLAN 2.8a and 2.11l).

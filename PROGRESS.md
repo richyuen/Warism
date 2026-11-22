@@ -10,3 +10,9 @@
   memory pressure) was never handled. Now the game saves and boots again from the save at the same view;
   `contextLost1938.spec.ts` green (chromium). Not reproduced on a device here: the loss is forced with
   `WEBGL_lose_context`.
+
+## 2026-11-22 — Less GPU memory on a phone (ADR-1152)
+
+- The user's decision after ADR-1151: on a touch screen the WebGL map at most at 2 px per CSS px and no kept frame; the
+  names at the screen's px. `phoneGpu1938.spec.ts` green (an emulated iPhone at 3 px: map 2, names 3, no kept frame, the
+  map on the screen; a desk unchanged); the touch-emulated specs run again: 43 of 49 green; the 6 red (heroes1938, landingMarkMore1938, desk cases among them) red on the commit before too, here (7 there).

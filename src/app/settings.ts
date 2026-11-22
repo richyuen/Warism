@@ -161,17 +161,19 @@ export class Settings {
 
 /**
  * The map as a PNG: the WebGL map and its overlays (city and nation names, flags) composed at
- * device resolution. Draws first, in the same task, so the WebGL buffer is still valid.
+ * device resolution (the names'). Draws first, in the same task, so the WebGL buffer is still valid.
  */
 export function captureMap(view: MapView): Promise<Blob> {
   view.draw();
   const map = document.getElementById('map') as HTMLCanvasElement;
+  // At the names' resolution: a touch screen's map is drawn at fewer px than its names (ADR-1152), and is stretched to them.
+  const overlays = [...document.querySelectorAll<HTMLCanvasElement>('canvas.map-labels')];
   const out = document.createElement('canvas');
-  out.width = map.width;
-  out.height = map.height;
+  out.width = Math.max(map.width, ...overlays.map((o) => o.width));
+  out.height = Math.max(map.height, ...overlays.map((o) => o.height));
   const ctx = out.getContext('2d')!;
-  ctx.drawImage(map, 0, 0);
-  for (const o of document.querySelectorAll<HTMLCanvasElement>('canvas.map-labels')) ctx.drawImage(o, 0, 0, out.width, out.height);
+  ctx.drawImage(map, 0, 0, out.width, out.height);
+  for (const o of overlays) ctx.drawImage(o, 0, 0, out.width, out.height);
   return new Promise((resolve, reject) => out.toBlob((b) => (b ? resolve(b) : reject(new Error('screenshot failed'))), 'image/png'));
 }
 
