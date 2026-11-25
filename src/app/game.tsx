@@ -20,7 +20,7 @@ import { newStrikes, nextAlerts } from '../shared/nukeAlert';
 import type { Heard } from '../shared/sound';
 import { installTestApi } from './testApi';
 import { MAP_MODES } from '../shared/mapModes';
-import type { Camera } from '../render/camera';
+import { CENTRE_PANELS, parseViewAfterLoss, VIEW_AFTER_LOSS, type ViewAfterLoss } from './viewAfterLoss';
 
 /**
  * Boots a game of `scenarioId` (the sim worker, the map view on `canvas`, the HUD in `uiRoot`).
@@ -29,8 +29,8 @@ import type { Camera } from '../render/camera';
  * file), ?view=0 (no map view; tests that only drive the sim worker use it).
  */
 /** The keys of the map modes, in the order of the button (PLAN 7.4f1). */
-/** sessionStorage: the camera at a lost WebGL context, for the boot from the save that follows. */
-const CAMERA_AFTER_LOSS = 'warism.cameraAfterLoss';
+/** Each top-centre panel's flag on the HUD. */
+const CENTRE_SIGNALS = { charts: 'showCharts', history: 'showHistory', relations: 'showRelations', settings: 'showSettings', editor: 'showEditor' } as const;
 const MODE_KEYS = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0'];
 
 export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement | null, params: URLSearchParams, scenarioId: ScenarioId): Promise<void> {
@@ -340,12 +340,22 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   // A lost WebGL context (iOS Safari takes it under memory pressure): the map froze while its names went on moving.
   // The view does not rebuild its GPU state in place; the game is saved and boots again from the save, at the same
   // view. Before the game has started (`started`) a save could overwrite the player's with a world not yet loaded:
-  // the page only boots again.
+  // the page only boots again. The view kept is the camera and what was open (ADR-1153): the selected nation, the
+  // formation's panel, the played nation's selected formations, the top-centre panel and the God tab.
   let started = false;
   if (view) {
     view.onContextLost = () => {
       try {
-        sessionStorage.setItem(CAMERA_AFTER_LOSS, JSON.stringify(view.controller.cam));
+        const kept: ViewAfterLoss = {
+          cam: view.controller.cam,
+          nation: hud.selected.peek(),
+          formation: hud.formation.peek(),
+          player: player?.nation.peek() ?? 0,
+          selection: player && player.nation.peek() !== 0 ? [...view.selectedFormations] : [],
+          panel: CENTRE_PANELS.find((p) => hud[CENTRE_SIGNALS[p]].peek()) ?? null,
+          god: hud.godMode.peek(),
+        };
+        sessionStorage.setItem(VIEW_AFTER_LOSS, JSON.stringify(kept));
       } catch {
         // No storage: the game boots at its usual view.
       }
@@ -466,13 +476,27 @@ export async function startGame(canvas: HTMLCanvasElement, uiRoot: HTMLElement |
   }
   autosave.start(() => !hud.paused.value);
   started = true;
-  // Booted again after a lost WebGL context: the view the player had.
+  // Booted again after a lost WebGL context: the view the player had, and what was open on it (ADR-1153).
+  let kept: ViewAfterLoss | null = null;
   try {
-    const cam = sessionStorage.getItem(CAMERA_AFTER_LOSS);
-    sessionStorage.removeItem(CAMERA_AFTER_LOSS);
-    if (cam && view && params.get('continue') === '1') view.controller.set(JSON.parse(cam) as Camera);
+    kept = parseViewAfterLoss(sessionStorage.getItem(VIEW_AFTER_LOSS));
+    sessionStorage.removeItem(VIEW_AFTER_LOSS);
   } catch {
-    // No storage, or not a camera: the usual view.
+    // No storage: the usual view.
+  }
+  if (kept && view && params.get('continue') === '1') {
+    view.controller.set(kept.cam);
+    // A nation dead in the save is not found by the stats' first count and is let go there (PLAN 2.17e3).
+    if (kept.nation !== 0) hud.onSelectNation(kept.nation);
+    // A formation that is gone closes its own panel at the sim's answer (`Hud.refreshFormation`).
+    if (kept.formation !== 0) hud.selectFormation(kept.formation);
+    if (kept.panel === 'charts') hud.toggleCharts();
+    else if (kept.panel === 'history') hud.toggleHistory();
+    else if (kept.panel === 'relations') hud.toggleRelations();
+    else if (kept.panel === 'settings') hud.toggleSettings();
+    else if (kept.panel === 'editor') hud.toggleEditor();
+    if (kept.god && !hud.godMode.peek()) hud.toggleGod();
+    if (player && kept.player !== 0 && kept.selection.length > 0) player.restoreSelection(kept.player, kept.selection);
   }
   // Persisted speed and pause (PLAN 1.8). ?paused=1 paused the start at boot (above, R70c); not forced again here, or a
   // Resume pressed while the world was building would be undone (ROADMAP R74a, critic run 65 R65-N7).

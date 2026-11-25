@@ -27,7 +27,7 @@
  * that nation's there at once, with no gold, training or research (`spawnFormation`,
  * `spawnFleet`, `spawnWing`), until Escape, another order armed, or God Mode off.
  */
-import { signal } from '@preact/signals';
+import { effect, signal } from '@preact/signals';
 import type { Command } from '../shared/commands';
 import type { Hud } from './hud';
 import type { MapView } from './MapView';
@@ -48,6 +48,8 @@ export interface NationMenu {
 const MENU_ANSWER_MS = 3000;
 /** How long the words of a refusal stay (ms). */
 const MENU_NOTICE_MS = 5000;
+/** How long a selection kept at a lost WebGL context waits for its nation to be played again (ms, ADR-1153). */
+const RESTORE_WAIT_MS = 30_000;
 
 export class PlayerControl {
   /** The controlled nation (0 = none) and how many of its formations are selected. */
@@ -188,6 +190,36 @@ export class PlayerControl {
     this.view.followSelection(false);
     this.selectedCount.value = 0;
     this.view.requestDraw();
+  }
+
+  /**
+   * Gives back the selection a lost WebGL context took (ADR-1153): formations `ids` of `nation`, once the sim says
+   * `nation` is played again. The stats' first count sets the played nation and then clears the selection, so the ids
+   * go in after it. A formation gone by then leaves the selection at the next snapshot, as any does. The camera stays.
+   */
+  restoreSelection(nation: number, ids: readonly number[]): void {
+    let done = false;
+    let stop: (() => void) | null = null;
+    const end = (): void => {
+      done = true;
+      stop?.();
+    };
+    const give = (): void => {
+      if (done || this.nation.peek() !== nation) return;
+      end();
+      const sel = this.view.selectedFormations;
+      for (const id of ids) sel.add(id);
+      this.view.followSelection(false);
+      this.selectedCount.value = sel.size;
+      this.view.requestDraw();
+    };
+    stop = effect(() => {
+      // After the stats' handler that set it has cleared the selection (`clearSelection` follows the set).
+      if (this.nation.value === nation) queueMicrotask(give);
+    });
+    if (done) stop();
+    // A played nation that never comes back (another taken meanwhile): nothing is given back.
+    setTimeout(end, RESTORE_WAIT_MS);
   }
 
   /** Selects all formations of the controlled nation that a click orders (Ctrl+A): its land formations, else its fleets. The camera stays. */
