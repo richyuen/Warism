@@ -5,6 +5,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1153 · 2026-11-25 · proposed · A lost WebGL context keeps what was open, not only the camera
+
+- **The case** (the user, after ADR-1151: "finish the iPhone fix"). ADR-1151 boots again from the save at the camera
+  the player had, but the selected nation, the formation's panel, the played nation's selected formations, the open
+  top-centre panel and the God tab were gone: on a phone the player was back on a bare map.
+- **Decision.** `onContextLost` keeps them with the camera in sessionStorage (`warism.viewAfterLoss`,
+  `src/app/viewAfterLoss.ts`; a bare camera kept before this is still read). After the boot from the save: the camera,
+  the nation selected, the formation's panel asked again, the one top-centre panel (charts, History, Relations,
+  Settings or the editor) and the God tab. The selected formations are given back only once the sim says the same
+  nation is played again (`PlayerControl.restoreSelection`), after the first count's `clearSelection`; given up after
+  30 s. The save the boot loads is the one the loss wrote, so the ids are its own; a nation dead or a formation gone is
+  let go by the rules that already do it (PLAN 2.17e3, `refreshFormation`, the snapshot's selection check).
+- **Not kept.** The time-lapse (it pauses the game and is opened from History), a nation panel's tab, hover and tooltips.
+- **Consequences.** `tests/e2e/contextLost1938.spec.ts` has a second test (nation, formation panel, two selected
+  formations, History, God Mode through a forced loss); `tests/unit/viewAfterLoss.test.ts` reads the kept value. The
+  e2e test was written in a container with no browser and has not been run yet.
+
 ## ADR-1152 · 2026-11-22 · accepted · A touch screen's map at most at 2 px per CSS px, and no kept frame (the user's decision)
 
 - **The case.** ADR-1151 makes a lost WebGL context recoverable; it does not make it rarer. iOS takes the context under
