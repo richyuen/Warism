@@ -7,7 +7,7 @@ import { T3_MAX_M } from '../../src/render/units/individuals';
 import { SCENARIO_GEOMETRY } from '../../src/shared/scenarios';
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
 import { Domain } from '../../src/sim/world';
-import { settle } from './settle';
+import { settle, settleAtZoom } from './settle';
 
 // PLAN 3.11 (the critic's R3-B3: "zooming to a formation in contact shows its fight"), the
 // task's own test, on a game no part of it was built on: seed 5381. Two wars of it: one nobody
@@ -116,15 +116,14 @@ for (const war of WARS) test(`PLAN 3.11 on a seed not used: every formation in c
   expect(engaged.every((e) => e.fight), 'every formation in contact has a fight to go to').toBe(true);
 
   /** The view on (x, y) at `m` metres a pixel, with the section of that zoom drawn. */
-  const lookAt = (x: number, y: number, m: number): Promise<void> =>
-    page.evaluate(async ({ x, y, m }) => {
+  const lookAt = async (x: number, y: number, m: number): Promise<void> => {
+    await page.evaluate(({ x, y, m }) => {
       const v = window.__warsim!.view!;
       v.controller.set({ cx: x, cy: y, scale: (v.metresPerPx * v.controller.cam.scale) / m });
-      const t0 = performance.now();
-      while (Math.abs(v.elementsZoom / m - 1) >= 0.01 && performance.now() - t0 < 5000) await new Promise((d) => setTimeout(d, 30));
-      await new Promise((d) => setTimeout(d, 400));
-      v.draw(performance.now());
     }, { x, y, m });
+    // The section itself, at rest: not "5 s at most, then 400 ms", which a software GPU outran.
+    await settleAtZoom(page);
+  };
   const goTo = async (id: number, m: number): Promise<void> => {
     const [x, y] = (await page.evaluate((id) => window.__warsim!.view!.formationPos(id), id))!;
     await lookAt(x, y, m);
@@ -166,11 +165,8 @@ for (const war of WARS) test(`PLAN 3.11 on a seed not used: every formation in c
         await new Promise((done) => setTimeout(done, 1));
       }
       while (c.animating) await new Promise((done) => requestAnimationFrame(done));
-      const t0 = performance.now();
-      while (Math.abs(v.elementsZoom / v.metresPerPx - 1) >= 0.01 && performance.now() - t0 < 5000) await new Promise((d) => setTimeout(d, 30));
-      await new Promise((d) => setTimeout(d, 400));
-      v.draw(performance.now());
     }, from);
+    await settleAtZoom(page);
   };
 
   const seen: Seen[] = [];

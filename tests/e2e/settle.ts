@@ -32,3 +32,23 @@ export async function settle(page: Page, timeoutMs = 30_000): Promise<void> {
     }
   }, timeoutMs);
 }
+
+/**
+ * Waits until the view holds the element section of the camera's own zoom (the snapshot asked
+ * for at this zoom has come: `elementsZoom` within 1 % of the camera's m/px), then `settle`s.
+ *
+ * In place of a wait of the wall's time ("up to 5 s for the section, then 400 ms"; "1.5 s, then
+ * draw"): how long a snapshot takes to come, and how many frames a fade takes, hang on the
+ * machine. On a software GPU a section could still be on its way when such a wait ran out, and
+ * the test measured the figures of the zoom before (shipMarks1938's destroyers at 16.5 px). This
+ * waits for the state itself, with a limit only for a section that never comes.
+ *
+ * For a paused game, as `settle`.
+ */
+export async function settleAtZoom(page: Page, timeoutMs = 60_000): Promise<void> {
+  await page.waitForFunction(() => {
+    const v = window.__warsim!.view!;
+    return Math.abs(v.elementsZoom / v.metresPerPx - 1) < 0.01;
+  }, null, { timeout: timeoutMs });
+  await settle(page, timeoutMs);
+}

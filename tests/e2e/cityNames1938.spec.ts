@@ -50,12 +50,17 @@ function lettersCovered(page: Page): Promise<{ name: string; alpha: number; over
 }
 
 /**
- * The game at top speed for `ms`, the camera at rest; the view's own frames, read as they are
- * drawn. A name's box may not move at all while it shows (`jumps`); `fades`: names that began to
- * go or to come; `fewest`, `most`: names more than half there in a frame; `names`: at the end.
+ * The game at top speed, the camera at rest, until the view has drawn `frames` frames of its own
+ * and the game has run `ticks` ticks; the frames read as they are drawn. A name's box may not
+ * move at all while it shows (`jumps`); `fades`: names that began to go or to come; `fewest`,
+ * `most`: names more than half there in a frame; `names`: at the end.
+ *
+ * Counted in frames and ticks, not in seconds of the wall: how many four seconds hold hangs on
+ * the machine, and on a software GPU it was too few (the list of 4.2f). `limitMs` is only for a
+ * game that stops.
  */
-function watchNames(page: Page, ms: number): Promise<{ frames: number; ticks: number; fades: number; jumps: string[]; fewest: number; most: number; names: number; markers: number }> {
-  return page.evaluate(async (ms) => {
+function watchNames(page: Page, want: { frames: number; ticks: number }, limitMs = 90_000): Promise<{ frames: number; ticks: number; fades: number; jumps: string[]; fewest: number; most: number; names: number; markers: number }> {
+  return page.evaluate(async ({ want, limitMs }) => {
     const v = window.__warsim!.view!;
     const hud = window.__warsim!.hud;
     hud.setSpeedLevel(99);
@@ -66,7 +71,9 @@ function watchNames(page: Page, ms: number): Promise<{ frames: number; ticks: nu
     let frames = 0;
     let fades = 0;
     const tick = v.lastTick;
-    for (const t0 = performance.now(); performance.now() - t0 < ms; ) {
+    const t0 = performance.now();
+    while (frames < want.frames || v.lastTick - tick < want.ticks) {
+      if (performance.now() - t0 > limitMs) throw new Error(`in ${limitMs / 1000} s: ${frames} of ${want.frames} frames, ${v.lastTick - tick} of ${want.ticks} ticks`);
       await new Promise((done) => requestAnimationFrame(done));
       frames++;
       let names = 0;
@@ -88,11 +95,14 @@ function watchNames(page: Page, ms: number): Promise<{ frames: number; ticks: nu
     if (!hud.paused.value) hud.togglePause();
     hud.setSpeedLevel(4);
     return { frames, ticks: v.lastTick - tick, fades, jumps, fewest: Math.min(...shown), most: Math.max(...shown), names: v.cityLabels.lastPlaced.filter((l) => l.nameAlpha > 0 && !l.ghost).length, markers: v.markerRects.length };
-  }, ms);
+  }, { want, limitMs });
 }
 
+/** What `watchNames` reads: 120 of the view's frames and 100 ticks at the least. */
+const WATCH = { frames: 120, ticks: 100 };
+
 test('city names are not under the T0 counters or the capital flags, and are not simply left out', async ({ page }, info) => {
-  test.setTimeout(150_000);
+  test.setTimeout(240_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
@@ -131,17 +141,17 @@ test('city names are not under the T0 counters or the capital flags, and are not
   // While the game runs the counters move, fold and come out, at top speed in every frame. A name
   // they come to stand on goes out by its fade and comes in at another place by its fade: it
   // never jumps, and it does not follow a counter. The view's own frames, read as they are
-  // drawn, for four seconds: the camera rests, so a name's box may not move at all.
+  // drawn, for 120 frames and 100 ticks at the least: the camera rests, so a name's box may not move at all.
   await page.evaluate(({ cx, cy }) => {
     const v = window.__warsim!.view!;
     v.controller.set({ cx, cy, scale: (v.metresPerPx * v.controller.cam.scale) / 4000 });
   }, { cx: EX, cy: EY });
   await settle(page);
-  const running = await watchNames(page, 4000);
+  const running = await watchNames(page, WATCH);
   console.log(`running at top speed, 4000 m/px: ${running.frames} frames, ${running.ticks} ticks; ${running.names} names, ${running.fades} fades begun, ${running.jumps.length} jumps`);
-  // (How many frames and ticks four seconds hold depends on the machine: enough of both to have seen names go and come.)
-  expect(running.ticks).toBeGreaterThan(50);
-  expect(running.frames).toBeGreaterThan(8);
+  // (The watch runs until both are counted, on any machine: enough of both to have seen names go and come.)
+  expect(running.ticks).toBeGreaterThanOrEqual(WATCH.ticks);
+  expect(running.frames).toBeGreaterThanOrEqual(WATCH.frames);
   expect(running.fades).toBeGreaterThan(0);
   expect(running.jumps).toEqual([]);
 });
@@ -187,7 +197,7 @@ test('nothing is drawn over the letters of a city name: not a nation name, a cou
 // of a name that is shown. And the names are not simply left out: four in five of those that
 // were shown before, covered or not.
 test('city names keep clear of the T1 markers, and are not simply left out', async ({ page }, info) => {
-  test.setTimeout(240_000);
+  test.setTimeout(330_000);
   await page.setViewportSize({ width: 1400, height: 800 });
   await page.goto('/?scenario=1938&paused=1&seed=1938');
   await page.waitForFunction(() => (window.__warsim?.view?.frames ?? 0) > 0 && window.__warsim!.hud.stats.value !== null && window.__warsim!.sim.mapLayers !== null, null, { timeout: 60_000 });
@@ -231,17 +241,17 @@ test('city names keep clear of the T1 markers, and are not simply left out', asy
 
   // While the game runs the markers move with their armies, every tick. A name one comes to
   // stand on goes out by its fade and comes in at another place by its fade; it never jumps and
-  // it does not follow a marker. The view's own frames for four seconds at top speed, the camera
-  // at rest: a name's box may not move at all while it shows.
+  // it does not follow a marker. The view's own frames at top speed, 120 and 100 ticks at the
+  // least, the camera at rest: a name's box may not move at all while it shows.
   await page.evaluate(({ cx, cy }) => {
     const v = window.__warsim!.view!;
     v.controller.set({ cx, cy, scale: (v.metresPerPx * v.controller.cam.scale) / 1000 });
   }, { cx: EX, cy: EY });
   await settle(page);
-  const running = await watchNames(page, 4000);
+  const running = await watchNames(page, WATCH);
   console.log(`running at top speed, 1000 m/px: ${running.frames} frames, ${running.ticks} ticks; ${running.markers} markers; ${running.fewest} to ${running.most} names shown, ${running.fades} fades begun, ${running.jumps.length} jumps`);
-  expect(running.ticks).toBeGreaterThan(50);
-  expect(running.frames).toBeGreaterThan(8);
+  expect(running.ticks).toBeGreaterThanOrEqual(WATCH.ticks);
+  expect(running.frames).toBeGreaterThanOrEqual(WATCH.frames);
   expect(running.jumps).toEqual([]);
   // The names are still there while the armies march: four in five of the 25 of before.
   expect(running.fewest, 'names shown while running').toBeGreaterThanOrEqual(15);

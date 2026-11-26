@@ -44,3 +44,10 @@
   no deploy for a push of Markdown, docs/ or critic/ alone, checkouts without docs/evidence and critic/, the v5 Pages
   actions. PROMPT.md step 9 and ROADMAP.md's rules: the tick in the item's own commit, no hash commit. Typecheck and
   lint green; the build from the sparse tree (63 MB) green here. The workflow itself first runs at the merge.
+
+## 2026-11-26 — Three browser specs wait for the view's state, not for seconds (ADR-1156, branch)
+
+- On branch `test/frame-count-timing`, not on main. `shipMarks1938` and `fightSeen1938` wait for the section of their
+  zoom and for rest (`settleAtZoom`), in place of 1.5 s and of "5 s at most, then 400 ms"; `cityNames1938` watches 120
+  frames and 100 ticks of the running game in place of four seconds. Typecheck and lint green; the specs not run: no
+  browser in the container. Their `knownRed.json` entries stay until a SwiftShader run shows them green.
