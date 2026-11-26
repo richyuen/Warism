@@ -3,6 +3,16 @@
 The resolved entries of BLOCKERS.md, moved here on 2026-11-02 (ADR-804) in the order they stood. Searched, not
 read. New resolved entries are moved here when they are resolved.
 
+### RESOLVED 2026-11-26 (ADR-1156: the test waits for the section of its zoom; green on the GPU and on SwiftShader, off `tools/gate/knownRed.json`) · shipMarks1938's T3 test, again: red at 16.5 px against 17 in a gate and on HEAD (2026-11-18); on `tools/gate/knownRed.json`
+- **The bar:** at 20 m/px on the fleets of seed 2251's first Italy-UK sea battle, a destroyer's median hull length over
+  17 px (`shipMarks1938.spec.ts`, PLAN 7.35c; about 19 by the rule). Resolved once on 2026-11-03 (`docs/BLOCKERS_DONE.md`).
+- **What was read:** red in R139's gate and again alone, 16.5 px (7 destroyers). By hand on the R139 code 7 of 7 green
+  (17.5-18.5); on 8fe68e51 without R139, 1 of 2 red at 16.5, the same fleets at (1074.8, 329.3) and (1071.9, 330.5),
+  per ship 15.5-17.5 in the red run and 15.5-20 in the green. The world is the same each run; the frames' timing moves
+  the measure, as on 2026-11-02. No drawing of ships changed.
+- **Left:** a measure that does not hang on one frame (the median over several draws, or ships at rest); the test is not
+  changed here. It leaves the list when it passes in a review.
+
 ### RESOLVED 2026-11-17 (green 3 runs of 3 on both projects, off `tools/gate/knownRed.json`) · `seaRow1938`'s Speed x1 test red on this machine again, the code not its cause; on `tools/gate/knownRed.json` (2026-11-08, R53g)
 - **The bar:** from the row of Germany's and Britain's sea battle (seed 5591, hour 45), at Speed x1 for 6 s, a frame
   with both sides' ships' tracers on the screen (`seaRow1938.spec.ts`, PLAN 7.22a). Resolved once (docs/BLOCKERS_DONE.md,

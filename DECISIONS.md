@@ -18,9 +18,12 @@ from AoC are tagged **[AoC-DEVIATION]**.
   A spec that watches a running game watches a number of the view's frames and of ticks (`cityNames1938`: 120 frames
   and 100 ticks at the least), not a time. What each test measures is unchanged.
 - **Consequences.** The three specs take longer where frames are slow, and their limits are raised to match. The
-  entries stay on `knownRed.json` until a run on SwiftShader (`E2E_RENDER=software`) shows them green. The other known
-  reds are not changed here: `tickClock` tests the clock of a tick a second itself; `fire1938` and `individuals1938`
-  hold budgets of draw and build time; the rest wait on a run that shows which of their checks is red.
+  other known reds are not changed: `tickClock` tests the clock of a tick a second itself; `fire1938` and
+  `individuals1938` hold budgets of draw and build time. On the user's PC on SwiftShader (`E2E_RENDER=software`, 4
+  workers) all 22 tests of the 11 files were green in one run (8.0 min; destroyers 18 px at 20 m/px), so
+  `knownRed.json` is emptied and shipMarks1938's BLOCKERS entry resolved: the suite runs on the user's PC since
+  ADR-1029, and these were put on the list for a cloud container's speed. One run, not the three of
+  2026-11-17's precedent: a test red again goes back on the list with a BLOCKERS entry.
 
 ## ADR-1155 · 2026-11-26 · proposed · The deploy waits on typecheck and lint; the records alone deploy nothing; one commit an item
 
