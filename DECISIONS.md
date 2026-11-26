@@ -5,6 +5,23 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1156 · 2026-11-26 · proposed · A browser spec waits for the view's state, not for seconds of the wall
+
+- **The case** (the user chose idea 3 of the Nov 24 review). Of the 12 tests on `tools/gate/knownRed.json`, 11 are
+  there as "a software GPU's speed: frames and ticks counted against wall time". Waits of a fixed time made a measure
+  hang on the machine: `shipMarks1938` waited 1.5 s after a zoom and drew, `fightSeen1938` waited at most 5 s for the
+  section of its zoom (and went on without it) and then 400 ms, and `cityNames1938` read the frames of four seconds and
+  asked for more than 8 frames and 50 ticks. `shipMarks1938`'s T3 test is red now and then on the GPU too (BLOCKERS:
+  16.5 px against 17, "the frames' timing moves the measure").
+- **Decision.** A spec that needs the section of a new zoom waits for it (`settleAtZoom` in `tests/e2e/settle.ts`: the
+  view's `elementsZoom` within 1 % of the camera's, then `settle`), with a limit only for a section that never comes.
+  A spec that watches a running game watches a number of the view's frames and of ticks (`cityNames1938`: 120 frames
+  and 100 ticks at the least), not a time. What each test measures is unchanged.
+- **Consequences.** The three specs take longer where frames are slow, and their limits are raised to match. The
+  entries stay on `knownRed.json` until a run on SwiftShader (`E2E_RENDER=software`) shows them green. The other known
+  reds are not changed here: `tickClock` tests the clock of a tick a second itself; `fire1938` and `individuals1938`
+  hold budgets of draw and build time; the rest wait on a run that shows which of their checks is red.
+
 ## ADR-1155 · 2026-11-26 · proposed · The deploy waits on typecheck and lint; the records alone deploy nothing; one commit an item
 
 - **The case** (the user chose ideas 1, 2 and 5 of the Nov 24 review). `pages.yml` published every push to `main` after

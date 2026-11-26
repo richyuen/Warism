@@ -3,6 +3,7 @@ import path from 'node:path';
 import type {} from '../../src/app/testApi';
 import { NATIONS_1938 } from '../../src/sim/scenario1938';
 import { Frame, isShipFrame } from '../../src/shared/unitLooks';
+import { settleAtZoom } from './settle';
 
 // PLAN 7.10a (critic run 7, naval 5: "ships at 15 m/px are flat coloured bars",
 // `critic/shots/c7e_9043_1_0015m.png`): a ship's marks were light grey, which the tint made a paler
@@ -49,8 +50,10 @@ async function atSeaBattle(page: Page): Promise<void> {
     const v = window.__warsim!.view!;
     v.controller.set({ cx: x, cy: y, scale: (v.metresPerPx * v.controller.cam.scale) / 15 });
   }, { x: at![0], y: at![1] });
-  await page.waitForFunction(() => window.__warsim!.view!.subscription?.tier === 3 && window.__warsim!.view!.individualCount > 0, null, { timeout: 15_000 });
-  await page.waitForTimeout(1500);
+  await page.waitForFunction(() => window.__warsim!.view!.subscription?.tier === 3 && window.__warsim!.view!.individualCount > 0, null, { timeout: 60_000 });
+  // The section of this zoom, at rest: not 1.5 s of the wall, which a software GPU can spend
+  // before the section of 15 m/px has come (BLOCKERS: shipMarks1938's T3 test, again).
+  await settleAtZoom(page);
 }
 
 test('T3: a ship at 15 m/px has dark marks on its hull, not a flat bar', async ({ page }) => {
@@ -206,7 +209,9 @@ test('T3: at 20 m/px every class of ship is drawn long and broad enough to read 
       v.controller.set({ cx: x, cy: y, scale: (v.metresPerPx * v.controller.cam.scale) / 20 });
     }, f);
     await page.waitForFunction(() => window.__warsim!.view!.subscription?.tier === 3 && window.__warsim!.view!.individualCount > 0, null, { timeout: 15_000 }).catch(() => undefined);
-    await page.waitForTimeout(1500);
+    // The section of 20 m/px, at rest, before a hull is measured: after 1.5 s of the wall the
+    // figures could still be those of the zoom before, and the destroyers read 16.5 px.
+    await settleAtZoom(page);
     const got = await page.evaluate(([classes, a, d]) => {
       const v = window.__warsim!.view!;
       const canvas = document.querySelector('canvas')!;
