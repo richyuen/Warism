@@ -160,7 +160,8 @@ async function lookAtPoint(page: Page, [x, y]: [number, number], mPerPx: number,
   await page.waitForFunction((tier) => {
     const v = window.__warsim!.view!;
     if (v.subscription?.tier !== tier || v.elementCount === 0) return false;
-    return tier === 3 ? v.shares.individuals > 0.99 && v.individualCount > 0 : v.shares.elements > 0.99 && v.shares.individuals < 0.01;
+    // The ball look builds no figures (ADR-1154): its close tier is the zoom's alone.
+    return tier === 3 ? v.shares.individuals > 0.99 && (v.unitLook === 'balls' || v.individualCount > 0) : v.shares.elements > 0.99 && v.shares.individuals < 0.01;
   }, tier, { timeout: 30_000 });
   await page.waitForTimeout(1200);
 }

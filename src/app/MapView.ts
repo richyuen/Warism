@@ -1410,15 +1410,26 @@ export class MapView {
     this.shares.elements = change.elements;
     this.morph = change.morph;
     const wanted = m <= (this.close.near ? T3_MAX_M * ZOOM_HYSTERESIS : T3_MAX_M);
+    // The countryballs are one ball an element at T3 too (SPEC 8.2): their look draws no figures,
+    // so none is built or uploaded in it (ADR-1154). Figures built in Classic before a switch are
+    // let go, so that neither their turrets are turned nor their muzzles fire; a switch back to
+    // Classic builds them again from the section kept.
+    const balls = this.unitLook === 'balls';
+    if (balls && this.individualCount > 0) {
+      this.individualCount = 0;
+      this.individualTurrets = 0;
+      this.individualsBuilt = false;
+    }
     // The figures are drawn while the close tier is on and while it fades out: for as long,
     // they are of the snapshot in hand (PLAN 2.7j).
-    if ((wanted || this.close.animating(now)) && !this.individualsBuilt && this.elementSection) this.buildIndividuals(this.elementSection);
+    if (!balls && (wanted || this.close.animating(now)) && !this.individualsBuilt && this.elementSection) this.buildIndividuals(this.elementSection);
     // Which of the two close layers shows is a matter of the zoom, with one exception: elements
     // whose figures cannot be drawn (their section not kept yet, or more figures than the cap)
     // keep their sprites. Where there are no elements at all there is nothing to keep, and the
     // close tier stays as the zoom has it (PLAN 2.7p). It went off there, and a pan onto a
     // formation turned it on again with its fade: 250 ms of element sprites at the zoom of figures.
-    const figures = this.individualsBuilt && this.individualCount > 0;
+    // The balls stand for their elements at either tier, so in their look the zoom alone decides.
+    const figures = balls || (this.individualsBuilt && this.individualCount > 0);
     this.shares.individuals = this.close.share(figures || this.elementCount === 0 ? m : Infinity, now);
     this.individualsShown = this.close.near === true;
   }
