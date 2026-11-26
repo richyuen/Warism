@@ -64,8 +64,10 @@ game's assets or code.
    and name them in PROGRESS.md.
 8. When touching the sim or rendering, check the budgets of goal 5 and log any change in tick or
    frame time with numbers.
-9. `npm run check` green, then commit, tick the item in ROADMAP.md with its commit and evidence,
-   append to PROGRESS.md, push (`git push`: a push to `main` deploys to GitHub Pages).
+9. `npm run check` green, then tick the item in ROADMAP.md with its evidence and append to PROGRESS.md
+   in the same commit, whose subject starts with the item's id (`R225: …`), and push (`git push`: a push
+   to `main` deploys to GitHub Pages). No follow-up commit names the hash: `git log --grep '^R225:'`
+   finds it (ADR-1155).
 10. An item that fails three attempts, or whose run misses its AT's bar, gets a BLOCKERS.md entry
     (the bar, what moved, what is left) and the loop takes the next item. The cause found becomes a
     ROADMAP item of its own.
