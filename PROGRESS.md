@@ -29,3 +29,11 @@
 - On branch `fix/iphone-context-keep-view` (pull request 7), not on main. The ball look no longer builds and uploads the
   T3 figures it never draws. Typecheck, lint and the build green; `countryballs1938.spec.ts`'s new check and the
   adapted wait in `heroes1938.spec.ts` not run: no browser in the container.
+
+## 2026-11-26 — The branch's browser specs on the user's PC
+
+- The user ran `contextLost1938`, `countryballs1938`, `heroes1938` and the touch specs (touchMenu, landingsBarPanel,
+  phoneLayout, landingMarkMore, traitsTap, relationsTap, phoneGpu) on chromium: 67 of 68 green, the six touch reds of
+  2026-11-22 among them. Red: `contextLost1938`'s first test read the camera when the save's tick was on the HUD, before
+  the boot had set it (the start view, cx 1024 for 1064): it now waits for the kept view to leave sessionStorage, which
+  the boot does in the same task as it sets the camera. Not run again here: no browser.
