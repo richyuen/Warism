@@ -21,6 +21,9 @@ test('a lost WebGL context saves, boots again from the save, at the same view', 
   });
   await page.waitForURL(/continue=1/, { timeout: 30_000 });
   await page.waitForFunction(() => window.__warsim?.hud.tick.value === 24, null, { timeout: 60_000 });
+  // The save's tick is on the HUD before the boot has finished: the camera is set after one more round trip to the
+  // worker (`showWorld`), in the same task that takes the kept view out of sessionStorage. Read it after that.
+  await page.waitForFunction(() => sessionStorage.getItem('warism.viewAfterLoss') === null, null, { timeout: 30_000 });
   const after = await page.evaluate(() => ({ lost: window.__warsim!.view!.contextLost, cam: { ...window.__warsim!.view!.controller.cam } }));
   expect(after.lost).toBe(false);
   expect(after.cam.cx).toBeCloseTo(cam.cx, 3);
