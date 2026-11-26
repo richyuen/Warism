@@ -51,3 +51,10 @@
   zoom and for rest (`settleAtZoom`), in place of 1.5 s and of "5 s at most, then 400 ms"; `cityNames1938` watches 120
   frames and 100 ticks of the running game in place of four seconds. Typecheck and lint green; the specs not run: no
   browser in the container. Their `knownRed.json` entries stay until a SwiftShader run shows them green.
+
+## 2026-11-26 — The known reds green on SwiftShader on the user's PC; the list emptied (ADR-1156, branch)
+
+- The user ran the 11 files of `tools/gate/knownRed.json` on branch `test/frame-count-timing` with
+  `E2E_RENDER=software` (chromium, 4 workers): 22 of 22 green in 8.0 min. `shipMarks1938` at 20 m/px: destroyers 18 px
+  (7 ships), cruisers 24.5. `cityNames1938`: 120 frames, 1,388 and 1,349 ticks, no jumps. The list is emptied and
+  shipMarks1938's BLOCKERS entry moved to `docs/BLOCKERS_DONE.md`.
