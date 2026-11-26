@@ -5,6 +5,24 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1155 · 2026-11-26 · proposed · The deploy waits on typecheck and lint; the records alone deploy nothing; one commit an item
+
+- **The case** (the user chose ideas 1, 2 and 5 of the Nov 24 review). `pages.yml` published every push to `main` after
+  only the build: lint and the unit tests ran in the nightly run alone, so a break was live before anything flagged it
+  (03d8051 fixed the lint of cc9a3f0, a push later). 72 of 200 commits were "ROADMAP: Rxxx tick names its commit", each
+  a push that built and deployed the site again. Every deploy checked out the whole tree, 551 MB, of which docs/evidence
+  (428 MB) and critic/ (61 MB) are read by neither the build nor the checks.
+- **Decision.** (1) A `check` job (typecheck, lint) beside the build; the deploy needs both. The unit suite stays
+  nightly: it ran 59 min on the runner on 2026-11-26, and the deploy is a 2-min job. (2) A push whose files are all
+  Markdown, `docs/` or `critic/` starts no deploy (`paths-ignore`). The tick goes in the item's own commit with its
+  evidence; that commit's subject starts with the item's id, and no follow-up commit names its hash (PROMPT.md step 9,
+  ROADMAP.md's rules). (3) Both jobs check out without docs/evidence and critic/ (63 MB). `deploy-pages` v4 → v5 (it
+  warned of Node 20), with `upload-pages-artifact` v3 → v5, its pair. The nightly run keeps the whole tree: tests read
+  critic/.
+- **Consequences.** A commit that breaks typecheck or lint leaves the site as it was. The checkout's saving is small,
+  seconds a deploy (it took 14 s whole). The v5 actions and the sparse checkout are first run by the merge; a failure
+  there leaves the last site up.
+
 ## ADR-1154 · 2026-11-26 · proposed · The ball look builds no T3 figures
 
 - **The case** (the user asked whether cutting close zoom would speed the game up; he said yes to this fix). The

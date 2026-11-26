@@ -9,8 +9,9 @@ Rules:
   reads it, or the case that must hold; ADR-554), and the rules it adds to a checker, when it changes
   a sim rule (ADR-803, ADR-804).
 - An item too big for one sitting is split into lettered parts (R3a, R3b), one level only.
-- Tick it (`- [x]`) in the commit that finishes it, with one line under it: the commit and the
-  evidence. Ticked items stay until the batch's release, then move to CHANGELOG.md.
+- Tick it (`- [x]`) in the commit that finishes it, with one line under it: the evidence. That
+  commit's subject starts with the item's id (`R225: …`), so `git log --grep '^R225:'` finds it; no
+  follow-up commit names its hash (ADR-1155). Ticked items stay until the batch's release, then move to CHANGELOG.md.
 - A batch ends with a critic run and a release tag (`release-<YYYY-MM-DD>`, PROMPT.md "Releases"; a
   second on one day takes a letter, `release-2026-11-03b`, ADR-820).
 

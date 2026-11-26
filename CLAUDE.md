@@ -70,4 +70,5 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
 - Never weaken or delete a test to make it pass; a test goes only with the feature it tests.
 - Keep `main` runnable.
 - Push every commit (`git push`, ADR-107). A push to `main` deploys the build to GitHub Pages
-  (`.github/workflows/pages.yml`): https://richyuen.github.io/Warism/
+  (`.github/workflows/pages.yml`) once typecheck and lint pass; a push of Markdown, `docs/` or `critic/` alone
+  deploys nothing (ADR-1155): https://richyuen.github.io/Warism/

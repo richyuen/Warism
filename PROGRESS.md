@@ -37,3 +37,10 @@
   2026-11-22 among them. Red: `contextLost1938`'s first test read the camera when the save's tick was on the HUD, before
   the boot had set it (the start view, cx 1024 for 1064): it now waits for the kept view to leave sessionStorage, which
   the boot does in the same task as it sets the camera. Not run again here: no browser.
+
+## 2026-11-26 — The deploy waits on typecheck and lint; the records alone deploy nothing (ADR-1155, branch)
+
+- On branch `ci/gate-deploy-and-slim-checkout`, not on main. `pages.yml`: a typecheck-and-lint job the deploy needs,
+  no deploy for a push of Markdown, docs/ or critic/ alone, checkouts without docs/evidence and critic/, the v5 Pages
+  actions. PROMPT.md step 9 and ROADMAP.md's rules: the tick in the item's own commit, no hash commit. Typecheck and
+  lint green; the build from the sparse tree (63 MB) green here. The workflow itself first runs at the merge.
