@@ -23,3 +23,9 @@
   formation's panel, the played nation's selected formations, the top-centre panel and the God tab with the camera.
   Typecheck, lint, `viewAfterLoss.test.ts` 4/4 and the build green. `contextLost1938.spec.ts`'s new test and the six red
   touch specs of 2026-11-22 not run: no browser in the container this was made in.
+
+## 2026-11-26 — No hidden figures at close zoom in the ball look (ADR-1154, branch)
+
+- On branch `fix/iphone-context-keep-view` (pull request 7), not on main. The ball look no longer builds and uploads the
+  T3 figures it never draws. Typecheck, lint and the build green; `countryballs1938.spec.ts`'s new check and the
+  adapted wait in `heroes1938.spec.ts` not run: no browser in the container.

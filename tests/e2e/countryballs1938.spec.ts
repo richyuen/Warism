@@ -208,6 +208,12 @@ test('countryballs at T2 and T3: the flag in the ball, the outline, the eyes tow
     // a ball's eyes in both reads, so a ball's eyes are white in one of them unless they are not.
     const later = (await readBalls(page, 500)).balls;
     expect(later.length, `${m} m/px: the same balls half a second on`).toBe(balls.length);
+    // No figures behind the balls at T3 (ADR-1154): the close tier is on, and nothing was built for it.
+    if (m === 15) {
+      const close = await page.evaluate(() => ({ shown: window.__warsim!.view!.individualsShown, figures: window.__warsim!.view!.individualCount }));
+      expect(close.shown, '15 m/px: the close tier on').toBe(true);
+      expect(close.figures, '15 m/px: no figures built in the ball look').toBe(0);
+    }
     await page.screenshot({ path: path.join(info.outputPath(), `balls-${m}m.png`) });
     let flagOk = 0;
     let flagAll = 0;

@@ -5,6 +5,21 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1154 · 2026-11-26 · proposed · The ball look builds no T3 figures
+
+- **The case** (the user asked whether cutting close zoom would speed the game up; he said yes to this fix). The
+  countryballs are one ball an element at T2 and at T3 (SPEC 8.2, PLAN 7.174c), and their draw never reads the figures.
+  `MapView.tierShares` built them anyway in the frame the close tier came in, up to `MAX_INDIVIDUALS` (60,000), and
+  uploaded them: CPU time and GPU memory spent at close zoom for nothing, in the default look and on a phone.
+- **Decision.** In the ball look no figures are built; figures built in Classic before a switch are let go (count and
+  turrets 0), and a switch back builds them again from the kept section. The close tier's share follows the zoom alone
+  in the ball look, as it did whenever figures were built, so the layers that read it (sorties, air, sea marks, hulls,
+  ship sizes) are unchanged. A shot at T3 in the ball look now leaves its element's slot, as at T2, not the muzzle of a
+  figure that was never drawn.
+- **Consequences.** `countryballs1938.spec.ts` checks no figures are built at 15 m/px; `heroes1938.spec.ts`'s wait for
+  T3 no longer asks for figures in the ball look. Typecheck, lint and the build pass; neither spec has been run: written
+  in a container with no browser.
+
 ## ADR-1153 · 2026-11-25 · proposed · A lost WebGL context keeps what was open, not only the camera
 
 - **The case** (the user, after ADR-1151: "finish the iPhone fix"). ADR-1151 boots again from the save at the camera
