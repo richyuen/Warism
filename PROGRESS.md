@@ -99,3 +99,11 @@
 - `gateReview.test.ts` asked for a list of known reds longer than none; `d547cda1` emptied it (ADR-1156), so the unit
   suite run in full was red on `main` from then (found by R227's gate, the first to run it in full: a change of
   `tests/helpers/aiSweep.ts`). It now asks for a list, and of each entry what it asked before.
+
+## 2026-11-26 — R229: `settleAtZoom` asks again for the section of a camera at rest
+
+- R227's run of the whole browser suite read 549 of 551: `relationsTap1938`'s footer test timed out at its boot under
+  eight workers (green alone, as at the release) and `fightSeen1938`'s Japan case timed out in `settleAtZoom`, alone
+  too. Not R227's: 3 of 3 red on the commit before it, 1 of 3 on `d547cda1`, the remote's head before this batch. The
+  trace: the camera at rest at 20 m/px, the section taken at 19.7, the subscription's key the one last asked with.
+  The helper now sends the view's subscription again in that state. `fightSeen1938` × 5: 10 of 10.

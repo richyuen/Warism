@@ -64,6 +64,16 @@ on separate P-cores (a ratio, not an absolute figure).
   (2.63 against 2.31 ms over three years of seed 99, `farPoint` 28 % of S's time). Kept by cell, as `cellPoint` keeps
   the land's. AT: three years of seed 99 at S end at HEAD's hash (`83341f24`) and tick at or under M's in the same
   arms; `farPoint` under 2 % of S's sampled time; the pin unchanged.
+- [x] R229 **`fightSeen1938`'s Japan case times out waiting for a section that is never asked for again** (found by
+  R227's run of the whole browser suite; red 1 of 3 on `d547cda1`, before this batch, and 3 of 3 and 2 of 2 on later
+  builds, on the GPU). `settleAtZoom` (ADR-1156) waits for a section taken within 1 % of the camera's m/px. A paused
+  view asks only when its subscription's key changes, and a flight's last stretch can end inside the key it last asked
+  with: a section of 19.7 m/px under a camera at rest at 20, and no other would come. AT: the Japan and the Germany
+  case 10 of 10 on the GPU; the whole browser suite green with it.
+  - Done: `settleAtZoom` sends the view's own subscription again while the camera is at rest and the section's zoom is
+    off (the worker answers with the section as it is). What the specs measure is unchanged. `fightSeen1938` both
+    cases × 5: 10 of 10. The whole browser suite, the gate's run: 550 of 551, `relationsTap1938`'s boot
+    timed out under eight workers and green alone (as at the release). No ADR (ADR-914: ADR-1156's helper mended).
 
 ## Released
 

@@ -43,12 +43,21 @@ export async function settle(page: Page, timeoutMs = 30_000): Promise<void> {
  * the test measured the figures of the zoom before (shipMarks1938's destroyers at 16.5 px). This
  * waits for the state itself, with a limit only for a section that never comes.
  *
+ * A camera at rest with the section of a moment before asks for it again (ROADMAP R229). A paused view
+ * asks the worker only when its subscription's key changes (`viewSubscription`: the tier, the zoom's power
+ * of two, the box in steps), and the last stretch of a flight can end inside the key it last asked with: the
+ * section it has is the right one, taken when the camera was a percent or two off, and no other would ever
+ * come (fightSeen1938's Japan case on the GPU: a section of 19.7 m/px under a camera at 20, 1 run in 3 on
+ * `d547cda1`). The view's own subscription is sent again; the worker answers with the section as it is now.
+ *
  * For a paused game, as `settle`.
  */
 export async function settleAtZoom(page: Page, timeoutMs = 60_000): Promise<void> {
   await page.waitForFunction(() => {
     const v = window.__warsim!.view!;
-    return Math.abs(v.elementsZoom / v.metresPerPx - 1) < 0.01;
-  }, null, { timeout: timeoutMs });
+    if (Math.abs(v.elementsZoom / v.metresPerPx - 1) < 0.01) return true;
+    if (!v.controller.animating && v.subscription) window.__warsim!.sim.subscribe(v.subscription);
+    return false;
+  }, null, { timeout: timeoutMs, polling: 250 });
   await settle(page, timeoutMs);
 }
