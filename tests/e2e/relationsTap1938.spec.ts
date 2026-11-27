@@ -27,6 +27,10 @@ test('a phone: the first tap after a drag, and after a pinch, selects the nation
   await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
   await page.evaluate(() => window.__warsim!.sim.step(24 * 365));
   await page.waitForFunction(() => (window.__warsim!.view?.lastTick ?? 0) >= 24 * 365, null, { timeout: 240_000 });
+  // The statistics of that year in (ROADMAP R232): they come a message behind the picture, some 0.1 s. A graph opened
+  // before them is laid out on the start's ties and then moved on to the year's from those places: another layout,
+  // in which the pinch below leaves no nation clear of the edge to tap. Under the suite's load three runs in five.
+  await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) >= 24 * 365, null, { timeout: 60_000 });
   const btn = page.getByTestId('relations-btn');
   await btn.scrollIntoViewIfNeeded();
   await btn.tap();

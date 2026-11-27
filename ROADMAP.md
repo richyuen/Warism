@@ -139,18 +139,39 @@ on separate P-cores (a ratio, not an absolute figure).
     Looser in one case, as the AT has it: a run whose one fault was such an error was red as it stood, and is now
     judged by the file's run alone. Not seen: Linux (the nightly run's unit stage is the first run there), and the
     ten-year suite's whole report.
-- [ ] R232 **`relationsTap1938`'s first test is red in three of five runs of the whole browser suite** (read in R230's
+- [x] R232 **`relationsTap1938`'s first test is red in three of five runs of the whole browser suite** (read in R230's
   runs). "a phone: the first tap after a drag, and after a pinch, selects the nation tapped": after the pinch its
   `node` finds no nation's circle inside the graph, and the tap has nothing to aim at (line 74, `n` null). So in the
   gate's run of 2026-11-26 and both whole runs of 2026-11-27, under eight workers; green alone both times it was run so (14 of 14),
   so the gate passes it. Where it passes in the suite it takes 40 to 45 s. AT: the cause named from the trace of a
   red run; the test 20 of 20 with the suite running beside it, measuring what it measures now.
+  - Done: the graph was opened before the year's statistics were in. They come a message behind the picture (0.1 s
+    alone); under load the tap on Relations wins, the graph is laid out on the start's ties (65 nodes) and moved on
+    to the year's from those places 30 ms later (73 nodes, 40 steps of the layout where a graph opened on the year's
+    gets 300), and in that layout the test's pinch leaves two nations in view, both within the 30 px it keeps from
+    the edge: none to tap. The spec waits for the statistics of the tick it stepped to, as `relations1938` does; its
+    gestures, its picks and what it expects are as they were. Read from the traces of six red runs (the test eight
+    times at once, 6 red of 8) against a green one: the same view at every step, the same 73 nations, other places
+    from the first snapshot on. The order of the two messages is not in a trace: read from a copy of the test that
+    logs them (four of eight at once opened on tick 0's statistics, each red), and forced on a quiet machine
+    (Relations opened first, then the year stepped: red alone). With the wait: 8 of 8 eight at once, and 20 of 20
+    with the whole suite beside it (the suite at its 8 workers, the 20 at 4 more: each 47 to 59 s, the last done
+    seven minutes before the suite was). The suite's own copy, run after the 20 at the suite's own load, green too
+    (42 s; the spec 14 of 14). The suite, twelve pages at once while the 20 ran: 550 of 551 (`heroes1938`'s T2 and T3
+    test, run in that stretch, timed out a 60 s wait; green alone).
+    No ADR (ADR-914: a spec's wait, as its neighbour has it). The worker is as it was: `step` is the tests' call alone.
 - [ ] R233 **A change of SPEC.md runs no test of it** (found by R231's whole unit run). `specRefs.test.ts` reads
   SPEC.md from the disk and no import reaches it, so the gate, sized by imports, runs nothing for a SPEC line, and a
   name that does not exist goes to `main`: R94a's `chromeCover1938`, red in the nightly run of 2026-11-16; R231's own
   line was red in its whole run until the new file was in git's index, which the checker reads. AT: a change of
   SPEC.md runs `specRefs.test.ts` in `npm run check` (`gate.test.ts` holds the plan), and a file SPEC cites counts
   as soon as it is in the working tree, added or not.
+- [ ] R234 **Two more specs open the relations graph a year on without the year's statistics** (found by R232).
+  `relationsLabels1938.spec.ts` and `relationsNamed1938.spec.ts` step a year, wait for the picture's tick and open
+  the graph, as `relationsTap1938`'s first test did. Under load the graph is then laid out on the start's ties and
+  moved on (R232), so the labels they judge are of one layout or the other by the race. Both green so far. AT: each
+  waits for the statistics of the tick it stepped to; eight at once each is green, and its graph's places are the
+  same in every run (a digest of the nodes' places, as R232's probe read them).
 
 ## Released
 

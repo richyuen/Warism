@@ -217,3 +217,39 @@
   `npm run check:review` reads with the same code.
 - Filed from the whole run's second red: R233, a change of SPEC.md runs no test of it (`specRefs` is reached by no
   import; it has let a stale name through before, R94a's, red in the nightly run of 2026-11-16).
+
+## 2026-11-27 — R232: relationsTap1938's first test waits for the year's statistics before it opens the graph
+
+- Reproduced without the suite: the test eight times at once (`--repeat-each=8 --workers=8`, on the GPU): 6 red of 8,
+  each at line 74 with no nation to tap after the pinch, as in the suite's runs.
+- From the six red runs' traces (their DOM snapshots, read by a scratch parser) against a green run's alone: the view
+  is the same at every step (after the drag; after the pinch 309.9 392.1 106.7×150.0 at zoom 6.00), so the gestures
+  are not the cause. The graph has the same 73 nations, 6 wars and 114 lines; its places differ from the first
+  snapshot of the graph on, and do not move again within a run, the selections included. After the pinch the red
+  runs have two nations wholly in view, each within the 30 px the test keeps from the graph's edge (9 units of the
+  drawing at that zoom, by the graph's box of 355 × 500 px: n27 3 units inside it at the right, n80 7 at the
+  bottom); the green run has n1 and n7 near the middle.
+- Why the places differ is not in a trace. From a scratch copy of the test that logs the worker's statistics and the
+  graph's places (a config of its own, its own output folder): alone the year's statistics come 113 ms after the
+  picture's tick and the graph opens at 304 ms. Eight at once, four runs opened the graph on the statistics of tick 0
+  (65 nodes) and had the year's 28 to 39 ms later, which moved the graph on from the start's places (73 nodes): no
+  nation to tap in each. The other four opened on the year's and found n7. The order forced on a quiet machine with
+  one worker (Relations opened first, the year stepped after): the same places, and no nation.
+- Read in the code: the statistics trail the step's reply by a turn of the worker's timer. `maybeStats` in `handle`
+  is given the time the step arrived, a tenth of a second after the start's statistics and inside their throttle of
+  a second, so the pump sends them. `step` has no caller in `src` outside the worker: no player meets it, and the
+  worker is left as it is.
+- The spec now waits for the statistics of the tick it stepped to, as `relations1938.spec.ts` does. Its gestures, its
+  picks and what it expects are as they were: it sees the layout of its green runs every time.
+- Eight at once again: 8 of 8. With the whole browser suite beside it (the suite at its 8 workers, the test 20 times
+  at 4 more, started 33 s after it; a preview server of the run's own, the 20 in their own output folder): 20 of 20,
+  each 47 to 59 s, the last done seven minutes before the suite was. The suite's own copy of the test ran after the
+  20 were done, at the suite's own load: green in 42 s, the spec's 14 tests all green. The suite itself (12.1 min,
+  twelve pages at once for the 4.6 min of the 20): 550 of 551; `heroes1938.spec.ts:169` ran in that stretch (from
+  266 s to 326 s of the suite, the 20 from 30 s to 308 s), timed out a 60 s wait, and is green alone (50 s). None of
+  the suite's traces was lost (no ENOENT in its log).
+- By hand: `npx playwright test tests/e2e/relationsTap1938.spec.ts:24 --project=chromium --repeat-each=8 --workers=8`
+  before and after; the same with `--repeat-each=20 --workers=4 --output=<a folder of its own>` beside
+  `npx playwright test --project=chromium --project=swiftshader`; `tests/e2e/heroes1938.spec.ts:169` alone.
+- The same wait is missing in two specs that are green, `relationsLabels1938` and `relationsNamed1938`: filed as
+  R234, not changed here.
