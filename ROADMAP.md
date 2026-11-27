@@ -335,6 +335,33 @@ on separate P-cores (a ratio, not an absolute figure).
     200 samples) and, with the rule, on 37701 and 38701. Left, R243: guests on a front fought beside them (Germany's
     and Romania's on Finland's land in 1944) are set down a cell back each morning as the Soviet Union takes the
     cell they stood on: five days running at the most on the own seed, seven on seed 5.
+- [ ] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
+  that takes it** (found by R239; to be done by the rule the user chose on 2026-11-27, "Yes try it", ADR-1167; put
+  first of the open items by the builder, so that "continue" takes it: the order is not the user's ruling). A hold
+  is between two nations wherever they stand (ADR-929). The Finnish front's hold ends on 9 June
+  1944 and the Soviet Union fights Finland freely to the armistice of 19 September, taking its land cell by cell;
+  the Eastern Front's hold (Germany, Italy, Romania, Hungary against the Soviet Union) stands to May 1945. So
+  German and Romanian formations on Finland's land neither fight for the cell they stand on nor leave it. Since
+  R239 the track sets such a formation down on Finland's next cell at the day's first hour, and that cell is taken
+  by 08:00 the same day (read hour by hour, 20 to 22 August 1944: a German and a Romanian formation; a Finnish one
+  the same on Germany's land on 18 November 1941, before the Eastern Front's hold). On the replay's own seed five
+  days running at the most; on seed 5 a Romanian formation seven days running to 22 August 1944 (`WARNING
+  historyTrack`: `left`). The rule to try, the small version of ADR-1167's cure: a formation on the land of an ally
+  in its war is held, or not, as that ally is against the foe it faces there (where it stands decides, not whose
+  it is). So a German on Finland's land fights the Soviet Union beside Finland from 9 June 1944, and one on an
+  ally's frozen front is frozen there, its own nation's front free or not. ADR-1167 lists what the item settles,
+  and first of all whether a cell still goes to the foe under a guest that defends it (territory asks by the cells'
+  holders: if it does, opening combat alone is not enough, and the guest counts for its host there or retreats as
+  its host's formations do); then: combat asks by the formations' nations and has their cells; planning and ways
+  ask by the pair; R239's look and the checker's `left` must not take a guest out of its fight. AT: a test
+  red before (a guest on an ally's land whose front with a foe is free, its own nation held off from that foe: it
+  fights for the cell beside its ally; one on an ally's frozen front does not, its own nation's front free); on
+  the replay's six seeds no `left` or `stand` line and no warning (seed 5's gone); the replay's ten-year tests
+  green, their figures named against R239's run (kept in `.cache/r239/r239_all.log.txt`, or run again on R239's
+  commit); the census's bars on
+  seeds 1938, 37701 and 38701 (both engaged at 9 large land fronts or more on the own seed, Uranus engaged at its
+  hour, D-Day in a third of its samples, the Sixth Army near Stalingrad); the tick logged; the pin unchanged. If a
+  bar is missed: a BLOCKERS entry, and the choice back to the user (park R243, or ADR-1167's full cure).
 - [ ] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
   all the same** (found by R236's review). A command applied while the replay runs ends it (R62j), and
   `moveFormation` counts as applied whether or not its order is given (a refused order is told by `MoveRejected`).
@@ -386,20 +413,6 @@ on separate P-cores (a ratio, not an absolute figure).
   14 May 1940 1 of 60 at 1,000 m/px, 1 of 31 at 400, 6 of 60 at 1,500, 2 of 60 at 2,500 (before R241: 2 of 71, 3 of
   48, 3 of 71, 3 of 71). AT: on those scenes at those zooms every advancing formation in view is in a bold arrow
   (one cut away joins the arrow that cuts it, its men in that arrow's width); the frame budgets kept.
-- [ ] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
-  that takes it** (found by R239). A hold is between two nations wherever they stand (ADR-929). The Finnish front's
-  hold ends on 9 June 1944 and the Soviet Union fights Finland freely to the armistice of 19 September, taking its
-  land cell by cell; the Eastern Front's hold (Germany, Italy, Romania, Hungary against the Soviet Union) stands to
-  May 1945. So German and Romanian formations on Finland's land neither fight for the cell they stand on nor leave
-  it. Since R239 the track sets such a formation down on Finland's next cell at the day's first hour, and that
-  cell is taken by 08:00 the same day (read hour by hour, 20 to 22 August 1944: a German and a Romanian formation;
-  a Finnish one the same on Germany's land on 18 November 1941, before the Eastern Front's hold). On the replay's
-  own seed five days running at the most; on seed 5 a Romanian formation seven days running to 22 August 1944
-  (`WARNING historyTrack`: `left`). AT: the cause read (why a guest stands on a front it may not fight on: the AI's
-  stationing, or the hold's reach by the pair and not by the front); on the replay's six seeds no `left` line and
-  no warning; a test of a guest on an ally's land that a foe it is held off from takes (it fights beside its ally
-  there, or it is not stationed there, or it leaves for land that is not being taken: the choice an ADR); the
-  replay's ten-year tests green, the pin unchanged.
 
 ## Released
 

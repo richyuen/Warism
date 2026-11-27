@@ -643,3 +643,29 @@
   each run, `snapshot-perf` past its 90 s under the load, green alone (a steady snapshot 0.73 ms at the median,
   1.20 at the 95th; its budget 2). The pin of seed 99 is unchanged. No spec changed, so the browser stage was left
   out: the five above by hand.
+
+## 2026-11-27 — The loop stopped by the user; R243 by the small cure (ADR-1167), put first
+
+- The user stopped the loop (`/loop off`) after R239 and asked why each item finds new ones, then what the cure
+  is. Both answers are in ADR-1167: one root (the replay's freezes are by pair of nations, under rules written for
+  fronts that move), checks that look harder each time, every cause filed, the first report misread; and the cure,
+  a freeze by the border on the map, where a formation stands deciding and not whose it is.
+- Ruled by the user ("Yes try it"): R243 by the small version, a formation on an ally's land takes that ally's
+  front. The full cure is not taken. R243 is put first of the open items so that "continue" takes it: the builder's
+  ordering, not ruled (before it the builder had advised R240 first, the one a player can meet).
+- Not ruled: which of R240 and R242 are still fixed (asked, not answered). Open as filed, after R243.
+- The deploy of R239's push: success.
+- For the next sitting (the context cleared and the machine restarted, so nothing of this session's scratchpad is
+  counted on): the probes and scripts of R236 to R239 are in `.cache/r239/`, ignored by git. `strand.ts` (who
+  stands on a held foe's ground, by cause and pair), `second.ts` (three days hour by hour for one pair), `marks.ts`
+  (the replay's hash on marked days, the set-downs by pair), `may40.ts`, `look.ts`; `bundle4.mjs` bundles one of
+  them with files of the sim swapped for copies beside it (the before and after arms); `r236_all.sh` and
+  `r236_track.sh` run the replay's ten-year tests (ten files) and the checker's six, their logs into that folder;
+  `r236_compare.py` reads the figures of two such logs; `r239_time.sh` and `r239_profcmp.mjs` are the tick pairs
+  and the tick by system; `r239_census.mjs` sums two logs of `tools/diag/trackFronts.ts`. R239's own ten-year run
+  is `r239_all.log.txt` (its own-seed checker file is red there, on `left`'s first wording; the figures are the
+  code's), R236's `r236_all_v2.log.txt`; R239's census `fronts.after.log`, with 37701's and 38701's beside it.
+  In the logs kept there, `head` and `before` are the code before R239, and `rule` and `after` are R239's: R243's
+  "before". The copies of `track.ts` and the bundles made of them are deleted, so no arm of R239's is taken for
+  HEAD: an arm is made anew (`git show <commit>:src/sim/track.ts` into a copy beside `bundle4.mjs`, then the
+  bundle), and `r239_time.sh` and `r239_prof.sh` fail until their two bundles are built again.

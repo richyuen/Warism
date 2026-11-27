@@ -5,6 +5,57 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1167 · 2026-11-27 · the user's decision ("Yes try it") · R243 by a freeze that follows the ground under a guest; the full cure of the holds not taken now
+
+- **The case.** After R239 the user stopped the loop and asked why each item finds new ones. One report of the
+  arrows (R235) had become nine items (R235 to R243), six of them done. Answered: (1) one root: the replay freezes
+  fronts between pairs of nations (`hold`), and the rules of marching, planning and arrows were written for fronts
+  that move, so whatever waits for a front to move waits for ever at a frozen one (R236, R239, R243, and the arrows
+  that drew them); (2) each fix adds a rule to a checker that replays 1938 to 1991 on six seeds, and finds what was
+  there before (the 330 American formations of 1972; R237); of the nine only R240 was caused by a fix; (3) every
+  cause found is filed, three of the open items by the reviews before a push; (4) the first report was misread
+  (stuck marches, for the arrows' length at a far zoom: R241), and four items came of that. The sizes fall: about
+  150 marches stuck on a day (R236), 75,055 formation-days now 121 (R239), one formation for a week on one seed of
+  six (R243), 1 to 6 arrows of 60 (R242).
+- **The cure, as explained to the user.** The timeline's 81 holds name nations and dates and no place; four
+  questions are asked of them (`World.holds`, `holdsAt`, `holdsLand`, `holdsPlan`) in about a dozen places (combat,
+  territory, movement, the operational AI, the arrows). The full cure: a freeze is the closed border between the
+  land two sides hold. One question, of two cells: is the border between them closed (no shot, step, way, plan or
+  cell across it); nobody stands on its far side, seen to when a border closes or an event moves it; where a
+  formation stands decides, not whose it is. Its cost: the replay proved again from 1938 (every bar, six seeds),
+  several sittings, and the corner cases of a new course; it does not touch R240 or R242.
+- **Put to the user:** the small version, on R243 alone: a formation on the land of an ally takes that ally's front.
+  Said to be probably one item, and untried.
+- **Ruled** (the user, 2026-11-27: "Yes try it", and to set it up for a later "continue"). R243 is done by the
+  small version. The full cure is not taken now; it is the user's to raise again (it pays where more history is
+  scripted).
+- **The order is the builder's, not ruled.** R243 is put first of the open items in ROADMAP so that "continue"
+  takes it. Before that the builder had advised R240 first, the one a player can meet. The user may turn it back.
+- **Not ruled.** Which of R240 and R242 are still fixed: asked ("R240 only" or "all three"), not answered. Both stay
+  open as filed, after R243.
+- **For the item** (read from the code on R239; to settle there, not decided here):
+  1. First to read: whether a cell still changes hands under a formation that defends it. Territory asks by the
+     cells' holders (3 below), so the cell may go to the Soviet Union whatever the guest does. The ground under the
+     guest is then the foe's, no host is left to judge it by, the pair's freeze holds again, and the next morning's
+     look sets it down: the hop goes on. Opening combat alone would then miss the AT, and the item has a second
+     part: the guest's men count for its host in territory, or it retreats as its host's formations do.
+  2. Combat asks by the two formations' nations and has both cells (`combat.ts`: `world.holds(ma, mb)`, then
+     `holdsAt(ma, mb, cellOf(a), cellOf(b))`): there a guest can be judged as its host, the holder of the cell it
+     stands on, where that holder is on its side of the war.
+  3. Territory asks by the holders of the two cells already (`territory.ts`: `holdsLand(an, d, c)` with `an` the
+     neighbouring cell's holder): the Soviet Union takes Finland's cells whoever stands on them. Whether a guest's
+     men count for its host there is to read.
+  4. Planning and ways ask by the pair (`foesOf`, `frozenFront`, `passageOf`: `holdsPlan`). Whether a guest plans
+     and marches as its host does, or only fights where it stands, is the item's choice; the least change is the
+     second.
+  5. R239's look (`setDownLeft`) and the checker's `left` and `stand` call a formation held by the pair
+     (`holdsPlan`): a guest that may now fight where it stands is not left behind a line, and must not be set down
+     out of its fight.
+  6. The other way round holds too: a formation on an ally's frozen front is frozen there though its own nation's
+     front is free. A hold covers a side's puppets by their overlord (`Track.held`); the holds with `air` (R74h)
+     are not this item's.
+- **If it misses a bar:** a BLOCKERS entry, and the choice goes back to the user (park R243, or the full cure).
+
 ## ADR-1166 · 2026-11-27 · accepted · A formation the timeline leaves on a held foe's ground is set down behind the line at the day's first hour (R239)
 
 - **The case** (found by R236: ADR-1163's decision 4, ADR-1164). Across a front the track holds nobody fights on land
