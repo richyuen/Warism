@@ -118,3 +118,15 @@
   test is a second pin that every combat rule would move), and the kept test holds a reader against none.
 - The whole browser suite on the GPU: by hand 549 of 551 (R229's case, and `relationsTap1938`'s boot under eight
   workers); in the gate's run with R229 550 of 551, `relationsTap1938` green alone, as at the release.
+
+## 2026-11-26 — R228: the S map's water points are kept, and the mask's search is cheaper
+
+- Three years of seed 99 at S: 2.5 → 1.57 ms a tick, the same hash; S was slower than M (2.63 against 2.31 at the
+  profile) and is a quarter under it. M itself 2 to 3 % less. `World.seaPoint` keeps a coastal cell's point as
+  `cellPoint` keeps the land's; `farPoint` no longer reads the mask through `maskBit` for every pair of pixels.
+- A mask is shared by the worlds made on it and `addIslet` writes to it: it counts its changes now (`version`), and
+  the kept water points go with a change. `cellPoint`'s kept land points are as they were (no such guard; not touched).
+- The first gate run on it ended green with `worldTemplate.test.ts` never run: its worker ran out of memory comparing
+  the new kept points (they hold the mask) as a field outside the state. Mended in the test's list of derived fields;
+  the gate's blind spot for a crashed file is filed as R230, open. The second run: every file, no crash.
+- Batch 60's four items and R229 are done; R230 is open. The critic and a release when the user wants one (ADR-1139).

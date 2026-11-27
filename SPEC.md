@@ -388,7 +388,8 @@ As built (reviewed 2026-10-04; §2.5 has the details of saves and autosave):
     surely land, else at the cell's point (`cityStand`) [ADR-224];
   - *an element:* at its slot in the block, else at the first sure land on the way from the slot to
     its formation, searched in eighths (`slotPlace`); a formation on water keeps its slots;
-  - *a fleet:* at its water cell's sea point (`seaPoint`, `waterPoint`).
+  - *a fleet:* at its water cell's sea point (`seaPoint`, `waterPoint`), searched for once a cell and kept, as the
+    land's (`cellPoint`), for the mask as it is and the map's looping (R228).
   - Inland cells (their pixels and the ring round them all land) answer at once (`World.onLand`).
 - **Elevation:** ETOPO 2022 60″, box-averaged into Miller cells; levels 4096, 2048, 1024 and 512
   wide ship in `public/data/earth/` (`SHIP_MAX_W`) [ADR-13]. `manifest.json` lists every asset and

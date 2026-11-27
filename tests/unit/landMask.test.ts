@@ -282,3 +282,85 @@ describe('the coast the page keeps (PLAN 7.1l7)', () => {
     expect(c.blocks.length).toBe(32 * 8);
   });
 });
+
+// ROADMAP R228: `farPoint` reads the cell and the eight about it once and leaves a pixel that cannot win. The same
+// point as the search before, which held each pixel of the cell against every pixel of the square through `maskBit`.
+
+/** The search as it was before R228, kept here to be held against. */
+function farPointBefore(m: LandMask, mapW: number, cx: number, cy: number, wrapX: boolean, land: boolean): [number, number] | null {
+  const k = Math.round(m.w / mapW);
+  const x0 = cx * k;
+  const y0 = cy * k;
+  const at = (px: number, py: number): boolean => maskBit(m, wrapX ? ((px % m.w) + m.w) % m.w : px, py) === land;
+  let best = -1;
+  let bestMid = 0;
+  let bx = 0;
+  let by = 0;
+  for (let py = y0; py < y0 + k; py++) {
+    for (let px = x0; px < x0 + k; px++) {
+      if (!at(px, py)) continue;
+      let near = 2 * k * k + 1;
+      for (let qy = y0 - k; qy < y0 + 2 * k && near > 1; qy++) {
+        for (let qx = x0 - k; qx < x0 + 2 * k; qx++) {
+          if (at(qx, qy)) continue;
+          const d = (qx - px) * (qx - px) + (qy - py) * (qy - py);
+          if (d < near) near = d;
+        }
+      }
+      const mid = (2 * (px - x0) + 1 - k) ** 2 + (2 * (py - y0) + 1 - k) ** 2;
+      if (near > best || (near === best && mid < bestMid)) {
+        best = near;
+        bestMid = mid;
+        bx = px;
+        by = py;
+      }
+    }
+  }
+  if (best < 0) return null;
+  return [(bx + 0.5) / k, (by + 0.5) / k];
+}
+
+describe('the land and water points are the search’s before R228', () => {
+  /** A coast of bays, islets and ponds drawn from whole numbers: every kind of cell, the same in every engine. */
+  const rough = (mw: number, mh: number, k: number): LandMask =>
+    mask(mw, mh, k, (px, py) => {
+      const a = (px * 7 + py * 13) % 29;
+      const b = ((px >> 2) * 5 + (py >> 3) * 11) % 17;
+      const c = ((px >> 4) + (py >> 4) * 3) % 7;
+      return c < 3 ? a < 20 || b < 4 : b === 0 && a < 6;
+    });
+
+  for (const k of [4, 8, 16]) {
+    it(`${k} pixels to a cell: every cell of a rough map, looping and not`, () => {
+      const [mw, mh] = [24, 12];
+      const m = rough(mw, mh, k);
+      let both = 0;
+      let none = 0;
+      for (const wrap of [false, true]) {
+        for (let cy = 0; cy < mh; cy++) {
+          for (let cx = 0; cx < mw; cx++) {
+            const land = landPoint(m, mw, cx, cy, wrap);
+            const water = waterPoint(m, mw, cx, cy, wrap);
+            expect(land, `land ${cx},${cy} wrap ${wrap}`).toEqual(farPointBefore(m, mw, cx, cy, wrap, true));
+            expect(water, `water ${cx},${cy} wrap ${wrap}`).toEqual(farPointBefore(m, mw, cx, cy, wrap, false));
+            if (land && water) both++;
+            if (!land || !water) none++;
+          }
+        }
+      }
+      // Cells of both kinds and cells of one are among them.
+      expect(both).toBeGreaterThan(50);
+      expect(none).toBeGreaterThan(0);
+    }, 120_000);
+  }
+
+  it('all of one kind, and the map’s edges: the pixel nearest the middle, as before', () => {
+    for (const land of [true, false]) {
+      const m = mask(3, 3, 8, () => land);
+      for (let cy = 0; cy < 3; cy++) for (let cx = 0; cx < 3; cx++) for (const wrap of [false, true]) {
+        expect(landPoint(m, 3, cx, cy, wrap)).toEqual(farPointBefore(m, 3, cx, cy, wrap, true));
+        expect(waterPoint(m, 3, cx, cy, wrap)).toEqual(farPointBefore(m, 3, cx, cy, wrap, false));
+      }
+    }
+  });
+});

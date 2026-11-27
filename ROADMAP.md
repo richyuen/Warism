@@ -69,11 +69,22 @@ on separate P-cores (a ratio, not an absolute figure).
     hash of every number. `fireWanted1938.test.ts` (kept): with no reader no record is written and the state is the
     same; the worker asks for none at T0 and T1, for them at T2. The whole browser suite on the GPU, the gate's run:
     550 of 551 (`relationsTap1938`'s boot under eight workers, green alone).
-- [ ] R228 **On the S map a sailing fleet's water point is searched for each hour.** `World.seaPoint` asks the fine
+- [x] R228 **On the S map a sailing fleet's water point is searched for each hour.** `World.seaPoint` asks the fine
   mask on every call (`waterPoint`, `farPoint`), 16 × 16 pixels a cell on S against 8 × 8 on M: S ticks slower than M
   (2.63 against 2.31 ms over three years of seed 99, `farPoint` 28 % of S's time). Kept by cell, as `cellPoint` keeps
   the land's. AT: three years of seed 99 at S end at HEAD's hash (`83341f24`) and tick at or under M's in the same
   arms; `farPoint` under 2 % of S's sampled time; the pin unchanged.
+  - Done: `World.seaPoint` keeps each coastal cell's point (for the mask as it is, `LandMask.version`, which
+    `addIslet` counts up, and the map's looping), and `farPoint` reads the cell and the eight about it once and leaves a
+    pixel that cannot win: the kept points alone left it at 4.5 % of S (each cell's first search, the land's too), now
+    0.2 %. Three years of seed 99, arms at once and swapped. S: the hash `83341f24` on both, the tick 2.49 and 2.52 →
+    1.56 and 1.58 ms (−37 %), movement 1.03 → 0.21, ticks over 16 ms 686 → 199. M: the hash `32ec3f7f` on both, 2.15
+    and 2.14 → 2.07 and 2.11 ms. S a quarter under M (1.59 and 1.54 against 2.09 and 2.11, arms at once). `landMask.test`: the
+    search's points are those of the search before on every cell of rough maps at 4, 8 and 16 px a cell, looping and
+    not. `seaPointKept.test`: a point searched for once, and again after the mask or the looping changes.
+    `worldTemplate.test` lists the kept points among the derived fields (not listed, its comparison printed the 16 MB
+    mask they hold and its worker ran out of memory: R230). The pin unchanged. No ADR (a speed-up with no rule in
+    it, as R220).
 - [x] R229 **`fightSeen1938`'s Japan case times out waiting for a section that is never asked for again** (found by
   R227's run of the whole browser suite; red 1 of 3 on `d547cda1`, before this batch, and 3 of 3 and 2 of 2 on later
   builds, on the GPU). `settleAtZoom` (ADR-1156) waits for a section taken within 1 % of the camera's m/px. A paused
@@ -84,6 +95,13 @@ on separate P-cores (a ratio, not an absolute figure).
     off (the worker answers with the section as it is). What the specs measure is unchanged. `fightSeen1938` both
     cases × 5: 10 of 10. The whole browser suite, the gate's run: 550 of 551, `relationsTap1938`'s boot
     timed out under eight workers and green alone (as at the release). No ADR (ADR-914: ADR-1156's helper mended).
+- [ ] R230 **The gate calls a unit run green when a test file's worker crashed** (found by R228's first gate run).
+  `worldTemplate.test.ts`'s worker ran out of memory (R228's own slip, mended there); vitest reported "1 error" and
+  434 of 436 files with no test of that file red, and `npm run check` ran the one red test it had a name for again
+  alone and ended green: the file's five tests never ran. `gateReview.test.ts` holds "a file red with no test red"
+  and "a run failed with no red named", not a run with a red named and a file lost beside it. AT: a unit run that
+  loses a file (a fixture whose worker exits) is red unless that file, run again alone, passes; `gateReview.test.ts`
+  holds the case, and the same for a browser spec's worker.
 
 ## Released
 

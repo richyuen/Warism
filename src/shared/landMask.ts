@@ -22,6 +22,11 @@ export interface LandMask {
   w: number;
   h: number;
   bits: Uint8Array;
+  /**
+   * How often a bit of it has been changed (`addIslet`), absent while never: for a reader that keeps what
+   * it read of the mask (`World.seaPoint`, ROADMAP R228). A mask is shared by the worlds made on it.
+   */
+  version?: number;
 }
 
 /** The mask's bit at pixel (`px`, `py`); outside its rows there is no land. `px` is taken as it is: wrap it first. */
@@ -247,35 +252,61 @@ export function waterPoint(mask: LandMask, mapW: number, cx: number, cy: number,
   return farPoint(mask, mapW, cx, cy, wrapX, false);
 }
 
-/** Of the cell's pixels that are land (`land`) or water, the middle of the one furthest from the other kind (`landPoint`). */
+/** `farPoint`'s window, kept between calls (not state): 1 where a pixel of the cell and the eight about it is of the kind asked. */
+let farWindow = new Uint8Array(0);
+
+/**
+ * Of the cell's pixels that are land (`land`) or water, the middle of the one furthest from the other kind (`landPoint`).
+ *
+ * ROADMAP R228: the cell and the eight about it are read once into `farWindow`; each pixel of the cell was held against
+ * every pixel of that square through `maskBit`, 589,824 reads a cell on the S map (16 px a cell). And a pixel that is
+ * already nearer the other kind than the best found is left there: it cannot be the furthest. The same pixel wins, by
+ * the same whole numbers.
+ */
 function farPoint(mask: LandMask, mapW: number, cx: number, cy: number, wrapX: boolean, land: boolean): [number, number] | null {
   const k = Math.round(mask.w / mapW); // mask pixels to a cell
   const x0 = cx * k;
   const y0 = cy * k;
-  const at = (px: number, py: number): boolean => maskBit(mask, wrapX ? ((px % mask.w) + mask.w) % mask.w : px, py) === land;
+  const n = 3 * k;
+  if (farWindow.length < n * n) farWindow = new Uint8Array(n * n);
+  const win = farWindow;
+  for (let qy = 0; qy < n; qy++) {
+    const my = y0 - k + qy;
+    for (let qx = 0; qx < n; qx++) {
+      const mx = x0 - k + qx;
+      win[qy * n + qx] = maskBit(mask, wrapX ? ((mx % mask.w) + mask.w) % mask.w : mx, my) === land ? 1 : 0;
+    }
+  }
   let best = -1;
   let bestMid = 0;
   let bx = 0;
   let by = 0;
-  for (let py = y0; py < y0 + k; py++) {
-    for (let px = x0; px < x0 + k; px++) {
-      if (!at(px, py)) continue;
+  for (let py = 0; py < k; py++) {
+    for (let px = 0; px < k; px++) {
+      if (win[(py + k) * n + px + k] !== 1) continue;
       // The square of the distance to the nearest pixel of the other kind in the window, in pixels.
       let near = 2 * k * k + 1;
-      for (let qy = y0 - k; qy < y0 + 2 * k && near > 1; qy++) {
-        for (let qx = x0 - k; qx < x0 + 2 * k; qx++) {
-          if (at(qx, qy)) continue;
-          const d = (qx - px) * (qx - px) + (qy - py) * (qy - py);
+      for (let qy = 0; qy < n && near > 1 && near >= best; qy++) {
+        const dy = qy - (py + k);
+        const row = dy * dy;
+        // No pixel of this row is nearer than what is found.
+        if (row >= near) continue;
+        const o = qy * n;
+        for (let qx = 0; qx < n; qx++) {
+          if (win[o + qx] === 1) continue;
+          const dx = qx - (px + k);
+          const d = dx * dx + row;
           if (d < near) near = d;
         }
       }
+      if (near < best) continue;
       // Twice the distance from the cell's middle, squared, in half pixels: whole numbers.
-      const mid = (2 * (px - x0) + 1 - k) ** 2 + (2 * (py - y0) + 1 - k) ** 2;
+      const mid = (2 * px + 1 - k) ** 2 + (2 * py + 1 - k) ** 2;
       if (near > best || (near === best && mid < bestMid)) {
         best = near;
         bestMid = mid;
-        bx = px;
-        by = py;
+        bx = x0 + px;
+        by = y0 + py;
       }
     }
   }
@@ -311,6 +342,7 @@ export function addIslet(mask: LandMask, mapW: number, cx: number, cy: number): 
       mask.bits[i >> 3] = mask.bits[i >> 3]! | (1 << (i & 7));
     }
   }
+  mask.version = (mask.version ?? 0) + 1;
   return true;
 }
 

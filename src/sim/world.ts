@@ -1273,6 +1273,11 @@ export class World {
     return [p[0], p[1]];
   }
 
+  /** Derived (not state): the water points `seaPoint` has searched for, by cell, and the mask and looping they are of. */
+  private readonly seaPoints: { points: Map<number, [number, number] | null>; mask: LandMask | null; version: number; loop: boolean } = { points: new Map(), mask: null, version: 0, loop: false };
+  /** How often `seaPoint` has searched the mask for a cell's water point (`waterPoint`): for a test and the tools. Not state. */
+  seaPointSearches = 0;
+
   /**
    * Where a fleet stands in the water cell `cell` (PLAN 4.2b): its middle, or where the fine
    * mask has land there the cell's water point (the point of it furthest from land); null for
@@ -1284,9 +1289,28 @@ export class World {
     const cy = (cell - cx) / w;
     const mask = this.landMask;
     if (!mask) return [cx + 0.5, cy + 0.5];
+    const loop = this.settings.loopingMap;
     // The middle is a corner of four pixels: open water when none of them is land.
-    if (maskField(mask, w, h, cx + 0.5, cy + 0.5, this.settings.loopingMap) === 0) return [cx + 0.5, cy + 0.5];
-    return waterPoint(mask, w, cx, cy, this.settings.loopingMap);
+    if (maskField(mask, w, h, cx + 0.5, cy + 0.5, loop) === 0) return [cx + 0.5, cy + 0.5];
+    // A coastal cell's point is searched for once (ROADMAP R228), as `cellPoint` keeps the land's: the search reads
+    // every pixel of the cell against the nine cells' about it, 16 × 16 against 48 × 48 on the S map, and a fleet under
+    // way asked it each hour of each cell of its step (28 % of S's tick). Kept for the mask as it is and the map's
+    // looping: the points go when either changes.
+    const kept = this.seaPoints;
+    const version = mask.version ?? 0;
+    if (kept.mask !== mask || kept.version !== version || kept.loop !== loop) {
+      kept.points.clear();
+      kept.mask = mask;
+      kept.version = version;
+      kept.loop = loop;
+    }
+    let p = kept.points.get(cell);
+    if (p === undefined) {
+      this.seaPointSearches++;
+      p = waterPoint(mask, w, cx, cy, loop);
+      kept.points.set(cell, p);
+    }
+    return p === null ? null : [p[0], p[1]];
   }
 
   /**
