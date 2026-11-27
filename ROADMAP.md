@@ -242,7 +242,7 @@ on separate P-cores (a ratio, not an absolute figure).
     checker ask between ticks. The AT's two days by its letter: from ground not the held foe's, none and none;
     on the held foe's own ground five British divisions by the Polish Corridor on 23 November and three on 14
     December still stand a week or more with one order. Ticked on the reading that "behind a held front" is on
-    one's own side of it (ADR-1164, proposed, the user's decision); those divisions are R239's.
+    one's own side of it (ADR-1164, the user's decision: "Keep the tick"); those divisions are R239's.
 - [x] R237 **A question asked of the historical track between two ticks changes the replay's course** (found by
   R236's probes: two runs of the replay under one rule stood on different hashes on 23 November 1939, one of them
   asking `holdsPlan` once a day). The track keeps the stages whose days of fighting are open in an hour

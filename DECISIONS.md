@@ -69,7 +69,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   `advancing1938h.test.ts` (on the 1938 map: a march presses on the first of the enemy's cells along its route; one
   over its own land whose line lies over a corner of the enemy's is none, where the line's rule said an advance).
 
-## ADR-1164 · 2026-11-27 · proposed, the user's decision · R236's two days are read "from ground not the foe's"; the divisions on the foe's own ground are R239's
+## ADR-1164 · 2026-11-27 · the user's decision ("Keep the tick") · R236's two days are read "from ground not the foe's"; the divisions on the foe's own ground are R239's
 
 - **The case.** R236's AT: "on that day and three weeks on no land formation behind a held front has stood 7 days
   with one order whose way is over the held foe's land". On R236's code the replay has, on 23 November and 14
@@ -84,8 +84,10 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Why it is not R236's.** A way from closed ground walks on it (ADR-149), so the way of such a march made again
   is the same way. What frees those formations is another rule (to walk out as a march home does, ADR-222, or to
   be set down on their own side's land as at a stage, R66c), with decisions of its own to check.
-- **The user's to rule on.** Keep the tick, and R239 takes the rest as filed; or read the AT by its letter, and
-  R236 is open again until R239 is done.
+- **Put to the user:** keep the tick, and R239 takes the rest as filed; or read the AT by its letter, and R236 is
+  open again until R239 is done.
+- **Ruled** (the user, 2026-11-27: "Keep the tick"). R236 stays ticked on that reading. The formations on a held
+  foe's own ground are R239's, as filed.
 
 ## ADR-1163 · 2026-11-27 · accepted · No way over the land of a foe whose front the historical track holds (R236)
 

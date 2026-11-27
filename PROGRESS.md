@@ -552,3 +552,11 @@
   at 400, 3 of 71 and 6 of 60 at 1,500. A handful both times, by `cutAtCrossing`: filed as R242. SPEC's sentence
   says what the spec measured, on its two fronts: the free game's worst arrow is 1.47 cells past the front against
   the bar of 1.5 (an arrow is a straight line to the cell pressed and may clip another of the enemy's first).
+
+## 2026-11-27 — ADR-1164 ruled: R236's tick stays
+
+- The user, asked twice whether R236 stays ticked on the reading its tick rests on (a formation "behind a held
+  front" is on its own side of it) or is open again until R239 is done: "Keep the tick". ADR-1164 is the user's
+  decision; ROADMAP's R236 names it. The formations that wait on a held foe's own ground are R239's, as filed.
+- Open in Batch 61: R239 (those formations), R240 (a God Mode march across a held front) and R242 (an advance whose
+  arrow is cut away). The loop is stopped since the usage limit of this morning: the user's to start again.
