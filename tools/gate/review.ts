@@ -8,7 +8,8 @@
  * SwiftShader (about 40 minutes a chunk), and the perf spec on its own project. A unit,
  * sweep or browser test that fails is run again alone (its file, one worker) once; red is what
  * fails both times. A file whose worker was lost and a browser test that did not run are red in
- * their run as a failed test is (ROADMAP R230, ADR-1159: `vitestRed`, `playwrightRed`, `again`).
+ * their run as a failed test is (ROADMAP R230, ADR-1159: `vitestRed`, `playwrightRed`, `again`), and
+ * so is the file of an error vitest caught outside the tests (ROADMAP R231, ADR-1160: `errorRed`).
  * Each step's result is written to `.cache/gate/review.json` under the code key
  * as soon as it is done, so a run cut off goes on where it stopped (`npm run check:review` again).
  *
@@ -22,6 +23,7 @@ import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { GPU, SUITE } from './render';
+import { ERRORS_ENV, type RunError } from './vitestErrors';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const DIR = path.join(ROOT, '.cache/gate');
@@ -96,6 +98,35 @@ export function vitestRed(report: { testResults?: { name: string; status?: strin
     for (const a of tests) if (a.status === 'failed') out.push(`${file} › ${a.fullName}`);
     const lost = tests.length === 0 || tests.some((a) => a.status === 'pending');
     if (lost || (out.length === before && f.status === 'failed')) out.push(`${file} › ${FILE_RED}`);
+  }
+  return out;
+}
+
+/** The files the pool's error of a lost worker names, in its last words: "… while running test file(s) <a>, <b>". */
+const LOST_WORKER = / while running test files? (.+)$/;
+
+/**
+ * The red ids of the errors vitest caught outside the tests of a run (ROADMAP R231, ADR-1160), as the gate's reporter
+ * wrote them (`vitestErrors.ts`): a rejection nothing handled, an exception out of a timer, a worker lost. vitest
+ * fails the run for each and its JSON report has no trace of them: the tests of the file pass.
+ *
+ * An error is red as its file is, as a whole (`FILE_RED`): the file whose worker it came from, where vitest names it,
+ * or the file a lost worker was running, by the pool's own words (the file `vitestRed` reads from the report's
+ * shape: one id for the two). Run again alone, that file is to be
+ * clean (`again`). An error with no file to its name is the run's own (`stage:<stage>`), and no run alone clears it: a
+ * rejection with a value that is no Error; a worker that went as it started, whose file is in no report at all. Read
+ * on vitest 5.0.3, and held by fixtures run for real in `gateReview.test.ts`: a lost worker told another way turns
+ * R230's fixture red by its run.
+ */
+export function errorRed(errors: readonly RunError[], stage: string): string[] {
+  const out: string[] = [];
+  const add = (id: string): void => {
+    if (!out.includes(id)) out.push(id);
+  };
+  for (const e of errors) {
+    const files = e.path !== undefined ? [e.path] : (LOST_WORKER.exec(e.cause ?? '') ?? LOST_WORKER.exec(e.message ?? ''))?.[1]?.split(', ') ?? [];
+    if (files.length === 0) add(`stage:${stage}`);
+    for (const f of files) add(`${path.relative(ROOT, f).split(path.sep).join('/')} › ${FILE_RED}`);
   }
   return out;
 }
@@ -233,19 +264,34 @@ function readJson<T>(file: string): T | null {
   }
 }
 
-/** The command of a vitest run with a JSON report to `out`: `verb` is `run`, or `related --run` (ADR-427). */
+/** The gate's reporter, as vitest takes one from the root: the errors of a run outside its tests (`vitestErrors.ts`). */
+const ERRORS_REPORTER = './tools/gate/vitestErrors.ts';
+
+/**
+ * The command of a vitest run with a JSON report to `out`, and the gate's reporter beside vitest's two: `verb` is
+ * `run`, or `related --run` (ADR-427).
+ */
 export function vitestCommand(verb: string, config: string, out: string, files: string[]): string {
-  return `npx vitest ${verb} ${config} --reporter=default --reporter=json --outputFile=${out} ${files.join(' ')}`;
+  return `npx vitest ${verb} ${config} --reporter=default --reporter=json --outputFile=${out} --reporter=${ERRORS_REPORTER} ${files.join(' ')}`;
 }
 
-/** A vitest run (`config` '' for the unit tests) of `files` (all when empty): its red ids, or null when it wrote no report. */
+/**
+ * A vitest run (`config` '' for the unit tests) of `files` (all when empty): its red ids, the tests' and those of the
+ * errors outside them, or null when it wrote no report, or none of its errors.
+ */
 function vitest(config: string, files: string[], stage: string, verb = 'run', at: RunAt = {}): string[] | null {
   const out = at.out ?? path.join(DIR, 'vitest.json');
+  // The errors' file is named for each run, beside its report: a run inside another (a fixture's, from a test of the
+  // gate's own run) must not write to the file of the one about it.
+  const errors = out.replace(/\.json$/, '') + '.errors.json';
   mkdirSync(path.dirname(out), { recursive: true });
   rmSync(out, { force: true });
-  const ok = run(vitestCommand(verb, at.config === undefined ? config : `${config} ${at.config}`.trim(), out, files), undefined, at.quiet);
+  rmSync(errors, { force: true });
+  const ok = run(vitestCommand(verb, at.config === undefined ? config : `${config} ${at.config}`.trim(), out, files), { [ERRORS_ENV]: errors }, at.quiet);
   const r = readJson<Parameters<typeof vitestRed>[0]>(out);
-  return r === null ? null : runRed(vitestRed(r), ok, stage);
+  const e = readJson<RunError[]>(errors);
+  // A lost file is told twice, by the report's shape and by the pool's error: one id.
+  return r === null || e === null ? null : runRed([...new Set([...vitestRed(r), ...errorRed(e, stage)])], ok, stage);
 }
 
 /** A Playwright run: its red ids, or null when it wrote no report. */
@@ -267,15 +313,20 @@ function playwright(args: string, stage: string, at: RunAt = {}): string[] | nul
  *   run of its tests to hold the second against. Alone all of it is to pass: whatever its run alone names red is red.
  * - A run alone that wrote no report, or failed with nothing of the file named (its own `stage:` id), has not passed
  *   the file: what was red of it stays red.
+ * - So with a run alone in which the file is red as a whole (ROADMAP R231, ADR-1160): its worker was lost there, it
+ *   did not load, or it left an error outside its tests, which the run alone told as its own failure until the gate
+ *   read such errors by their file. A test that passed beside that has not cleared its red.
  */
 export function again(first: string[], rerun: (file: string) => string[] | null): string[] {
   // A run's own failure is no file's to run again: red as it stands.
   const red: string[] = first.filter((t) => t.startsWith('stage:'));
   for (const file of [...new Set(first.filter((t) => !t.startsWith('stage:')).map(fileOf))]) {
     const mine = first.filter((t) => fileOf(t) === file);
+    const whole = `${file} › ${FILE_RED}`;
     const second = rerun(file);
     if (second === null || second.some((t) => t.startsWith('stage:'))) red.push(...mine);
-    else if (mine.includes(`${file} › ${FILE_RED}`)) red.push(...second);
+    else if (mine.includes(whole)) red.push(...second);
+    else if (second.includes(whole)) red.push(...mine);
     else red.push(...mine.filter((t) => second.includes(t)));
   }
   return red;

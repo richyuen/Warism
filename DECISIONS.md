@@ -5,6 +5,70 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1160 · 2026-11-27 · accepted · An error vitest caught outside the tests is red: as its file, or as the run (R231)
+
+- **The case** (found by R230's fixtures). vitest fails a run for an error it catches outside the tests, a rejection
+  nothing handled or an exception out of a timer, while the tests of the file pass ("Errors 1 error", exit 1). It
+  hands such errors to its reporters at the run's end, and its JSON reporter, whose report the gate reads, leaves
+  them out. The gate took a failed run for the stage's own red only when the report named nothing: beside a test red
+  by name that passed alone it ended green, as with R230's lost file. Read on fixtures (vitest 5.0.3):
+  - an Error rejected or thrown while a test file's worker runs comes with that file's full path, and the test that
+    was running;
+  - a rejection with a value that is no Error (a string) comes with no file;
+  - a lost worker's error (R230) is the pool's, one a worker, with no file as a field: its cause's message ends
+    "while running test file <path>";
+  - a worker that goes as it starts (a node flag it does not know) gives the pool's error with no file in it at all
+    ("during starting state"), and the report leaves its file out altogether: no test of it, and no file. R230's
+    reading of the report's shape cannot see that file;
+  - `process.exit` in a test fails that test by its name. A timer that throws after the file's last test, and a
+    worker that goes after it, leave no error at all (exit 0, every test passed).
+- **Decision.**
+  1. The gate's vitest runs take a reporter of the gate's own beside vitest's two (`tools/gate/vitestErrors.ts`). It
+     writes the run's errors outside its tests to a file beside the JSON report, which the gate names for each run. A
+     report with no such file is no report: the run is the stage's red.
+  2. An error with a test file to its name is red as that file, as a whole (`<file> › (the file)`), beside whatever
+     the report names (`errorRed`). The file a lost worker was running is read from the pool's words: the id R230
+     reads from the report's shape.
+  3. Such a file is run again alone as ADR-1159 (3) has it, and is red unless that run is clean: its tests passed,
+     and no error of it caught.
+  4. An error with no file to its name is the run's own red (`stage:test`), which no run alone clears.
+  5. A run alone in which the file is red as a whole clears no red of it: what was red of the file stays red
+     (`again`). Until (2) a run alone that left an error named nothing and was its own failure, which ADR-1159 (4)
+     held; read by its file it would have cleared a test red by name that passed beside it, the hole of this item one
+     run later.
+- **Consequences.**
+  - A file that leaves an error behind in every run is red by its name, with a red test beside it or not. Until now
+    it was red only when the run named nothing else (as `stage:test`).
+  - Looser in one case, as R231's AT has it: a run whose one fault was such an error was red as it stood. It is now
+    judged by the file's run alone, and an error that comes only under the load of the parallel run is not red, as a
+    timing test is not (ADR-423).
+  - Stricter in one: an error with no file is red as it stands, with a red named beside it or not. So a worker that
+    did not start fails the run, as it did before R230 when nothing else was red: its file is in no report, and there
+    is none to run again.
+  - Stricter in a second, by (5): a test red by its name whose file loses its worker in the run alone, or does not
+    load there, stays red. It did not run there; until now it was green. The browser stage's runs alone are judged by
+    the same `again`.
+  - The gate reads the pool's wording of a lost worker. A vitest that words it another way gives `stage:test` for
+    every lost worker, and R230's fixture test turns red by it.
+  - The same reader serves `npm run check:review`, its ten-year step, and the nightly run's unit stage.
+  - Not covered: what vitest tells no reporter of (a timer that throws after the file's last test).
+- **Read.** `gateReview.test.ts`: `errorRed`'s shapes, and the unit stage run for real (`unitRedTwice`, `RunAt`) on two
+  fixtures written under `.cache/gate`, each with a test red in the first run and green alone. One has a file that
+  leaves a rejection behind in every run (red: the file) and a file whose timer throws in the first run alone (run
+  again alone, clean: not red); the other a rejection of a value that is no Error (red: `stage:test`; the red test's
+  file alone is run again). A fixture's file leaves a mark when it is run again, so the test tells a file cleared
+  from one never noticed. On HEAD's reader both runs name nothing red. (5): a shape, and a fourth file of the first
+  fixture, red by its name in the first run, whose test passes alone and leaves a rejection (red: that test); both
+  red on this item's reading before (5). R230's fixture expects what it did and holds the pool's wording of a lost
+  worker: no `stage:test` among its reds. The worker that did not start was read by a probe (a node flag it does not
+  know: two files, neither in the report, two errors with no file) and is held as a shape. Healthy runs record no
+  error, read before (5), which changes no first run's reading: the whole unit suite with the reporter (510 files,
+  2,652 tests: no error, no file red as a whole; two tests red by name, the timing test `snapshot-perf` and
+  `specRefs`, whose SPEC line cited the reporter before git knew the file), the pin of seed 99 under the sweep config
+  (one test), and a related run that reaches no test (both files written, nothing red). A change of the reporter
+  alone reaches `gateReview.test.ts` (`review.ts` imports the variable's name from it). Not read: the ten-year
+  suite's whole report, and any run on Linux.
+
 ## ADR-1159 · 2026-11-27 · accepted · What did not run is red: a unit file whose worker was lost, a browser test that did not run (R230)
 
 - **The case** (R228's first gate run, 2026-11-26). The worker of `worldTemplate.test.ts` ran out of memory. vitest

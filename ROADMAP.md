@@ -114,12 +114,31 @@ on separate P-cores (a ratio, not an absolute figure).
     there names no red at all). No false alarm on the whole unit suite's report (510 files) or the whole browser
     suite's (551 tests). One change the AT asked for: a run that lost a file and named nothing else was red as it
     stood, and is now red only if the file fails alone too. The nightly run's unit stage reads with the same code.
-- [ ] R231 **The gate calls a unit run green when vitest caught an error outside the tests beside a red test** (found
+- [x] R231 **The gate calls a unit run green when vitest caught an error outside the tests beside a red test** (found
   by R230's fixtures). An unhandled rejection in a test file fails vitest's run ("Errors 1 error", exit 1) and leaves
   no trace in the JSON report the gate reads (the fixture's: 7 of 7 tests passed). With no red named the run is the
   stage's red; beside a test red by name that passes alone the gate ends green, as it did with R230's lost file. AT:
   a unit run with such an error beside a red that passes alone is red (by the file vitest says it came from, where it
   names one), unless that file's run alone is clean; `gateReview.test.ts` holds it with a fixture run for real.
+  - Done (ADR-1160): vitest hands such errors to its reporters alone, and its JSON reporter leaves them out; the
+    gate's vitest runs take a reporter of the gate's own beside it (`tools/gate/vitestErrors.ts`), which writes them
+    to a file beside the report. An error with a test file to its name (an Error rejected or thrown while that file's
+    worker runs; a lost worker, by the pool's words) is that file's red as a whole, run again alone and red unless
+    that run is clean (`errorRed`). One with none is the run's own red, which no run alone clears:
+    a rejection of a value that is no Error, and a worker that went as it started, whose file is in no report at all
+    (R230's reading of the report's shape cannot see it). `gateReview.test.ts`: the shapes, and the unit stage run for
+    real on two fixtures, each beside a test red in the first run alone: an error each time (red: the file) with one
+    in the first run alone (run again, clean, not red); an error of no file (red: `stage:test`). On HEAD's reader both
+    runs named nothing red. A run alone in which the file is red as a whole clears no red of it (`again`): read by
+    its file, an error left in the run alone would have cleared a test red by name beside it (found in review before
+    the push; a shape and a fourth file of the fixture hold it). R230's fixture holds the pool's wording: no
+    `stage:test` among its reds. Healthy
+    runs record no error: the whole unit suite with the reporter (510 files, 2,652 tests; two red by name, a timing
+    test and `specRefs` on this item's own SPEC line before git knew the new file), the pin under the sweep config, a
+    related run that reaches no test (both files written, nothing red).
+    Looser in one case, as the AT has it: a run whose one fault was such an error was red as it stood, and is now
+    judged by the file's run alone. Not seen: Linux (the nightly run's unit stage is the first run there), and the
+    ten-year suite's whole report.
 - [ ] R232 **`relationsTap1938`'s first test is red in three of five runs of the whole browser suite** (read in R230's
   runs). "a phone: the first tap after a drag, and after a pinch, selects the nation tapped": after the pinch its
   `node` finds no nation's circle inside the graph, and the tap has nothing to aim at (line 74, `n` null). So in the

@@ -172,3 +172,46 @@
   judged by the file's run alone, as the AT asked. A file that runs out of memory by what it does fails alone too.
 - Found beside it and filed, not done (R231): an unhandled rejection that loses no file, beside a red test that passes
   alone, still ends green. vitest's JSON report has no trace of it.
+
+## 2026-11-27 — R231: the gate reads the errors vitest caught outside the tests (ADR-1160)
+
+- Read in vitest's code (5.0.3): a run's unhandled errors go to its reporters at the run's end, and the JSON reporter
+  takes the test files alone. So a reporter of the gate's own beside it (`tools/gate/vitestErrors.ts`, given on the
+  command line as the other two are), which writes them to a file beside the report. The gate names that file for
+  each run (`GATE_VITEST_ERRORS`): a fixture's run inside the gate's own unit run would otherwise inherit the name
+  and write over the gate's.
+- Probes first, one run a case on a scratch fixture. An Error rejected or thrown while a file's worker runs comes
+  with the file's path; a rejection of a string with none; a lost worker's error is the pool's and names its file
+  only in its cause's last words. `process.exit` in a test fails the test by name; a timer that throws after the
+  file's last test, and a worker killed after it, leave no error (exit 0).
+- One more probe, of what R230 could not see: a worker that goes as it starts (a node flag it does not know). Two
+  errors with no file in them, and a report with neither file in it: no test, no file. Beside a red that passes alone
+  the gate would have ended green there too. So an error with no file is the run's own red (`stage:test`) and no run
+  alone clears it; one with a file is that file's red as a whole, judged by its run alone (`errorRed`).
+- `gateReview.test.ts`: three new tests (the shapes; the unit stage on two fixtures) and the command's. Red on HEAD's
+  reader: both fixture runs come back with nothing red. The fixtures now leave a mark when a file is run again,
+  R230's too: "run again and clean" read the same as "never noticed" before. R230's fixture expects what it did,
+  which holds the pool's wording (no `stage:test`).
+- The first version of the change moved the hole one run later, found in review before the push. A test red by its
+  name whose run alone passed it and left an error was cleared: that run now named `(the file)`, which the test's
+  own id is not, where before the change it named nothing, was its own failure, and kept the test red. `again` now
+  holds a run alone in which the file is red as a whole to have cleared nothing. Stricter by it in two cases that
+  were green: a worker lost in the run alone, a file that does not load there. A shape and a fourth file of the
+  fixture hold it, both red on the first version (18 of 18 on the change, 22 s alone).
+- Beside the tests, since this change's own gate runs the gate's tests alone (run before the rule of the run alone
+  and the fixture's fourth file, which change the gate's own tests and no other run's reading):
+  - the whole unit suite with the reporter: 510 files, 2,652 tests, no error recorded, no file red as a whole. Two
+    tests red by name: `snapshot-perf` (the timing test, as before) and `specRefs` §10, on my own SPEC line: the
+    checker reads git's index, and the new file was not in it yet. Green once added. The gate would not have run
+    that test for this change (no import reaches SPEC.md);
+  - the pin under the sweep config: one test, no error recorded;
+  - a related run that reaches no test (`CHANGELOG.md`): both files written, nothing red. A later commit of
+    documents and code no test reaches takes that path;
+  - a change of the reporter alone reaches the gate's tests (2 files, 31 tests): `review.ts` imports the variable's
+    name from it.
+- In that whole run `gateReview.test.ts` took 130 s of a worker's time (85 s before): its four fixture tests 47, 38,
+  15 and 29 s, 300 s allowed each. The fourth file adds one run alone to the second of them.
+- Looser in one case, as the AT has it: a run whose one fault was such an error was red as it stood, and is now
+  judged by the file's run alone. Stricter in one: an error with no file is red with a red named beside it or not.
+- Not seen: Linux (the nightly run's unit stage is the first run there), and the ten-year suite's whole report, which
+  `npm run check:review` reads with the same code.

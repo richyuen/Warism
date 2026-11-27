@@ -19,6 +19,8 @@
  * it one or two at a time, a different one each run, and pass alone. A file whose worker was lost
  * (out of memory, killed) is red in its run as a failed test is, and so is a browser test that did
  * not run; a file red as a whole must pass alone as a whole (ROADMAP R230, ADR-1159: `review.ts`).
+ * An error vitest caught outside the tests (a rejection nothing handled) is red as its file is, and
+ * as the run where vitest names no file for it (ROADMAP R231, ADR-1160: `vitestErrors.ts`).
  *
  * Of the sweep stage (ADR-278, the user's decision): every 10-year test only when git cannot tell
  * what changed, or FULL is set; otherwise only the pinned state

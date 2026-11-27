@@ -1,10 +1,10 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { SUITE } from '../../tools/gate/render';
-import { again, codeTree, E2E_CHUNK, e2eRedTwice, FILE_RED, judge, KNOWN, outOfKey, playwrightRed, reviewSteps, runRed, unitRedTwice, vitestCommand, vitestRed, type ReviewRecord, type RunAt } from '../../tools/gate/review';
+import { again, codeTree, E2E_CHUNK, e2eRedTwice, errorRed, FILE_RED, judge, KNOWN, outOfKey, playwrightRed, reviewSteps, runRed, unitRedTwice, vitestCommand, vitestRed, type ReviewRecord, type RunAt } from '../../tools/gate/review';
 
 // ADR-297 (the user's decision): the phase review's full run is recorded by `npm run check:review`
 // under a code key, and judged against a list of known reds, so that the commit that ticks the
@@ -32,10 +32,26 @@ function withFixture<T>(files: Record<string, string[]>, body: (dir: string, rel
   }
 }
 
-/** A fixture file's first lines: whether this is the first run of it (it leaves a mark beside itself). */
-const FIRST_RUN = ["const mark = import.meta.filename + '.ran';", 'const first = !existsSync(mark);', "if (first) writeFileSync(mark, '');"];
+/** A fixture file's first lines: whether this is the first run of it (it leaves a mark beside itself, and another when it is run again). */
+const FIRST_RUN = ["const mark = import.meta.filename + '.ran';", 'const first = !existsSync(mark);', "writeFileSync(first ? mark : mark + '.again', '');"];
 /** The fixture's worker goes, as one out of memory or killed does: at once, with nothing said. */
 const WORKER_GOES = "process.kill(process.pid, 'SIGKILL');";
+/** A fixture of unit tests: its config, and a test red by its name in the first run and green alone, as a timing test under the load of the run: the red the gate has a name for. */
+const UNIT_FIXTURE = {
+  'vitest.config.ts': ["import { defineConfig } from 'vitest/config';", '', "export default defineConfig({ test: { include: ['<rel>/unit/*.test.ts'], exclude: ['**/node_modules/**'], environment: 'node' } });"],
+  'unit/red.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { expect, it } from 'vitest';", ...FIRST_RUN, "it('red in the first run, green alone', () => {", '  expect(first).toBe(false);', '});'],
+};
+/**
+ * The gate's unit stage run on a fixture's files: its red ids (from the fixture's folder), and the files it ran again
+ * alone, of those that leave their mark (`FIRST_RUN`): the files red in the first run.
+ */
+const unitStage = (files: Record<string, string[]>): { red: string[]; again: string[] } =>
+  withFixture(files, (dir, rel) => {
+    const at: RunAt = { config: `--config ${rel}/vitest.config.ts`, out: path.join(dir, 'report.json'), quiet: true };
+    const red = unitRedTwice(undefined, at).map((t) => t.replace(`${rel}/`, '')).sort();
+    const again = readdirSync(path.join(dir, 'unit')).filter((f) => f.endsWith('.ran.again')).map((f) => f.replace('.ran.again', '')).sort();
+    return { red, again };
+  });
 
 const record = (done: Record<string, string[]>, steps = ['lint', 'test', 'e2e:1']): ReviewRecord => ({
   key: 'k',
@@ -82,8 +98,9 @@ describe('npm run check:review (ADR-297)', () => {
   });
 
   it('the related run is the related tests with a report, and a red file of it is run again alone (ADR-427)', () => {
-    expect(vitestCommand('related --run', '--passWithNoTests', 'r.json', ['src/a.ts', 'src/b.ts'])).toBe('npx vitest related --run --passWithNoTests --reporter=default --reporter=json --outputFile=r.json src/a.ts src/b.ts');
-    expect(vitestCommand('run', '', 'r.json', ['tests/unit/a.test.ts'])).toBe('npx vitest run  --reporter=default --reporter=json --outputFile=r.json tests/unit/a.test.ts');
+    // With the gate's own reporter beside vitest's two: the errors outside the tests (R231).
+    expect(vitestCommand('related --run', '--passWithNoTests', 'r.json', ['src/a.ts', 'src/b.ts'])).toBe('npx vitest related --run --passWithNoTests --reporter=default --reporter=json --outputFile=r.json --reporter=./tools/gate/vitestErrors.ts src/a.ts src/b.ts');
+    expect(vitestCommand('run', '', 'r.json', ['tests/unit/a.test.ts'])).toBe('npx vitest run  --reporter=default --reporter=json --outputFile=r.json --reporter=./tools/gate/vitestErrors.ts tests/unit/a.test.ts');
   });
 
   it('the ids of red tests: a vitest report by file and full name, a Playwright one by file and titles', () => {
@@ -195,9 +212,7 @@ describe('npm run check:review (ADR-297)', () => {
 
   it('the unit stage on a fixture whose workers go: a lost file is red unless it passes alone, beside a red that does (R230)', () => {
     const files = {
-      'vitest.config.ts': ["import { defineConfig } from 'vitest/config';", '', "export default defineConfig({ test: { include: ['<rel>/unit/*.test.ts'], exclude: ['**/node_modules/**'], environment: 'node' } });"],
-      // Red by its name in the first run and green alone, as a timing test under the load of the run: the red the gate had a name for.
-      'unit/red.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { expect, it } from 'vitest';", ...FIRST_RUN, "it('red in the first run, green alone', () => {", '  expect(first).toBe(false);', '});'],
+      ...UNIT_FIXTURE,
       // Its worker goes in a test of the first run; alone it passes.
       'unit/once.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { it } from 'vitest';", ...FIRST_RUN, "it('before', () => {});", "it('its worker goes in the first run', () => {", `  if (first) ${WORKER_GOES}`, '});', "it('after', () => {});"],
       // Its worker goes as the file loads, each time (as one out of memory does).
@@ -205,11 +220,87 @@ describe('npm run check:review (ADR-297)', () => {
       // Its worker goes as the file loads in the first run; alone it loads, and a test of it is red.
       'unit/then.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { expect, it } from 'vitest';", ...FIRST_RUN, `if (first) ${WORKER_GOES}`, "it('fine', () => {});", "it('red when it runs', () => {", '  expect(1).toBe(2);', '});'],
     };
-    const red = withFixture(files, (dir, rel) => {
-      const at: RunAt = { config: `--config ${rel}/vitest.config.ts`, out: path.join(dir, 'report.json'), quiet: true };
-      return unitRedTwice(undefined, at).map((t) => t.replace(`${rel}/`, ''));
-    });
-    expect(red.sort()).toEqual(['unit/then.test.ts › red when it runs', `unit/twice.test.ts › ${FILE_RED}`]);
+    const { red, again } = unitStage(files);
+    // No `stage:test` among them: vitest's error of each lost worker is read as that file's too (R231, `errorRed`).
+    expect(red).toEqual(['unit/then.test.ts › red when it runs', `unit/twice.test.ts › ${FILE_RED}`]);
+    // Each file red in the first run was run again alone (`twice` leaves no mark).
+    expect(again).toEqual(['once.test.ts', 'red.test.ts', 'then.test.ts']);
+  }, 300_000);
+
+  // ROADMAP R231 (ADR-1160). vitest fails a run for an error it caught outside the tests (a rejection nothing handled,
+  // an exception out of a timer) and its JSON report has no trace of it: beside a test red by its name that passed
+  // alone, the gate ended green. The gate's reporter (`tools/gate/vitestErrors.ts`) writes those errors beside the report.
+  it('an error vitest caught outside the tests is red: its file as a whole where it names one, else the run (R231)', () => {
+    // As vitest hands them to a reporter (5.0.3; the live runs below hold them against the vitest installed): a file by its full path.
+    const full = (f: string): string => path.join(ROOT, f).split(path.sep).join('/');
+    const pool = '[vitest-pool]: Worker forks emitted error.';
+    const red = errorRed(
+      [
+        // From a test file's worker: vitest names the file, and the test that was running.
+        { type: 'Unhandled Rejection', message: 'not caught', path: full('tests/unit/a.test.ts'), test: 'a' },
+        // Another of the same file: the file once.
+        { type: 'Uncaught Exception', message: 'from a timer', path: full('tests/unit/a.test.ts') },
+        // A lost worker (R230): the pool's error names the file in its cause's last words, as Windows says it and as Linux does.
+        { type: 'Unhandled Error', message: pool, cause: `Worker exited unexpectedly with exit code 1 during started state while running test file ${full('tests/unit/lost.test.ts')}` },
+        { type: 'Unhandled Error', message: pool, cause: `Worker exited unexpectedly with signal SIGKILL during started state while running test files ${full('tests/unit/b.test.ts')}, ${full('tests/unit/c.test.ts')}` },
+        // No file named: a rejection with a value that is no Error; a worker that went as it started, whose file the
+        // report leaves out altogether. The run's, once.
+        { type: 'Unhandled Rejection', message: 'a string' },
+        { type: 'Unhandled Error', message: pool, cause: 'Worker exited unexpectedly with exit code 9 during starting state' },
+      ],
+      'test',
+    );
+    expect(red).toEqual([`tests/unit/a.test.ts › ${FILE_RED}`, `tests/unit/lost.test.ts › ${FILE_RED}`, `tests/unit/b.test.ts › ${FILE_RED}`, `tests/unit/c.test.ts › ${FILE_RED}`, 'stage:test']);
+    expect(errorRed([], 'test')).toEqual([]);
+    expect(errorRed([{}], 'test:sweep')).toEqual(['stage:test:sweep']);
+  });
+
+  it('a run alone in which the file is red as a whole clears no red of it: an error left there, a worker lost there (R231)', () => {
+    const slow = 'tests/unit/a.test.ts › slow';
+    const whole = `tests/unit/a.test.ts › ${FILE_RED}`;
+    // Alone the test passes and the file leaves an error outside its tests. Until the gate read such errors by their
+    // file that run named nothing and was its own failure (`stage:test`), and the test stayed red: so it does.
+    expect(again([slow], () => [whole])).toEqual([slow]);
+    // The same of a file whose worker is lost alone, or that does not load there: the test did not pass, it did not run.
+    expect(again([slow], () => ['tests/unit/a.test.ts › other', whole])).toEqual([slow]);
+    // Another file's red as a whole is none of its: `again` asks of one file's run alone.
+    expect(again([slow, 'tests/unit/b.test.ts › x'], (f) => (f === 'tests/unit/b.test.ts' ? [`tests/unit/b.test.ts › ${FILE_RED}`] : []))).toEqual(['tests/unit/b.test.ts › x']);
+  });
+
+  /** A fixture's test that passes and leaves an error outside it (`what` raises it): vitest catches it while the test waits. */
+  const leaves = (what: string): string[] => ["it('passes, and leaves an error behind', async () => {", `  ${what}`, '  await new Promise((r) => setTimeout(r, 50));', '});'];
+
+  it('the unit stage on a fixture with errors outside its tests: such a file is red unless its run alone is clean, beside a red that passes alone (R231)', () => {
+    const files = {
+      ...UNIT_FIXTURE,
+      // A rejection nothing handles, each time; its test passes.
+      'unit/each.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { it } from 'vitest';", ...FIRST_RUN, ...leaves("void Promise.reject(new Error(first ? 'not caught' : 'nor alone'));")],
+      // An exception out of a timer, in the first run alone.
+      'unit/once.test.ts': ["import { existsSync, writeFileSync } from 'node:fs';", "import { it } from 'vitest';", ...FIRST_RUN, ...leaves("if (first) setTimeout(() => { throw new Error('from a timer'); }, 0);")],
+      // Red by its name in the first run; alone its test passes, and leaves a rejection behind.
+      'unit/after.test.ts': [
+        "import { existsSync, writeFileSync } from 'node:fs';",
+        "import { expect, it } from 'vitest';",
+        ...FIRST_RUN,
+        "it('red in the first run, and alone leaves an error behind', async () => {",
+        '  expect(first).toBe(false);',
+        "  void Promise.reject(new Error('alone'));",
+        '  await new Promise((r) => setTimeout(r, 50));',
+        '});',
+      ],
+    };
+    const { red, again } = unitStage(files);
+    // `after`'s test is not cleared by a run alone that left an error; `each` is red as a whole both times.
+    expect(red).toEqual(['unit/after.test.ts › red in the first run, and alone leaves an error behind', `unit/each.test.ts › ${FILE_RED}`]);
+    // Each of the four was red in the first run, `each` and `once` by their errors alone: run again alone, where `once` and `red` are clean.
+    expect(again).toEqual(['after.test.ts', 'each.test.ts', 'once.test.ts', 'red.test.ts']);
+  }, 300_000);
+
+  it('the unit stage on a fixture with an error vitest names no file for: the run is red, and no run alone clears it (R231)', () => {
+    // A rejection with a value that is no Error; its test passes.
+    const files = { ...UNIT_FIXTURE, 'unit/bare.test.ts': ["import { it } from 'vitest';", ...leaves("void Promise.reject('a string');")] };
+    // The file of that error has no name to be run again by: the red test's file alone was.
+    expect(unitStage(files)).toEqual({ red: ['stage:test'], again: ['red.test.ts'] });
   }, 300_000);
 
   it('the browser stage on a fixture whose worker goes: a test that did not run is red unless it passes alone (R230)', () => {

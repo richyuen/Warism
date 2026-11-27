@@ -2396,6 +2396,11 @@ changed since HEAD [ADR-48, ADR-55]:
   test that did not run (its worker went as it loaded the file: Playwright reports it skipped and ok),
   by its name. A file red as a whole (lost, failed to load, a hook threw) is red unless its run alone
   passes all of it; a run alone that fails with nothing named has passed nothing.
+- An error vitest caught outside the tests (a rejection nothing handled, an exception out of a timer)
+  is red in its run [ADR-1160]: vitest's JSON report leaves it out, so the gate's own reporter
+  (`tools/gate/vitestErrors.ts`) writes it beside the report. It is red as its file is, as a whole,
+  and that file's run alone is to be clean; an error vitest names no file for is the run's own red,
+  which no run alone clears. A run alone in which the file is red as a whole clears no red of it.
 
 `npm run check:full` runs every stage whatever changed. `npm run check:review` (`tools/gate/review.ts`)
 runs every stage on its own, the browser suite in chunks of 20 spec files, a failed test again alone,
