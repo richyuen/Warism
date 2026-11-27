@@ -5,6 +5,70 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1165 · 2026-11-27 · accepted · An advance's arrow ends at the cell its march presses on, found by its route (R241, the user's report)
+
+- **The case** (the user, 2026-11-27, of the report R235 took up: "The issue was that the arrows in far zoom looked
+  like they crossed far into enemy territory, but at close zoom it looked like it was in held territory for the
+  French divisions"). An arrow is drawn along the first 70 to 136 px of its march's line at every zoom
+  (`ARROW_LONG_PX` and three of its widths, ADR-1074: "the way a force is going, not the whole of its way"), a bold
+  one never under 26 px (R96, ADR-1088), and the line of a march on land is straight from the formation to its
+  target (PLAN 7.4g3). So how far an arrow reached on the map was the zoom's: a few km inside its own cell at 60
+  m/px, 100 km at 1,000. Measured on fronts fought for, the part of a bold arrow past the front, median and most, in
+  cells (a cell 19.6 km): on the replay's 14 May 1940 in the West nothing at 60 m/px, 0.49 and 2.16 at 400, 1.66 and
+  5.16 at 1,000, 3.32 and 13.23 at 2,500, 6.15 and 23.91 at 5,000; in a free game (seed 99, day 120) 2.11 and 4.15 at
+  1,000, 6.30 and 22.91 at 5,000. The user's own scene, the Rhine on 23 November 1939, has no arrow since R235 and
+  R236: it was a held front. The reading was the same on every front that is fought for.
+- **Decision.**
+  1. An advance's arrow ends at the cell its march presses on: the first cell of its route that a nation at war
+     with it holds and it may take today. There the march waits until the cell is taken (PLAN 1.14). Its way is
+     from the formation to that cell's point and no further; the stretch of it drawn is as before (the first 70 to
+     136 px, at least 26).
+  2. The worker finds the cell by the route (`pressesAt`, `advancing`) and sends its point with the snapshot
+     (`SnapshotFormations.front`; NaN for every other formation).
+  3. Which march is an advance is asked of the route too, where ADR-1088 and ADR-1162 asked the line the view
+     draws: one whose route comes to such a cell within 100 km of where it stands, as the crow flies. The line lies
+     over land the route goes round, and misses land the route turns into.
+  4. A march behind the lines, drawn faint for the nation looked at, is drawn as far as its own side goes: its line,
+     still the straight one, cut before the first land an enemy holds (`ownSideLength`, the view's).
+  5. Where a cell is smaller than the least length (past 1,000 m/px: 26 px are 3.3 cells at 2,500 m/px and 6.6 at
+     5,000) an advance's arrow is that length: R96's sign that a front is pushed there, kept as it is. No arrow is
+     longer than that for the length of its line.
+- **Why at the cell, and not a head's length further.** An arrow lies under the markers and must still be seen.
+  Counted at 400 and 1,000 m/px in the West: the tips of 8 of 23 and 13 of 27 arrows lie under a marker's box (7 of
+  25 and 9 of 23 before), mostly the defender's on the cell pressed; their bodies and heads show beside it
+  (`docs/evidence/R241/after/`). A longer cut is the old reading again at the zoom the user reported at.
+- **Consequences.**
+  - After, the same measure: the West 0.52 and 0.87 at 400 m/px, 0.67 and 1.33 at 1,000 (more than a cell and a half
+    past the front: 13 of 23 arrows before, none of 27), 2.56 and 3.32 at 2,500, 5.88 and 6.64 at 5,000; the free
+    game 0.82 and 1.47 at 1,000 (14 of 21 before, none of 22), 5.88 and 6.64 at 5,000. Faint arrows over an enemy's
+    land at 5,000 m/px: half a cell and 3.3 cells at the most before, none after.
+  - Which marches are advances, the West on 14 May 1940: 63 by the line, 52 by the route, 41 by both. Of Germany's
+    30 by the line, 14 have routes with none of the enemy's land (marches along its own side of the front, their
+    lines over French cells) and 6 come to it beyond reach; 6 more are advances by the route alone. In a free war's
+    opening (Germany on Poland, seed 1938) the route has 11 of the line's 12 at hour 48 and 21 of its 24 at hour 96.
+  - The snapshot has one array more, two numbers a formation. The worker's question costs a snapshot 0.06 ms at the
+    median, as before (seed 99 a year on: 1,111 formations, 509 on the march, 69 advances). `npm run bench -- G`
+    PASS (T0 402 fps, T2 151 fps; draw cpu 1.6 and 5.5 ms).
+  - The line's rule (`advances`) is gone, and its tests are the route's, case for case.
+  - Whether an advance still has an arrow. The advancing formations well inside the view that are in no bold arrow
+    of the frame, before → after: Germany on Poland in a free game (seed 1938) at hour 48, 1 of 12 → 1 of 11 at
+    1,500 and at 1,000 m/px; at hour 96, 1 of 23 → none of 21 at both; the West on 14 May 1940, 2 of 71 → 1 of 60
+    at 1,000 m/px, 3 of 48 → 1 of 31 at 400, 3 of 71 → 6 of 60 at 1,500. Those are arrows cut away by one of their
+    nation they would cross (`cutAtCrossing`, then under `ARROW_SHORTEST_PX`), as before: ROADMAP R242. The rest
+    are one arrow of several marches, as before.
+  - `orderLines1938.spec.ts` guards that the arrows are on the names' canvas by counting the points of their middle
+    lines that lie on it, 21 an arrow: more than 50 until now. At 1,500 m/px that war's 12 advances in view were 3
+    arrows, and its 11 are 2 (one formation in none, both times). The guard is more than 20: one whole arrow drawn
+    there, which is what it guards. What the test holds of names and arrows is as it was.
+  - Not changed: the least length (5 above); that arrows lie under the counters at the world's zoom.
+- **Read.** `arrowReach1938h.spec.ts` (the two fronts at 60 to 5,000 m/px: a bold arrow past the front by a cell and
+  a half at the most, or by the least length where a cell is smaller; a nation's faint arrows with half a cell of
+  them over an enemy's land at the most; red before in ten places). `moveArrows.test.ts` (`pressesAt`: over the
+  front, behind it, along it, round a corner of the enemy's land the line lies over, the reach as the crow flies
+  from where the formation stands, land that may not be taken, the map's seam; `ownSideLength`).
+  `advancing1938h.test.ts` (on the 1938 map: a march presses on the first of the enemy's cells along its route; one
+  over its own land whose line lies over a corner of the enemy's is none, where the line's rule said an advance).
+
 ## ADR-1164 · 2026-11-27 · proposed, the user's decision · R236's two days are read "from ground not the foe's"; the divisions on the foe's own ground are R239's
 
 - **The case.** R236's AT: "on that day and three weeks on no land formation behind a held front has stood 7 days

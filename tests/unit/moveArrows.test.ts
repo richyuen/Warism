@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { advances } from '../../src/shared/advances';
-import { ARROW_PALE, OTHER_WIDE, ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, drawMoveArrows, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
+import { pressesAt } from '../../src/shared/advances';
+import { ARROW_PALE, OTHER_WIDE, ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, OWN_SIDE_STEP, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, drawMoveArrows, groupMarches, ownSideLength, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
 
 // ROADMAP R89a (ADR-1073, ADR-1074): a march is a thick arrow, as wide as its men are many; the
 // marches of a nation that start together and head the same way are one arrow.
@@ -191,62 +191,115 @@ describe('two arrows of a nation do not cross (R89a)', () => {
   });
 });
 
-describe('which marches are advances (R96: onto land an enemy holds)', () => {
-  // Nations 1 and 2 at war, 3 at peace with both. Nation 2 holds x >= 100; 1 the rest; 3 the rows y >= 200.
-  const holderAt = (x: number, y: number): number => (y >= 200 ? 3 : x >= 100 ? 2 : 1);
+describe('which marches are advances, and where each presses (R96: onto land an enemy holds; R241: by its route)', () => {
+  // A map 200 cells wide. Nations 1 and 2 at war, 3 at peace with both. Nation 2 holds x >= 100, and the one cell
+  // (99, 150) west of that; 1 the rest; 3 the rows y >= 170.
+  const W = 200;
+  const cell = (x: number, y: number): number => y * W + x;
+  const holderOf = (c: number): number => {
+    const [x, y] = [c % W, Math.floor(c / W)];
+    return y >= 170 ? 3 : x >= 100 || (x === 99 && y === 150) ? 2 : 1;
+  };
   const atWar = (a: number, b: number): boolean => (a === 1 && b === 2) || (a === 2 && b === 1);
-  const way = (id: number, nation: number, ...line: number[]): { id: number; nation: number; line: number[] } => ({ id, nation, line });
-  const ids = (s: Set<number>): number[] => [...s].sort((a, b) => a - b);
+  /** A route through the cells given, `x, y` by twos. */
+  const route = (...xy: number[]): number[] => Array.from({ length: xy.length / 2 }, (_, i) => cell(xy[2 * i]!, xy[2 * i + 1]!));
+  /** The route from (x, y) straight east or west to (tx, y). */
+  const along = (x: number, y: number, tx: number): number[] => Array.from({ length: Math.abs(tx - x) + 1 }, (_, i) => cell(x + Math.sign(tx - x) * i, y));
+  /**
+   * Where nation `n`'s march presses, by the cell: [x, y], or null. It stands in the middle of the cell of its route it
+   * has reached (`step`), or `at` a place of its own.
+   */
+  const presses = (n: number, path: number[], reach = 5, takes?: (holder: number, c: number) => boolean, step = 0, at?: [number, number]): [number, number] | null => {
+    const here = path[step] ?? 0;
+    const [x, y] = at ?? [(here % W) + 0.5, Math.floor(here / W) + 0.5];
+    const k = pressesAt(path, step, x, y, n, W, reach, holderOf, atWar, takes);
+    return k < 0 ? null : [path[k]! % W, Math.floor(path[k]! / W)];
+  };
 
-  it('over the front within reach: an advance; behind it, however near the front or the enemy, not', () => {
-    const got = advances([
-      way(1, 1, 97, 50, 104, 50), // over the front 3 cells on
-      way(2, 1, 60, 50, 90, 50), // toward the front, its end 10 cells short of it: a reinforcement
-      way(3, 1, 99, 30, 99, 70), // along the front a cell behind it
-      way(4, 2, 103, 50, 96, 50), // the other side's, over the front the other way
-      way(5, 1, 40, 195, 40, 210), // into a neutral's land
-      way(6, 3, 97, 50, 104, 50), // a nation at peace, over the same front
-    ], holderAt, atWar, 5);
-    expect(ids(got)).toEqual([1, 4]);
+  it('over the front within reach: an advance, pressing on the first cell of its route the enemy holds; behind it, however near, not', () => {
+    // Over the front 3 cells on.
+    expect(presses(1, along(97, 50, 104))).toEqual([100, 50]);
+    // Toward the front, its end 10 cells short of it: a reinforcement.
+    expect(presses(1, along(60, 50, 90))).toBeNull();
+    // Along the front a cell behind it.
+    expect(presses(1, route(99, 30, 99, 31, 99, 32, 99, 33))).toBeNull();
+    // The other side's, over the front the other way.
+    expect(presses(2, along(103, 50, 96))).toEqual([99, 50]);
+    // Into a neutral's land.
+    expect(presses(1, route(40, 167, 40, 168, 40, 169, 40, 170, 40, 171))).toBeNull();
+    // A nation at peace, over the same front.
+    expect(presses(3, along(97, 50, 104))).toBeNull();
   });
 
-  it('the front beyond the reach of the way is not looked at; just within it, it is', () => {
+  // The line of a march on land is straight to its target (PLAN 7.4g3): along a front that bends it lies over land
+  // the route goes round. By the line that was an advance; by the route it is a march on its own side.
+  it("a route round a corner of the enemy's land that its straight line lies over: no advance", () => {
+    // From (99, 148) to (99, 152): the straight line is over (99, 150), the enemy's; the route goes by (98, 150).
+    const round = route(99, 148, 99, 149, 98, 150, 99, 151, 99, 152);
+    expect(holderOf(cell(99, 150))).toBe(2);
+    expect(presses(1, round)).toBeNull();
+    // The same way through that cell: it presses on it.
+    expect(presses(1, route(99, 148, 99, 149, 99, 150, 99, 151, 99, 152))).toEqual([99, 150]);
+  });
+
+  it('the front beyond reach is not looked at; just within it, it is: as the crow flies from where the march stands', () => {
     for (const reach of [1, 5, 12]) {
-      const got = advances([way(1, 1, 100 - reach + 0.2, 50, 130, 50), way(2, 1, 100 - reach - 0.6, 50, 130, 50)], holderAt, atWar, reach);
-      expect(ids(got), `reach ${reach}`).toEqual([1]);
+      expect(presses(1, along(100 - reach, 50, 130), reach), `reach ${reach}`).toEqual([100, 50]);
+      expect(presses(1, along(100 - reach - 1, 50, 130), reach), `reach ${reach}`).toBeNull();
     }
+    // A route that winds, 8.2 cells long, to a cell 4 away: within a reach of 5.
+    const winding = route(96, 50, 97, 49, 97, 50, 98, 51, 98, 50, 99, 49, 99, 50, 100, 50);
+    expect(presses(1, winding)).toEqual([100, 50]);
+    // One that first goes 6 cells north, out of reach, and comes to the enemy's land after: none.
+    const away = [...route(96, 50, 96, 49, 96, 48, 96, 47, 96, 46, 96, 45, 96, 44), ...along(97, 44, 101)];
+    expect(presses(1, away)).toBeNull();
+    expect(presses(1, away, 9)).toEqual([100, 44]);
+    // From where it stands, not from the cell of its route it last reached: well on its way to the next one, the
+    // front is that much nearer. The middle of (100, 50) is 5 cells from the middle of (95, 50) and 4.7 from here.
+    expect(presses(1, along(95, 50, 104), 4.8)).toBeNull();
+    expect(presses(1, along(95, 50, 104), 4.8, undefined, 0, [95.8, 50.5])).toEqual([100, 50]);
   });
 
-  it('already on the enemy\u2019s land and going on, or coming back from it: an advance while it stands there', () => {
-    expect(ids(advances([way(1, 1, 110, 50, 120, 50), way(2, 1, 101, 50, 80, 50)], holderAt, atWar, 5))).toEqual([1, 2]);
-  });
-
-  it('along a way with a turn: the enemy\u2019s land after the turn counts, by the way\u2019s length and not as the crow flies', () => {
-    // North 3 cells, then east over the front: 3 + 2.5 cells along the way.
-    const bent = way(1, 1, 98, 50, 98, 47, 104, 47);
-    expect(ids(advances([bent], holderAt, atWar, 6))).toEqual([1]);
-    expect(ids(advances([bent], holderAt, atWar, 4))).toEqual([]);
+  it("already on the enemy's land: pressing on its next cell, going on or coming back", () => {
+    expect(presses(1, along(110, 50, 120))).toEqual([111, 50]);
+    expect(presses(1, along(101, 50, 80))).toEqual([100, 50]);
+    // On the enemy's first cell and off it at once: over the front while it stands there, pressing where it goes.
+    expect(presses(1, along(100, 50, 96))).toEqual([99, 50]);
+    // At its way's end on the enemy's land: that cell.
+    expect(presses(1, route(100, 50))).toEqual([100, 50]);
   });
 
   // ROADMAP R235 (ADR-1162): land an enemy holds that cannot be taken today is no advance's. The worker asks the world
   // (`World.holdsLand`: a front the historical track holds); here, nation 2's land from row 60 south.
-  it('land an enemy holds that the marcher may not take is no advance: over it, on it, or along it; land it may take beyond, within reach, is', () => {
-    const takes = (_nation: number, _holder: number, _x: number, y: number): boolean => y < 60;
-    const got = advances([
-      way(1, 1, 97, 50, 104, 50), // over the front where the land may be taken
-      way(2, 1, 97, 70, 104, 70), // over the front where it is held
-      way(3, 1, 101, 70, 110, 70), // standing on the held land and going on over it
-      way(4, 1, 99, 62, 102, 56), // onto the held land first, and onto land it may take 4 cells on
-      way(5, 1, 99, 75, 102, 61), // onto the held land and no further than it within the reach
-    ], holderAt, atWar, 5, takes);
-    expect(ids(got)).toEqual([1, 4]);
-    // Asked by who marches: nation 2 may take nation 1's land, nation 1 none of nation 2's.
-    const byNation = (nation: number): boolean => nation === 2;
-    expect(ids(advances([way(1, 1, 97, 50, 104, 50), way(2, 2, 103, 50, 96, 50)], holderAt, atWar, 5, byNation))).toEqual([2]);
+  it('the first cell of the enemy that the march comes to may not be taken: no advance, whatever lies beyond', () => {
+    const takes = (_holder: number, c: number): boolean => Math.floor(c / W) < 60;
+    // Over the front where the land may be taken.
+    expect(presses(1, along(97, 50, 104), 5, takes)).toEqual([100, 50]);
+    // Over the front where it is held.
+    expect(presses(1, along(97, 70, 104), 5, takes)).toBeNull();
+    // Standing on the held land and going on over it.
+    expect(presses(1, along(101, 70, 110), 5, takes)).toBeNull();
+    // Onto the held land first, and onto land it may take three cells on: it waits before the held cell.
+    expect(presses(1, route(99, 62, 100, 61, 101, 60, 102, 59, 103, 58), 5, takes)).toBeNull();
+    // Asked by who marches: here nation 2 may take nation 1's land, nation 1 none of nation 2's.
+    const of2 = (holder: number): boolean => holder === 1;
+    expect(presses(1, along(97, 50, 104), 5, of2)).toBeNull();
+    expect(presses(2, along(103, 50, 96), 5, of2)).toEqual([99, 50]);
   });
 
-  it('a way of one point or none is no advance unless it stands on the enemy\u2019s land', () => {
-    expect(ids(advances([way(1, 1, 50, 50), way(2, 1), way(3, 1, 120, 50)], holderAt, atWar, 5))).toEqual([3]);
+  it('from the cell it stands in, not from its route’s start; with no route left, or none, no advance', () => {
+    // The same route, the march 5 cells along it: the front is 2 cells on.
+    expect(presses(1, along(93, 50, 104), 5, undefined, 0)).toBeNull();
+    expect(presses(1, along(93, 50, 104), 5, undefined, 5)).toEqual([100, 50]);
+    expect(presses(1, along(60, 50, 90), 5, undefined, 30)).toBeNull();
+    expect(presses(1, [], 5)).toBeNull();
+    expect(presses(1, along(97, 50, 104), 5, undefined, 99)).toBeNull();
+  });
+
+  it("over the map's seam: the reach is by the nearer way round", () => {
+    // Nation 2 holds x >= 100: a march of nation 1 from (2, 50) west over the seam comes to (199, 50), 3 cells on.
+    expect(presses(1, route(2, 50, 1, 50, 0, 50, 199, 50, 198, 50))).toEqual([199, 50]);
+    expect(presses(1, route(2, 50, 1, 50, 0, 50, 199, 50, 198, 50), 2)).toBeNull();
   });
 
   it('an advance and a march behind the lines from one place the same way are two arrows, the one faint', () => {
@@ -285,5 +338,39 @@ describe("another nation's arrow with a nation looked at (ROADMAP R106)", () => 
     const [x, y] = widths(2);
     expect(y).toBe(a);
     expect(x).toBeCloseTo(OTHER_WIDE * a!, 6);
+  });
+});
+
+// ROADMAP R241 (ADR-1165): a march behind the lines is drawn on its own side of a front. Its line is straight to its
+// target, and at a far zoom the stretch of it the arrow is drawn along lay over the front.
+describe("how much of a way runs before an enemy's land (R241)", () => {
+  // The enemy's land: x >= 100.
+  const enemyAt = (x: number): boolean => x >= 100;
+
+  it('to the last point looked at before it; all of it where it comes onto none; nothing where it starts on it', () => {
+    // From 90 east: looked at every OWN_SIDE_STEP, the first on the enemy's land at 10 along it.
+    expect(ownSideLength([90, 50, 130, 50], enemyAt)).toBe(10 - OWN_SIDE_STEP);
+    expect(ownSideLength([90, 50, 99.9, 50], enemyAt)).toBe(Infinity);
+    expect(ownSideLength([100, 50, 130, 50], enemyAt)).toBe(0);
+    expect(ownSideLength([130, 50, 90, 50], enemyAt)).toBe(0);
+    expect(ownSideLength([90, 50], enemyAt)).toBe(Infinity);
+    expect(ownSideLength([], enemyAt)).toBe(Infinity);
+  });
+
+  it('along a way with turns, by its length; its end is looked at too', () => {
+    // North 3, then east: the enemy's land 5 cells east of the turn.
+    expect(ownSideLength([95, 50, 95, 47, 104, 47], enemyAt)).toBe(3 + 5 - OWN_SIDE_STEP);
+    // A way that ends on the enemy's first cell, its last stretch shorter than a look apart.
+    expect(ownSideLength([99.8, 50, 100.1, 50], enemyAt)).toBe(0);
+    expect(ownSideLength([99.2, 50, 100.0, 50], enemyAt)).toBe(OWN_SIDE_STEP);
+  });
+
+  it('the way cut there stays on its own side', () => {
+    for (const line of [[90, 50, 130, 50], [95, 50, 95, 47, 104, 47], [80.3, 20, 111.7, 31.5]]) {
+      const cut = wayStart(line, ownSideLength(line, enemyAt));
+      for (let i = 0; i < cut.length; i += 2) expect(enemyAt(cut[i]!), `${line.join(',')} at ${cut[i]},${cut[i + 1]}`).toBe(false);
+      // And it is no shorter than a look less than the way to the front.
+      expect(100 - cut[cut.length - 2]!).toBeLessThanOrEqual(OWN_SIDE_STEP + 1e-9);
+    }
   });
 });

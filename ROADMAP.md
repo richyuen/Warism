@@ -318,6 +318,45 @@ on separate P-cores (a ratio, not an absolute figure).
   `TrackEnded`, the division on the march. AT: such an order is carried out by the world its command sets free, as
   before R236, or is refused with a reason that names the hold and leaves the replay running; a test sends the
   command across a held front, and across a nation outside the war, where today's reason is the right one.
+- [x] R241 **At a far zoom the arrows cross far into the enemy's land; close up they stay in their own** (the user,
+  2026-11-27, of the report R235 took up: "The issue was that the arrows in far zoom looked like they crossed far
+  into enemy territory, but at close zoom it looked like it was in held territory for the French divisions"). An
+  arrow is drawn along the first 70 to 136 px of its march's line at every zoom (ADR-1074), a bold one never under
+  26 px (R96), and the line of a march on land is straight from the formation to its target: the same arrow is a
+  few km inside its own cell at 60 m/px and 100 km past the front at 1,000. The user's own scene has no arrow since
+  R235 and R236 (the Rhine was a held front); on a front fought for it reads the same way. AT: on the replay's 14
+  May 1940 in the West and in a free game (seed 99, day 120), at 60, 150, 400 and 1,000 m/px no bold arrow lies more
+  than a cell and a half past the front; at 2,500 and 5,000 m/px, where a cell is under an arrow's least length,
+  none further past it than that length; the faint arrows of a nation looked at lie on its own side; a spec red
+  before; the frame budgets kept.
+  - Done (ADR-1165): an advance's arrow ends at the cell its march presses on, the first of its route that an enemy
+    holds and it may take: where it will wait (PLAN 1.14). The worker finds it by the route (`pressesAt`) and sends
+    it with the snapshot (`front`). Which march is an advance is asked of the route too, no longer of the line: on
+    14 May 1940, of Germany's 30 advances in the West by the line, 14 were marches along its own side of the front
+    and 6 not yet within reach. A march behind the lines is drawn as far as its own side goes (`ownSideLength`).
+    By `arrowReach1938h.spec.ts`, red before in ten places, the part of a bold arrow past the front, median and
+    most, in cells, before → after: the West at 400 m/px 0.49 and 2.16 → 0.52 and 0.87; at 1,000 1.66 and 5.16 →
+    0.67 and 1.33 (more than a cell and a half past: 13 of 23 arrows → none of 27); at 2,500 3.32 and 13.23 → 2.56
+    and 3.32; at 5,000 6.15 and 23.91 → 5.88 and 6.64. The free game at 1,000 m/px 2.11 and 4.15 → 0.82 and 1.47
+    (14 of 21 → none of 22); at 5,000 6.30 and 22.91 → 5.88 and 6.64. Faint arrows over an enemy's land at 5,000
+    m/px: 0.51 and 3.32 cells at the most → none. Past 1,000 m/px a cell is smaller than the least length (26 px
+    are 3.3 cells at 2,500 m/px, 6.6 at 5,000): there an arrow is that sign, R96's, and no longer. Held too by
+    `moveArrows.test.ts` (the route's rule, case for case with the line's it replaces) and `advancing1938h.test.ts`
+    (a march over its own land whose line lies over a corner of the enemy's is no advance; the line's rule said
+    one). The worker's question 0.06 ms a snapshot as before; `npm run bench -- G` PASS (T0 402 fps, T2 151 fps).
+    `orderLines1938.spec.ts` and `arrowsHeld1938h.spec.ts` by hand, green. The first's guard that the arrows
+    are on the names' canvas (the points of their middle lines there, 21 an arrow) is more than 20 where it was
+    more than 50: at 1,500 m/px that war's 12 advances in view were 3 arrows, its 11 are 2. The advancing
+    formations in view that are in no arrow at all: 1 to 3 on three scenes before, none to 6 after (R242).
+    Pictures before and after at 1,000 and 400 m/px in `docs/evidence/R241/`.
+- [ ] R242 **An advance whose arrow is cut away by one it would cross has no arrow** (found by R241's review). An
+  arrow that would cross another of its nation stops before it (`cutAtCrossing`), and one left shorter than
+  `ARROW_SHORTEST_PX` is not drawn: its formations are in no arrow, and their men in no arrow's width. Counted on
+  three scenes, the advancing formations well inside the view that are in no bold arrow: Germany on Poland in a
+  free game (seed 1938, hours 48 and 96) none or 1 of 11 to 21 at 300 to 1,500 m/px, 5 of 37 at 4,000; the West on
+  14 May 1940 1 of 60 at 1,000 m/px, 1 of 31 at 400, 6 of 60 at 1,500, 2 of 60 at 2,500 (before R241: 2 of 71, 3 of
+  48, 3 of 71, 3 of 71). AT: on those scenes at those zooms every advancing formation in view is in a bold arrow
+  (one cut away joins the arrow that cuts it, its men in that arrow's width); the frame budgets kept.
 
 ## Released
 

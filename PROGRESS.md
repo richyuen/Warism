@@ -486,3 +486,69 @@
   across a held front while the replay runs, which no test sends: it is now refused as `NoRoute`, whose words name
   nations outside the war, and the replay ends all the same, as it does for any `moveFormation`; before, the order
   was given. Filed as R240.
+
+## 2026-11-27 — R241: an advance's arrow ends at the cell its march presses on (ADR-1165; the user's report)
+
+- The user answered what R235 had asked: "The issue was that the arrows in far zoom looked like they crossed far into
+  enemy territory, but at close zoom it looked like it was in held territory for the French divisions". That is not
+  the held front alone: it is how long an arrow is.
+- The cause, from the drawing: an arrow is the first 70 to 136 px of its march's line on the screen (`ARROW_LONG_PX`
+  and three widths), a bold one at least 26 px, at every zoom. The line of a march on land is straight from the
+  formation to its target (the snapshot's way of a march is those two points, PLAN 7.4g3). So the arrow is 4 to 8
+  km at 60 m/px, inside its own cell, and 70 to 136 km at 1,000 m/px, well past the front, though the march waits
+  before the first cell an enemy holds.
+- Measured first, on fronts that have arrows (the user's scene has none since R235 and R236): the replay's 14 May
+  1940 in the West and a free game (seed 99, day 120). The part of each bold arrow past where it first comes onto
+  land an enemy holds, in cells, by a spec that reads the frame's arrows and the frame's own map: none at 60
+  m/px, a median of 1.66 and 5.16 at the most at 1,000 m/px, 6.15 and 23.91 at 5,000 (the West); 2.11 and 4.15,
+  6.30 and 22.91 (the free game).
+- Found on the way: which march is an advance was asked of that same straight line (R96, R235). On 14 May 1940 in
+  the West the line calls 63 marches advances and the route 52, 41 of them the same. Of Germany's 30 by the line,
+  14 have routes with none of the enemy's land (marches along the Rhine to land Germany holds, their lines over a
+  French cell) and 6 come to it more than 100 km off. So a march along one's own side of a front had an attack's
+  arrow: the user's reading again, in a war that is fought.
+- The rule (ADR-1165): the worker walks the march's route to the first cell an enemy holds (`pressesAt`): within 100
+  km of where the formation stands and to be taken today, the march is an advance and the cell's point goes with the
+  snapshot (`front`). The arrow is drawn from the formation to that point. A march behind the lines, faint for the
+  nation looked at, is cut before the first land an enemy holds along its line (`ownSideLength`).
+- Two things corrected while testing. The reach was first measured along the route (a winding route 5.8 cells long
+  to a cell 5 away was out of reach where the line had it in), then from the last cell of the route the formation
+  had reached (up to a cell and a half behind where it stands): it is as the crow flies from where it stands, and
+  the route then has 11 of the line's 12 advances at hour 48 of a free war and 21 of its 24 at hour 96.
+- After, by the same spec (`arrowReach1938h.spec.ts`, red before in ten places, green): at 1,000 m/px a median of
+  0.67 and 1.33 at the most in the West, 0.82 and 1.47 in the free game; no arrow more than a cell and a half past
+  the front at 60 to 1,000 m/px (13 of 23 and 14 of 21 before). At 2,500 and 5,000 m/px every arrow is the least
+  length or its own line, whichever is longer: 3.32 and 6.64 cells past at the most (13.23 and 23.91 before). A
+  cell is 7.8 and 3.9 px there, smaller than the 26 px of R96's sign, which is kept.
+- Looked at (`docs/evidence/R241/`, before and after at 1,000 and 400 m/px): at 400 m/px each arrow runs from its
+  stack to the front and ends just across the line, Belgium's, France's and Germany's alike; at 1,000 m/px the long
+  arrows into Germany (the Netherlands' to Cologne among them) are short wedges on the line. At 5,000 m/px the
+  picture is the same before and after but for two arrows in Norway: the counters cover the rest.
+- Whether the shorter arrows still show: the tips of 8 of 23 arrows at 400 m/px and 13 of 27 at 1,000 lie under a
+  marker's box (7 of 25 and 9 of 23 before), mostly the defender's on the cell pressed.
+- Tests: `moveArrows.test.ts` has the route's rule where it had the line's (`advances` is gone): each of its cases,
+  and those the route brings (round a corner of the enemy's land the line lies over; the reach from where the
+  formation stands; the first of the enemy's cells not to be taken, whatever lies beyond). `advancing1938h.test.ts`:
+  on the 1938 map a march presses on the first Polish cell of its route; a German march over German land, a cell
+  beside its route made Poland's under its line, is no advance (the line's rule, run once from git, said one).
+  `server.test.ts`: a snapshot in flight has 23 buffers, one more.
+- By hand: `orderLines1938.spec.ts`, `arrowsHeld1938h.spec.ts` and the new spec, green. The first's guard that the
+  arrows are on the names' canvas counted more than 50 points of their middle lines, three arrows' worth; this war
+  has two arrows at 1,500 m/px now, and the guard is more than 20 (R96 had lowered its neighbour the same way).
+  The arrows spec prints 13 advances on 4 September 1939 (17), none on 5 April 1940, 64 on 14 May (75), 55 of them
+  in the West, Germany's 16 (30).
+- Cost: the worker's question 0.063 ms a snapshot at the median, 0.10 at the 95th (seed 99 a year on: 1,111
+  formations, 509 on the march, 8 wars, 69 advances; 0.06 and 0.16 for the line's at R235). `npm run bench -- G`
+  PASS: T0 402 fps, T2 151 fps, draw cpu 1.6 and 5.5 ms.
+- The gate: `src/shared` is one of the sim's inputs, so every test's saved world was made again in its unit run (425
+  files). One red in that run, `snapshot-perf` past its 90 s under the load, green alone (a steady snapshot 0.61 ms
+  at the median, 1.00 at the 95th; its budget 2). The two changed specs ran in the gate's browser stage, green. The pin of seed 99 is
+  unchanged.
+- Before the push, asked: do the advances that had arrows still have them, or were short arrows that press one
+  cell cut away by each other? Counted in the page on this commit and its parent, the advancing formations well
+  inside the view that are in no bold arrow: Germany on Poland (seed 1938) at hour 48, 1 of 12 before and 1 of 11
+  after at 1,500 and 1,000 m/px (so the two arrows at 1,500 m/px are ten formations in two, not arrows lost); at
+  hour 96, 1 of 23 and none of 21; the West on 14 May 1940, 2 of 71 and 1 of 60 at 1,000 m/px, 3 of 48 and 1 of 31
+  at 400, 3 of 71 and 6 of 60 at 1,500. A handful both times, by `cutAtCrossing`: filed as R242. SPEC's sentence
+  says what the spec measured, on its two fronts: the free game's worst arrow is 1.47 cells past the front against
+  the bar of 1.5 (an arrow is a straight line to the cell pressed and may clip another of the enemy's first).

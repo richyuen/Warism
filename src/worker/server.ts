@@ -2244,11 +2244,21 @@ export class SimServer {
     }
     const fway = this.view(Float32Array, fwayStart[fc]!, buffers);
     for (let i = 0; i < fc; i++) fway.set(ways[i]!, fwayStart[i]!);
-    // The marches that are advances (ROADMAP R96, R235; ADR-1162): asked of the world here, by the lines the view draws.
-    // The map's km a cell at this world's size, as the view's geometry has it.
+    // The marches that are advances, and the cell each presses on (ROADMAP R96, R235, R241; ADR-1162, ADR-1165):
+    // asked of the world here, by their routes. The map's km a cell at this world's size, as the view's geometry has it.
     const geo = SCENARIO_GEOMETRY[this.requireSim().scenario];
-    const onAdvance = advancing(world, shown, (i) => ways[i]!, (geo.kmPerCell * geo.w) / world.cells.w);
-    for (let i = 0; i < fc; i++) if (onAdvance.has(shown[i]!)) fflags[i]! |= FormationFlag.advancing;
+    const onAdvance = advancing(world, shown, (geo.kmPerCell * geo.w) / world.cells.w);
+    const ffront = this.view(Float32Array, fc * 2, buffers);
+    ffront.fill(NaN);
+    for (let i = 0; i < fc; i++) {
+      const cell = onAdvance.get(shown[i]!);
+      if (cell === undefined) continue;
+      fflags[i]! |= FormationFlag.advancing;
+      const [px, py] = world.cellPoint(cell);
+      const w = world.cells.w;
+      ffront[2 * i] = world.settings.loopingMap ? px + w * Math.round((fx[i]! - px) / w) : px;
+      ffront[2 * i + 1] = py;
+    }
     const majors = Float32Array.from(world.battles.majors.flatMap((m) => [m.x, m.y]));
     // The sea battles (PLAN 4.10b): the place, the cells to the furthest fleet, the two sides;
     // the middle and the size of the box of its fleets (PLAN 4.12a).
@@ -2356,7 +2366,7 @@ export class SimServer {
       tiles: { size: TILE, tilesX: out.tilesX, tilesY: out.tilesY, count: tileCount, ids, owner, controller },
       nations: { count: n, data: nations },
       wars,
-      formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, health: fhealth, wayStart: fwayStart, way: fway },
+      formations: { count: fc, id: fid, generation: fgen, nation: fnat, x: fx, y: fy, prevX: fpx, prevY: fpy, block: fblock, facing: ffacing, strength: fstr, template: ftpl, flags: fflags, target: ftarget, enemy: fenemy, health: fhealth, wayStart: fwayStart, way: fway, front: ffront },
       majors,
       taking: Uint32Array.from(takingCells(world)),
       voyages: Float32Array.from(this.voyages(world)),

@@ -12,7 +12,7 @@ import type { LandingMark } from '../shared/protocol';
 import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { changedCells, ControlFlashes } from '../render/fx/flashes';
-import { arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
+import { arrowFill, drawMoveArrows, groupMarches, ownSideLength, wayStart, type DrawnArrow, type March } from '../render/units/moveArrows';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, HeroLifts, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, STACK_RULE_TIGHT, type StackItem } from '../render/units/markerStacks';
@@ -805,6 +805,8 @@ export class MapView {
     this.formHealth = f.health.slice(0, f.count);
     this.formWayStart = f.wayStart.slice(0, f.count + 1);
     this.formWay = f.way.slice(0, f.wayStart[f.count] ?? 0);
+    this.formFront = f.front.slice(0, f.count * 2);
+    this.ownSide.clear();
     this.majors = s.majors.slice();
     this.taking = s.taking.slice();
     this.voyages = s.voyages.slice();
@@ -1194,6 +1196,8 @@ export class MapView {
   /** The ways left of the fleets under way (PLAN 4.7d; `Snapshot.formations.way`). */
   private formWayStart = new Uint32Array(1);
   private formWay = new Float32Array(0);
+  /** Where each formation on an advance presses on the front, `x, y` in cells by twos; NaN for the others (ROADMAP R241). */
+  private formFront = new Float32Array(0);
   private majors = new Float32Array(0);
   /** The cells being taken, as the snapshot packs them (ROADMAP R105), and how many glows the last frame drew of them. */
   taking = new Uint32Array(0);
@@ -2382,7 +2386,10 @@ export class MapView {
    * of what is looked at (`orderShown`), faint. Each from `from` its formation's index, or from where it stands.
    * Which march is an advance the worker says (`FormationFlag.advancing`; ROADMAP R96, R235, ADR-1162): of a nation at
    * war, onto land it may take from an enemy within `ADVANCE_REACH_KM`; not a retreat, nor over a front the
-   * historical track holds.
+   * historical track holds. An advance's way is to the cell it presses on (the worker's too, by its route: `formFront`)
+   * and no further, and any other march's as far as its own side of a front goes (ROADMAP R241, ADR-1165): an arrow's
+   * stretch of its way is a length on the screen, and of a line to the march's target it lay 2 cells past the front at
+   * 1,000 m/px where it stayed in its own cell at 60.
    */
   private marchesShown(viewer: OrderViewer, from?: (i: number) => [number, number]): March[] {
     const w = this.geo.w;
@@ -2392,13 +2399,46 @@ export class MapView {
       const id = this.formIds[i]!;
       const bold = (this.formFlags[i]! & FormationFlag.advancing) !== 0;
       if (!bold && !orderShown(id, this.formNation[i]!, viewer)) continue;
+      const [fx, fy] = [this.formFront[2 * i]!, this.formFront[2 * i + 1]!];
+      if (bold && !Number.isNaN(fx)) {
+        // An advance (ROADMAP R241): from where it is drawn to the cell it presses on, and no further.
+        const [sx, sy] = from ? from(i) : [this.formX[i]!, this.formY[i]!];
+        marches.push({ id, nation: this.formNation[i]!, men: this.formStrength[i]!, line: [sx, sy, fx, fy] });
+        continue;
+      }
       const target = this.formTarget[i]!;
       const ws = this.formWayStart[i]!;
       const we = this.formWayStart[i + 1]!;
-      const line = orderLine({ x: this.formX[i]!, y: this.formY[i]!, target: [(target % w) + 0.5, Math.floor(target / w) + 0.5], way: we - ws >= 4 ? this.formWay.subarray(ws, we) : null, ...(from ? { from: from(i) } : {}) }, this.geo)!;
+      let line = orderLine({ x: this.formX[i]!, y: this.formY[i]!, target: [(target % w) + 0.5, Math.floor(target / w) + 0.5], way: we - ws >= 4 ? this.formWay.subarray(ws, we) : null, ...(from ? { from: from(i) } : {}) }, this.geo)!;
+      // A march behind the lines is drawn on its own side of a front (R241): its line is straight to its target.
+      const own = this.ownSideOf(i, line);
+      if (own < Infinity) line = wayStart(line, own);
       marches.push({ id, nation: this.formNation[i]!, men: this.formStrength[i]!, line, ...(bold ? {} : { faint: true }) });
     }
     return marches;
+  }
+
+  /** How far each march's line runs before land an enemy holds, cells, by the formation's index: of the last snapshot (`ownSideOf`). */
+  private readonly ownSide = new Map<number, number>();
+
+  /**
+   * How far the line of formation `i`'s march runs before it comes onto land a nation at war with its own holds, in
+   * cells (ROADMAP R241; Infinity where it comes onto none): looked at once a snapshot. A way over the map's seam has
+   * cells beyond its width: whose they are is read at the cell's own place.
+   */
+  private ownSideOf(i: number, line: ArrayLike<number>): number {
+    const kept = this.ownSide.get(i);
+    if (kept !== undefined) return kept;
+    const w = this.geo.w;
+    const nation = this.formNation[i]!;
+    const far = !this.atWar.has(nation)
+      ? Infinity
+      : ownSideLength(line, (x, y) => {
+          const holder = this.controlGrid[Math.floor(y) * w + (((Math.floor(x) % w) + w) % w)] ?? 0;
+          return holder !== 0 && holder !== nation && this.warPairs.has(nation < holder ? nation * 65536 + holder : holder * 65536 + nation);
+        });
+    this.ownSide.set(i, far);
+    return far;
   }
 
   /**

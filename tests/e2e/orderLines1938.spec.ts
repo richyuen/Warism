@@ -234,7 +234,9 @@ test('a war shows its advances as arrows with nothing selected; a nation looked 
 `);
         expect(names.whole, 'names and dots in view').toBeGreaterThan(200);
         expect(names.changed, `${m} m/px: a name's or a dot's pixel changed by an arrow`).toBe(0);
-        expect(names.arrowPx, 'the arrows are on the canvas of the names').toBeGreaterThan(50);
+        // (An arrow's middle line is looked at in 21 points. More than 50 of them until ROADMAP R241, three arrows' worth;
+        // an arrow now ends at the front it presses on, and at 1,500 m/px this war has two here.)
+        expect(names.arrowPx, 'the arrows are on the canvas of the names').toBeGreaterThan(20);
         under.points += names.onName;
         under.lost += names.lost;
       }

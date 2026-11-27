@@ -220,6 +220,12 @@ export interface SnapshotFormations {
    */
   wayStart: Uint32Array;
   way: Float32Array;
+  /**
+   * Where a march on an advance presses on the front (ROADMAP R241, ADR-1165; `FormationFlag.advancing`): the point
+   * of the first cell of its route that an enemy holds and it may take, `x, y` in cells by twos, a formation a pair
+   * (the x next to the formation's own on a map that wraps); NaN for every other formation. Its arrow ends there.
+   */
+  front: Float32Array;
 }
 
 /**
@@ -267,8 +273,9 @@ export function tierOf(mPerPx: number): Tier {
 /** Bit 2 (PLAN 7.4g2): on the retreat (`retreat` hours left), drawn on its T1 marker. */
 /**
  * `advancing` (ROADMAP R235, ADR-1162): its march is an advance, onto land its nation may take from an enemy today
- * (`shared/advances`, asked of the world by the worker: a front the historical track holds is none). Of the snapshot's
- * formations alone; an element's flags have the other three.
+ * (`shared/advances`, asked of the world by the worker, of the march's route since ROADMAP R241: a front the
+ * historical track holds is none; where it presses is `SnapshotFormations.front`). Of the snapshot's formations
+ * alone; an element's flags have the other three.
  */
 export const FormationFlag = { moving: 1, engaged: 2, retreating: 4, advancing: 8 } as const;
 

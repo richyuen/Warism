@@ -12,6 +12,14 @@
  * 99 marches on the Fujian front of seed 99 were 38 thick arrows from beyond the screen with 131
  * crossings among them (ADR-1074).
  *
+ * How far an arrow goes is the map's, not the screen's alone (ROADMAP R241, ADR-1165; the user: "the arrows in far
+ * zoom looked like they crossed far into enemy territory, but at close zoom it looked like it was in held
+ * territory"). The stretch drawn is a length on the screen, the same at every zoom: 70 to 136 px of a line that ran
+ * to the march's target were a few km inside its own cell at 60 m/px and 100 km past the front at 1,000. So an
+ * advance's way is given here as far as the cell it presses on and no further (the view's, from the worker:
+ * `SnapshotFormations.front`), and a march behind the lines as far as its own side goes (`ownSideLength`). Where a
+ * cell is smaller than ARROW_LEAST_PX (past 1,000 m/px) an advance's arrow is that least length: a sign.
+ *
  * Pure but for `drawMoveArrows`: the same marches give the same arrows.
  */
 
@@ -117,6 +125,33 @@ export function wayStart(line: ArrayLike<number>, long: number): number[] {
     left -= seg;
   }
   return out;
+}
+
+/** How far apart the points of a way are looked at for an enemy's land, in the way's own units (cells): `ownSideLength`. */
+export const OWN_SIDE_STEP = 0.5;
+
+/**
+ * How much of a way runs before it comes onto an enemy's land (ROADMAP R241; `enemyAt` a point of it): its length
+ * to the last point looked at before the first on such land, every OWN_SIDE_STEP of it and at its end; Infinity
+ * where it comes onto none, 0 where it starts on it. A march behind the lines is drawn on its own side of a front:
+ * its line is straight to its target, and at a far zoom the arrow's stretch of it lay over the front.
+ */
+export function ownSideLength(line: ArrayLike<number>, enemyAt: (x: number, y: number) => boolean): number {
+  if (line.length < 2) return Infinity;
+  if (enemyAt(line[0]!, line[1]!)) return 0;
+  let done = 0;
+  for (let i = 2; i < line.length; i += 2) {
+    const [ax, ay, bx, by] = [line[i - 2]!, line[i - 1]!, line[i]!, line[i + 1]!];
+    const seg = Math.hypot(bx - ax, by - ay);
+    let before = 0;
+    for (let d = Math.min(OWN_SIDE_STEP, seg); seg > 0; d = Math.min(d + OWN_SIDE_STEP, seg)) {
+      if (enemyAt(ax + ((bx - ax) * d) / seg, ay + ((by - ay) * d) / seg)) return done + before;
+      before = d;
+      if (d >= seg) break;
+    }
+    done += seg;
+  }
+  return Infinity;
 }
 
 /** The heading of a way, radians: from its start to its point `long` along it (`wayStart`'s last, with nothing made). */

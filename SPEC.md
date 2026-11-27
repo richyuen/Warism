@@ -1999,11 +1999,16 @@ Two looks (`src/shared/unitLooks.ts`, the game option; default `balls`, the e2e 
   marker is 34 by 34 px; `UNIT_FONT`, the counters' numbers too),
   order arrows (a fleet's along its turning points), crossed swords while engaged. A land formation's march is a
   movement arrow (`src/render/units/moveArrows.ts`, ROADMAP R89a, R89b, ADR-1074, ADR-1075; at every tier): an
-  advance (`advances`, ROADMAP R96, ADR-1088: of a nation at war, its way within its next `ADVANCE_REACH_KM`, 100,
-  on land an enemy holds that it may take today; not a retreat. The worker says which, `FormationFlag.advancing`,
-  ROADMAP R235, ADR-1162: across a front the historical replay holds no march is one, but onto a stage's land in its
-  days) bold and for every viewer, never shorter than `ARROW_LEAST_PX` (26); any other march faint
-  (`FAINT_WIDE` 0.6 of the width, `FAINT_ALPHA` 0.5) and for the formations whose orders are shown. Filled, tapered, in its nation's colour half way to white with a dark rim, from the formation
+  advance (`pressesAt`, ROADMAP R96, R241, ADR-1088, ADR-1165: of a nation at war, its route coming, within
+  `ADVANCE_REACH_KM`, 100, of where it stands, to a cell an enemy holds that it may take today; not a retreat. The
+  worker says which, `FormationFlag.advancing`, and the cell, the snapshot's `front`; ROADMAP R235, ADR-1162: across
+  a front the historical replay holds no march is one, but onto a stage's land in its days) bold and for every
+  viewer, from the formation to the cell it presses on and no further (R241: on the two fronts its spec measures,
+  its tip a cell and a half past the front at the most where a cell is 20 px or more; it ran its line to its target
+  before, 2 cells past the front at 1,000 m/px and 6 at 5,000), never shorter than `ARROW_LEAST_PX` (26: past 1,000
+  m/px, where a cell is smaller, the arrow is that sign); any other march faint (`FAINT_WIDE` 0.6 of the width, `FAINT_ALPHA` 0.5), for the formations
+  whose orders are shown, and on its own side of a front (`ownSideLength`). Filled, tapered, in its nation's colour
+  half way to white with a dark rim, from the formation
   along the first `ARROW_LONG_PX` (70) and three of its widths of its way; `ARROW_MIN_PX` (5) wide at 2,000 men to
   `ARROW_MAX_PX` (22) at 400,000, by the logarithm. Marches of a nation that start within `GROUP_START_PX` (44) and
   head within `GROUP_TURN` (40°) are one arrow of their men; one that would cross another of its nation stops before

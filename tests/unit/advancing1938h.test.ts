@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ADVANCE_REACH_KM } from '../../src/shared/advances';
 import type { TimelineFile } from '../../src/sim/data/schemas';
 import { kmPerCell, project } from '../../src/sim/data/projection';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
@@ -84,10 +85,9 @@ function ordered(w: World): { into: number; beside: number; back: number } {
   return { into, beside, back };
 }
 
-/** Which of `ids` are on an advance, by their ways as the snapshot gives a march on land (from where it stands to its target's point). */
+/** Which of `ids` are on an advance, as the worker asks it for a snapshot: by their routes (ROADMAP R241). */
 function onAdvance(w: World, ids: readonly number[]): number[] {
-  const c = w.formations.cols;
-  const got = advancing(w, ids, (i) => [c.x[ids[i]!]!, c.y[ids[i]!]!, ...w.cellPoint(c.targetCell[ids[i]!]!)], kmPerCell(w.cells.w));
+  const got = advancing(w, ids, kmPerCell(w.cells.w));
   return ids.filter((x) => got.has(x));
 }
 
@@ -112,5 +112,69 @@ describe('which marches are advances across a front the historical track holds (
     expect(w.holds(id('GER'), id('POL'))).toBe(false);
     const m = marches(w);
     expect(onAdvance(w, [m.into, m.beside, m.back])).toEqual([m.into, m.beside, m.back]);
+  }, 300_000);
+});
+
+// ROADMAP R241 (ADR-1165; the user: "the arrows in far zoom looked like they crossed far into enemy territory, but at
+// close zoom it looked like it was in held territory"). Which march is an advance is asked of its route, and the
+// answer is the cell it presses on: the first of its route an enemy holds, where it will wait (PLAN 1.14) and where
+// its arrow ends. Until R241 it was asked of the line the view draws, straight from the formation to its target: a
+// march along its own side of a front that bends was an advance over land its route never entered.
+describe('an advance is by its route, and presses on the first cell of it an enemy holds (ROADMAP R241)', () => {
+  it("onto the enemy's land: the first cell of the route that is its; to its own land round a corner of the enemy's, the line over it: none", () => {
+    const w = world({ events: [WAR] }).world;
+    const [GER, POL] = [id('GER'), id('POL')];
+    const f = w.formations;
+    const c = f.cols;
+    const W = w.cells.w;
+    const km = kmPerCell(W);
+    // Germany's march onto Poland's land: it presses on the first of Poland's cells along its route.
+    const m = marches(w);
+    const path = Array.from(w.paths.get(m.into)!);
+    const first = path.find((cell, k) => k > 0 && w.cells.controller[cell] === POL);
+    expect(first).toBeDefined();
+    expect(advancing(w, [m.into], km).get(m.into)).toBe(first);
+    // A German march over Germany's own land, 5 cells one way and 2 the other: its route takes some of the cells its
+    // straight line lies over and not others. One of those others, near the formation, is made Poland's: a corner of
+    // the enemy's land the line lies over and the route goes by.
+    /** The cells the straight line from (x0, y0) to (x1, y1) lies over, in its order. */
+    const under = (x0: number, y0: number, x1: number, y1: number): number[] => {
+      const out: number[] = [];
+      for (let k = 0; k <= 200; k++) {
+        const cell = Math.floor(y0 + ((y1 - y0) * k) / 200) * W + Math.floor(x0 + ((x1 - x0) * k) / 200);
+        if (out[out.length - 1] !== cell) out.push(cell);
+      }
+      return out;
+    };
+    let round = 0;
+    let corner = -1;
+    f.forEach((fid) => {
+      if (round !== 0 || fid === m.into || fid === m.beside || fid === m.back || c.moving[fid] === 1) return;
+      if (c.nation[fid] !== GER || w.rules?.templates[c.template[fid]!]?.domain !== Domain.land || w.offLand(fid)) return;
+      const [fx, fy] = [Math.floor(c.x[fid]!), Math.floor(c.y[fid]!)];
+      for (const [dx, dy] of [[5, 2], [-5, 2], [5, -2], [-5, -2], [2, 5], [-2, 5], [2, -5], [-2, -5]] as const) {
+        if (round !== 0) break;
+        const [x, y] = [fx + dx, fy + dy];
+        if (w.cells.controller[y * W + x] !== GER || !marchTo(w, fid, x + 0.5, y + 0.5)) continue;
+        const way = new Set(w.paths.get(fid)!);
+        const beside = under(c.x[fid]!, c.y[fid]!, x + 0.5, y + 0.5).filter((cell) => !way.has(cell) && w.cells.controller[cell] === GER);
+        if (beside.length > 0 && [...way].every((cell) => w.cells.controller[cell] === GER)) {
+          round = fid;
+          corner = beside[0]!;
+        } else {
+          // Not this one: the order is taken back.
+          c.moving[fid] = 0;
+          w.paths.delete(fid);
+        }
+      }
+    });
+    expect(round, "a German march over Germany's land whose line lies over a cell its route goes by").toBeGreaterThan(0);
+    w.setController(corner, POL);
+    expect(w.cells.controller[corner]).toBe(POL);
+    // The line lies over Poland's land within an advance's reach; the route has none of it.
+    const [fx, fy] = [c.x[round]!, c.y[round]!];
+    expect(Math.hypot((corner % W) + 0.5 - fx, Math.floor(corner / W) + 0.5 - fy)).toBeLessThan(ADVANCE_REACH_KM / km);
+    expect(Array.from(w.paths.get(round)!).some((cell) => w.cells.controller[cell] === POL)).toBe(false);
+    expect(advancing(w, [round], km).has(round)).toBe(false);
   }, 300_000);
 });
