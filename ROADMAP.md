@@ -60,8 +60,9 @@ on separate P-cores (a ratio, not an absolute figure).
   the tick 3 %); with a reader the records of a war world's hours are HEAD's, number for number (a unit test); the
   specs of the fire drawn pass.
   - Done: ADR-1158. `FireLog.wanted`, set by the reader: the worker before each step as its subscription draws
-    elements, `Sim.step` with no taker of its outputs, and the headless runner, the soak, the replay's build and the
-    sweeps' runner. While false `combat`, `navalCombat` and `bombardment` write no record and work out no place for one.
+    elements, `Sim.step` with no taker of its outputs, and the headless runner, the soak and the replay's build (not
+    the sweeps' runner, as first committed: its `fleetsStand` reads the volleys, and `aiSweep3` was red without them;
+    taken out the same day). While false `combat`, `navalCombat` and `bombardment` write no record and work out no place for one.
     Two years of seed 99 with no reader, arms at once and swapped: the hash `9e8dd1b1` on both, combat 0.390 and 0.382
     → 0.301 and 0.302 ms a tick (−22 %), the tick 2.41 and 2.34 → 2.31 and 2.29. With a reader, against the commit
     before (a scratch test run on both, not kept: a second pin): days 20, 70 and 179 of seed 99, three days each, the

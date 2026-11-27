@@ -130,3 +130,14 @@
   the new kept points (they hold the mask) as a field outside the state. Mended in the test's list of derived fields;
   the gate's blind spot for a crashed file is filed as R230, open. The second run: every file, no crash.
 - Batch 60's four items and R229 are done; R230 is open. The critic and a release when the user wants one (ADR-1139).
+
+## 2026-11-26 — R227 corrected: the sweeps' runner keeps its fire records
+
+- R227 as committed (`0f79149f`) switched the records off in `tests/helpers/aiSweep.ts` with the other headless loops.
+  That runner's `fleetsStand` reads the hour's volleys (a sea battle that begins and ends in one hour names its ships
+  only there), and without them `aiSweep3` was red: seed 3, day 96, two fleets "no rule should have touched". `main`
+  was so from R227's push until this one; the gate did not see it (of `tests/sweep/` it runs the pin alone), and a
+  review of the batch did. The line is out; ADR-1158 and R227's tick say so. The other three loops only empty the
+  records (the runner, the soak, the replay's build): checked again.
+- With it out: `aiSweep1` to `3` green, and the ten-year suite whole (`npm run test:sweep`): 23 files, 29 tests, on
+  the batch's code. That suite had not been run on R225, R227 or R228 before (the gate's pin alone).

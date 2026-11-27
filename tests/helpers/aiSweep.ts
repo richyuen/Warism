@@ -59,8 +59,6 @@ import { strayNaN } from './stateNumbers';
  */
 export function aiSweep(seed: number): void {
   const s = new Sim({ scenario: '1938', seed, assets: assets1938(SIZE_1938.w) });
-  // Nobody draws a sweep's fire: no record of it is made (`FireLog.wanted`, ROADMAP R227).
-  s.world.out.fires.wanted = false;
   const counts: Record<string, number> = {};
   const names = Object.fromEntries(Object.entries(EventKind).map(([k, v]) => [v, k]));
   const yearly: Record<string, number>[] = [];

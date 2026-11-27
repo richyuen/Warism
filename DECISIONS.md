@@ -14,8 +14,7 @@ from AoC are tagged **[AoC-DEVIATION]**.
   made for nothing, 22 % of combat's time.
 - **Decision.** `FireLog.wanted` (`src/shared/events.ts`), set by the reader and never by the sim: the worker sets it
   before each step as `drainFires` keeps or drops the records (its subscription draws elements); `Sim.step` with no
-  taker of the tick's outputs steps with it false; the headless runner, the soak, the replay's build and the sweeps'
-  runner set it false. While it is false the three systems that fire (`combat`, `navalCombat`, `bombardment`) write no
+  taker of the tick's outputs steps with it false; the headless runner, the soak and the replay's build set it false. While it is false the three systems that fire (`combat`, `navalCombat`, `bombardment`) write no
   record and work out nothing a record alone needs. It is an output's switch, as `World.out` is the tick's outputs:
   not state, saved and hashed nowhere, and nothing but the records hangs on it. The systems still read no
   subscription, clock or render state (SPEC 2.1); they read whether their output has a taker.
@@ -28,6 +27,11 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Consequences.** A view that zooms in to T2 gets fire from the next tick, as before (the records of ticks before a
   subscription were never kept). A tool that reads `World.out.fires` in its own step callback gets them as before:
   the switch is true unless a reader sets it.
+- **Corrected the same day.** As first committed (`0f79149f`) the sweeps' runner (`tests/helpers/aiSweep.ts`) set it
+  false too, and that runner has a reader: `fleetsStand` reads the hour's volleys to tell a fleet that fought. Without
+  them `aiSweep3` was red (seed 3, day 96: two fleets "no rule should have touched"); the gate runs the pin alone of
+  the ten-year tests, so it passed. The line is out; the rule for a reader stands: whoever reads the records leaves the
+  switch on.
 
 ## ADR-1157 · 2026-11-26 · accepted · At Max the worker's next slice comes by a message to itself, not a timer (R226)
 
