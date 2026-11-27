@@ -372,6 +372,7 @@ export function combatSystem(world: World): void {
   const w = world.cells.w;
   const cellOf = (fid: number): number => Math.floor(f.y[fid]!) * w + Math.floor(f.x[fid]!);
   const fires = world.out.fires;
+  const recorded = fires.wanted;
   const stamp = fireCall(world);
   const attack = attackTable(units);
   const nt = TERRAIN_ATK.length;
@@ -506,6 +507,8 @@ export function combatSystem(world: World): void {
         if (dmg <= 0) continue;
         if (hurt[t] === 0) hit[hits++] = t;
         hurt[t] = hurt[t]! + dmg;
+        // The shot's record, for a reader that draws it (`FireLog.wanted`, ROADMAP R227): the two places are its alone.
+        if (!recorded) continue;
         place(sf, s);
         place(tf, t);
         const subtick = hash32(world.seed, world.tick, s, 0x5b7) % 60;

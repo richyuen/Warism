@@ -125,6 +125,8 @@ export function runHeadless(opts: HeadlessOptions): HeadlessResult {
   const options = { ...(opts.nations !== undefined ? { nations: opts.nations } : {}), ...(opts.size !== undefined ? { size: opts.size } : {}) };
   const sim = new Sim(opts.scenario !== 'toy' ? { scenario: opts.scenario, seed: opts.seed, assets: loadAssets1938(size1938(opts.size).w), ...(Object.keys(options).length > 0 ? { options } : {}) } : { scenario: opts.scenario, seed: opts.seed });
   if (opts.load) sim.load(opts.load);
+  // Nobody draws a headless run's fire: no record of it is made (`FireLog.wanted`, ROADMAP R227).
+  sim.world.out.fires.wanted = false;
   const world = sim.world;
   // The lane graph before the clock, as the game's worker builds it before the first tick (PLAN 4.8e).
   if (world.ports.length > 0 && world.seaSeeds.length > 0) laneOf(world);

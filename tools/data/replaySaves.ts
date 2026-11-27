@@ -83,6 +83,8 @@ export function replayYears(sim: Sim, last = Infinity): number[] {
 /** Steps a fresh 1938h world through the years, handing each 1 January's world to `each`. */
 export function buildReplaySaves(each: (year: number, sim: Sim) => void, last = Infinity): void {
   const sim = new Sim({ scenario: '1938h', seed: SEED_1938H, assets: assets1938(SIZE_1938.w) });
+  // Nobody draws the build's fire: no record of it is made (`FireLog.wanted`, ROADMAP R227).
+  sim.world.out.fires.wanted = false;
   const t = sim.world.track!;
   for (const year of replayYears(sim, last)) {
     const at = t.tickOf(`${year}-01-01`);

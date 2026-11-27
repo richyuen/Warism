@@ -434,6 +434,13 @@ export const FireField = { tick: 0, subtick: 1, shooter: 2, target: 3, weapon: 4
 export class FireLog {
   data = new Float64Array(FIRE_STRIDE * 256);
   length = 0;
+  /**
+   * Whether anyone reads the records (ROADMAP R227, ADR-1158): set by the reader, never by the sim. The worker
+   * sets it as its subscription draws elements (T1.5 and closer), a headless run to false. While false the
+   * systems that fire write no record and work out nothing that only a record needs (the two elements' places
+   * of each shot). Not state, and no state hangs on it: the world is the same either way.
+   */
+  wanted = true;
 
   push(tick: number, subtick: number, shooter: number, target: number, weapon: number, dmg: number, x0: number, y0: number, x1: number, y1: number): void {
     let d = this.data;

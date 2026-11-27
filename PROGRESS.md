@@ -107,3 +107,14 @@
   too. Not R227's: 3 of 3 red on the commit before it, 1 of 3 on `d547cda1`, the remote's head before this batch. The
   trace: the camera at rest at 20 m/px, the section taken at 19.7, the subscription's key the one last asked with.
   The helper now sends the view's subscription again in that state. `fightSeen1938` × 5: 10 of 10.
+
+## 2026-11-26 — R227: the sim makes a fire record only while a reader wants it (ADR-1158)
+
+- Combat −22 % and the tick about −3 % in seed 99's first two years with no view drawing elements (the hash the same);
+  the records with a reader the same as before, number for number, in three windows with land, naval and bombardment
+  fire. The switch is the reader's (`FireLog.wanted`); `npm run sim`, the sweeps, the soak and the replay's build run
+  with it off, so their tick is the world-zoom page's.
+- The AT asked for the comparison with HEAD's records as a unit test; kept as a one-off read (a hash of records in a
+  test is a second pin that every combat rule would move), and the kept test holds a reader against none.
+- The whole browser suite on the GPU: by hand 549 of 551 (R229's case, and `relationsTap1938`'s boot under eight
+  workers); in the gate's run with R229 550 of 551, `relationsTap1938` green alone, as at the release.

@@ -178,13 +178,21 @@ export class Sim {
   }
 
   step(n = 1, afterTick?: (world: World) => void): void {
-    for (let i = 0; i < n; i++) {
-      step(this.world, this.systems);
-      if (afterTick) afterTick(this.world);
-      else {
-        this.world.out.events.length = 0;
-        this.world.out.fires.length = 0;
+    // With nobody to take a tick's outputs its fire records are not made at all (`FireLog.wanted`, ROADMAP R227).
+    const fires = this.world.out.fires;
+    const wanted = fires.wanted;
+    if (!afterTick) fires.wanted = false;
+    try {
+      for (let i = 0; i < n; i++) {
+        step(this.world, this.systems);
+        if (afterTick) afterTick(this.world);
+        else {
+          this.world.out.events.length = 0;
+          fires.length = 0;
+        }
       }
+    } finally {
+      fires.wanted = wanted;
     }
   }
 

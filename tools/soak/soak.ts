@@ -87,6 +87,8 @@ function assets(w: number): ScenarioAssets {
 function makeSim(opts: SoakOptions, seed: number): Sim {
   const options = { ...(opts.nations !== undefined ? { nations: opts.nations } : {}), ...(opts.size !== undefined ? { size: opts.size } : {}) };
   const sim = new Sim(opts.scenario !== 'toy' ? { scenario: opts.scenario, seed, assets: assets(size1938(opts.size).w), ...(Object.keys(options).length > 0 ? { options } : {}) } : { scenario: opts.scenario, seed });
+  // Nobody draws a soak's fire: no record of it is made (`FireLog.wanted`, ROADMAP R227).
+  sim.world.out.fires.wanted = false;
   lanes(sim);
   return sim;
 }

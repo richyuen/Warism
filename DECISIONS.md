@@ -5,6 +5,30 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1158 · 2026-11-26 · accepted · The sim makes a fire record only while a reader wants it (R227)
+
+- **The case** (the profile of 2026-11-26, Batch 60). Every shot of the land, the sea and a bombardment wrote a record
+  to `World.out.fires` (the two elements, the damage, the places it flies between), and land combat worked out the two
+  elements' places for it alone. The worker keeps the records only for a view that draws elements (T1.5 and closer,
+  `drainFires`), and a headless run throws them all away: at a world zoom and in every sweep, soak and build they were
+  made for nothing, 22 % of combat's time.
+- **Decision.** `FireLog.wanted` (`src/shared/events.ts`), set by the reader and never by the sim: the worker sets it
+  before each step as `drainFires` keeps or drops the records (its subscription draws elements); `Sim.step` with no
+  taker of the tick's outputs steps with it false; the headless runner, the soak, the replay's build and the sweeps'
+  runner set it false. While it is false the three systems that fire (`combat`, `navalCombat`, `bombardment`) write no
+  record and work out nothing a record alone needs. It is an output's switch, as `World.out` is the tick's outputs:
+  not state, saved and hashed nowhere, and nothing but the records hangs on it. The systems still read no
+  subscription, clock or render state (SPEC 2.1); they read whether their output has a taker.
+- **Read.** With a reader the records are those of the commit before, number for number: seed 99's days 20, 70 and
+  179, three days each (87,188, 104,891 and 14,119 records: the land's, 656 of ships' guns and 319 torpedoes, 208 of a
+  bombardment), the same count, hash of every number and state after. With none, two years of seed 99: the same hash
+  (`9e8dd1b1`), combat 0.390 and 0.382 → 0.301 and 0.302 ms a tick (−22 %), the tick 2.41 and 2.34 → 2.31 and 2.29
+  (arms at once, swapped). `fireWanted1938.test.ts`: with none no record is written and the state is the same; the
+  worker asks for none at T0 and T1 and for them at T2.
+- **Consequences.** A view that zooms in to T2 gets fire from the next tick, as before (the records of ticks before a
+  subscription were never kept). A tool that reads `World.out.fires` in its own step callback gets them as before:
+  the switch is true unless a reader sets it.
+
 ## ADR-1157 · 2026-11-26 · accepted · At Max the worker's next slice comes by a message to itself, not a timer (R226)
 
 - **The case** (the profile of 2026-11-26, Batch 60). At Max the worker runs its ticks in slices of 12 ms and asked for

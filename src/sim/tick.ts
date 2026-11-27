@@ -1,6 +1,8 @@
 /**
  * Tick orchestration (SPEC §2.5). Systems run in a fixed order; each is `(world) => void`
- * and reads no wall-clock time, render state or subscriptions.
+ * and reads no wall-clock time, render state or subscriptions. Of their readers they know one
+ * thing: whether the fire records have a taker (`FireLog.wanted`, ADR-1158), an output's switch
+ * that no state hangs on.
  */
 import { endTrack, runTrack } from './track';
 import { isMonthStart } from '../shared/calendar';

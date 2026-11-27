@@ -53,12 +53,22 @@ on separate P-cores (a ratio, not an absolute figure).
     and the date held, 16 of 16 under eight workers. The 250 ms of this AT is not what the spec holds (ADR-1156: ticks
     and frames, not the wall): alone the pause was taken in 25 to 38 ms (12 runs); under eight workers two of sixteen
     read over 300 ms with 3 and 4 ticks run. The whole browser suite on the GPU: 551 of 551.
-- [ ] R227 **Fire records nobody draws.** Combat works out each shot's two element places and a record
+- [x] R227 **Fire records nobody draws.** Combat works out each shot's two element places and a record
   (`World.out.fires`) that the worker throws away unless the view draws elements (T1.5 and closer), and a headless
   run always. AT: with no reader (the headless runner; the worker while its subscription draws no elements) seed 99's
   first two years end at the same hash (`9e8dd1b1`) with combat's mean a tick at least 15 % under HEAD's (a trial: 22 %,
   the tick 3 %); with a reader the records of a war world's hours are HEAD's, number for number (a unit test); the
   specs of the fire drawn pass.
+  - Done: ADR-1158. `FireLog.wanted`, set by the reader: the worker before each step as its subscription draws
+    elements, `Sim.step` with no taker of its outputs, and the headless runner, the soak, the replay's build and the
+    sweeps' runner. While false `combat`, `navalCombat` and `bombardment` write no record and work out no place for one.
+    Two years of seed 99 with no reader, arms at once and swapped: the hash `9e8dd1b1` on both, combat 0.390 and 0.382
+    → 0.301 and 0.302 ms a tick (−22 %), the tick 2.41 and 2.34 → 2.31 and 2.29. With a reader, against the commit
+    before (a scratch test run on both, not kept: a second pin): days 20, 70 and 179 of seed 99, three days each, the
+    same 87,188, 104,891 and 14,119 records (ships' guns 656, torpedoes 319, a bombardment's 208 among them), the same
+    hash of every number. `fireWanted1938.test.ts` (kept): with no reader no record is written and the state is the
+    same; the worker asks for none at T0 and T1, for them at T2. The whole browser suite on the GPU, the gate's run:
+    550 of 551 (`relationsTap1938`'s boot under eight workers, green alone).
 - [ ] R228 **On the S map a sailing fleet's water point is searched for each hour.** `World.seaPoint` asks the fine
   mask on every call (`waterPoint`, `farPoint`), 16 × 16 pixels a cell on S against 8 × 8 on M: S ticks slower than M
   (2.63 against 2.31 ms over three years of seed 99, `farPoint` 28 % of S's time). Kept by cell, as `cellPoint` keeps

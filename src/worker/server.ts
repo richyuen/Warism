@@ -1660,6 +1660,8 @@ export class SimServer {
    */
   private advance(n: number, atStrike = false): number {
     const sim = this.requireSim();
+    // Fire records only for a view that draws them (`drainFires` keeps no other's; ROADMAP R227): the sim then makes none.
+    sim.world.out.fires.wanted = sim.world.rules?.units !== undefined && this.drawsElements();
     for (let i = 0; i < n; i++) {
       this.snapshotPrev(sim.world);
       const from = sim.world.history.length;

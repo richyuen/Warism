@@ -99,7 +99,7 @@ export function bombardmentSystem(world: World): void {
       if (dmg <= 0) continue;
       pending.set(t, (pending.get(t) ?? 0) + dmg);
       hit.add(tf);
-      fires.push(world.tick, hash32(world.seed, world.tick, s, 0x5b8) % 60, s, t, ec.unit[s]!, dmg, x, y, c.x[tf]!, c.y[tf]!);
+      if (fires.wanted) fires.push(world.tick, hash32(world.seed, world.tick, s, 0x5b8) % 60, s, t, ec.unit[s]!, dmg, x, y, c.x[tf]!, c.y[tf]!);
     }
   });
   for (const t of [...pending.keys()].sort((p, q) => p - q)) applyLoss(world, t, pending.get(t)!);

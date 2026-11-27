@@ -753,6 +753,8 @@ export function navalCombatSystem(world: World): void {
         if (dmg <= 0) return;
         const tf = ec.formation[t]!;
         pending.set(t, (pending.get(t) ?? 0) + dmg);
+        // The volley's record, for a reader that draws it (`FireLog.wanted`, ROADMAP R227).
+        if (!fires.wanted) return;
         const [x0, y0] = elementPlace(world, sf, ec.slot[s]!, slotCount(world, sf, idx.get(sf)!.length), s);
         const [x1, y1] = elementPlace(world, tf, ec.slot[t]!, slotCount(world, tf, idx.get(tf)!.length), t);
         fires.push(world.tick, hash32(world.seed, world.tick, s, SALT_SUBTICK) % 60, s, t, torpedo ? -1 - ec.unit[s]! : ec.unit[s]!, dmg, x0, y0, x1, y1);

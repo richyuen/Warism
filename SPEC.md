@@ -224,9 +224,11 @@ and is sent with its own place: it was not alive before, or the count of its id 
 (PLAN 2.7o)._
 
 _As of PLAN 2.4a fire events travel in a section of their own, `fires` (f64 stride 10: tick, subtick, shooter,
-target, weapon, dmg, x0, y0, x1, y1; `src/shared/events.ts`), not in `events`: only for a subscription that
-gets elements, filtered when they happen to those with an end in the subscribed bbox, queue cap 2^13 with
-`fires.dropped`._
+target, weapon, dmg, x0, y0, x1, y1; `src/shared/events.ts`), not in `events`: only for a subscription that gets
+elements, filtered when they happen to those with an end in the subscribed bbox, queue cap 2^13 with
+`fires.dropped`. The sim makes the records only while such a view reads them (`FireLog.wanted`, set by the
+reader: the worker as its subscription draws elements, a headless run to false; R227, ADR-1158): with none it
+writes no record and works out no element's place for one, and the world is the same._
 
 ### 2.5 Tick order (1 tick = 1 sim hour) [ADR-5]
 Calendar (PLAN 1.8, ADR-21): tick 0 = 00:00 of the scenario start date (`World.startDay`, saved);
