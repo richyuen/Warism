@@ -652,7 +652,8 @@
   a freeze by the border on the map, where a formation stands deciding and not whose it is.
 - Ruled by the user ("Yes try it"): R243 by the small version, a formation on an ally's land takes that ally's
   front. The full cure is not taken. R243 is put first of the open items so that "continue" takes it: the builder's
-  ordering, not ruled (before it the builder had advised R240 first, the one a player can meet).
+  ordering, then ruled by the user when asked ("Yes, R243 first"; before it the builder had advised R240 first, the
+  one a player can meet).
 - Not ruled: which of R240 and R242 are still fixed (asked, not answered). Open as filed, after R243.
 - The deploy of R239's push: success.
 - For the next sitting (the context cleared and the machine restarted, so nothing of this session's scratchpad is

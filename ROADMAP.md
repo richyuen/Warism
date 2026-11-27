@@ -336,9 +336,8 @@ on separate P-cores (a ratio, not an absolute figure).
     and Romania's on Finland's land in 1944) are set down a cell back each morning as the Soviet Union takes the
     cell they stood on: five days running at the most on the own seed, seven on seed 5.
 - [ ] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
-  that takes it** (found by R239; to be done by the rule the user chose on 2026-11-27, "Yes try it", ADR-1167; put
-  first of the open items by the builder, so that "continue" takes it: the order is not the user's ruling). A hold
-  is between two nations wherever they stand (ADR-929). The Finnish front's hold ends on 9 June
+  that takes it** (found by R239; to be done by the rule the user chose on 2026-11-27, "Yes try it", and first of
+  the open items, "Yes, R243 first": ADR-1167). A hold is between two nations wherever they stand (ADR-929). The Finnish front's hold ends on 9 June
   1944 and the Soviet Union fights Finland freely to the armistice of 19 September, taking its land cell by cell;
   the Eastern Front's hold (Germany, Italy, Romania, Hungary against the Soviet Union) stands to May 1945. So
   German and Romanian formations on Finland's land neither fight for the cell they stand on nor leave it. Since

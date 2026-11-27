@@ -29,8 +29,9 @@ from AoC are tagged **[AoC-DEVIATION]**.
 - **Ruled** (the user, 2026-11-27: "Yes try it", and to set it up for a later "continue"). R243 is done by the
   small version. The full cure is not taken now; it is the user's to raise again (it pays where more history is
   scripted).
-- **The order is the builder's, not ruled.** R243 is put first of the open items in ROADMAP so that "continue"
-  takes it. Before that the builder had advised R240 first, the one a player can meet. The user may turn it back.
+- **The order, ruled too** (the user, 2026-11-27, asked whether "continue" starts with R243: "Yes, R243 first").
+  R243 stands first of the open items in ROADMAP. The builder had put it there so that "continue" takes it, and
+  before that had advised R240 first, the one a player can meet.
 - **Not ruled.** Which of R240 and R242 are still fixed: asked ("R240 only" or "all three"), not answered. Both stay
   open as filed, after R243.
 - **For the item** (read from the code on R239; to settle there, not decided here):
