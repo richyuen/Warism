@@ -319,7 +319,9 @@ it is spent on.
 - **Invariant tests** (must always pass): (I1) same seed + commands → same hash
   at N ticks; (I2) save → load → continue == uninterrupted, bit-identical bytes;
   (I3) Node run == worker run; (I4) random viewport/subscription churn leaves the hash
-  unchanged; (I5) save bytes → load → save bytes are identical.
+  unchanged (and so does any question asked of the world between two ticks: what a tick keeps of
+  its own working, as the historical track's open stages, is made by the tick, R237,
+  `tests/unit/trackAsked1938h.test.ts`); (I5) save bytes → load → save bytes are identical.
 
 ### 2.7 Persistence [ADR-9]
 As built (reviewed 2026-10-04; §2.5 has the details of saves and autosave):

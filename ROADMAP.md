@@ -222,6 +222,39 @@ on separate P-cores (a ratio, not an absolute figure).
   cause shown by such a run; on that day and three weeks on no land formation behind a held front has stood 7 days
   with one order whose way is over the held foe's land (it goes round by its own side's land, or the order ends);
   the replay's ten-year tests green, the pin unchanged.
+- [x] R237 **A question asked of the historical track between two ticks changes the replay's course** (found by
+  R236's probes: two runs of the replay under one rule stood on different hashes on 23 November 1939, one of them
+  asking `holdsPlan` once a day). The track keeps the stages whose days of fighting are open in an hour
+  (`Track.openStages`, R66d), made at the hour's first asking, of the events applied by then and of the men then in
+  each stage's area (ADR-977). A tick's number is the coming hour's from the end of the tick before, so a question
+  between two ticks makes the list before the hour's commands and events, and the hour's systems go by it: at a
+  stage's own hour its land is fought for an hour more. Since R235 the worker asks at every picture (which marches
+  are advances: `World.holdsLand`), so the replay in the page went by when its pictures were made: I4 (SPEC §2.6)
+  broken for a world with a track, on `main` since R235. AT: the replay stepped through the worker with a picture a
+  day stands on the plain run's hash on every marked day; a test red before; the plain run's own course unchanged
+  (its hashes, and the ten-year tests' figures the nightly run's).
+  - Done: the list is a tick's own: `step` begins by forgetting it (`Track.tickBegins`). The replay on its own seed
+    to 23 November 1939, before: the plain run 1a5c4ff4 that day; through the worker's server with a picture of
+    the world a day, another hash by day 300 and 58a39e70 that day; by `holdsLand` or `holdsPlan` alone, asked
+    once a day, the plain run's hash to day 620 and another from day 650. After: each of them the plain run's hash
+    on every marked day, the plain run's own as before, and so to 26 July 1953 (twelve marks). Held by
+    `trackAsked1938h.test.ts`: two tests of the mechanism, red before (a stage's own hour; a stage's days with the
+    taker's men gone within the tick), and four of I4 on a world with a track, on two seeds (the three questions of
+    a hold after every tick; the worker's picture after every tick, 384 of them, each asking), green before too
+    in that small world. No ADR (ADR-914: a mend of I4; it stands on ADR-974, ADR-977 and ADR-1162). What R235
+    read of the replay in the page after its change (its spec's prints, its pictures) was of a page that asked;
+    its spec holds bars, not those figures.
+- [ ] R238 **Within an hour the open stages are made before the hour's later events** (found by R237). The list of
+  an hour's open stages is made at its first asking and kept for the hour. An arrival of the timeline's asks while
+  the hour's events are applied (`forces`, R82b: whether its cell is the land of a stage open for its side), so the
+  list is of the men and events up to that arrival: the arrivals and stages that follow in the same hour are not
+  in it, and the hour's systems go by it. With the list made again after each event (kept by the events applied,
+  as the holds' list is, R72b) the replay goes another way from 1944 on: its hash the same on 1 January 1944,
+  another on 1 January 1945 and after. Measured so, on R237's code: the ten-year tests green, the 44 map lines
+  and the figures of `historyMatch1938h` and `chinaFront1938h` the nightly run's to the last digit; of the ten
+  free worlds after 1953 one meets its first war a day sooner (16 days for 17). AT: a test red before (two events
+  of one hour, the list asked between them); the replay's ten-year tests green with their figures named; the pin
+  unchanged.
 
 ## Released
 

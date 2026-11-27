@@ -192,7 +192,10 @@ export class Track {
   private live: { tick: number; next: number; list: readonly Hold[] } | null = null;
   /** The objectives' events, by index, with the tick each ends (R62e). */
   private readonly objectiveAt: readonly { i: number; until: number }[];
-  /** The stages open to fighting at a tick (R66d; derived, not state). */
+  /**
+   * The stages open to fighting at a tick (R66d; derived, not state). Of the tick's own asking: forgotten when a tick
+   * begins (`tickBegins`, ROADMAP R237).
+   */
   private open: { tick: number; w: number; list: OpenStage[] } | null = null;
   /** The longest window of fighting of the timeline's stages, in days (R77): how far ahead `openStages` looks. */
   private readonly longestWindow: number;
@@ -334,6 +337,17 @@ export class Track {
     }
     this.open = { tick, w: world.cells.w, list };
     return list;
+  }
+
+  /**
+   * A tick begins (ROADMAP R237): the open stages kept are forgotten. Their list is of the formations as they stand
+   * when it is first asked for in an hour (`outnumbered`) and of the events applied by then. One kept from a question
+   * asked between two ticks (the worker's, of which marches are advances, at every picture; a checker's) was made
+   * before the hour's commands and events, and the hour's systems fought by it: the asking changed the replay's
+   * course. So the list the hour goes by is of its own first asking, and a question between ticks changes nothing.
+   */
+  tickBegins(): void {
+    this.open = null;
   }
 
   /** A stage's area at a map's size (geometry only: cached). */

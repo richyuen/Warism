@@ -521,6 +521,9 @@ export function applyPendingCommands(world: World): void {
 
 /** Advances the world by one tick using `systems` after command application. */
 export function step(world: World, systems: readonly System[]): void {
+  // What the historical track keeps for an hour is of the hour's own asking, not of a question asked between two
+  // ticks (ROADMAP R237).
+  world.track?.tickBegins();
   // A holder's last means of delivery lost in the tick is told (PLAN 7.37b3).
   const held = meansHeld(world);
   // A save from before ROADMAP R33b: its convoys made landings.

@@ -340,3 +340,50 @@
 - The nightly run of 2026-11-27 (45996417446, on `0af83759`) is green, its unit stage on Linux too: the first run
   there of R230's and R231's fixture tests (`gateReview.test.ts`, 18 tests in 19.8 s). Its first run had two reds
   by name, `scenario1938` (green alone) and `snapshot-perf` (on the runner's list): `ci unit: green`.
+
+## 2026-11-27 — R237: a question between two ticks no longer changes the replay's course
+
+- Found while measuring R236. Two probes ran the replay under one rule to 23 November 1939 and stood on different
+  hashes: one stepped straight there, the other a day at a time, asking `World.holdsPlan` of the waiting marches.
+- Narrowed on the scenario's own seed, six ways to that day: one step; a day a step; and a day a step with one
+  thing asked between: `holdsPlan` once, `holdsLand` once, `waitsForFront` of every formation, the hash. All stand
+  on the plain run's hash every marked day but the two that ask of a hold: the plain run's to day 620, another
+  from day 650 (HEAD: 1a5c4ff4 on day 691 plain, f752c64b with `holdsLand` asked).
+- The cause. `Track.openStages` keeps an hour's open stages by the tick's number, made at the first asking: of the
+  events applied by then (`next`) and of the men in each stage's area (`outnumbered`, ADR-977). `step` raises the
+  tick's number at its end, so a question between two ticks is asked under the coming hour's number, before that
+  hour's commands and events, and its list is the one the hour's systems find. At a stage's own hour the stage is
+  still in it: combat, the planners and the territory system treat its land as open an hour more.
+- Who asks between ticks: in `src`, the worker alone, since R235 (`advancing` asks `holdsLand` of each cell a
+  march's line crosses, at every picture). So I4 (SPEC §2.6: what a view asks leaves the hash unchanged) was
+  broken for a world with a track, on `main` since R235's push this morning: the replay a player watched went by
+  when its pictures were made. Read on the replay itself through the worker's server, a picture of the whole
+  world once a day: another hash than the plain run's by day 300 (279a6586 for 1dce0bc2), 58a39e70 on day 691.
+  A free game has no track and asks nothing of it.
+- The fix: `step` begins by telling the track (`Track.tickBegins`), which forgets the list; the hour's list is of
+  the hour's own first asking, as in a run where nobody asks between. After: the plain run's hash on every marked
+  day by each of the ways above and through the worker's server (691 pictures), and the plain run's own hashes
+  as before, to 26 July 1953 (twelve marks, a plain run of HEAD beside one of the fix).
+- A second change was tried with it and taken out: the list kept by the events applied too (made again after each
+  event of an hour). That is not this item: it changes the plain replay from 1944 on (the same hash on 1 January
+  1944, another on 1 January 1945), since an arrival of the timeline's asks while its hour's events are applied
+  (`forces`, R82b). Filed as R238 with what it measured.
+- Tests: `trackAsked1938h.test.ts` on a timeline of its own (Germany and Poland held, a stage on 15 January 1938).
+  Two tests of the mechanism, red before: asked before the tick of the stage's hour and again by a system in that
+  tick (the hold must stand on the land the stage has just given); asked in the stage's days, then by a system
+  after another has left Germany a man a formation (the stage must be shut by the men of the hour). Four of I4 on
+  two seeds: the three questions of a hold after every tick, and the worker's picture after every tick (384
+  pictures, each asking), against a plain run, day by day. Those four are green before too: in that small world no
+  list kept from a question changed an outcome. `server.test.ts` holds I4 on the toy world, which has no track.
+- The plain run is what the ten-year tests run, and their figures are the nightly run's (2026-11-27, on `0af83759`):
+  ten files, 11 tests; `historyMatch1938h`'s 44 map lines to the digit, Paris Germany's from 10 June 1940, 936
+  French cells on 22 June, 10,734 Soviet cells after 1 December 1941, the Soviet army 3,396k; the China front 15.2 %,
+  809k, 381k and 59.4 % without the hold; the ten free worlds' days to a first war the same ten.
+- By hand, the browser specs that run the replay: `arrowsHeld1938h`, `replayYear1938h`, `scenario1938h` and
+  `trackView1938h`, 14 of 14. The arrows spec prints what it printed at R235 (17 advances on 4 September 1939,
+  none on 5 April 1940, 92 on 14 May, 87 of them in the West).
+- No ADR (ADR-914): I4 is SPEC §2.6's, and the fix states no new rule. It stands on ADR-974 (a stage's days),
+  ADR-977 (`outnumbered`) and ADR-1162 (the worker's question), whose tests are green before and after:
+  `trackFight1938h`, `advancing1938h`, `moveArrows.test.ts`.
+- The gate: the sim changed, so every test's saved world was made again in its unit run (436 files). One red in
+  that run, `snapshot-perf` past its 90 s under the load, green alone (46 s). The pin of seed 99 is unchanged.
