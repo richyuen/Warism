@@ -193,9 +193,10 @@ sequence cursor, so they are never lost. **No SharedArrayBuffer** [ADR-6].
 
 Implementation (PLAN 0.13):
 - `src/worker/server.ts` `SimServer` is environment-agnostic (injected `post`, driven by `pump(now, clock)`).
-  `src/worker/entry.ts` wires it to `postMessage` and a timer (4 ms pacing at a fixed speed, 12 ms
-  slices at `'max'`). `src/app/simClient.ts` acks from `requestAnimationFrame` and transfers the
-  snapshot's `buffers` back.
+  `src/worker/entry.ts` wires it to `postMessage` and a timer (4 ms pacing at a fixed speed); at `'max'` its
+  12 ms slices follow each other by a message the worker posts itself, not a timer of 0 ms, which a browser
+  holds 4 ms or more once timers nest (R226, ADR-1157): the page's messages sent during a slice are handled
+  first. `src/app/simClient.ts` acks from `requestAnimationFrame` and transfers the snapshot's `buffers` back.
 - Dirty tiles: the sim marks 64×64 tiles through `World.setController` into `World.out`
   (`TickOutputs`, derived and never hashed). The server clears them when it sends.
 - Events: systems call `World.out.emit`. After every tick the server moves them into an unsent queue

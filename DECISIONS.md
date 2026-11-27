@@ -5,6 +5,27 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1157 · 2026-11-26 · accepted · At Max the worker's next slice comes by a message to itself, not a timer (R226)
+
+- **The case** (the profile of 2026-11-26, Batch 60). At Max the worker runs its ticks in slices of 12 ms and asked for
+  the next with `setTimeout(0)`, to let the page's messages in between. A browser holds a timer set from a timer 4 ms or
+  more once five are nested (the HTML standard's clamp), so the worker waited a quarter of its time: 290 and 363 ticks a
+  second in seed 99's first two years in the page, where the sim alone (a bundle, as the game is built) ticks 402 and
+  537.
+- **Decision.** While the speed is Max and ticks advance, `src/worker/entry.ts` posts itself a message on a
+  `MessageChannel` for its next turn; at a fixed speed, and while only derived messages are owed (paused), the 4 ms
+  timer as before. The message is a task of the queue the page's messages come by: what the page sent during a slice (a
+  pause, a command, an ack, a subscription) is handled before it, in its order. `SimServer` and its `pump` are
+  unchanged, and so are the unit tests and the headless tools, which never ran `entry.ts`.
+- **Read** (`tools/diag/maxStalls.ts 99 - 2`, the build before and this one, each twice, interleaved, on the RTX 4070
+  Ti): year 1 31.2 and 31.2 s → 25.2 and 25.2 s (−19 %), year 2 24.2 and 24.1 → 20.1 and 20.1 s (−17 %); 59.5 to 60 fps
+  on both. `maxLoop1938.spec.ts`: a command given at Max is applied, a pause is taken 3 to 6 ticks after the worker's
+  tick was asked (16 runs under eight workers) and the date holds. It counts ticks and frames, not ms (ADR-1156): alone
+  the pause was taken in 25 to 38 ms (12 runs), under eight workers in 29 to 48 ms with two of sixteen over 300 ms and
+  3 and 4 ticks run, so not ticks; their cause was not looked for. The whole browser suite on the GPU: 551 of 551.
+- **Consequences.** At Max the worker's thread is busy all of the time, not three quarters of it. What still parts the
+  page from the sim alone, some 15 to 20 %, is the snapshot's build, the statistics and the labels.
+
 ## ADR-1156 · 2026-11-26 · proposed · A browser spec waits for the view's state, not for seconds of the wall
 
 - **The case** (the user chose idea 3 of the Nov 24 review). Of the 12 tests on `tools/gate/knownRed.json`, 11 are

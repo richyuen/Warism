@@ -85,3 +85,11 @@
   year's 5,743 searches (now refused from a region another's search walked that day, `keepRegions`).
 - Left in that year's `strategicAi`: the routes found (1,421 orders), each region's first refusal, and `massPoints`,
   `homeByLand` and `borderOnLands` (about 0.2 ms together). `npm run check` green on the rebased tree.
+
+## 2026-11-26 — R226: at Max the worker's next slice comes by a message, not a timer (ADR-1157)
+
+- `maxStalls 99 - 2`, each build twice: year 1 31.2 → 25.2 s, year 2 24.1 → 20.1 s (347 and 435 ticks a second for 280
+  and 363), 60 fps kept. `maxLoop1938.spec.ts` (new) 16 of 16 under eight workers; the whole browser suite on the GPU
+  551 of 551 (11.6 min), run by hand: the worker's entry is under every spec, and the gate runs only changed specs.
+- The spec's first form held the pause to 250 ms of the wall and was red once in eight under eight workers (357 ms, with
+  3 ticks run); it now counts ticks and frames, as ADR-1156 has it.

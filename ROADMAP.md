@@ -40,12 +40,19 @@ on separate P-cores (a ratio, not an absolute figure).
     Three-nation worlds 91415, 91408 and 91413 × 12 years: every yearly hash the same (and their tick: no gain there).
     `refusedOrders.test`'s new case red on HEAD (6 searches for 0). The pin unchanged. No ADR (ADR-914: PLAN 1.42g's
     memo, PLAN 7.124's regions and ADR-1150's "one extra search per point a day" mended).
-- [ ] R226 **Max speed waits on a timer between its slices.** At Max the worker's next 12 ms slice is a `setTimeout(0)`
+- [x] R226 **Max speed waits on a timer between its slices.** At Max the worker's next 12 ms slice is a `setTimeout(0)`
   (`src/worker/entry.ts`), which a browser holds 4 ms or more once timers nest: the page ran 290 to 363 ticks a second
   in seed 99's first two years, about 70 % of what the sim does alone. The next slice by a message to itself. AT:
   `tools/diag/maxStalls.ts 99 - 2` on HEAD's build and this one, each twice, interleaved: each year at least 12 % less
   wall time (a trial: 17 and 16 %), 59 fps or more; a spec at Max: a pause holds the date within 250 ms and a command
   given at Max is applied.
+  - Done: ADR-1157. `entry.ts` posts itself a message for the next turn while the speed is Max; the 4 ms timer at a
+    fixed speed and while paused. `maxStalls 99 - 2`, the build before and this one, each twice, interleaved: year 1
+    31.2 and 31.2 s → 25.2 and 25.2 s (−19 %), year 2 24.2 and 24.1 → 20.1 and 20.1 s (−17 %); 59.5 to 60 fps.
+    `maxLoop1938.spec.ts`: a command given at Max applied; a pause taken 3 to 6 ticks after the worker's tick was asked
+    and the date held, 16 of 16 under eight workers. The 250 ms of this AT is not what the spec holds (ADR-1156: ticks
+    and frames, not the wall): alone the pause was taken in 25 to 38 ms (12 runs); under eight workers two of sixteen
+    read over 300 ms with 3 and 4 ticks run. The whole browser suite on the GPU: 551 of 551.
 - [ ] R227 **Fire records nobody draws.** Combat works out each shot's two element places and a record
   (`World.out.fires`) that the worker throws away unless the view draws elements (T1.5 and closer), and a headless
   run always. AT: with no reader (the headless runner; the worker while its subscription draws no elements) seed 99's
