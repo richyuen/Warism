@@ -1635,6 +1635,9 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
   }
 }
 
+/** The cells refused before the last that a formation's memo keeps (`World.refusedOrders`' `others`, ROADMAP R225). */
+const REFUSED_KEPT = 16;
+
 /**
  * The plan's order of formation `id` to the cell `to` (PLAN 1.42g, the user's decision of
  * 2026-10-15), held to a way no longer than LONG_WAY times the straight line (`orderMove`'s
@@ -1645,6 +1648,9 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
  * open to it are the same (`Passage.ok`), and no cell has gone from an open holder to a closed one
  * or back since (`World.flipLog`, as `passageOf` keeps what it knows of the cells). Asked again,
  * such an order is refused again, as it was: the rule changes no state, and the pin did not move.
+ * Each cell refused so on that ground is kept, the last and up to REFUSED_KEPT before it (ROADMAP R225:
+ * a massing's `gather` asks a refused formation a second cell, R224, and with one cell kept the two
+ * were searched for again every day).
  * A refusal for want of a way by the cells of a corridor of provinces (PLAN 7.30b) holds longer:
  * while the provinces' `open` and `shut` are the same, the cell stood on is open, and no cell of
  * the corridor's provinces has gone from a closed holder to an open one (`corridorHolds`); a cell
@@ -1653,7 +1659,7 @@ function planNation(world: World, n: number, fighting: Set<number>, frontier: Ma
 export function askMove(world: World, id: number, to: number, pass: Passage): 'ok' | 'refused' | 'long' {
   if (!timing) return asked(world, id, to, pass);
   const was = world.refusedOrders.get(id);
-  const before = was ? { ...was, long: was.long.slice() } : undefined;
+  const before = was ? { ...was, long: was.long.slice(), others: was.others.slice() } : undefined;
   const f = world.formations.cols;
   const from = Math.floor(f.y[id]!) * world.cells.w + Math.floor(f.x[id]!);
   const searches = CORRIDOR_REFUSAL.searches;
@@ -1684,6 +1690,20 @@ function asked(world: World, id: number, to: number, pass: Passage): 'ok' | 'ref
     world.seaBound.delete(id);
     return was!.to === to ? 'refused' : 'long';
   }
+  // A cell refused before the last, on the same ground (ROADMAP R225): refused again as its search would be, which
+  // writes nothing (a sea order kept stands, R24a), and the last refused now, as after that search; the last one
+  // takes its place among the others.
+  if (same) {
+    const k = was!.others.findIndex((o) => o.to === to);
+    if (k >= 0) {
+      const o = was!.others[k]!;
+      was!.others[k] = { to: was!.to, corridor: was!.corridor, since: was!.since };
+      was!.to = o.to;
+      was!.corridor = o.corridor;
+      was!.since = now;
+      return 'refused';
+    }
+  }
   const searches = CORRIDOR_REFUSAL.searches;
   if (orderMove(world, id, (to % w) + 0.5, Math.floor(to / w) + 0.5, pass, false, true)) {
     world.refusedOrders.delete(id);
@@ -1693,9 +1713,14 @@ function asked(world: World, id: number, to: number, pass: Passage): 'ok' | 'ref
   // The order's one search, refused by the cells of its corridor: what it read.
   const read = !long && CORRIDOR_REFUSAL.searches === searches + 1 && CORRIDOR_REFUSAL.at === searches + 1 ? CORRIDOR_REFUSAL.read : undefined;
   if (!kept) world.refusedOrders.delete(id);
-  else if (!same) world.refusedOrders.set(id, { from, to: long ? -1 : to, template: f.template[id]!, grid: nav.grid, ok: pass.ok.slice(), flips: now, long: long ? [to] : [], corridor: read, since: now });
+  else if (!same) world.refusedOrders.set(id, { from, to: long ? -1 : to, template: f.template[id]!, grid: nav.grid, ok: pass.ok.slice(), flips: now, long: long ? [to] : [], corridor: read, since: now, others: [] });
   else if (long) was!.long.push(to);
   else {
+    // The cell refused before it stays known (R225), the oldest of REFUSED_KEPT forgotten.
+    if (was!.to !== -1) {
+      if (was!.others.length >= REFUSED_KEPT) was!.others.shift();
+      was!.others.push({ to: was!.to, corridor: was!.corridor, since: was!.since });
+    }
     was!.to = to;
     was!.corridor = read;
     was!.since = now;

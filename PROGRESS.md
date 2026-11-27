@@ -76,3 +76,12 @@
   `farPoint` 28 % of S). The month's first hour 92 to 109 ms (`tickMax` on year 2: economicAi about 50, economy 30).
 - Filed as Batch 60 (R225 to R228): the four that change no rule. The compromises (the army AI's cadence, the month's
   accounts by nation, fewer formations, render settings for weak machines) are the user's to choose and are not filed.
+
+## 2026-11-26 — R225: a massing's refused formations are not searched for again every day
+
+- Seed 99's year 19 (at peace, five nations massing most of the year): `strategicAi` 2.13 → 0.56 ms a tick, the tick
+  2.9 → 1.3, the same hash (`2cbef30d`); three-nation worlds' hashes the same. Two causes: R224's second ask replaced
+  the one refused cell the memo kept (now each is kept), and a formation on the march keeps no memo, 3,442 of the
+  year's 5,743 searches (now refused from a region another's search walked that day, `keepRegions`).
+- Left in that year's `strategicAi`: the routes found (1,421 orders), each region's first refusal, and `massPoints`,
+  `homeByLand` and `borderOnLands` (about 0.2 ms together). `npm run check` green on the rebased tree.

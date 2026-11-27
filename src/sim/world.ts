@@ -1094,10 +1094,12 @@ export class World {
    * open by `ok`, when `flipLog` had `flips` changes (`to` -1: none refused so but for the way's
    * length); and on that ground, the cells it was refused for the way's length (`long`, PLAN 1.42h);
    * of a refusal of `to` by the cells of a corridor, what it read (`corridor`, PLAN 7.30b) and the
-   * count of `flipLog` up to which it is known to hold (`since`).
+   * count of `flipLog` up to which it is known to hold (`since`). `others`: the cells refused so before
+   * `to` on that ground, each with its own (ROADMAP R225: a massing asks a formation a second cell, and one
+   * cell kept made the two take each other's place, both searched for again each day).
    * Dropped with the land counts.
    */
-  refusedOrders = new Map<number, { from: number; to: number; template: number; grid: NavGrid; ok: Uint8Array; flips: number; long: number[]; corridor?: CorridorRefusal | undefined; since: number }>();
+  refusedOrders = new Map<number, { from: number; to: number; template: number; grid: NavGrid; ok: Uint8Array; flips: number; long: number[]; corridor?: CorridorRefusal | undefined; since: number; others: { to: number; corridor?: CorridorRefusal | undefined; since: number }[] }>();
   /** Derived: bumped when God Mode renames a nation (labels re-derive, PLAN 1.32b). */
   namesVersion = 0;
   /** Global settings (state, saved in world.meta). */

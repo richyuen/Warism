@@ -1653,7 +1653,8 @@ production and research. `src/sim/ai/`.
 - **Mass, then declare** (R97b, ADR-1089; `ai/massing.ts`): a nation in no war that so chooses a war on a neighbour
   of its home does not declare at once. It brings `MASS_SHARE` (0.7) of its land formations on the border's land to
   within `MASS_NEAR_CELLS` (15) of the border (each sent to its nearest point; refused there, to a point another was
-  sent to that day, or, of none yet, to each point not yet asked once: R224, ADR-1150) and declares when `MASS_READY` (0.5) of its men there stand so, if it
+  sent to that day, or, of none yet, to each point not yet asked once: R224, ADR-1150; the day's asks keep the regions
+  their refused searches walked, `keepRegions`, R225) and declares when `MASS_READY` (0.5) of its men there stand so, if it
   would still declare that day (`whyNotWar`, its gold, the pile, the blocs' deterrence). It gives the war up after
   `MASS_DAYS` (90), that target then barred to it for `MASS_BAR_DAYS` (365), or when it is at war; a nation with no
   other living neighbour declares at that limit all the same (R123, ADR-1106). A nation at war
@@ -1714,8 +1715,8 @@ production and research. `src/sim/ai/`.
   armour among them (≥ `SPEARHEAD_ARMOUR` (0.5) of a template's upkeep in tanks) the armour attacks and
   the rest hold. Otherwise they hold its front cell nearest its centre. No new order when the target is
   within a sector of the old or already reached. A refused order is remembered (`World.refusedOrders`,
-  derived) and not asked again from the same cell, template and grid; a corridor's refusal holds while
-  its route is the same. An order the movement system refuses as `LongWay` is diverted to another
+  derived: the cell last refused and up to `REFUSED_KEPT` (16) before it, R225) and not asked again from the same
+  cell, template and grid; a corridor's refusal holds while its route is the same. An order the movement system refuses as `LongWay` is diverted to another
   target up to `DIVERTS` (2) times.
 - **From afar:** every `MARCH_DAYS` (8) days (by id) a free, idle formation more than the deploy range from
   every sector it reaches marches to the nearest sector with nobody of over `takeMen` (1,500) men in it

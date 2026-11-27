@@ -22,7 +22,7 @@ years 1 and 19 by function (an esbuild bundle, as the game is built), and Max in
 Speed-ups only: every result bit for bit as before, the pin of seed 99 unchanged. Timings are paired arms run at once
 on separate P-cores (a ratio, not an absolute figure).
 
-- [ ] R225 **A massing's refused formations are searched for again every day.** Year 19 of seed 99, at peace:
+- [x] R225 **A massing's refused formations are searched for again every day.** Year 19 of seed 99, at peace:
   `strategicAi` 2.10 of 2.66 ms a tick (0.93 the year before), 71 % of the year's time in `findPath` under `gather`,
   single ticks to 240 ms; at Max the date stood still ten times for 0.25 to 0.7 s and the year took 29.5 s, as long as
   the war-heavy first. Read from the code: R224's second ask replaces the one refused cell `asked()` keeps
@@ -31,6 +31,15 @@ on separate P-cores (a ratio, not an absolute figure).
   year 19 from a year-18 save of HEAD ends at HEAD's hash (`2cbef30d`) with `strategicAi`'s mean a tick at most half of
   HEAD's (arms at once, swapped); a unit test red without it (a formation refused at two cells is searched for at
   neither when asked again); the pin unchanged.
+  - Done: `asked()` keeps each cell refused to a standing formation (the last and up to 16 before it, `others` of
+    `World.refusedOrders`), and `gather` keeps the regions its refused searches walked for the day's asks
+    (`keepRegions`, PLAN 7.124, as the operational AI's plan does). The memo alone was not the half: of the year's
+    5,743 searches 3,442 were refusals of formations on the march, which keep no memo (`strategicAi` 2.13 → 1.37 ms);
+    the regions answer those. Year 19, arms at once and swapped: the hash `2cbef30d` on both; `strategicAi` 2.13 and
+    2.11 → 0.57 and 0.56 ms a tick (0.27 of HEAD's), the tick 2.91 and 2.84 → 1.31 and 1.32, ticks over 50 ms 108 → 66.
+    Three-nation worlds 91415, 91408 and 91413 × 12 years: every yearly hash the same (and their tick: no gain there).
+    `refusedOrders.test`'s new case red on HEAD (6 searches for 0). The pin unchanged. No ADR (ADR-914: PLAN 1.42g's
+    memo, PLAN 7.124's regions and ADR-1150's "one extra search per point a day" mended).
 - [ ] R226 **Max speed waits on a timer between its slices.** At Max the worker's next 12 ms slice is a `setTimeout(0)`
   (`src/worker/entry.ts`), which a browser holds 4 ms or more once timers nest: the page ran 290 to 363 ticks a second
   in seed 99's first two years, about 70 % of what the sim does alone. The next slice by a message to itself. AT:

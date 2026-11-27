@@ -45,6 +45,7 @@
 import { Refusal } from '../../shared/commands';
 import { EventKind } from '../../shared/events';
 import { hypot } from '../core/dmath';
+import { keepRegions } from '../nav/provinceGraph';
 import { passageOf } from '../systems/movement';
 import { declareWar, whyNotWar } from '../systems/war';
 import { navOf, type World } from '../world';
@@ -358,25 +359,33 @@ function gather(world: World, n: number, mine: Standing['mine'], allPoints: read
   const reached: number[] = [];
   const asked = new Set<number>();
   const refused: Standing['mine'] = [];
-  for (const x of rest) {
-    if (have >= want) break;
-    asked.add(x.point);
-    if (askMove(world, x.id, x.point, pass) === 'ok') {
-      have++;
-      if (!reached.includes(x.point)) reached.push(x.point);
-    } else refused.push(x);
-  }
-  if (MASS_PROBE.nearestOnly === true) return;
-  for (const x of refused) {
-    if (have >= want) break;
-    const ok = reached.length > 0 ? reached : undefined;
-    const tryAt = ok ?? allPoints.filter((p) => !asked.has(p));
-    if (tryAt.length === 0) break;
-    const to = tryAt.reduce((b, p) => (away(world, f.x[x.id]!, f.y[x.id]!, p) < away(world, f.x[x.id]!, f.y[x.id]!, b) ? p : b));
-    asked.add(to);
-    if (askMove(world, x.id, to, pass) === 'ok') {
-      have++;
-      if (!reached.includes(to)) reached.push(to);
+  // The day's asks keep the regions their refused searches found no way out of (`keepRegions`, PLAN 7.124, as the
+  // operational AI's plan does; ROADMAP R225): no cell changes hands in here, and a formation on the march, which
+  // keeps no refusal of its own (`askMove`), is refused from a region another's search has walked, with no search.
+  keepRegions(true);
+  try {
+    for (const x of rest) {
+      if (have >= want) break;
+      asked.add(x.point);
+      if (askMove(world, x.id, x.point, pass) === 'ok') {
+        have++;
+        if (!reached.includes(x.point)) reached.push(x.point);
+      } else refused.push(x);
     }
+    if (MASS_PROBE.nearestOnly === true) return;
+    for (const x of refused) {
+      if (have >= want) break;
+      const ok = reached.length > 0 ? reached : undefined;
+      const tryAt = ok ?? allPoints.filter((p) => !asked.has(p));
+      if (tryAt.length === 0) break;
+      const to = tryAt.reduce((b, p) => (away(world, f.x[x.id]!, f.y[x.id]!, p) < away(world, f.x[x.id]!, f.y[x.id]!, b) ? p : b));
+      asked.add(to);
+      if (askMove(world, x.id, to, pass) === 'ok') {
+        have++;
+        if (!reached.includes(to)) reached.push(to);
+      }
+    }
+  } finally {
+    keepRegions(false);
   }
 }

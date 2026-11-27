@@ -129,6 +129,44 @@ describe('refused orders (PLAN 1.42g)', () => {
     expect(w.refusedOrders.has(id)).toBe(false);
   }, 120_000);
 
+  // ROADMAP R225: a massing's `gather` asks a refused formation a second cell (R224). The memo kept one refused cell,
+  // so the two took each other's place and both were searched for again every day.
+  it('a formation refused at two cells is searched for at neither when asked again', () => {
+    const s = new Sim({ scenario: '1938', seed: 1942, assets: assets1938(W) });
+    const w = s.world;
+    w.wars.start([GER], [POL], w.tick);
+    w.wars.changed();
+    const home = inner(w, GER, 11.5, 48.5);
+    const id = addDivision(w, GER, (home % W) + 0.5, Math.floor(home / W) + 0.5);
+    const swiss = inner(w, SWI, 8.2, 46.8);
+    const other = inner(w, SWI, 7.4, 46.9);
+    const third = inner(w, SWI, 9.4, 46.6);
+    expect(new Set([swiss, other, third]).size).toBe(3);
+    refusals(w, id);
+    expect(askMove(w, id, swiss, passageOf(w, GER))).toBe('refused');
+    expect(askMove(w, id, other, passageOf(w, GER))).toBe('refused');
+    expect(refusals(w, id)).toBe(2);
+    // Asked again in the same order, a day's `gather` after another: neither is searched for, and nothing is written.
+    const hash = s.hash();
+    for (let day = 0; day < 3; day++) {
+      expect(askMove(w, id, swiss, passageOf(w, GER))).toBe('refused');
+      expect(askMove(w, id, other, passageOf(w, GER))).toBe('refused');
+    }
+    expect(refusals(w, id)).toBe(0);
+    // A third cell is searched for once, and the first two stay known.
+    expect(askMove(w, id, third, passageOf(w, GER))).toBe('refused');
+    expect(refusals(w, id)).toBe(1);
+    for (const to of [swiss, third, other, swiss]) expect(askMove(w, id, to, passageOf(w, GER))).toBe('refused');
+    expect(refusals(w, id)).toBe(0);
+    expect(s.hash()).toBe(hash);
+    // A cell from a closed holder to an open one (France's, taken by Germany): each is asked again, once.
+    w.setController(inner(w, FRA, 2.5, 47.0), GER);
+    for (const to of [swiss, other, third]) askMove(w, id, to, passageOf(w, GER));
+    expect(refusals(w, id)).toBe(3);
+    for (const to of [swiss, other, third]) askMove(w, id, to, passageOf(w, GER));
+    expect(refusals(w, id)).toBe(0);
+  }, 120_000);
+
   it('a formation on the march is asked each time', () => {
     const s = new Sim({ scenario: '1938', seed: 1942, assets: assets1938(W) });
     const w = s.world;
