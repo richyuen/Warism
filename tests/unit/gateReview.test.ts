@@ -140,7 +140,8 @@ describe('npm run check:review (ADR-297)', () => {
 
   it('the list of known reds: each test once, of a file that exists, with why it is there', () => {
     const list = (JSON.parse(readFileSync(path.join(ROOT, KNOWN), 'utf8')) as { tests: { id: string; why: string }[] }).tests;
-    expect(list.length).toBeGreaterThan(0);
+    // A list, with none on it too: emptied on 2026-11-26 when its tests ran green on the user's PC (ADR-1156).
+    expect(Array.isArray(list)).toBe(true);
     expect(new Set(list.map((t) => t.id)).size).toBe(list.length);
     for (const t of list) {
       expect(existsSync(path.join(ROOT, t.id.split(' › ')[0]!)), t.id).toBe(true);

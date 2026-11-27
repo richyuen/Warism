@@ -93,3 +93,9 @@
   551 of 551 (11.6 min), run by hand: the worker's entry is under every spec, and the gate runs only changed specs.
 - The spec's first form held the pause to 250 ms of the wall and was red once in eight under eight workers (357 ms, with
   3 ticks run); it now counts ticks and frames, as ADR-1156 has it.
+
+## 2026-11-26 — The gate's test of the known reds takes the emptied list
+
+- `gateReview.test.ts` asked for a list of known reds longer than none; `d547cda1` emptied it (ADR-1156), so the unit
+  suite run in full was red on `main` from then (found by R227's gate, the first to run it in full: a change of
+  `tests/helpers/aiSweep.ts`). It now asks for a list, and of each entry what it asked before.
