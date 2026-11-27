@@ -278,3 +278,24 @@
   - `docs/PARITY.md` moved away, nothing else changed: `test` alone, red ("41: docs/PARITY.md (no such file)").
 - The test's file takes 2.03 s where it took 1.63: one more test, and the two listings (0.13 and 0.27 s).
 - It amends two rules of the gate's size, one of them the user's (ADR-280: by imports): said in ADR-1161.
+
+## 2026-11-27 — R234: relationsLabels1938 and relationsNamed1938 wait for the year's statistics too
+
+- The same three lines as R232's test: step a year, wait for the picture's tick, open Relations. Read by copies of
+  the two specs with a log (the statistics' tick at the click; a digest of the nodes' places once the labels are
+  drawn and 1.5 s later), run by a config of their own with its own output folder.
+- With the wait: 28 runs (20 eight at once, 8 two at once), the year's statistics in at every click, and each test
+  the same places in every run.
+- On HEAD, eight at once (the labels' two tests four times, the names' six twice): 20 of 20 green, and 12 of the 20
+  had other places than their test has with the wait, in 6 of the 8 tests; two tests had both layouts among their
+  runs. Those 12 are told by their places alone: the tick logged at the click was the start's in all 20 (it is read
+  as soon as the picture's tick is in, before the click lands), so it does not say which runs' graphs opened ahead
+  of the year's statistics. That this is what gives the other places is R232's finding (its order forced, alone).
+- So these specs were not red by the race: what they hold (no two labels overlapping, each 10 px high, every nation
+  at war or allied named, each truce its own line) held in either layout. Which layout a run judged was the race's.
+- In none of the 48 logged runs did the places move between the two reads (the labels drawn; 1.5 s later).
+- By hand: `npx playwright test tests/e2e/relationsLabels1938.spec.ts --project=chromium --repeat-each=4 --workers=8`
+  (8 of 8) and `tests/e2e/relationsNamed1938.spec.ts` with `--repeat-each=2` (12 of 12).
+- What the specs no longer see: the layout of a graph that was open while the world moved on (laid out on older
+  ties, then given 40 steps a message). That is the graph a player with Relations open has, and no spec holds its
+  labels now but by chance before. Not filed: no red was seen in it (12 runs of it green here).

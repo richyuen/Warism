@@ -175,12 +175,19 @@ on separate P-cores (a ratio, not an absolute figure).
     real: SPEC.md alone citing a file that is not there: `test` alone, red twice, failed, the tree not recorded;
     the file made and not added: green; another document alone: nothing runs; `docs/PARITY.md` moved away: red.
     The test's file 1.63 → 2.03 s.
-- [ ] R234 **Two more specs open the relations graph a year on without the year's statistics** (found by R232).
+- [x] R234 **Two more specs open the relations graph a year on without the year's statistics** (found by R232).
   `relationsLabels1938.spec.ts` and `relationsNamed1938.spec.ts` step a year, wait for the picture's tick and open
   the graph, as `relationsTap1938`'s first test did. Under load the graph is then laid out on the start's ties and
   moved on (R232), so the labels they judge are of one layout or the other by the race. Both green so far. AT: each
   waits for the statistics of the tick it stepped to; eight at once each is green, and its graph's places are the
   same in every run (a digest of the nodes' places, as R232's probe read them).
+  - Done: both wait for the statistics of the year before they open the graph, as R232's test does. Read by copies
+    of the two specs that log the statistics' tick at the click and a digest of the nodes' places. With the wait: 28
+    runs (20 eight at once, 8 two at once), the year's statistics in at every click, one layout a test in every
+    run. On HEAD, eight at once: 12 of 20 runs had other places than those, in 6 of the 8 tests (the layout of a
+    graph opened ahead of the year's statistics, as R232's forced order showed; the tick at the click does not tell
+    them, it was the start's in all 20), and all 20 were green: the labels hold in either. The specs themselves
+    eight at once: 8 of 8 and 12 of 12. No ADR (ADR-914: R232's wait).
 
 ## Released
 

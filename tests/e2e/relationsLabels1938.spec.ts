@@ -37,6 +37,10 @@ for (const [name, seed, width, height] of [['desk', 20887, 1600, 900], ['phone',
     await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
     await page.evaluate(() => window.__warsim!.sim.step(24 * 365));
     await page.waitForFunction(() => (window.__warsim!.view?.lastTick ?? 0) >= 24 * 365, null, { timeout: 240_000 });
+    // The statistics of that year in before the graph is opened (ROADMAP R232, R234): they come a message behind the
+    // picture, and a graph opened ahead of them is laid out on the start's ties and moved on to the year's, another
+    // layout. Which of the two these labels were of was a race.
+    await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) >= 24 * 365, null, { timeout: 60_000 });
     const out = process.env['EVIDENCE'] ? path.resolve(import.meta.dirname, '../../docs/evidence/R34') : info.outputPath();
     mkdirSync(out, { recursive: true });
     const btn = page.getByTestId('relations-btn');

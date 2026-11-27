@@ -55,6 +55,10 @@ for (const seed of [39939, 39941, 39943])
       await page.waitForFunction(() => window.__warsim?.hud.stats.value !== null && window.__warsim?.hud.stats.value !== undefined, null, { timeout: 60_000 });
       await page.evaluate(() => window.__warsim!.sim.step(24 * 365));
       await page.waitForFunction(() => (window.__warsim!.view?.lastTick ?? 0) >= 24 * 365, null, { timeout: 240_000 });
+      // The statistics of that year in before the graph is opened (ROADMAP R232, R234): they come a message behind
+      // the picture, and a graph opened ahead of them is laid out on the start's ties and moved on to the year's,
+      // another layout. Which of the two was judged here was a race.
+      await page.waitForFunction(() => (window.__warsim!.hud.stats.value?.tick ?? 0) >= 24 * 365, null, { timeout: 60_000 });
       const btn = page.getByTestId('relations-btn');
       await btn.scrollIntoViewIfNeeded();
       await btn.click();
