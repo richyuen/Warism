@@ -387,3 +387,35 @@
   `trackFight1938h`, `advancing1938h`, `moveArrows.test.ts`.
 - The gate: the sim changed, so every test's saved world was made again in its unit run (436 files). One red in
   that run, `snapshot-perf` past its 90 s under the load, green alone (46 s). The pin of seed 99 is unchanged.
+
+## 2026-11-27 — R238: an hour's open stages are made again after each of its events
+
+- Found by R237: its first fix also kept the list by the events applied, and with that the plain replay went
+  another way from 1944 on. Taken out there, done here on its own, since it changes the replay.
+- The cause. An hour's list of open stages is made at the hour's first asking and kept for the hour. One event
+  asks while it is applied: an arrival on land an enemy holds whose owner is at peace with the arrival's nation
+  (`forces`, R82b: whether the cell is the land of a stage open for its side; the Allies in Vichy's Normandy). So
+  the hour's list was of the events and the men up to that arrival. A stage applied after it in that hour stayed
+  open for the hour; the arrivals after it were not counted when the track judged whether the stage's taker was far
+  outnumbered (ADR-977).
+- The fix: `applyDue` tells the track after each event (`Track.eventApplied`), which forgets the list, as `step`
+  does when a tick begins. The other form tried in R237 (the list kept by the count of events applied) gives the
+  same replay: the same hashes on twelve marks to 26 July 1953.
+- Where the replay parts: a plain run of R237's code beside one of this, the hash each day of 1944: the same to
+  5 June, another from 6 June. That is the hour of the D-Day arrivals: several `forces` events in one hour, the
+  first of them asking before the others had landed.
+- What it moves, by the ten-year tests on this code (ten files, 11 tests, green): nothing they print but one
+  figure. `historyMatch1938h`'s 44 map lines to the digit, Paris from 10 June 1940, 936 French cells, 10,734
+  Soviet cells, the Soviet army 3,396k; the China front as before; of the ten free worlds after 1953, the ninth
+  seed's first war 16 days after the end where it was 17. No `WARNING historyTrack` line.
+- Tests: `trackHourEvents1938h.test.ts`, two tests on timelines of their own, red before for the reasons named:
+  "the hold stands on the land the stage gave, in the hour it gave it" (false before), and "its days are open by
+  the men of the hour" (shut before). In both, Warsaw's cell is made a third nation's land held by Poland, so the
+  German arrival there asks as Normandy's did; each test checks that it did ask while the events were applied.
+- By hand, the browser specs that run the replay (`arrowsHeld1938h`, `replayYear1938h`, `scenario1938h`,
+  `trackView1938h`): 14 of 14.
+- No ADR (ADR-914): ADR-974 opens a stage's days "before an `occupy` stage not yet applied", and ADR-977 counts
+  the men "this hour"; the code now does both within the hour of several events.
+- The gate: the sim changed, so every test's saved world was made again in its unit run (437 files). Two red in
+  that run by tests past their 90 s under the load (`scenario1938`, `snapshot-perf`), each green alone. The pin of
+  seed 99 is unchanged.

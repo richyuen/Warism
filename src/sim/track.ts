@@ -350,6 +350,16 @@ export class Track {
     this.open = null;
   }
 
+  /**
+   * An event of the timeline's has been applied (ROADMAP R238): the open stages kept are forgotten. An event brings
+   * men (`forces`) or applies a stage, and one may ask while it is applied (an arrival, R82b): the list it made was
+   * of the hour up to itself, and the hour's later events and its systems went by it. A stage applied after it stayed
+   * open for the hour; men who arrived after it were not counted. So the hour's systems go by a list of all its events.
+   */
+  eventApplied(): void {
+    this.open = null;
+  }
+
   /** A stage's area at a map's size (geometry only: cached). */
   private area(world: World, i: number, by: string, of: readonly string[], ring: readonly (readonly [number, number])[]): OpenStage {
     const { w, h } = world.cells;
@@ -1285,6 +1295,8 @@ function applyDue(world: World, t: Track): void {
     const i = t.next++;
     const e = t.events[i]!;
     const why = apply(world, t, e);
+    // What the track kept of the hour's open stages was of the hour before this event (ROADMAP R238).
+    t.eventApplied();
     if (why !== Refusal.None) world.out.emit(world.tick, EventKind.TrackSkipped, firstNation(t, e), i + 1, NaN, why);
     else if (toldByNote(t, i)) {
       const [x, y] = placeOf(world, t, e);

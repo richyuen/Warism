@@ -244,7 +244,7 @@ on separate P-cores (a ratio, not an absolute figure).
     in that small world. No ADR (ADR-914: a mend of I4; it stands on ADR-974, ADR-977 and ADR-1162). What R235
     read of the replay in the page after its change (its spec's prints, its pictures) was of a page that asked;
     its spec holds bars, not those figures.
-- [ ] R238 **Within an hour the open stages are made before the hour's later events** (found by R237). The list of
+- [x] R238 **Within an hour the open stages are made before the hour's later events** (found by R237). The list of
   an hour's open stages is made at its first asking and kept for the hour. An arrival of the timeline's asks while
   the hour's events are applied (`forces`, R82b: whether its cell is the land of a stage open for its side), so the
   list is of the men and events up to that arrival: the arrivals and stages that follow in the same hour are not
@@ -255,6 +255,18 @@ on separate P-cores (a ratio, not an absolute figure).
   free worlds after 1953 one meets its first war a day sooner (16 days for 17). AT: a test red before (two events
   of one hour, the list asked between them); the replay's ten-year tests green with their figures named; the pin
   unchanged.
+  - Done: the track forgets the list after each event it applies (`Track.eventApplied`, in `applyDue`), as `step`
+    does when a tick begins (R237): whoever asks next makes it of the hour so far, and the hour's systems of all
+    its events. Held by `trackHourEvents1938h.test.ts`, two tests red before, each with an arrival that asks as
+    Normandy's did (on land an enemy holds, its owner's at peace with the arrival's nation): a stage applied after
+    it in the same hour (the hold must stand on the stage's land in that hour); forty divisions set down after it
+    in an hour of a stage's days, Germany far outnumbered before them (the stage must be open by the men of the
+    hour). The replay's course: the plain run's hash the same on every day of 1944 to 5 June and another from 6
+    June, the hour of the D-Day arrivals (several `forces` events in one hour, the first of them asking). The
+    ten-year tests on this code, green (ten files): the 44 map lines and every figure of `historyMatch1938h` and
+    `chinaFront1938h` the nightly run's; the ten free worlds' days to a first war the same but one (16 for 17).
+    The four browser specs of the replay by hand, 14 of 14. The pin unchanged. No ADR (ADR-914: a mend of
+    ADR-974's "a stage not yet applied" and ADR-977's "this hour").
 
 ## Released
 
