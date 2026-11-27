@@ -15,6 +15,40 @@ Rules:
 - A batch ends with a critic run and a release tag (`release-<YYYY-MM-DD>`, PROMPT.md "Releases"; a
   second on one day takes a letter, `release-2026-11-03b`, ADR-820).
 
+## Batch 60 — speed with no rule changed (the user's decision of 2026-11-26, from a profile of `release-2026-11-20`)
+
+What the profile found that costs the game nothing: 25 years of seed 99 by system (`npm run sim -- --profile`), its
+years 1 and 19 by function (an esbuild bundle, as the game is built), and Max in the page (`tools/diag/maxStalls.ts`).
+Speed-ups only: every result bit for bit as before, the pin of seed 99 unchanged. Timings are paired arms run at once
+on separate P-cores (a ratio, not an absolute figure).
+
+- [ ] R225 **A massing's refused formations are searched for again every day.** Year 19 of seed 99, at peace:
+  `strategicAi` 2.10 of 2.66 ms a tick (0.93 the year before), 71 % of the year's time in `findPath` under `gather`,
+  single ticks to 240 ms; at Max the date stood still ten times for 0.25 to 0.7 s and the year took 29.5 s, as long as
+  the war-heavy first. Read from the code: R224's second ask replaces the one refused cell `asked()` keeps
+  (`World.refusedOrders`), so a formation asked at two points is searched for at both again the next day (ADR-1150 meant
+  one extra search per point a day). The memo keeps each refused cell: the same orders, by its own rule. AT: seed 99's
+  year 19 from a year-18 save of HEAD ends at HEAD's hash (`2cbef30d`) with `strategicAi`'s mean a tick at most half of
+  HEAD's (arms at once, swapped); a unit test red without it (a formation refused at two cells is searched for at
+  neither when asked again); the pin unchanged.
+- [ ] R226 **Max speed waits on a timer between its slices.** At Max the worker's next 12 ms slice is a `setTimeout(0)`
+  (`src/worker/entry.ts`), which a browser holds 4 ms or more once timers nest: the page ran 290 to 363 ticks a second
+  in seed 99's first two years, about 70 % of what the sim does alone. The next slice by a message to itself. AT:
+  `tools/diag/maxStalls.ts 99 - 2` on HEAD's build and this one, each twice, interleaved: each year at least 12 % less
+  wall time (a trial: 17 and 16 %), 59 fps or more; a spec at Max: a pause holds the date within 250 ms and a command
+  given at Max is applied.
+- [ ] R227 **Fire records nobody draws.** Combat works out each shot's two element places and a record
+  (`World.out.fires`) that the worker throws away unless the view draws elements (T1.5 and closer), and a headless
+  run always. AT: with no reader (the headless runner; the worker while its subscription draws no elements) seed 99's
+  first two years end at the same hash (`9e8dd1b1`) with combat's mean a tick at least 15 % under HEAD's (a trial: 22 %,
+  the tick 3 %); with a reader the records of a war world's hours are HEAD's, number for number (a unit test); the
+  specs of the fire drawn pass.
+- [ ] R228 **On the S map a sailing fleet's water point is searched for each hour.** `World.seaPoint` asks the fine
+  mask on every call (`waterPoint`, `farPoint`), 16 × 16 pixels a cell on S against 8 × 8 on M: S ticks slower than M
+  (2.63 against 2.31 ms over three years of seed 99, `farPoint` 28 % of S's time). Kept by cell, as `cellPoint` keeps
+  the land's. AT: three years of seed 99 at S end at HEAD's hash (`83341f24`) and tick at or under M's in the same
+  arms; `farPoint` under 2 % of S's sampled time; the pin unchanged.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

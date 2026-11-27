@@ -58,3 +58,21 @@
   `E2E_RENDER=software` (chromium, 4 workers): 22 of 22 green in 8.0 min. `shipMarks1938` at 20 m/px: destroyers 18 px
   (7 ships), cruisers 24.5. `cityNames1938`: 120 frames, 1,388 and 1,349 ticks, no jumps. The list is emptied and
   shipMarks1938's BLOCKERS entry moved to `docs/BLOCKERS_DONE.md`.
+
+## 2026-11-26 — A profile of release-2026-11-20; Batch 60 filed (the user's decision)
+
+- The user asked what could be faster, compromises allowed. Measured on `bc9fa5ed` (i7-13700KF, RTX 4070 Ti), the
+  release's commit: this checkout was nine commits behind `main` (to `d547cda1`), none of them in `src/sim`,
+  `src/worker` or `src/shared`, and the batch is rebased onto them. Seed 99 × 25 years by system (the sim's
+  `--profile`, on 0xFFFF): mean 1.75 ms a tick, year 1 2.77, the quietest 0.93, year 19 (at peace) 2.66 with
+  `strategicAi` 2.10. In an esbuild bundle, as the game is built (tsx read 2.30 ms for its 1.97 over three years, one
+  pair), the first five years: the AI's layers about a third (operational 15 %, strategic 7, air 5, economic 4,
+  invasion 3), combat 15, air 10, supply 10, movement 9, territory 6; year 1 by function: none over 6 %.
+- Max in the page (`maxStalls 99 - 2`): 290 and 363 ticks a second in years 1 and 2, about 70 % of the bundle's own; a
+  trial with the worker's next slice by a message, each build twice: 30.2 → 25.2 s and 24.2 → 20.2 s, 60 fps kept.
+- Trials in a scratch worktree, two years, arms at once: no fire records −3.3 % (combat −22 %, the same hash); the
+  operational AI's turn every second day, `operationalAi` 0.39 → 0.22 ms (another world); each element firing every
+  second or third hour, within a diverged world's noise (±3 %). The S map slower than M (2.63 against 2.31 ms,
+  `farPoint` 28 % of S). The month's first hour 92 to 109 ms (`tickMax` on year 2: economicAi about 50, economy 30).
+- Filed as Batch 60 (R225 to R228): the four that change no rule. The compromises (the army AI's cadence, the month's
+  accounts by nation, fewer formations, render settings for weak machines) are the user's to choose and are not filed.
