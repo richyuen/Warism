@@ -160,12 +160,21 @@ on separate P-cores (a ratio, not an absolute figure).
     (42 s; the spec 14 of 14). The suite, twelve pages at once while the 20 ran: 550 of 551 (`heroes1938`'s T2 and T3
     test, run in that stretch, timed out a 60 s wait; green alone).
     No ADR (ADR-914: a spec's wait, as its neighbour has it). The worker is as it was: `step` is the tests' call alone.
-- [ ] R233 **A change of SPEC.md runs no test of it** (found by R231's whole unit run). `specRefs.test.ts` reads
+- [x] R233 **A change of SPEC.md runs no test of it** (found by R231's whole unit run). `specRefs.test.ts` reads
   SPEC.md from the disk and no import reaches it, so the gate, sized by imports, runs nothing for a SPEC line, and a
   name that does not exist goes to `main`: R94a's `chromeCover1938`, red in the nightly run of 2026-11-16; R231's own
   line was red in its whole run until the new file was in git's index, which the checker reads. AT: a change of
   SPEC.md runs `specRefs.test.ts` in `npm run check` (`gate.test.ts` holds the plan), and a file SPEC cites counts
   as soon as it is in the working tree, added or not.
+  - Done (ADR-1161): the test joins the gate's unit stage whenever a change can break a line of SPEC.md: SPEC.md
+    itself, anything that is not a document (the test reads the tree's names and the code's words too: a file
+    renamed or a name gone is a line's miss from the other side), a document gone from the disk (`touchesSpec`,
+    `planUnit`). Documents alone with such a change run that test alone (`planGate`); other documents nothing, as
+    before. The checker reads the working tree, a file added or not, less what is removed from the disk
+    (`loadCorpus`). `gate.test.ts` and `specRefs.test.ts` hold it, four tests red on HEAD. Through the gate for
+    real: SPEC.md alone citing a file that is not there: `test` alone, red twice, failed, the tree not recorded;
+    the file made and not added: green; another document alone: nothing runs; `docs/PARITY.md` moved away: red.
+    The test's file 1.63 → 2.03 s.
 - [ ] R234 **Two more specs open the relations graph a year on without the year's statistics** (found by R232).
   `relationsLabels1938.spec.ts` and `relationsNamed1938.spec.ts` step a year, wait for the picture's tick and open
   the graph, as `relationsTap1938`'s first test did. Under load the graph is then laid out on the start's ties and

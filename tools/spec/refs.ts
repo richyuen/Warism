@@ -1,14 +1,14 @@
 /**
  * SPEC.md's references to the code (ROADMAP R6, ADR-821): every backticked file path, code name
- * and `npm run` script a section of SPEC.md cites must exist in the tracked tree, so a rewritten
+ * and `npm run` script a section of SPEC.md cites must exist in the working tree, so a rewritten
  * section cannot name what is gone.
  *
  * `npx tsx tools/spec/refs.ts [section…]` prints each section's misses (all sections when none is
  * given). `tests/unit/specRefs.test.ts` holds the sections already rewritten at 0.
  *
  * A backticked span is judged when it is one token:
- * - a path (it has a `/` or ends in a file extension): the tail of a tracked file's or folder's
- *   path, its extension optional, `<x>` and `*` standing for any part (`.cache/` is run output and
+ * - a path (it has a `/` or ends in a file extension): the tail of the path of a file or folder of
+ *   the working tree (`loadCorpus`), its extension optional, `<x>` and `*` standing for any part (`.cache/` is run output and
  *   not judged);
  * - `npm run <script>`: a script of package.json;
  * - a name (`foo`, `foo()`, `World.cellPoint`, `CONST_NAME`): each dotted part a word of the
@@ -34,10 +34,16 @@ export interface Corpus {
   scripts: Set<string>;
 }
 
+/**
+ * The tree SPEC.md is held against: the working tree as a commit of it would be (ROADMAP R233, ADR-1161). A file
+ * counts as soon as it is there, added to git's index or not (one ignored never does), and one removed from the disk
+ * does not count, staged or not: the index alone called a new file SPEC.md cites missing until it was added, and
+ * kept a file that was gone.
+ */
 export function loadCorpus(root = ROOT): Corpus {
-  const files = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8', maxBuffer: 64 << 20 })
-    .split('\n')
-    .filter((f) => f && !f.startsWith('reference/'));
+  const list = (...args: string[]): string[] => execFileSync('git', ['ls-files', ...args], { cwd: root, encoding: 'utf8', maxBuffer: 64 << 20 }).split('\n').filter((f) => f !== '');
+  const gone = new Set(list('--deleted'));
+  const files = [...new Set(list('--cached', '--others', '--exclude-standard'))].filter((f) => !gone.has(f) && !f.startsWith('reference/'));
   const dirs = new Set<string>();
   const names = new Set<string>();
   for (const f of files) {

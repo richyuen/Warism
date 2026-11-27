@@ -3,6 +3,7 @@
  *
  *   nothing changed, and the gate has passed this very tree           → nothing
  *   only documents changed (Markdown anywhere, anything under docs/)  → nothing; the tree is recorded
+ *     with SPEC.md among them, or one of them gone                    → the test of SPEC.md's references alone
  *   no sim input changed                                             → everything but the 10-year sweep tests
  *   otherwise                                                        → everything, the sweep stage the pin alone
  *
@@ -37,7 +38,10 @@
  * a different few each run, and pass alone; a known red is this machine's, with its BLOCKERS entry).
  * The perf specs run on their own project, after (`e2eRuns`).
  *
- * Nothing reads the documents (parity retired, ADR-805), and nothing but a sim input can change what
+ * Of the documents one is read, SPEC.md, by the test of what it cites (`SPEC_TEST`; parity is retired, ADR-805).
+ * That test reads SPEC.md and the tree's names from the disk, where no import reaches: it joins the unit stage
+ * whenever a change can break a line (`touchesSpec`; ROADMAP R233, ADR-1161), a commit of documents with SPEC.md
+ * in it included. Nothing but a sim input can change what
  * the sweep tests prove. `critic/` is the critic's own output and is ignored. The gate runs
  * before every commit, so the stages left out were proved by the gate of an earlier commit.
  * A green gate records the tree it passed (`.cache/gate/green.json`); a clean tree whose HEAD is
@@ -65,15 +69,28 @@ export type Stage = (typeof ALL_STAGES)[number];
 const ignored = (file: string): boolean => file.startsWith('critic/');
 const isDocument = (file: string): boolean => file.endsWith('.md') || file.startsWith('docs/');
 
+/** The one document a test reads, and that test (ROADMAP R233, ADR-1161): what SPEC.md cites exists (`tools/spec/refs.ts`). */
+const SPEC = 'SPEC.md';
+export const SPEC_TEST = 'tests/unit/specRefs.test.ts';
+
+/**
+ * Whether a change of `file` can break a line of SPEC.md (ROADMAP R233, ADR-1161). `specRefs.test.ts` reads SPEC.md
+ * and the tree from the disk, the files' names and the words of the code, and no import reaches either: SPEC.md
+ * itself, anything that is not a document (a name of the code changed, a file SPEC.md cites renamed), and a document
+ * that is gone (SPEC.md cites some by their path). A document edited or added can break none.
+ */
+const touchesSpec = (file: string, exists: (f: string) => boolean): boolean => file === SPEC || !isDocument(file) || !exists(file);
+
 /**
  * The stages to run for `files` changed since HEAD (repo-relative, `/`-separated); null = unknown.
- * `gated`: the gate has already passed the tree of HEAD.
+ * `gated`: the gate has already passed the tree of HEAD. `exists`: whether a path is on disk.
  */
-export function planGate(files: readonly string[] | null, gated = false): Stage[] {
+export function planGate(files: readonly string[] | null, gated = false, exists: (f: string) => boolean = () => true): Stage[] {
   if (files === null) return [...ALL_STAGES];
   const changed = files.filter((f) => !ignored(f));
   if (changed.length === 0 && gated) return [];
-  if (changed.length > 0 && changed.every(isDocument)) return [];
+  // Documents alone: nothing, but the unit stage for SPEC.md's references when one of them can break a line (`planUnit`).
+  if (changed.length > 0 && changed.every(isDocument)) return changed.some((f) => touchesSpec(f, exists)) ? ['test'] : [];
   const sim = changed.some((f) => SWEEP_INPUTS.some((p) => (p.endsWith('/') ? f.startsWith(p) : f === p)));
   return ALL_STAGES.filter((s) => s !== 'test:sweep' || sim);
 }
@@ -103,19 +120,24 @@ export interface UnitPlan {
 }
 
 /**
- * How much of the unit stage a gate with code in it runs (ADR-280). `exists`: whether a path is on
+ * How much of the unit stage a gate runs (ADR-280). `exists`: whether a path is on
  * disk (a file removed runs everything: what imported it is not known any more).
+ *
+ * The test of SPEC.md's references (`SPEC_TEST`) is no file's by its imports: it joins the related tests whenever a
+ * change can break a line of SPEC.md (`touchesSpec`; ROADMAP R233, ADR-1161), and is the stage alone when nothing else is.
  */
 export function planUnit(files: readonly string[] | null, exists: (f: string) => boolean): UnitPlan {
   if (files === null) return { mode: 'full', files: [], why: 'what changed is not known' };
-  const changed = files.filter((f) => !ignored(f) && !isDocument(f));
+  const live = files.filter((f) => !ignored(f));
+  const changed = live.filter((f) => !isDocument(f));
   const shared = changed.find((f) => UNIT_SHARED.some((p) => (p.endsWith('/') ? f.startsWith(p) : f === p)));
   if (shared !== undefined) return { mode: 'full', files: [], why: `${shared} changed` };
   const code = changed.filter((f) => (f.startsWith('src/') || f.startsWith('tools/') || f.startsWith('tests/unit/')) && /\.(ts|tsx|js|json)$/.test(f));
   const gone = code.find((f) => !exists(f));
   if (gone !== undefined) return { mode: 'full', files: [], why: `${gone} removed` };
-  if (code.length === 0) return { mode: 'none', files: [], why: 'no source or unit test changed' };
-  return { mode: 'related', files: code, why: 'the tests that import what changed' };
+  const spec = live.some((f) => touchesSpec(f, exists));
+  if (code.length === 0) return spec ? { mode: 'related', files: [SPEC_TEST], why: "no source or unit test changed: SPEC.md's references alone" } : { mode: 'none', files: [], why: 'no source or unit test changed' };
+  return { mode: 'related', files: [...new Set([...code, SPEC_TEST])], why: "the tests that import what changed, and SPEC.md's references" };
 }
 
 export interface E2ePlan {
@@ -249,7 +271,8 @@ function recordGreen(tree: string | null): void {
 function main(): void {
   const files = process.env['FULL'] ? null : changedFiles();
   const head = git(['rev-parse', 'HEAD^{tree}']);
-  const stages = planGate(files, head !== null && gatedTrees().includes(head));
+  const onDisk = (f: string): boolean => existsSync(path.join(ROOT, f));
+  const stages = planGate(files, head !== null && gatedTrees().includes(head), onDisk);
   const sweep = planSweep(files);
   if (stages.length === 0) {
     // Documents alone (or nothing) changed: record the tree, so the clean tree after the commit runs nothing.
@@ -269,7 +292,7 @@ function main(): void {
     if (e2e.mode === 'none') stages.splice(stages.indexOf('e2e'), 1);
   }
   // The unit stage: the tests related to what changed, or all when what they stand on changed (ADR-280).
-  const unit: UnitPlan = process.env['FULL'] ? { mode: 'full', files: [], why: '' } : planUnit(files, (f) => existsSync(path.join(ROOT, f)));
+  const unit: UnitPlan = process.env['FULL'] ? { mode: 'full', files: [], why: '' } : planUnit(files, onDisk);
   const unitWhy = unit.why !== '' && stages.includes('test');
   if (stages.includes('test') && unit.mode === 'none') stages.splice(stages.indexOf('test'), 1);
   const skipped = ALL_STAGES.filter((s) => !stages.includes(s));

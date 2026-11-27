@@ -5,6 +5,42 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1161 · 2026-11-27 · accepted · The gate runs the test of what SPEC.md cites whenever a change can break a line (R233)
+
+- **The case** (found by R231's whole unit run). `specRefs.test.ts` (R6, ADR-821) holds SPEC.md to the tree: every
+  path, name and script it cites exists. It reads SPEC.md and the tree from the disk, and no import reaches either.
+  The gate sizes its unit stage by imports (ADR-280) and runs nothing for documents (ADR-48, ADR-55; "nothing reads
+  the documents" was written when parity was retired, ADR-805, before R6). So a SPEC line that cites what is not
+  there ran no test and went to `main`: R94a's `chromeCover1938`, red in the nightly run of 2026-11-16, and R231's
+  own line, red in its whole unit run. From the other side the same: a change that takes away a file or a name
+  SPEC.md cites runs no test of it. And the checker read git's index for the tree: a new file SPEC.md cites was
+  missing until it was added, and a file removed from the disk still counted.
+- **Decision.**
+  1. `specRefs.test.ts` joins the gate's unit stage whenever a change can break a line of SPEC.md: SPEC.md itself;
+     anything that is not a document (a name of the code changed, a file renamed or removed); a document gone from
+     the disk (SPEC.md cites a few by their path). A document edited or added can break none.
+  2. A change of documents alone that can break a line runs the unit stage alone, for that test alone. Other
+     documents run nothing, as before.
+  3. The tree the checker reads is the working tree as a commit of it would be: its files added to git's index or
+     not (never the ignored ones), less those removed from the disk.
+- **Consequences.**
+  - It amends "documents run nothing" (ADR-48, ADR-55) for SPEC.md and for a document removed, and "the tests whose
+    imports reach a changed file" (ADR-280, the user's decision) by one test that is every change's: 2 s of a gate.
+  - A change of what no unit test imports (a spec, a workflow, a page) ran no unit stage; it runs that one test.
+  - By (3) a file SPEC.md cites that is on this machine and never committed passes the gate here, and is a miss in
+    the nightly run: the gate judges the working tree, as the item's AT has it.
+  - `npm run check:full`, `npm run check:review` and the nightly run had the test already, in the whole suite.
+  - Not covered: the other documents, which no test reads; the sections of SPEC.md the test does not list (it lists
+    all ten now).
+- **Read.** `gate.test.ts` holds the plan (SPEC.md alone, with documents, with code; a spec, a workflow, a page; a
+  document gone; documents edited or added: none; the test's file is there, since the related run passes with no
+  tests), and `specRefs.test.ts` the tree (a scratch repository: a new file counts before it is added, a removed one
+  does not, an ignored one never). Four tests red on HEAD. Through `npm run check` for real, each on a tree with no
+  other change: SPEC.md citing a file that is not there: the stage `test` alone, red in the run and again alone, the
+  gate failed and the tree not recorded; that file made and not added: green, the related run naming it and the
+  test; another document alone (CHANGELOG.md): nothing runs; `docs/PARITY.md` moved away: red ("41: docs/PARITY.md
+  (no such file)"). The test's file takes 2.03 s where it took 1.63 (one more test; the two listings 0.4 s).
+
 ## ADR-1160 · 2026-11-27 · accepted · An error vitest caught outside the tests is red: as its file, or as the run (R231)
 
 - **The case** (found by R230's fixtures). vitest fails a run for an error it catches outside the tests, a rejection

@@ -2,16 +2,45 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { e2eRuns, splitKnown } from '../../tools/gate/review';
-import { ALL_STAGES, changedFiles, gatedTrees, historySpecs, PIN_TEST, planE2e, planGate, planSweep, planUnit, runsTheSim, worktreeTree } from '../../tools/gate/check';
+import { ALL_STAGES, changedFiles, gatedTrees, historySpecs, PIN_TEST, planE2e, planGate, planSweep, planUnit, runsTheSim, SPEC_TEST, worktreeTree } from '../../tools/gate/check';
 
 // ADR-48, ADR-49: the gate is sized to what changed since HEAD. ADR-55: a clean tree that the
 // gate has already passed runs nothing. ADR-805: the plan's phase reviews no longer widen it; the
 // whole suites run in check:full and check:review, before a release.
 
 describe('gate plan (ADR-48, ADR-49)', () => {
-  it('documents only: nothing to run (parity retired, ADR-805)', () => {
+  it('documents only: nothing to run (parity retired, ADR-805), but the unit stage for SPEC.md, which a test reads (R233)', () => {
     expect(planGate(['PROGRESS.md', 'docs/PARITY.md', 'docs/sweeps/2026-10-03-sweep-b1.json', 'docs/evidence/2.3/warsaw.png'])).toEqual([]);
     expect(planGate(['CLAUDE.md', 'critic/shots/s1.png'])).toEqual([]); // critic/ is ignored
+    // SPEC.md among them: the unit stage alone, for the test of what it cites (ADR-1161).
+    expect(planGate(['SPEC.md', 'PROGRESS.md'])).toEqual(['test']);
+    expect(planGate(['SPEC.md'], true)).toEqual(['test']);
+    expect(planGate(['SPEC.md', 'src/render/units/counters.ts'])).toEqual(ALL_STAGES.filter((s) => s !== 'test:sweep'));
+    // A document removed (or renamed: its old name): SPEC.md may cite it by its path. One edited or added cannot break a line.
+    expect(planGate(['docs/PARITY.md', 'PROGRESS.md'], false, (f) => f !== 'docs/PARITY.md')).toEqual(['test']);
+    expect(planGate(['docs/PARITY.md', 'PROGRESS.md'], false, () => true)).toEqual([]);
+  });
+
+  // ROADMAP R233 (ADR-1161): `specRefs.test.ts` reads SPEC.md and the tree's names from the disk, and no import
+  // reaches either: a SPEC line that cites what is not there, or a change that takes away what a line cites, ran no
+  // test of the gate and went to `main` (R94a's `chromeCover1938`, red in the nightly run of 2026-11-16).
+  it("SPEC.md's references are run when SPEC.md changed, when anything but a document did, and when a document is gone (R233)", () => {
+    const on = (): boolean => true;
+    // SPEC.md alone, or with other documents: that test alone.
+    expect(planUnit(['SPEC.md', 'PROGRESS.md'], on)).toEqual({ mode: 'related', files: [SPEC_TEST], why: expect.any(String) });
+    // Code: the tests that import it, and that test (a name gone from the code is a SPEC line's miss).
+    expect(planUnit(['src/render/fx/wrecks.ts'], on).files).toEqual(['src/render/fx/wrecks.ts', SPEC_TEST]);
+    // What no unit test imports is a file SPEC.md may cite too: a spec, a workflow, a page.
+    for (const f of ['tests/e2e/fire1938.spec.ts', '.github/workflows/nightly.yml', 'index.html']) expect(planUnit([f], on), f).toEqual({ mode: 'related', files: [SPEC_TEST], why: expect.any(String) });
+    // The test itself changed: once.
+    expect(planUnit([SPEC_TEST, 'SPEC.md'], on).files).toEqual([SPEC_TEST]);
+    // A document removed: its path may be cited. Documents edited or added, pictures and the critic's output: none.
+    expect(planUnit(['docs/PARITY.md', 'PROGRESS.md'], (f) => f !== 'docs/PARITY.md').files).toEqual([SPEC_TEST]);
+    expect(planUnit(['PROGRESS.md', 'docs/PARITY.md', 'docs/evidence/4.7/a.png', 'critic/x.json'], on).mode).toBe('none');
+    // In full it is one of all of them.
+    expect(planUnit(['SPEC.md', 'package.json'], on).mode).toBe('full');
+    // The related run passes with no tests: a test of that name must be there.
+    expect(readFileSync(path.resolve(import.meta.dirname, '../..', SPEC_TEST), 'utf8')).toContain('specMisses');
   });
 
   it('code outside the sim: everything but the sweep tests', () => {
@@ -53,8 +82,9 @@ describe('gate plan (ADR-48, ADR-49)', () => {
   // all of them when something every test stands on changed.
   it('the unit stage: in full when a shared file changed or what changed is not known; otherwise the related tests', () => {
     const on = (): boolean => true;
-    expect(planUnit(['src/render/fx/wrecks.ts', 'PROGRESS.md'], on)).toEqual({ mode: 'related', files: ['src/render/fx/wrecks.ts'], why: expect.any(String) });
-    expect(planUnit(['src/sim/world.ts', 'tests/unit/war.test.ts'], on).files).toEqual(['src/sim/world.ts', 'tests/unit/war.test.ts']);
+    // With the test of SPEC.md's references beside them (R233).
+    expect(planUnit(['src/render/fx/wrecks.ts', 'PROGRESS.md'], on)).toEqual({ mode: 'related', files: ['src/render/fx/wrecks.ts', SPEC_TEST], why: expect.any(String) });
+    expect(planUnit(['src/sim/world.ts', 'tests/unit/war.test.ts'], on).files).toEqual(['src/sim/world.ts', 'tests/unit/war.test.ts', SPEC_TEST]);
     expect(planUnit(null, on).mode).toBe('full');
     for (const f of ['vitest.config.ts', 'tests/helpers/earth.ts', 'package-lock.json', 'data/scenarios/1938/oob.json', 'public/data/earth/manifest.json', 'tools/headless/assets.ts']) expect(planUnit([f], on).mode, f).toBe('full');
     // A file removed: what imported it is not known any more.
@@ -62,8 +92,9 @@ describe('gate plan (ADR-48, ADR-49)', () => {
     // A commit of documents alone runs nothing (ADR-805).
     expect(planGate(['PLAN.md', 'PROGRESS.md'])).toEqual([]);
     expect(planUnit(['PLAN.md', 'PROGRESS.md'], on).mode).toBe('none');
-    // No source and no unit test: none (a spec, a picture, the critic's output).
-    expect(planUnit(['tests/e2e/fire1938.spec.ts', 'docs/evidence/4.7/a.png', 'critic/x.json'], on).mode).toBe('none');
+    // No source and no unit test (a spec, a picture, the critic's output): no test by its imports.
+    expect(planUnit(['tests/e2e/fire1938.spec.ts', 'docs/evidence/4.7/a.png', 'critic/x.json'], on).files).toEqual([SPEC_TEST]);
+    expect(planUnit(['docs/evidence/4.7/a.png', 'critic/x.json'], on).mode).toBe('none');
   });
 
   it('the working tree has a tree id, the same when asked twice; the record of passed trees is a list of ids', () => {

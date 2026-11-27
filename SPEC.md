@@ -2382,12 +2382,17 @@ URL options: `?scenario=1938|random|toy` (none: the title screen), `?seed=`, `?p
 `npm run check` (`tools/gate/check.ts`) must be green before every commit. It is sized to what
 changed since HEAD [ADR-48, ADR-55]:
 - a clean tree the gate has passed, or documents only (Markdown, `docs/`): nothing runs; the tree
-  is recorded (`.cache/gate/green.json`);
+  is recorded (`.cache/gate/green.json`). With SPEC.md among the documents, or one of them removed,
+  the unit stage runs for the test of what SPEC.md cites alone [ADR-1161];
 - code: typecheck (`tsc -b`), lint (`eslint .`), the unit tests whose imports reach a changed file
   (`vitest related`; all of them when something they all stand on changed: the vitest config,
   `tests/helpers/`, `data/`, `public/data/`, `tools/headless/`, `package.json`, the lock file)
   [ADR-280], the build, the e2e specs that changed (all when a helper or the config changed), and,
   when a sim input changed (`SWEEP_INPUTS`), the pin alone.
+- The test of what SPEC.md cites (`tests/unit/specRefs.test.ts`: every path, name and script exists)
+  reads SPEC.md and the working tree from the disk, where no import reaches: it joins the unit stage
+  whenever a change can break a line [ADR-1161]: SPEC.md itself, anything that is not a document, a
+  document that is gone. It holds SPEC.md against the working tree, a file added to git or not.
 - A test red in a run is run again alone; red twice fails, unless it is on
   `tools/gate/knownRed.json`: a failure of this machine, not of the code, each with why and its
   BLOCKERS entry. A test leaves the list when it passes here [ADR-297, ADR-779].

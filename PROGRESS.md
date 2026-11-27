@@ -253,3 +253,28 @@
   `npx playwright test --project=chromium --project=swiftshader`; `tests/e2e/heroes1938.spec.ts:169` alone.
 - The same wait is missing in two specs that are green, `relationsLabels1938` and `relationsNamed1938`: filed as
   R234, not changed here.
+
+## 2026-11-27 — R233: the gate runs the test of what SPEC.md cites whenever a change can break a line (ADR-1161)
+
+- `specRefs.test.ts` reads two things from the disk that no import reaches: SPEC.md, and the tree (its files' names,
+  the code's words). The item named the first; the second is the same hole from the other side (a file renamed or
+  a name removed that a line cites), so the rule is one: the test joins the unit stage for SPEC.md, for anything
+  that is not a document, and for a document that is gone (SPEC.md cites a few by their path, `docs/PARITY.md`
+  among them). A document edited or added can break no line and runs nothing, as before.
+- The planner: `planGate` gives a change of documents alone the unit stage when one of them can break a line;
+  `planUnit` adds the test to the related files, and it is the stage alone when no source changed (a spec, a
+  workflow, a page ran no unit stage before). The test's path is a constant the gate's test checks on the disk:
+  the related run passes with no tests, and a renamed test would have gone green in silence.
+- The checker's tree is the working tree: `git ls-files --cached --others --exclude-standard` less `--deleted`,
+  where it read the index. R231's line was red until its new file was added; a file removed and not staged counted.
+- Tests first, four red on HEAD: the plan's cases in `gate.test.ts` (three), and in `specRefs.test.ts` a scratch
+  repository with a file added, one made after, one ignored and one added and removed. 27 of 27 on the change.
+- Through `npm run check` for real (the code committed first, so that each tree had one change):
+  - SPEC.md citing `tools/gate/noSuchFileR233.ts`: `gate: test`, the test red in the run and again alone ("2391: …
+    (no such file)"), `gate: FAILED at test`, `green.json` untouched;
+  - that file made and not added: typecheck → lint → test → build, the related run naming the file and the test,
+    12 of 12, green;
+  - both taken back, a blank line on CHANGELOG.md: "no code changed", nothing runs;
+  - `docs/PARITY.md` moved away, nothing else changed: `test` alone, red ("41: docs/PARITY.md (no such file)").
+- The test's file takes 2.03 s where it took 1.63: one more test, and the two listings (0.13 and 0.27 s).
+- It amends two rules of the gate's size, one of them the user's (ADR-280: by imports): said in ADR-1161.

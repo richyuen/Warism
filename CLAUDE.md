@@ -25,10 +25,11 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
 ## Commands
 
 - `npm run check`: the gate, sized to what changed since HEAD. It must pass before every commit.
-  - Documents only (Markdown, `docs/`), or a clean tree it has passed: nothing to run.
+  - Documents only (Markdown, `docs/`), or a clean tree it has passed: nothing to run; with SPEC.md among
+    them, or a document removed, the test of what SPEC.md cites (`tests/unit/specRefs.test.ts`, ADR-1161).
   - Code: typecheck, lint, the unit tests whose imports reach a changed file (`vitest related`; all of
     them when something they stand on changed: `vitest.config.ts`, `tests/helpers/`, `data/`,
-    `public/data/`, `tools/headless/`, `package.json`, the lock file), build, the e2e specs that
+    `public/data/`, `tools/headless/`, `package.json`, the lock file) and `specRefs.test.ts`, build, the e2e specs that
     changed (all when a helper or the config changed; when the pin of seed 99 moved, those that step
     the sim, ADR-825, ADR-1029), and the
     pinned hash of seed 99 when a sim input changed. A test red in a run is run again alone; red twice fails, unless it is on
