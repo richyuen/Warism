@@ -189,6 +189,40 @@ on separate P-cores (a ratio, not an absolute figure).
     them, it was the start's in all 20), and all 20 were green: the labels hold in either. The specs themselves
     eight at once: 8 of 8 and 12 of 12. No ADR (ADR-914: R232's wait).
 
+## Batch 61 — what the user saw (reports of 2026-11-27 on)
+
+- [x] R235 **The movement arrows mislead in the historical replay** (the user, with two pictures of 23 November 1939
+  at Strasbourg, far and close: "I think the arrows are misleading here"). A bold arrow is an advance (R96: "only
+  show arrows if a country is invading another country or pushing through a front"). On that day five German
+  divisions stand in one cell on the Rhine, each under a bold arrow over it, and a French mountain division's points
+  far into Germany, on a front the track holds until 10 May 1940: nothing is taken across it. AT: in the replay no
+  bold arrow is drawn across a held front (23 November 1939 at Strasbourg at 1,000, 400 and 60 m/px; 4 September
+  1939 there, while Poland is fought for; 5 April 1940 there, in the days of a stage elsewhere); the land fought for
+  keeps its arrows (Poland that day, the West on 14 May 1940); a free game's advances are the same formations as
+  before.
+  - Done (ADR-1162): which marches are advances is asked of the world by the worker and sent with the snapshot
+    (`FormationFlag.advancing`, `src/worker/advancing.ts`): the same marches, lines and reach as the view judged by,
+    and of the land on a line one thing more, that the marcher may take it there today (`World.holdsLand`, by cell,
+    as the territory system asks). Reproduced first: the replay (seed 1938) stepped to the day gives the user's two
+    pictures, the same divisions by name. Of that day's 153 advances (the West 58, China 95) none can take a cell;
+    three weeks on 147 of their formations are in the same cell. After: 153 → 0 that day; 4 September 1939 112 → 17,
+    Germany's 7 and Poland's 10 in Poland, none in the West; 5 April 1940, in the days of Norway's stage, none (84 in
+    the West with the hold asked of the two nations alone); 14 May 1940 186 → 92, 87 in the West. A free game
+    (seed 99, days 120, 240, 365): 90, 25 and 73 advances, the same ids before and after. Held by `moveArrows.test.ts`,
+    `advancing1938h.test.ts` (a held front with a stage: none across it, the taker's onto the stage's land alone) and
+    `arrowsHeld1938h.spec.ts` (the replay on four days; pictures in `docs/evidence/R235/`). With France looked
+    at, its orders across the front are still drawn faint, as any nation's are: R236's.
+- [ ] R236 **In the historical replay a march whose way crosses a held front stands at it until the hold ends** (found
+  by R235). A march waits where its next step is onto an enemy's land until the territory system takes the cell
+  (`waitsForFront`, PLAN 1.14), and across a front the track holds no cell is taken (`holdsLand`, R62f2): the
+  formation stands with its order for as long as the hold lasts. On 23 November 1939 of the replay 153 marches go
+  over a held foe's land (the West 58, China 95); three weeks on 147 of their formations are in the same cell, 145
+  with the same order: five German divisions in one cell at Strasbourg, ordered 4 to 7 cells along their own front.
+  The cause is read from the code and the lines of the orders, not yet from a run with the wait taken out. AT: the
+  cause shown by such a run; on that day and three weeks on no land formation behind a held front has stood 7 days
+  with one order whose way is over the held foe's land (it goes round by its own side's land, or the order ends);
+  the replay's ten-year tests green, the pin unchanged.
+
 ## Released
 
 - `release-2026-11-03b` (2026-11-03): R0a–R0i and Batch 1 (R1–R5, R7–R15), in CHANGELOG.md for

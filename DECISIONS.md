@@ -5,6 +5,48 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1162 · 2026-11-27 · accepted · A march is an advance only onto land that can be taken today, and the worker says which (R235, the user's report)
+
+- **The case** (the user, 2026-11-27, with two pictures of the historical replay's 23 November 1939 at Strasbourg, far
+  and close: "I think the arrows are misleading here"). A bold arrow is an advance: "only show arrows if a country is
+  invading another country or pushing through a front" (R96, ADR-1088, the user's rule). The view judged it by what
+  it knows: a march of a nation at war whose line, within 100 km, is on land a nation at war with it holds. In the
+  replay the track holds fronts (R62f2): at war, and no land taken across them. On that day five German divisions
+  stood in one cell at Strasbourg, each ordered 4 to 7 cells along its own front on a line that clips French land,
+  each under a bold arrow over the Rhine, and a French mountain division's arrow pointed far into Germany. Of the
+  day's 153 advances (the West 58, China 95) none could take a cell: three weeks on 147 of their formations were in
+  the same cell, 145 with the same order.
+- **Decision.**
+  1. Which marches are advances is asked of the world, by the worker, and sent with the snapshot
+     (`FormationFlag.advancing`, `src/worker/advancing.ts`): the same marches, lines and reach as before
+     (`shared/advances`), and of the land on a line one thing more, that the marcher may take it there today
+     (`World.holdsLand`, the territory system's own question, by cell).
+  2. So no march is an advance across a front the track holds, and in the days of a stage (R66d) the marches of the
+     taker's side onto the stage's land are, and no other. The hold asked of the two nations alone (`holdsPlan`)
+     brings the Rhine's arrows back whenever Germany has a stage anywhere: run so, the replay's 5 April 1940 (the days
+     of Southern Norway's stage, the West held) has 84 advances in the West, Germany's 53, France's 28, the United
+     Kingdom's 3. By the cell it has none.
+  3. The view draws what the flag says and judges nothing (`findAdvances` is gone).
+- **Consequences.**
+  - It amends ADR-1088 (R96) by the user's own rule: an arrow where a front is pushed through, none where none can be.
+  - A free game has no hold, and its advances are the same formations as before: seed 99 at days 120, 240 and 365,
+    90, 25 and 73 of them, id for id.
+  - In the replay: on 4 September 1939 112 advances are 17 (Germany's 7 and Poland's 10, in Poland, a war the track
+    holds no front of; none in the West, held since the day before); on 23 November 1939 153 are none; on 5 April
+    1940 none; on 14 May 1940 186 are 92, 87 of them in the West.
+  - A nation looked at still has its other marches drawn faint (R89b): France's orders that cannot be carried out are
+    faint arrows into Germany. That such orders stand for months is the sim's, not the arrows': ROADMAP R236.
+  - Not touched: how the arrows of several nations read together at the world's zoom. They lie under the counters,
+    and two of a nation may run reversed along one line (the 6 divisions coming south to Strasbourg and the 2 going
+    north from it). Asked of the user, whether that was part of the report.
+- **Read.** `moveArrows.test.ts` (the rule: land that may not be taken, over it, on it, along it; land beyond it within
+  reach), `advancing1938h.test.ts` (a timeline of its own, Germany and Poland held with a stage: no advance across the
+  held front; in the stage's days Germany's onto the stage's land alone, not its march beside the ring nor Poland's;
+  with no hold all three) and `arrowsHeld1938h.spec.ts` (the replay itself on four days, at 1,000, 400 and 60 m/px at
+  Strasbourg and in the Ardennes; pictures in `docs/evidence/R235/`). The taker's advances in a stage's days are held
+  by the unit test alone: the replay's Norway stage has no German march on its land four days before it. On the
+  build before, the same marches read by the view: the figures above. `orderLines1938.spec.ts` green by hand.
+
 ## ADR-1161 · 2026-11-27 · accepted · The gate runs the test of what SPEC.md cites whenever a change can break a line (R233)
 
 - **The case** (found by R231's whole unit run). `specRefs.test.ts` (R6, ADR-821) holds SPEC.md to the tree: every

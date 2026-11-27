@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ARROW_PALE, OTHER_WIDE, ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, advances, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, drawMoveArrows, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
+import { advances } from '../../src/shared/advances';
+import { ARROW_PALE, OTHER_WIDE, ARROW_LONG_PX, ARROW_MAX_MEN, ARROW_MAX_PX, ARROW_MIN_MEN, ARROW_MIN_PX, ARROW_SHORTEST_PX, ARROW_TAIL, CROSS_GAP_PX, GROUP_START_PX, HEAD_WIDE, arrowFill, arrowOutline, arrowWidth, cutAtCrossing, drawMoveArrows, groupMarches, roundedWay, wayStart, type March } from '../../src/render/units/moveArrows';
 
 // ROADMAP R89a (ADR-1073, ADR-1074): a march is a thick arrow, as wide as its men are many; the
 // marches of a nation that start together and head the same way are one arrow.
@@ -225,6 +226,23 @@ describe('which marches are advances (R96: onto land an enemy holds)', () => {
     const bent = way(1, 1, 98, 50, 98, 47, 104, 47);
     expect(ids(advances([bent], holderAt, atWar, 6))).toEqual([1]);
     expect(ids(advances([bent], holderAt, atWar, 4))).toEqual([]);
+  });
+
+  // ROADMAP R235 (ADR-1162): land an enemy holds that cannot be taken today is no advance's. The worker asks the world
+  // (`World.holdsLand`: a front the historical track holds); here, nation 2's land from row 60 south.
+  it('land an enemy holds that the marcher may not take is no advance: over it, on it, or along it; land it may take beyond, within reach, is', () => {
+    const takes = (_nation: number, _holder: number, _x: number, y: number): boolean => y < 60;
+    const got = advances([
+      way(1, 1, 97, 50, 104, 50), // over the front where the land may be taken
+      way(2, 1, 97, 70, 104, 70), // over the front where it is held
+      way(3, 1, 101, 70, 110, 70), // standing on the held land and going on over it
+      way(4, 1, 99, 62, 102, 56), // onto the held land first, and onto land it may take 4 cells on
+      way(5, 1, 99, 75, 102, 61), // onto the held land and no further than it within the reach
+    ], holderAt, atWar, 5, takes);
+    expect(ids(got)).toEqual([1, 4]);
+    // Asked by who marches: nation 2 may take nation 1's land, nation 1 none of nation 2's.
+    const byNation = (nation: number): boolean => nation === 2;
+    expect(ids(advances([way(1, 1, 97, 50, 104, 50), way(2, 2, 103, 50, 96, 50)], holderAt, atWar, 5, byNation))).toEqual([2]);
   });
 
   it('a way of one point or none is no advance unless it stands on the enemy\u2019s land', () => {

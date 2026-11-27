@@ -299,3 +299,44 @@
 - What the specs no longer see: the layout of a graph that was open while the world moved on (laid out on older
   ties, then given 40 steps a message). That is the graph a player with Relations open has, and no spec holds its
   labels now but by chance before. Not filed: no red was seen in it (12 runs of it green here).
+
+## 2026-11-27 — R235: a march is an advance only onto land that can be taken today (ADR-1162; the user's report)
+
+- The user sent two pictures of the replay's 23 November 1939 at Strasbourg, far and close: "I think the arrows are
+  misleading here". Reproduced by a scratch run of the built game (the replay, seed 1938, stepped 691 days; the
+  camera on Infantry division 723): the same divisions by name at both zooms, the same arrows.
+- What each arrow stood for, from the view's own list at 1,000, 400, 150 and 60 m/px. The five German divisions
+  (23, 573, 719, 723, 913) are in one cell on the Rhine, each ordered 4 to 7 cells along its own front, to a cell
+  Germany holds, on a line that clips French land: a bold arrow each, over the river. The far picture's blue arrow
+  into Germany is one French mountain division (244), ordered to a cell 63 east and 41 north that Germany holds.
+- Followed for three weeks: none of the five moves. Of that day's 153 advances (Germany 24, France 25, the United
+  Kingdom 9; Japan 27, China 54, Manchukuo 12, Mengjiang 2) 147 formations are in the same cell 21 days on, 145 with
+  the same order. The track holds both fronts (R62f2): no land is taken across them, and a march waits for the land
+  ahead to be taken (PLAN 1.14). The arrows said "advance" where none can be; the orders themselves are R236.
+- The fix is where the judgement is made. The view knew who is at war, not where the track holds: the worker now
+  says which marches are advances (`FormationFlag.advancing`), by the same rule on the same lines, asking of the
+  land one thing more: may the marcher take it there today (`World.holdsLand`, by cell). By the two nations alone
+  (`holdsPlan`) it is wrong in the days of a stage: the replay's 5 April 1940, four days before Germany's stage in
+  Southern Norway, run with that question, has 84 advances back in the West (Germany 53, France 28, the United
+  Kingdom 3) and the browser spec red; by the cell, none. (I first wrote this of Poland in September 1939, wrongly:
+  that is a war the track holds no front of, with no stage. Found in review before the push.)
+- Before and after, the formations on an advance by id, from the built game: a free game (seed 99, days 120, 240,
+  365) 90, 25, 73 and the same ids; the replay on 4 September 1939 112 → 17 (Germany 7, Poland 10, none in the
+  West), on 23 November 1939 153 → 0, on 14 May 1940 186 → 92 (87 in the West: the Low Countries, the Rhine and
+  France's east by a box of cells).
+- Tests: the rule's case in `moveArrows.test.ts` (23 of 23); `advancing1938h.test.ts` on a timeline of its own (a held
+  front with a stage; 2 tests, 6 s); `arrowsHeld1938h.spec.ts` on four days of the replay at three zooms (56 s),
+  its pictures in `docs/evidence/R235/` and looked at: no arrow at Strasbourg far or close; the West's arrows on 14
+  May 1940. `orderLines1938.spec.ts` by hand: 2 of 2.
+- What it costs a snapshot: 0.06 ms at the median, 0.16 at the 95th (seed 99 a year on: 999 formations, 509 on the
+  march, 8 wars, 73 advances; 300 calls), of a budget of 2. The view judged the same on every snapshot before.
+  `snapshot-perf`'s world has no war and does not measure it.
+- The gate: `src/shared` is one of the sim's inputs, so every test's saved world was made again in its unit run (422
+  files). Nine of them were red in that run, by tests past their 90 s and by `snapshot-perf`'s budget under the load,
+  and each green alone. The pin of seed 99 is unchanged.
+- Still there, and told to the user: with France looked at, its orders across the front are faint arrows (R89b
+  draws a looked-at nation's marches); and at the world's zoom arrows lie under the counters, two of a nation
+  reversed on one line. Not changed unasked.
+- The nightly run of 2026-11-27 (45996417446, on `0af83759`) is green, its unit stage on Linux too: the first run
+  there of R230's and R231's fixture tests (`gateReview.test.ts`, 18 tests in 19.8 s). Its first run had two reds
+  by name, `scenario1938` (green alone) and `snapshot-perf` (on the runner's list): `ci unit: green`.

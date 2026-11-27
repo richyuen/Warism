@@ -265,7 +265,12 @@ export function tierOf(mPerPx: number): Tier {
 
 /** Formation flags in `SnapshotFormations.flags`. */
 /** Bit 2 (PLAN 7.4g2): on the retreat (`retreat` hours left), drawn on its T1 marker. */
-export const FormationFlag = { moving: 1, engaged: 2, retreating: 4 } as const;
+/**
+ * `advancing` (ROADMAP R235, ADR-1162): its march is an advance, onto land its nation may take from an enemy today
+ * (`shared/advances`, asked of the world by the worker: a front the historical track holds is none). Of the snapshot's
+ * formations alone; an element's flags have the other three.
+ */
+export const FormationFlag = { moving: 1, engaged: 2, retreating: 4, advancing: 8 } as const;
 
 /**
  * Whether a formation with these flags is on the march: it has a march (`moving`) and is not

@@ -78,7 +78,8 @@ import {
   VoyageState,
 } from '../shared/protocol';
 import { peaceWhy } from '../sim/ai/peaceWhy';
-import { geometryOf, SCENARIO_INFO } from '../shared/scenarios';
+import { geometryOf, SCENARIO_GEOMETRY, SCENARIO_INFO } from '../shared/scenarios';
+import { advancing } from './advancing';
 import { decodeAdmin1, type Admin1Meta } from '../shared/admin1';
 import { foundedName, foundedNth, provinceLabel } from '../shared/nationNames';
 import { xxhash32View } from '../sim/core/hash';
@@ -2243,6 +2244,11 @@ export class SimServer {
     }
     const fway = this.view(Float32Array, fwayStart[fc]!, buffers);
     for (let i = 0; i < fc; i++) fway.set(ways[i]!, fwayStart[i]!);
+    // The marches that are advances (ROADMAP R96, R235; ADR-1162): asked of the world here, by the lines the view draws.
+    // The map's km a cell at this world's size, as the view's geometry has it.
+    const geo = SCENARIO_GEOMETRY[this.requireSim().scenario];
+    const onAdvance = advancing(world, shown, (i) => ways[i]!, (geo.kmPerCell * geo.w) / world.cells.w);
+    for (let i = 0; i < fc; i++) if (onAdvance.has(shown[i]!)) fflags[i]! |= FormationFlag.advancing;
     const majors = Float32Array.from(world.battles.majors.flatMap((m) => [m.x, m.y]));
     // The sea battles (PLAN 4.10b): the place, the cells to the furthest fleet, the two sides;
     // the middle and the size of the box of its fleets (PLAN 4.12a).

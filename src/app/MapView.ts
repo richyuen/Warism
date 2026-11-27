@@ -12,7 +12,7 @@ import type { LandingMark } from '../shared/protocol';
 import { drawCorridors, type CorridorMark } from '../render/fx/corridors';
 import { drawHolds, type HoldMark } from '../render/fx/holds';
 import { changedCells, ControlFlashes } from '../render/fx/flashes';
-import { advances, arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
+import { arrowFill, drawMoveArrows, groupMarches, type DrawnArrow, type March } from '../render/units/moveArrows';
 import { AT_REST, drawLandingMark, drawMarkers, drawOrderArrows, drawVoyages, HeroLifts, MARKER_H, MARKER_W, markerMorph, MORPH_MS, orderLine, orderShown, strengthText, T1_MAX_M, T1_MIN_M, type MarkerInput, type MarkerMorph, type OrderArrow, type OrderViewer, type PlacedMarker } from '../render/units/markers';
 import { BATTLE_TAG_M, drawTags, layoutTags, type PlacedTag, type TagInput, type TagObstacle } from '../render/units/tags';
 import { MarkerStacks, STACK_RULE_TIGHT, type StackItem } from '../render/units/markerStacks';
@@ -805,7 +805,6 @@ export class MapView {
     this.formHealth = f.health.slice(0, f.count);
     this.formWayStart = f.wayStart.slice(0, f.count + 1);
     this.formWay = f.way.slice(0, f.wayStart[f.count] ?? 0);
-    this.findAdvances();
     this.majors = s.majors.slice();
     this.taking = s.taking.slice();
     this.voyages = s.voyages.slice();
@@ -2378,35 +2377,12 @@ export class MapView {
   /** The flashes of land that changed hands (ROADMAP R90b); tests read how many cells flash. */
   readonly flashes = new ControlFlashes();
 
-  /** How far along its way a march is looked at for the enemy's land, km (ROADMAP R96): a day's march or two. */
-  static readonly ADVANCE_REACH_KM = 100;
-
-  /** The formations on an advance (ROADMAP R96; `advances`), as of the last snapshot. */
-  private advancing = new Set<number>();
-
-  /** Which marches of the snapshot are advances: of a nation at war, onto land an enemy holds within the reach; not a retreat. */
-  private findAdvances(): void {
-    const w = this.geo.w;
-    const marches: { id: number; nation: number; line: number[] }[] = [];
-    for (let i = 0; i < this.formIds.length; i++) {
-      const nation = this.formNation[i]!;
-      if (!this.atWar.has(nation) || this.templates[this.formTemplate[i]!]?.domain !== 0) continue;
-      if ((this.formFlags[i]! & FormationFlag.moving) === 0 || (this.formFlags[i]! & FormationFlag.retreating) !== 0) continue;
-      const target = this.formTarget[i]!;
-      const ws = this.formWayStart[i]!;
-      const we = this.formWayStart[i + 1]!;
-      const line = orderLine({ x: this.formX[i]!, y: this.formY[i]!, target: [(target % w) + 0.5, Math.floor(target / w) + 0.5], way: we - ws >= 4 ? this.formWay.subarray(ws, we) : null }, this.geo)!;
-      marches.push({ id: this.formIds[i]!, nation, line });
-    }
-    // A way over the map's seam has cells beyond its width: whose they are is read at the cell's own place.
-    const holderAt = (x: number, y: number): number => this.controlGrid[Math.floor(y) * w + (((Math.floor(x) % w) + w) % w)] ?? 0;
-    const atWar = (a: number, b: number): boolean => this.warPairs.has(a < b ? a * 65536 + b : b * 65536 + a);
-    this.advancing = advances(marches, holderAt, atWar, MapView.ADVANCE_REACH_KM / this.geo.kmPerCell);
-  }
-
   /**
    * The marches to draw as arrows (ROADMAP R89b, ADR-1073): every advance, bold, of any nation; and the other marches
    * of what is looked at (`orderShown`), faint. Each from `from` its formation's index, or from where it stands.
+   * Which march is an advance the worker says (`FormationFlag.advancing`; ROADMAP R96, R235, ADR-1162): of a nation at
+   * war, onto land it may take from an enemy within `ADVANCE_REACH_KM`; not a retreat, nor over a front the
+   * historical track holds.
    */
   private marchesShown(viewer: OrderViewer, from?: (i: number) => [number, number]): March[] {
     const w = this.geo.w;
@@ -2414,7 +2390,7 @@ export class MapView {
     for (let i = 0; i < this.formIds.length; i++) {
       if ((this.formFlags[i]! & FormationFlag.moving) === 0 || this.templates[this.formTemplate[i]!]?.domain !== 0) continue;
       const id = this.formIds[i]!;
-      const bold = this.advancing.has(id);
+      const bold = (this.formFlags[i]! & FormationFlag.advancing) !== 0;
       if (!bold && !orderShown(id, this.formNation[i]!, viewer)) continue;
       const target = this.formTarget[i]!;
       const ws = this.formWayStart[i]!;
@@ -2755,6 +2731,12 @@ export class MapView {
   formationMoving(id: number): boolean {
     const i = this.formIds.indexOf(id);
     return i >= 0 && (this.formFlags[i]! & FormationFlag.moving) !== 0;
+  }
+
+  /** Whether formation `id` of the last snapshot is on an advance (ROADMAP R235, `FormationFlag.advancing`): its march's arrow is bold (tests). */
+  formationAdvancing(id: number): boolean {
+    const i = this.formIds.indexOf(id);
+    return i >= 0 && (this.formFlags[i]! & FormationFlag.advancing) !== 0;
   }
 
   /**
