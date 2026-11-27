@@ -1003,7 +1003,8 @@ month's start only).
   cell search (A*, 8-way, no corner cut, octile × the least cost, weighted ×1.5 past 120 cells and ×2
   past 300) runs in a corridor of the route's nodes and their neighbours; shorter marches search the
   cells directly. A march may cross only ground its `Passage` opens (its own side's and enemies'; a
-  neutral's is shut, `SHUT_PRICE` 8 on the graph; `foreignTo`), entering a cell only from one of the
+  neutral's is shut, `SHUT_PRICE` 8 on the graph; `foreignTo`; and in the replay a foe's whose front the
+  timeline holds, §7.7, R236), entering a cell only from one of the
   same holder; routes are cached by passage. The AI's `direct` orders are refused as `LongWay` past
   `LONG_WAY` (4) × the straight line (at least `LONG_WAY_FLOOR_CELLS`, 16).
 - **Orders** (`moveFormation`): refused for another nation's formation (`NoSuch`) or one on retreat
@@ -1019,7 +1020,9 @@ month's start only).
   `WITHDRAW_SPEED` (0.5) of that when ordered out of contact; an infantry division walks 28.8 km a day
   on plains. It goes along the cells' land points and the steps' ways over land (§3.1), waits before an
   enemy's cell (unless retreating), is barred from a third nation's, and on arrival is
-  `FormationArrived`. `marchHoursLeft` gives the time left.
+  `FormationArrived`. `marchHoursLeft` gives the time left. Before the cell of a foe whose front the
+  replay's timeline holds it does not wait (R236, ADR-1163): its way is made again from where it stands,
+  round that foe's land, or it halts; but one that stands on that foe's own ground waits as before.
 - **The march home** (repatriation, `HOME_MARCH` and `HOME_BACK`) is §3.5.
 
 ### 4.3 Territory [ADR-588]
@@ -1864,7 +1867,9 @@ to 27 July 1953, then sets the world free.
   (`tools/diag/historyMatch.ts`); `buff` and `forces` events (phase buffs, arrivals); `without` on `war` and `join`.
   The China front (R62f2, ADR-929): `hold` events, two sides (and their puppets) at war that do not fight on land,
   take land or plan attacks on each other until a date (with `air`, R74h, nor fly at each other: the Sino-Soviet
-  border war of 1969); Japan's gains in China by `occupy` stages; the Phoney War a
+  border war of 1969), nor march over each other's land (R236, ADR-1163, `passageOf`: a way goes round by their own
+  side's land, or the order is refused; a march under way is made again at the front, or halts there; but in the
+  days of a stage); Japan's gains in China by `occupy` stages; the Phoney War a
   hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
   armistice) and `redeploy` (a front moved by rail). 1940-41 to Iran (R62g2, ADR-932): `withdraw` (an evacuation),

@@ -28,6 +28,13 @@
  * was set on that cell's middle, up to 1.25 cells in the hour). The walk back is a march of one
  * step, marked `HOME_BACK`; it ends as any march, and any order ends it.
  *
+ * Nor over the ground of a foe whose front the historical track holds (ROADMAP R236, ADR-1163). No land of it is
+ * taken while the hold stands, and a march that went onto it waited at the front for the hold's end (below: the
+ * advance follows the front): on 23 November 1939 of the replay 155 of 269 marches. Its ground is closed to a way as
+ * a third nation's is (`passageOf`, by `World.holdsPlan`: a hold, and no stage's days open between the two), and a
+ * march under way whose next step is onto it is made again from the cell it stands on, or halts there. A formation
+ * that stands on that foe's own ground walks on it as on any closed ground, and waits before its next cell as before.
+ *
  * A path outlives a change of the ground (PLAN 3.7k, ADR-171): a paint of terrain, a map import
  * and a change of `loopingMap` leave `world.paths` alone. A step that the ground of now does not
  * allow (water ahead, a corner cut past new water, the seam of a map that loops no more) is not
@@ -115,7 +122,9 @@ export function foreignTo(world: World, nation: number, holder: number): boolean
 export function passageOf(world: World, nation: number, shared?: Map<string, Passage>): Passage {
   const ok = new Uint8Array(world.nations.highWater + 1).fill(1);
   world.nations.forEach((m) => {
-    if (foreignTo(world, nation, m)) ok[m] = 0;
+    // Nor over the ground of a foe whose front the historical track holds (ROADMAP R236): none of it is taken while the
+    // hold stands, and a march onto it would wait at the front for the hold's end.
+    if (foreignTo(world, nation, m) || world.holdsPlan(nation, m)) ok[m] = 0;
   });
   const key = ok.join('');
   const made = shared?.get(key);
@@ -826,6 +835,15 @@ export function movementSystem(world: World): void {
         // Not a formation on the retreat (PLAN 3.5a): it goes back over ground the enemy has taken behind it.
         // Nor a march home that stands on that enemy's ground (ADR-222): it walks on and out.
         if (world.wars.atWar(nation, holder) && c.retreat[id] === 0 && !(c.home[id] === HOME_MARCH && world.cells.controller[a] === holder)) {
+          // Nor does a march wait for ground that will not be taken (ROADMAP R236, ADR-1163): a foe's whose front the
+          // historical track holds. Its way is made again below by the ground of now, round that foe's (`passageOf`),
+          // or it halts here. Not one that stands on that foe's own ground: a way from closed ground walks on it, and
+          // would be the same way again (ROADMAP R239).
+          if (c.home[id] !== HOME_MARCH && world.cells.controller[a] !== holder && world.holdsPlan(nation, holder)) {
+            shut = true;
+            frac = 0;
+            break;
+          }
           // A mark does not wait here (ADR-222): the march home is ordered again below, round
           // this ground, and the walk back is a march as any other from now.
           if (c.home[id] === HOME_MARCH && frac === 0) foe = true;

@@ -419,3 +419,70 @@
 - The gate: the sim changed, so every test's saved world was made again in its unit run (437 files). Two red in
   that run by tests past their 90 s under the load (`scenario1938`, `snapshot-perf`), each green alone. The pin of
   seed 99 is unchanged.
+
+## 2026-11-27 — R236: no way over the land of a foe whose front the historical track holds (ADR-1163)
+
+- The cause, by a run (the replay on its own seed, the rule as it was): on 23 November 1939, 269 land marches, 155
+  of them waiting at a front, the land ahead of all 155 held (Germany's 23, France's 25, the United Kingdom's 8,
+  Japan's 28, China's 57, Manchukuo's 12, Mengjiang's 2). 21 days on, 149 are in the same cell with the same order,
+  each still waiting. From the same state with the holds taken out (`TRACK_PROBE.holdsOff`), 11 stand so after five
+  days and 4 after 21: the wait is the hold's.
+- Why they were ordered there. The planners plan no attack across a held front (`foesOf`), but `passageOf` opened
+  an enemy's land to every way, so a march to the marcher's own land was routed over the foe's where that was
+  shorter: along a front that bends (the five divisions at Strasbourg), to an exclave, by an order from before the
+  hold. The march then waited for land that nobody takes (PLAN 1.14).
+- The rule (ADR-1163): the land of a foe whose front the track holds is closed to a nation's ways, as a third
+  nation's is (`passageOf`, by `World.holdsPlan`); a march under way whose next step is onto it is made again from
+  where it stands, or halts; in the days of a stage between the two the land is open as in any war.
+- Its first form made every waiting march's way again, also one that stands on the held foe's own ground. A way from
+  closed ground walks on it, so that way came out the same, every hour: the checker's first run failed on British
+  divisions by the Polish Corridor. The rule leaves those marches as they were, the checker counts them apart
+  (`TrackRun.stranded`), and they are R239.
+- The checker (ADR-804): the track's has the rule `stand`, asked every day of the replay to 1991: no march waits
+  `STAND_DAYS` (7) with one order at a front the timeline holds, from ground not the foe's, no stage's days open
+  between the two. No line on the replay's own seed, no `WARNING historyTrack` on seeds 1 to 5.
+- The measuring went wrong once. The first probes and the checker's new rule ask `holdsPlan` between two ticks, and
+  two probes of one rule stood on different hashes: the asking changed the course (R237), and an arrival's asking
+  within an hour did the like (R238). Both were mended first, and everything here was read again on their code. A
+  probe's hash is now checked against a plain run's: on 23 November 1939 c43d19b9 by this rule, 1a5c4ff4 before.
+- Both rules by one probe from the replay's start (a march waiting at a held front from ground not the foe's, a
+  week or more with one order; before → after): 10 September 1939 99 → 0; 15 October 131 → 0; 23 November
+  147 → 0; 14 December 157 → 0; 1 February 1940 181 → 0; 5 April 98 → 0; 9 May 98 → 0. The land marches under way
+  on 23 November 269 → 141, on 5 April 213 → 110. Apart, on the held foe's own ground: 6 → 5 British divisions on
+  23 November, 3 → 3 on 14 December.
+- The ten-year tests, green (ten files, 11 tests), against the same run on R238's code. `historyMatch1938h`: Paris
+  Germany's from 10 June 1940 in both; French cells Germany's on 22 June 936 → 1,009 (the bar 500); Soviet cells
+  the Axis's after 1 December 1941 10,734 → 11,020 (6,000); the Soviet army of 1 November 1942 3,396k → 4,005k
+  (2,000k). 40 of the 44 map lines the same; four of control moved: 1 December 1941 whole 99.19 → 99.14 %, right
+  96.2 → 96.1 %, astray 0.56 → 0.61 % (its bar 1 %); 1 November 1942 whole 99.39 → 99.36 %; 5 June 1944 whole
+  99.32 → 99.29 %; 1 June 1945 whole 99.44 → 99.46 %. `chinaFront1938h`: Japan holds 15.2 % of China on 1 November
+  1938 and a year on, in both; China's army there 809k → 746k, a year held 381k → 390k (the bar 0.4 of the
+  start's); without the hold Japan would hold 63.3 % (59.4 %). The ten free worlds' days to a first war the same.
+- A free game has no hold: seed 99 over three years ends on the same hash by both rules (32ec3f7f), and the pin
+  is unchanged.
+- The tick, by pairs run at once, each rule on two cores of its own, the masks then swapped (bundles of the
+  runner as players' builds are made, `--affinity`): the replay's first eight years 2.01 and 1.87 ms before, 1.81
+  and 1.72 after (1.94 → 1.76 at the mean: fewer marches under way, 269 → 141 on the day above); a free game over
+  three years 1.83 and 1.75 before, 1.78 and 1.75 after: the two cores differ by more than the rules.
+- Drawn: `arrowsHeld1938h.spec.ts` by hand with the other three browser specs of the replay, 14 of 14 (17 advances
+  on 4 September 1939, none on 5 April 1940, 75 on 14 May, 66 of them in the West, Germany's 30). Its pictures of
+  23 November 1939 looked at, two of them kept in `docs/evidence/R236/`: at 400 m/px the two armies in their cells
+  along the Rhine from Luxembourg to Basel and no arrow; with France looked at, at 1,000 m/px, none into Germany
+  (R235 had left France's orders across the front drawn faint).
+- Tests: `heldFrontMarch1938h.test.ts` on a timeline of its own (four tests, three red before): a march to its
+  own land beyond goes round and arrives, never waiting at the held front; with no way round, and onto the foe's
+  land, the order is refused; a march under way from before the hold is made again and arrives, or halts on its
+  own land; in a stage's days the taker's march onto the stage's land is ordered. `advancing1938h.test.ts` orders
+  its marches as before a hold now, since across one none is ordered.
+- The decisions it stands on (ADR-803) are in ADR-1163 with their tests, green on R238's code and on this.
+  SPEC §4.2 (a march's passage; the hourly step) and §7.7 (a hold) say the rule.
+- The gate: a helper of the tests changed, so the whole unit suite ran, every saved world made again (514 files).
+  Two red in that run: `snapshot-perf` past its 90 s under the load, and `nukeStrikeAgain1938`, whose worker was
+  lost (exit code 3221225477); each green alone. The pin of seed 99 is unchanged.
+- Before the push, three things read again. The tick rests on a reading of the AT (a formation "behind a held
+  front" is on its own side of it): by the AT's letter five and three British divisions on German-held ground still
+  stand so on its two days. Written as ADR-1164, proposed, the user's decision. "Three of four red before": run
+  again on this base with the movement rule as it was, three red, the stage's test green. And a God Mode order
+  across a held front while the replay runs, which no test sends: it is now refused as `NoRoute`, whose words name
+  nations outside the war, and the replay ends all the same, as it does for any `moveFormation`; before, the order
+  was given. Filed as R240.

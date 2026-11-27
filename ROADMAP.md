@@ -212,7 +212,7 @@ on separate P-cores (a ratio, not an absolute figure).
     `advancing1938h.test.ts` (a held front with a stage: none across it, the taker's onto the stage's land alone) and
     `arrowsHeld1938h.spec.ts` (the replay on four days; pictures in `docs/evidence/R235/`). With France looked
     at, its orders across the front are still drawn faint, as any nation's are: R236's.
-- [ ] R236 **In the historical replay a march whose way crosses a held front stands at it until the hold ends** (found
+- [x] R236 **In the historical replay a march whose way crosses a held front stands at it until the hold ends** (found
   by R235). A march waits where its next step is onto an enemy's land until the territory system takes the cell
   (`waitsForFront`, PLAN 1.14), and across a front the track holds no cell is taken (`holdsLand`, R62f2): the
   formation stands with its order for as long as the hold lasts. On 23 November 1939 of the replay 153 marches go
@@ -222,6 +222,27 @@ on separate P-cores (a ratio, not an absolute figure).
   cause shown by such a run; on that day and three weeks on no land formation behind a held front has stood 7 days
   with one order whose way is over the held foe's land (it goes round by its own side's land, or the order ends);
   the replay's ten-year tests green, the pin unchanged.
+  - Done (ADR-1163): the land of a foe whose front the track holds is closed to a nation's ways as a third
+    nation's is (`passageOf`, by `World.holdsPlan`). A way goes round by its own side's land, or the order is
+    refused; a march under way whose next step is onto such land is made again where it stands, or halts; in the
+    days of a stage between the two the land is open as in any war. The cause by a run: from one save of 23
+    November 1939, 155 marches wait at a front, the land ahead of all 155 held, and 21 days on 149 are in the same
+    cell with the same order; the same save with the holds taken out, 11 stand so after five days, 4 after 21. Both
+    rules by one probe from the replay's start, read as the checker reads (a week or more at a held front with one
+    order): 23 November 147 → 0, 14 December 157 → 0; on five more days from 10 September 1939 to 9 May 1940, 98
+    to 181 → 0. The day's land marches 269 → 141. Held by `heldFrontMarch1938h.test.ts` (four tests on a timeline
+    of its own, three red before) and by the track's checker (`stand`: every day of the replay to 1991, no line on
+    its own seed, no warning on seeds 1 to 5). The replay's ten-year tests green (ten files): Paris Germany's from
+    10 June 1940 as before, 1,009 French cells on 22 June (936; the bar 500); 40 of the 44 map lines the same, four
+    of control by 0.05 points at most; the China front 15.2 % at its start and a year on. The pin unchanged; a
+    free game's hash the same by both rules. The tick: the replay's first eight years 1.94 → 1.76 ms, a free game
+    the same (pairs at once). `arrowsHeld1938h.spec.ts` by hand, green; the Rhine that day in
+    `docs/evidence/R236/`.
+    Read on R237's and R238's code, which this item's measuring found and which came first: the probes and the
+    checker ask between ticks. The AT's two days by its letter: from ground not the held foe's, none and none;
+    on the held foe's own ground five British divisions by the Polish Corridor on 23 November and three on 14
+    December still stand a week or more with one order. Ticked on the reading that "behind a held front" is on
+    one's own side of it (ADR-1164, proposed, the user's decision); those divisions are R239's.
 - [x] R237 **A question asked of the historical track between two ticks changes the replay's course** (found by
   R236's probes: two runs of the replay under one rule stood on different hashes on 23 November 1939, one of them
   asking `holdsPlan` once a day). The track keeps the stages whose days of fighting are open in an hour
@@ -267,6 +288,36 @@ on separate P-cores (a ratio, not an absolute figure).
     `chinaFront1938h` the nightly run's; the ten free worlds' days to a first war the same but one (16 for 17).
     The four browser specs of the replay by hand, 14 of 14. The pin unchanged. No ADR (ADR-914: a mend of
     ADR-974's "a stage not yet applied" and ADR-977's "this hour").
+- [ ] R239 **In the historical replay a formation on a held foe's own ground waits there until the hold ends** (found
+  by R236). The land of a foe whose front the track holds is closed ground, and who stands on closed ground may
+  walk on it and out of it (ADR-149): but each step to that foe's next cell waits for the front (PLAN 1.14), which
+  no one moves. So a formation the hold found on the foe's ground stands with its order, as R236's marches did at
+  the front. On the replay's own seed, in formation-days past a week (`TrackRun.stranded`, printed by
+  `historyTrack1938h`): the United States' on the National Liberation Front's (Vietnam) 60,578, South Korea's
+  there 882, the Philippines' there 588, French Indochina's there 100; the Soviet Union's on Germany's 1,754, the
+  United Kingdom's on Germany's 451, Italy's on Germany's 108; Ceylon's on Japan's 773, Australia's there 112;
+  Hungary's on the Soviet Union's 198, Germany's there 172, Slovakia's there 42; Liberia's on the NPFL's 142;
+  Germany's on France's 113; the Khmer Rouge's on Cambodia's 4; Japan's on the United States' 2. The British are
+  five divisions on German-held ground by the Polish Corridor on 23 November 1939 and three on 14 December (six on
+  15 October, none by February), on land Poland's at the start but one: the hold of the West stands between them
+  and the Germans from 3 September, Poland's fall left them behind its line, and its partition is a `transfer`,
+  which sets no formation down as a stage does (R66c). How the others came to stand there is not read yet (a line
+  the timeline drew over them, or ground walked onto in a stage's days). AT: each pair's cause read from a run; on
+  the replay's own seed no formation waits `STAND_DAYS` on a held foe's own ground (`stranded` empty, the checker's
+  `stand` rule without its exception: it walks out, or is set down on its own side's land); the replay's ten-year
+  tests green, the pin unchanged.
+- [ ] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
+  all the same** (found by R236's review). A command applied while the replay runs ends it (R62j), and
+  `moveFormation` counts as applied whether or not its order is given (a refused order is told by `MoveRejected`).
+  Before R236 a march ordered across a held front was given, and the replay it ended left it free to go. Since
+  R236 the order is judged by the hold that its own command is about to end: refused as `NoRoute` ("there is no
+  way by land that keeps off the ground of nations outside its wars", which the held foe is not), the formation
+  stays, the replay ends; the same order given again is carried out. Read on a timeline of its own (Germany and
+  Poland held, a German division ordered onto Poland's land three cells off): `MoveRejected` with `NoRoute`,
+  `CommandApplied`, `TrackEnded` by intervention, the division standing; before R236 `CommandApplied`,
+  `TrackEnded`, the division on the march. AT: such an order is carried out by the world its command sets free, as
+  before R236, or is refused with a reason that names the hold and leaves the replay running; a test sends the
+  command across a held front, and across a nation outside the war, where today's reason is the right one.
 
 ## Released
 

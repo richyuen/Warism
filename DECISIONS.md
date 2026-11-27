@@ -5,6 +5,100 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1164 · 2026-11-27 · proposed, the user's decision · R236's two days are read "from ground not the foe's"; the divisions on the foe's own ground are R239's
+
+- **The case.** R236's AT: "on that day and three weeks on no land formation behind a held front has stood 7 days
+  with one order whose way is over the held foe's land". On R236's code the replay has, on 23 November and 14
+  December 1939: from ground not the held foe's, none and none (147 and 157 before); on the held foe's own ground,
+  5 and 3 British divisions by the Polish Corridor (6 and 3 before), each a week or more with one order over land
+  Germany holds.
+- **What was done.** R236 is ticked on the reading that a formation "behind a held front" stands on its own side
+  of it. The checker's rule `stand` has the same exception (it counts the marches on the foe's own ground,
+  `TrackRun.stranded`, and judges none), and the exception was written after the checker's first run failed on
+  those divisions: the bar was drawn to what R236's rule owns, and the rest filed as R239 with its counts on the
+  replay's own seed (16 pairs, the United States' on the National Liberation Front's 60,578 formation-days).
+- **Why it is not R236's.** A way from closed ground walks on it (ADR-149), so the way of such a march made again
+  is the same way. What frees those formations is another rule (to walk out as a march home does, ADR-222, or to
+  be set down on their own side's land as at a stage, R66c), with decisions of its own to check.
+- **The user's to rule on.** Keep the tick, and R239 takes the rest as filed; or read the AT by its letter, and
+  R236 is open again until R239 is done.
+
+## ADR-1163 · 2026-11-27 · accepted · No way over the land of a foe whose front the historical track holds (R236)
+
+- **The case** (found by R235, the user's arrows of the replay's 23 November 1939). A march waits where its next step
+  is onto an enemy's land until the territory system takes the cell (PLAN 1.14, SPEC §4.2, `waitsForFront`). Across a
+  front the track holds no cell is taken and no attack is planned (ADR-929: `holdsLand`, `foesOf`), but a way was
+  still made over the held foe's land: for a march to the marcher's own land beyond it (the five German divisions at
+  Strasbourg, ordered 4 to 7 cells along their own front), for the AI's other orders, for an order from before the
+  hold. Such a march stood at the front with its order for as long as the hold lasted. By a run: from one save of
+  that day 155 marches wait at a front, the land ahead of all 155 held (Germany's 23, France's 25, the United
+  Kingdom's 8, Japan's 28, China's 57, Manchukuo's 12, Mengjiang's 2), and 21 days on 149 are in the same cell with
+  the same order, each still waiting; from the same save with the holds taken out, 11 of them stand so after five
+  days and 4 after 21.
+- **Decision.**
+  1. The land of a foe whose front the track holds is closed to a nation's ways, as a third nation's is
+     (`passageOf`, by `World.holdsPlan`: a hold between the two and no stage's days open between them). A way goes
+     round by its own side's land; with no such way the order is refused, whoever gives it (the AIs, the
+     timeline's `redeploy`, a God Mode order while the replay runs: that one with the reason of a way barred by
+     nations outside the war, and it ends the replay as any command does, ROADMAP R240).
+  2. A march under way whose next step is onto such land, from ground that is not that foe's, does not wait: its way
+     is made again from the cell it stands on, by the ground of now, or it halts there (the branch a barred step
+     takes, ADR-171, ADR-172). A march home keeps its own rule (ADR-222).
+  3. In the days of a stage between the two (R66d, ADR-974: `pairOpen`) the land is open as in any war and a march
+     waits at the front as before; when the days end, (2) takes the marches still waiting.
+  4. A formation that stands on the held foe's own ground is left as it was: closed ground is walked on and out of
+     by who stands on it (ADR-149), so its way made again is the same way, and it waits before its next cell. The
+     checker counts these and does not judge them: ROADMAP R239, and ADR-1164 for what that makes of this
+     item's AT.
+- **Why by the two nations, where R235's arrows ask by the cell.** An arrow is judged on the land its line crosses
+  today (`holdsLand`). A way is over holders, not cells (a `Passage` opens or closes a holder's ground, and routes are
+  kept by it), and the planners ask by the pair already (`foesOf`): in a stage's days they plan attacks on that foe,
+  and their marches have to be routed. So in a stage's days a march of that pair may still be ordered over the foe's
+  land away from the stage's, and wait there until the days end: 7 days, or the stage's own (five stages have 10 to
+  80). The checker does not count those days.
+- **Consequences.**
+  - A hold has a fourth leg (it amends ADR-929): no fight on land, no land taken, no attack planned, and no way over
+    each other's land.
+  - Before and after, by one probe on both rules from the replay's start, read as the checker reads (a march
+    waiting at a held front from ground not the foe's, a week or more with one order): 10 September 1939 99 → 0, 15
+    October 131 → 0, 23 November 147 → 0, 14 December 157 → 0, 1 February 1940 181 → 0, 5 April 98 → 0, 9 May
+    98 → 0. The land marches under way on 23 November: 269 → 141. The Rhine that day, pictures in
+    `docs/evidence/R236/`: the two armies in their cells along the front, no arrow, none with France looked at.
+  - The replay's course moves inside its bars (`historyMatch1938h`, against the same run on R238's code): Paris
+    Germany's from 10 June 1940 as before; 1,009 French cells Germany's on 22 June (936; the bar 500); 11,020 Soviet
+    cells the Axis's after 1 December 1941 (10,734; the bar 6,000); the Soviet army of 1 November 1942 4,005k
+    (3,396k; the bar 2,000k). Of its 44 map lines 40 are the same and four of control move by 0.05 points at most
+    (1 December 1941: whole 99.19 → 99.14 %, right 96.2 → 96.1 %, astray 0.56 → 0.61 % with its bar at 1 %).
+    The China front (`chinaFront1938h`): Japan holds 15.2 % of China on 1 November 1938 and a year on, as before;
+    China's army there 746k (809k), a year held 390k (381k; the bar 0.4 of the start's).
+  - A free game has no hold: seed 99 over three years ends on the same hash by both rules, and the pin is unmoved.
+  - The tick, by pairs run at once on cores of their own, the masks then swapped: the replay's first eight years
+    1.94 → 1.76 ms (2.01 and 1.87 against 1.81 and 1.72: fewer marches under way); a free game 1.79 and 1.77 ms
+    (1.83 and 1.75 against 1.78 and 1.75: the two cores differ by more than the rules).
+  - Left, R239: formations on a held foe's own ground, counted on the replay's own seed in formation-days past a
+    week: the United States' on the National Liberation Front's (Vietnam) 60,578, South Korea's there 882, the
+    Philippines' there 588; the Soviet Union's on Germany's 1,754; Ceylon's on Japan's 773; the United Kingdom's on
+    Germany's 451 (five divisions by the Polish Corridor on 23 November 1939, three on 14 December); and ten pairs
+    more of 2 to 198.
+  - The checker and this item's probes ask between two ticks, and `redeploy` orders its marches while an hour's
+    events are applied: both asked for the track's open stages out of turn, and the asking changed the course. Found
+    by this item's measuring and mended first (R237, R238); every figure here is read on their code, the probes'
+    hashes the plain run's (23 November 1939: c43d19b9 by this rule, 1a5c4ff4 before it).
+- **The decisions it stands on (ADR-803)**, each with its test green before (on R238's code: its gate and its
+  ten-year run) and after: ADR-929, the hold (`chinaFront1938h`); ADR-931, the West in 1940 and `redeploy`
+  (`historyMatch1938h`); ADR-974, a stage's days (`trackFight1938h`, and this item's test of a march ordered in
+  them); ADR-971, a planner's own front across a frozen hold (`trackLevers1938h`, `trackEndHolds1938h`); ADR-947 and
+  ADR-950, the checker, its own seed the bar (`historyTrack1938h` and seeds 1 to 5); ADR-1095, the march that waits
+  for the front (`heroFront1938`); ADR-149, ADR-169, ADR-172 and ADR-222, closed ground, the march home and the
+  barred step (`movement.test.ts`), and ADR-171, a path and a change of the ground (`pathsKept`); ADR-1162, which
+  marches are advances (`advancing1938h`, its marches now ordered as before a hold, since across one none is
+  ordered; `arrowsHeld1938h.spec.ts` by hand). SPEC §4.2 and §7.7 say the rule.
+- **Read.** `heldFrontMarch1938h.test.ts` (a timeline of its own, Germany and Poland held: a march to its own land
+  beyond goes round and arrives; with no way round, and onto the foe's land, the order is refused; a march under way
+  when the hold begins is made again or halts; in a stage's days the taker's march onto the stage's land is ordered:
+  three of the four red on the rule before). The track's checker has the rule (`stand`, ADR-804: asked every day of
+  the replay to 1991): no line on the replay's own seed, no warning on seeds 1 to 5.
+
 ## ADR-1162 · 2026-11-27 · accepted · A march is an advance only onto land that can be taken today, and the worker says which (R235, the user's report)
 
 - **The case** (the user, 2026-11-27, with two pictures of the historical replay's 23 November 1939 at Strasbourg, far

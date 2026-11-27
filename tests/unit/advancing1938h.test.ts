@@ -5,7 +5,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import { marchTo } from '../../src/sim/systems/movement';
-import { FIGHT_DAYS } from '../../src/sim/track';
+import { FIGHT_DAYS, TRACK_PROBE } from '../../src/sim/track';
 import { Domain, type World } from '../../src/sim/world';
 import { advancing } from '../../src/worker/advancing';
 import { assets1938 } from '../helpers/earth';
@@ -40,9 +40,19 @@ function world(timeline: TimelineFile): Sim {
 /**
  * Three marches ordered now, each onto land a nation at war with its own holds, within an advance's reach: Germany's
  * onto the stage's land (`into`), Germany's onto Poland's land beside the ring, east of it (`beside`), and Poland's
- * onto Germany's (`back`). Their formations' ids.
+ * onto Germany's (`back`). Their formations' ids. `asBefore`: ordered as before the hold began (ROADMAP R236: across a
+ * held front no march onto the foe's land is ordered; one under way from before is what the view may still be shown).
  */
-function marches(w: World): { into: number; beside: number; back: number } {
+function marches(w: World, asBefore = false): { into: number; beside: number; back: number } {
+  TRACK_PROBE.holdsOff = asBefore;
+  try {
+    return ordered(w);
+  } finally {
+    TRACK_PROBE.holdsOff = false;
+  }
+}
+
+function ordered(w: World): { into: number; beside: number; back: number } {
   const { w: W, h: H } = w.cells;
   const [GER, POL] = [id('GER'), id('POL')];
   const [u0, v0] = project(14.0, 54.5);
@@ -87,7 +97,7 @@ describe('which marches are advances across a front the historical track holds (
     const w = sim.world;
     // The front held, no stage near: each march goes over land of a nation at war with its own, and none is an advance.
     expect(w.holds(id('GER'), id('POL'))).toBe(true);
-    const first = marches(w);
+    const first = marches(w, true);
     expect(onAdvance(w, [first.into, first.beside, first.back])).toEqual([]);
     // The stage's window opens. Marches ordered afresh, from where the formations are now: Germany's onto the stage's
     // land is an advance. Not Germany's onto Poland's land beside the ring, nor Poland's onto Germany's: the hold
