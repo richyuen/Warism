@@ -215,3 +215,5 @@
   judged by the file's run alone. Stricter in one: an error with no file is red with a red named beside it or not.
 - Not seen: Linux (the nightly run's unit stage is the first run there), and the ten-year suite's whole report, which
   `npm run check:review` reads with the same code.
+- Filed from the whole run's second red: R233, a change of SPEC.md runs no test of it (`specRefs` is reached by no
+  import; it has let a stale name through before, R94a's, red in the nightly run of 2026-11-16).

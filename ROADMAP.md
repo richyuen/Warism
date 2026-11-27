@@ -145,6 +145,12 @@ on separate P-cores (a ratio, not an absolute figure).
   gate's run of 2026-11-26 and both whole runs of 2026-11-27, under eight workers; green alone both times it was run so (14 of 14),
   so the gate passes it. Where it passes in the suite it takes 40 to 45 s. AT: the cause named from the trace of a
   red run; the test 20 of 20 with the suite running beside it, measuring what it measures now.
+- [ ] R233 **A change of SPEC.md runs no test of it** (found by R231's whole unit run). `specRefs.test.ts` reads
+  SPEC.md from the disk and no import reaches it, so the gate, sized by imports, runs nothing for a SPEC line, and a
+  name that does not exist goes to `main`: R94a's `chromeCover1938`, red in the nightly run of 2026-11-16; R231's own
+  line was red in its whole run until the new file was in git's index, which the checker reads. AT: a change of
+  SPEC.md runs `specRefs.test.ts` in `npm run check` (`gate.test.ts` holds the plan), and a file SPEC cites counts
+  as soon as it is in the working tree, added or not.
 
 ## Released
 
