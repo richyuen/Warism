@@ -288,7 +288,7 @@ on separate P-cores (a ratio, not an absolute figure).
     `chinaFront1938h` the nightly run's; the ten free worlds' days to a first war the same but one (16 for 17).
     The four browser specs of the replay by hand, 14 of 14. The pin unchanged. No ADR (ADR-914: a mend of
     ADR-974's "a stage not yet applied" and ADR-977's "this hour").
-- [ ] R239 **In the historical replay a formation on a held foe's own ground waits there until the hold ends** (found
+- [x] R239 **In the historical replay a formation on a held foe's own ground waits there until the hold ends** (found
   by R236). The land of a foe whose front the track holds is closed ground, and who stands on closed ground may
   walk on it and out of it (ADR-149): but each step to that foe's next cell waits for the front (PLAN 1.14), which
   no one moves. So a formation the hold found on the foe's ground stands with its order, as R236's marches did at
@@ -306,6 +306,35 @@ on separate P-cores (a ratio, not an absolute figure).
   the replay's own seed no formation waits `STAND_DAYS` on a held foe's own ground (`stranded` empty, the checker's
   `stand` rule without its exception: it walks out, or is set down on its own side's land); the replay's ten-year
   tests green, the pin unchanged.
+  - Done (ADR-1166): at a day's first hour, after the hour's events, the track sets down every land formation that
+    stands, or waits on a march, on the ground of a foe its nation holds a front with, no stage's days open between
+    the two (`setDownLeft`): on the nearest land of its own or an ally's, two to a cell, as a stage's cut-off
+    formations are (R66c); with none within 40 cells it is taken off, its men back to the pool. Left alone: a march
+    that does not wait, one aboard, one a `forces` event keeps for its stage, a hero with no land in reach. Each
+    pair's cause, from a run of R241's code to 1991 (539 episodes of 447 formations, 75,055 formation-days): the
+    ground changed under 366 (a `transfer` sets nothing down: the Easter Offensive of 1 April 1972 under 330
+    American formations, 157 of them gone before the armistice; Poland's partition under 7 British; France freed
+    under 6 German; Liberia, the Sinai, Manchukuo's end); a hold closed over 99 on ground already the foe's (61
+    Soviet on Germany's from 2 December 1941; Ceylon's and Australia's on Japan's; Hungary's and Slovakia's on the
+    Soviet Union's); 30 Soviet arrivals on land Germany had taken; war come to 5 where they stood (Italy's on
+    Germany's, October 1943); 39 walked onto it, 30 of them for a day. With the rule 121 formation-days, the longest
+    5; set down 195, taken off 21 (the United States' on the NLF's ground 74 and none; the United Kingdom's on
+    Germany's 5 and 10; Italy's on Germany's none and 6). The checker's `stand` without its exception, and a rule
+    `left` beside it (no formation in one cell of a held foe's ground at two days' first hours running, nor on that
+    ground seven days running in whatever cells): no line on the own seed to 1991, no warning on seeds 1 to 4, one
+    on seed 5 (R243); with the rule switched off both tell the British by the Corridor within 790 days. Held by `trackLeft1938h.test.ts`, seven tests red before (land ceded at hours 0, 1 and
+    23; a stage's days and their end; an ally's land; none in reach; those left alone). The replay's ten-year tests
+    green (ten files): Paris Germany's from 14 June 1940 (10 June), 766 French cells on 22 June (1,009; the bar
+    500), 9,401 Soviet cells after 1 December 1941 (11,020; the bar 6,000), the Soviet army 4,365k (4,005k); 39 of
+    the 44 map lines the same, five of control inside their bars; the China front and the free worlds as before.
+    The course is the same to 28 September 1939 and another from 1 October; the look alone changes nothing (19
+    marked days to 1991). The pin unchanged; a free game the same hash and tick. The replay's tick 1.78 → 1.90 ms
+    over its first eight years, five sixths of it the land combat of 1943 and 1944 in this course; the look itself
+    0.002 ms a tick. The replay's five browser specs by hand, 15 of 15. The census's bars kept on the own seed (both
+    near 20 of 25 large land fronts; both engaged 11 for 14, R66d's bar 9; Uranus engaged at its hour; D-Day 101 of
+    200 samples) and, with the rule, on 37701 and 38701. Left, R243: guests on a front fought beside them (Germany's
+    and Romania's on Finland's land in 1944) are set down a cell back each morning as the Soviet Union takes the
+    cell they stood on: five days running at the most on the own seed, seven on seed 5.
 - [ ] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
   all the same** (found by R236's review). A command applied while the replay runs ends it (R62j), and
   `moveFormation` counts as applied whether or not its order is given (a refused order is told by `MoveRejected`).
@@ -357,6 +386,20 @@ on separate P-cores (a ratio, not an absolute figure).
   14 May 1940 1 of 60 at 1,000 m/px, 1 of 31 at 400, 6 of 60 at 1,500, 2 of 60 at 2,500 (before R241: 2 of 71, 3 of
   48, 3 of 71, 3 of 71). AT: on those scenes at those zooms every advancing formation in view is in a bold arrow
   (one cut away joins the arrow that cuts it, its men in that arrow's width); the frame budgets kept.
+- [ ] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
+  that takes it** (found by R239). A hold is between two nations wherever they stand (ADR-929). The Finnish front's
+  hold ends on 9 June 1944 and the Soviet Union fights Finland freely to the armistice of 19 September, taking its
+  land cell by cell; the Eastern Front's hold (Germany, Italy, Romania, Hungary against the Soviet Union) stands to
+  May 1945. So German and Romanian formations on Finland's land neither fight for the cell they stand on nor leave
+  it. Since R239 the track sets such a formation down on Finland's next cell at the day's first hour, and that
+  cell is taken by 08:00 the same day (read hour by hour, 20 to 22 August 1944: a German and a Romanian formation;
+  a Finnish one the same on Germany's land on 18 November 1941, before the Eastern Front's hold). On the replay's
+  own seed five days running at the most; on seed 5 a Romanian formation seven days running to 22 August 1944
+  (`WARNING historyTrack`: `left`). AT: the cause read (why a guest stands on a front it may not fight on: the AI's
+  stationing, or the hold's reach by the pair and not by the front); on the replay's six seeds no `left` line and
+  no warning; a test of a guest on an ally's land that a foe it is held off from takes (it fights beside its ally
+  there, or it is not stationed there, or it leaves for land that is not being taken: the choice an ADR); the
+  replay's ten-year tests green, the pin unchanged.
 
 ## Released
 

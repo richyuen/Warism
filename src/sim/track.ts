@@ -12,7 +12,7 @@
 import { staticCe } from './systems/efficiency';
 import { incomeRankOf } from './systems/research';
 import { grantTechs, knowsTechs, techMask } from './tech';
-import { dayOfIso } from '../shared/calendar';
+import { dayOfIso, isDayStart } from '../shared/calendar';
 import { Refusal } from '../shared/commands';
 import { EventKind, JoinedBy, TrackEnd } from '../shared/events';
 import type { Section } from './core/sections';
@@ -30,6 +30,7 @@ import { spawnCity } from './scenarioEdit';
 import { applyTraits } from './traits';
 import { traitMask } from '../shared/traits';
 import { detonate } from './systems/nuclear';
+import { waitsForFront } from './systems/movement';
 import { leaveWarsAgainst, makePeace, withPuppets } from './systems/war';
 import { applyCommand } from './tick';
 import { ATTACKERS, DEFENDERS } from './wars';
@@ -97,8 +98,12 @@ function takerSide(world: World, n: number, by: number): boolean {
   return n === by || world.wars.sameSide(n, by);
 }
 
-/** Tests' switches (an A/B from one save): objectives weigh nothing; no front holds. */
-export const TRACK_PROBE: { objectivesOff?: boolean; holdsOff?: boolean; fightOff?: boolean } = {};
+/**
+ * Tests' switches (an A/B from one save): objectives weigh nothing; no front holds; no stage's days are open; the
+ * formations left on a held foe's ground stay there (`leftOff`, R239). `onLeft`: told of each such formation as it is
+ * set down (`to` its cell) or taken off (-1), with its nation and the holder of the ground it stood on.
+ */
+export const TRACK_PROBE: { objectivesOff?: boolean; holdsOff?: boolean; fightOff?: boolean; leftOff?: boolean; onLeft?: (formation: number, nation: number, holder: number, to: number) => void } = {};
 
 /** The section of the track's state. */
 export const TRACK_SECTION = 'world.track';
@@ -1281,8 +1286,64 @@ export function runTrack(world: World): void {
     return;
   }
   if (t.next < t.events.length && t.ticks[t.next]! <= world.tick) applyDue(world, t);
+  // The formations the timeline has left on a held foe's ground (R239): at a day's first hour, after its events.
+  if (isDayStart(world.tick)) setDownLeft(world, t);
   // Its last day (R62d): after that hour's events.
   if (world.tick >= t.endTick) endTrack(world, TrackEnd.date);
+}
+
+/**
+ * The land formations left on the ground of a foe their nation holds a front with (ROADMAP R239, ADR-1166), at a
+ * day's first hour: each that stands there with no march, or waits on one before a cell an enemy holds, is set down
+ * behind the line as a stage's cut-off formations are (R66c, ADR-968: on the nearest land of its own side within
+ * FALL_BACK_CELLS, SET_DOWN_PER_CELL to a cell); with none in reach it is taken off, its men back to its nation's
+ * pool, as a `withdraw`'s are (a hero stays: it is not men).
+ *
+ * A hold keeps such a formation from fighting its way out, the land it stands on is taken by no one, and a march
+ * waits before each cell of that foe (PLAN 1.14): it stood until the hold ended, or starved first. An `occupy` and a
+ * `withdraw` set down the formations their own stage cuts off. Nothing did for the rest: land ceded under them (a
+ * `transfer`: the Easter Offensive of 1972 under 330 American formations, 157 of them gone before the armistice;
+ * Poland's partition under seven British divisions), a stage's days closing with them on the foe's cells, a hold or a
+ * change of sides declared where they stood, an arrival on land the foe had taken.
+ *
+ * Left where they are: one on a march that does not wait (it goes by itself: a step taken back, a way off that
+ * ground); one aboard; one the timeline keeps where it arrived for its stage (`kept`, R66d); and all of them while a
+ * stage's days are open between the two nations (`World.holdsPlan`: they may be fighting for that land).
+ */
+function setDownLeft(world: World, t: Track): void {
+  if (TRACK_PROBE.leftOff) return;
+  const f = world.formations.cols;
+  const { w, controller } = world.cells;
+  const left: [formation: number, holder: number][] = [];
+  world.formations.forEach((i) => {
+    if (world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.offLand(i)) return;
+    const n = f.nation[i]!;
+    const holder = controller[Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w]!;
+    if (holder === 0 || holder === n || !world.wars.atWar(n, holder) || !world.holdsPlan(n, holder)) return;
+    if (f.moving[i] === 1 && !waitsForFront(world, i)) return;
+    if (world.playerOrders.get(i)?.kind === PlayerOrderKind.kept) return;
+    left.push([i, holder]);
+  });
+  // The asking made the hour's list of open stages before the hour's systems asked (R237, R238): theirs is their own.
+  t.eventApplied();
+  if (left.length === 0) return;
+  const nowhere = new Set<number>();
+  const placed = new Map<number, number>();
+  for (const [i, holder] of left.sort((a, b) => a[0] - b[0])) {
+    const n = f.nation[i]!;
+    if (setDownBehind(world, i, nowhere, placed)) {
+      TRACK_PROBE.onLeft?.(i, n, holder, Math.floor(f.y[i]!) * w + Math.floor(f.x[i]!));
+      continue;
+    }
+    if (world.heroes.has(i)) continue;
+    world.nations.cols.manpower[n] = world.nations.cols.manpower[n]! + f.strength[i]!;
+    applyCommand(world, { kind: 'removeFormation', id: i });
+    TRACK_PROBE.onLeft?.(i, n, holder, -1);
+  }
+  // Formations moved or gone: what stands in contact is worked out again from the state, as after an event.
+  world.contacts = null;
+  world.deployed = null;
+  world.deployedBefore = null;
 }
 
 /** The events due by this hour, in the timeline's order. */

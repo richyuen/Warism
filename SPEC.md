@@ -1022,7 +1022,8 @@ month's start only).
   enemy's cell (unless retreating), is barred from a third nation's, and on arrival is
   `FormationArrived`. `marchHoursLeft` gives the time left. Before the cell of a foe whose front the
   replay's timeline holds it does not wait (R236, ADR-1163): its way is made again from where it stands,
-  round that foe's land, or it halts; but one that stands on that foe's own ground waits as before.
+  round that foe's land, or it halts; one that stands on that foe's own ground waits, until the track sets it down
+  behind the line at the day's first hour (§7.7, R239).
 - **The march home** (repatriation, `HOME_MARCH` and `HOME_BACK`) is §3.5.
 
 ### 4.3 Territory [ADR-588]
@@ -1876,7 +1877,12 @@ to 27 July 1953, then sets the world free.
   an owner's `occupy` (land taken back), `born` of a dead nation (a revival). Barbarossa by stages (R62g3,
   ADR-933): the Axis lines on their dates, the pockets taken (`withdraw` with `captured`); under a hold, the other
   formations a stage leaves behind its line, of `withdraw` or `occupy`, set down on the nearest land of their own or
-  an ally's in the war, two to a cell at most, the pool only for one with none within reach over land (R66c, ADR-968). For FIGHT_DAYS (7) before an `occupy` stage, or its own `fightDays` (R77: the
+  an ally's in the war, two to a cell at most, the pool only for one with none within reach over land (R66c, ADR-968).
+  So is any land formation that a day's first hour finds standing, or waiting on a march, on the ground of a foe its
+  nation holds a front with, no stage's days open between the two (R239, ADR-1166, `setDownLeft`: land ceded under
+  it by a `transfer`, a stage's days closed over it, a hold or a change of sides declared where it stood); not one
+  on a march that does not wait, nor one a `forces` event keeps for its stage.
+  For FIGHT_DAYS (7) before an `occupy` stage, or its own `fightDays` (R77: the
   Normandy beachhead's 50, from the landing to 25 July), the hold is lifted in its
   area (its ring's box and 120 km) for its taker's side and their foes; land goes across it only to the taker's side and
   only of the stage's land; no window opens while its taker's side has under a third of its foes' men on land in the area (ADR-977); a stage whose land its taker's side holds already is fulfilled (R66d, ADR-975). A `forces` event's `kept` date keeps its formations
@@ -1898,7 +1904,8 @@ to 27 July 1953, then sets the world free.
   row's city as of the row's hour (R87b: the names it bore, `World.cityFormer`, saved): Kalinin in 1941. After its
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
   by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
-  timeline, the diplomatic rules kept. While it steers the invasion AI lands only within an objective of the lander's
+  timeline, the diplomatic rules kept, no march waiting a week at a front the timeline holds (R236), no formation
+  left on a held foe's ground (R239: a second day in one cell, or a week of days in any). While it steers the invasion AI lands only within an objective of the lander's
   (R62l, ADR-949), and the operational AI takes a front sector within one of its objectives as threatened, empty or not
   (R63, ADR-951).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is

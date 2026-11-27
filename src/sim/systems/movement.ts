@@ -33,7 +33,8 @@
  * advance follows the front): on 23 November 1939 of the replay 155 of 269 marches. Its ground is closed to a way as
  * a third nation's is (`passageOf`, by `World.holdsPlan`: a hold, and no stage's days open between the two), and a
  * march under way whose next step is onto it is made again from the cell it stands on, or halts there. A formation
- * that stands on that foe's own ground walks on it as on any closed ground, and waits before its next cell as before.
+ * that stands on that foe's own ground walks on it as on any closed ground, and waits before its next cell: until the
+ * day's first hour, when the track sets it down behind the line (ROADMAP R239, `setDownLeft` in `track.ts`).
  *
  * A path outlives a change of the ground (PLAN 3.7k, ADR-171): a paint of terrain, a map import
  * and a change of `loopingMap` leave `world.paths` alone. A step that the ground of now does not
@@ -838,7 +839,8 @@ export function movementSystem(world: World): void {
           // Nor does a march wait for ground that will not be taken (ROADMAP R236, ADR-1163): a foe's whose front the
           // historical track holds. Its way is made again below by the ground of now, round that foe's (`passageOf`),
           // or it halts here. Not one that stands on that foe's own ground: a way from closed ground walks on it, and
-          // would be the same way again (ROADMAP R239).
+          // would be the same way again. The track sets that one down behind the line at the day's first hour
+          // (ROADMAP R239).
           if (c.home[id] !== HOME_MARCH && world.cells.controller[a] !== holder && world.holdsPlan(nation, holder)) {
             shut = true;
             frac = 0;

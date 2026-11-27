@@ -7,7 +7,7 @@ import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
 import { waitsForFront } from '../../src/sim/systems/movement';
-import type { World } from '../../src/sim/world';
+import { Domain, PlayerOrderKind, type World } from '../../src/sim/world';
 import { matchColumns, referenceHolders, referenceOwners } from '../../tools/diag/historyMatch';
 import { Breaks, bondsOf, membersOf, silentExits, useTags, worldBreaks } from './diploInvariants';
 import { assets1938 } from './earth';
@@ -28,10 +28,17 @@ import { deltaE } from '../../src/shared/color';
 //           than history's where history had it unchanged from the start under STRAY_BAR (ADR-968; the scenario's own
 //           seed is held to it by `historyMatch1938h`).
 //   stand   no land formation waits STAND_DAYS with one order at a front the timeline holds (ROADMAP R236, ADR-1163):
-//           its next step onto the land of a foe it holds a front with, from land that is not that foe's, no stage's
-//           days open between the two. Land there is taken by no one: the march goes round by its own side's, or its
-//           order ends. One that stands on the foe's own land (left behind its line: a route from closed ground walks
-//           on it) is not this rule's: counted (`TrackRun.stranded`), ROADMAP R239.
+//           its next step onto the land of a foe it holds a front with, no stage's days open between the two. Land
+//           there is taken by no one: the march goes round by its own side's, or its order ends. From whatever
+//           ground it stands on, since ROADMAP R239.
+//   left    no land formation stands, or waits on a march, in one cell of the ground of a foe the timeline holds its
+//           front with at two days' first hours running (ROADMAP R239, ADR-1166), no stage's days open between the
+//           two: the track sets it down behind the line at a day's first hour, or takes it off. Not one on a march
+//           that does not wait (it goes by itself), nor one the timeline keeps where it arrived for its stage. In
+//           another cell it was set down and overrun again: a guest on an ally's land that the held foe takes from
+//           that ally cell by cell (a Finnish formation on Germany's in November 1941, a German and a Romanian on
+//           Finland's in August 1944) falls back with the line a day at a time. Nor is one found on that foe's
+//           ground at STAND_DAYS days' first hours running, in whatever cells: set down each day and never free.
 
 /** The least ΔE of two land neighbours' colours on the world's map at the track's end (R84d; the critic's bar). */
 export const END_COLOUR_DE = 30;
@@ -66,20 +73,13 @@ export interface TrackRun {
    * member of NATO). Empty when the run stops before the end.
    */
   handover: Map<string, string[]>;
-  /**
-   * The formation-days of marches waiting past STAND_DAYS on a held foe's own land, by the pair ("ENG on GER"): left
-   * behind a line the timeline drew over them (ROADMAP R239). Not broken lines.
-   */
-  stranded: Map<string, number>;
 }
 
 /**
  * The marches that have waited STAND_DAYS today with one order at a front the timeline holds (`stand`, R236): asked
- * once a day, the days of each counted in `days` (by formation: its order's target, the days so far). Those that
- * stand on the held foe's own land are counted in `stranded` (by the pair, "ENG on GER": formation-days past the
- * bar), not told as broken.
+ * once a day, the days of each counted in `days` (by formation: its order's target, the days so far).
  */
-function standing(w: World, days: Map<number, { target: number; n: number }>, stranded: Map<string, number>): string[] {
+function standing(w: World, days: Map<number, { target: number; n: number }>): string[] {
   const c = w.formations.cols;
   const out: string[] = [];
   const waiting = new Set<number>();
@@ -93,13 +93,40 @@ function standing(w: World, days: Map<number, { target: number; n: number }>, st
     const d = days.get(f);
     const n = d && d.target === c.targetCell[f] ? d.n + 1 : 1;
     days.set(f, { target: c.targetCell[f]!, n });
-    if (n < STAND_DAYS) return;
-    if (w.cells.controller[path[c.pathStep[f]!]!] === holder) {
-      const pair = `${tag(nation)} on ${tag(holder)}`;
-      stranded.set(pair, (stranded.get(pair) ?? 0) + 1);
-    } else if (n === STAND_DAYS) out.push(`stand: a formation of ${tag(nation)} has waited ${STAND_DAYS} days with one order at the front the timeline holds against ${tag(holder)}`);
+    if (n === STAND_DAYS) out.push(`stand: a formation of ${tag(nation)} has waited ${STAND_DAYS} days with one order at the front the timeline holds against ${tag(holder)}`);
   });
   for (const f of [...days.keys()]) if (!waiting.has(f)) days.delete(f);
+  return out;
+}
+
+/**
+ * The land formations found on a held foe's ground at this day's first hour (`left`, R239): standing, or waiting on a
+ * march, no stage's days open between the two; asked once a day, those seen kept in `seen` (by formation: its cell,
+ * the holder of its ground, the days running). One read may find a formation there: the track's own look comes in the
+ * tick after it. Two running in one cell may not (the look did not take it), nor STAND_DAYS running on that foe's
+ * ground in whatever cells (set down each day and overrun again).
+ */
+function leftBehind(w: World, seen: Map<number, { cell: number; holder: number; days: number }>): string[] {
+  const c = w.formations.cols;
+  const W = w.cells.w;
+  const out: string[] = [];
+  const now = new Map<number, { cell: number; holder: number; days: number }>();
+  w.formations.forEach((f) => {
+    if (w.rules?.templates[c.template[f]!]?.domain !== Domain.land || w.offLand(f)) return;
+    const nation = c.nation[f]!;
+    const holder = w.cells.controller[Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W]!;
+    if (holder === 0 || holder === nation || !w.wars.atWar(nation, holder) || !w.holdsPlan(nation, holder)) return;
+    if (c.moving[f] === 1 && !waitsForFront(w, f)) return;
+    if (w.playerOrders.get(f)?.kind === PlayerOrderKind.kept) return;
+    const cell = Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W;
+    const was = seen.get(f);
+    const days = was && was.holder === holder ? was.days + 1 : 1;
+    now.set(f, { cell, holder, days });
+    if (was?.cell === cell) out.push(`left: a formation of ${tag(nation)} stands a second day in one cell of the ground of ${tag(holder)}, whose front the timeline holds`);
+    if (days === STAND_DAYS) out.push(`left: a formation of ${tag(nation)} is found ${STAND_DAYS} days running on the ground of ${tag(holder)}, whose front the timeline holds`);
+  });
+  seen.clear();
+  for (const [f, at] of now) seen.set(f, at);
   return out;
 }
 
@@ -133,7 +160,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
   breaks.add(`${label} day 0`, worldBreaks(sim.world).filter((l) => !l.startsWith('held')));
   let handover = new Map<string, string[]>();
   const waited = new Map<number, { target: number; n: number }>();
-  const stranded = new Map<string, number>();
+  const behind = new Map<number, { cell: number; holder: number; days: number }>();
   const heldAt = new Map(own ? HELD_BY.map((h) => [(dayOfIso(h[0]) - dayOfIso('1938-01-01')) * 24 + 12, h] as const) : []);
   while (!t.ended && sim.tick < hours) {
     meddle?.(sim.world);
@@ -156,7 +183,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       }
       breaks.add(where, silentExits(w, before, bonds.overlord, ev));
       if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w).filter((l) => !l.startsWith('held') || !heldByTimeline(w, l)));
-      if (w.tick % 24 === 0) breaks.add(where, standing(w, waited, stranded));
+      if (w.tick % 24 === 0) breaks.add(where, [...standing(w, waited), ...leftBehind(w, behind)]);
       const hb = heldAt.get(w.tick);
       if (hb) {
         const [date, by, lon, lat] = hb;
@@ -187,7 +214,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       if (d < END_COLOUR_DE) breaks.add(`${label} end`, [`colours: ${tag(a)} and ${tag(b)} share a border, ΔE ${d.toFixed(1)}`]);
     }
   }
-  return { lines: breaks.lines, skipped, end: sim.tick, sim, handover, stranded };
+  return { lines: breaks.lines, skipped, end: sim.tick, sim, handover };
 }
 
 /**

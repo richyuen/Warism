@@ -560,3 +560,86 @@
   decision; ROADMAP's R236 names it. The formations that wait on a held foe's own ground are R239's, as filed.
 - Open in Batch 61: R239 (those formations), R240 (a God Mode march across a held front) and R242 (an advance whose
   arrow is cut away). The loop is stopped since the usage limit of this morning: the user's to start again.
+
+## 2026-11-27 — R239: the formations the timeline leaves on a held foe's ground are set down behind the line (ADR-1166)
+
+- The case: a hold keeps a formation on the held foe's own ground from fighting, the land under it is taken by no
+  one, and its march waits before each of that foe's cells. R236 closed that ground to ways from outside and left
+  those on it as they were (ADR-1163's decision 4; ADR-1164, the user's "Keep the tick").
+- Read first, how each came to stand there (`.cache/r239/strand.ts`, the replay's own seed on HEAD to 1991, every
+  day's first hour): 539 episodes of 447 formations, 75,055 formation-days, 68,628 waiting on a march and 6,393 with
+  no order. The ground changed under 366 of them: a `transfer` sets no formation down (the Easter Offensive of 1
+  April 1972 under 330 American formations, 68,179 days, 157 of them gone before the armistice; Poland's partition
+  under 7 British divisions, all gone by 20 January 1940; France freed under 6 German; the NPFL's Liberia, the
+  Sinai, Manchukuo's end). A hold closed over 99 on ground already the foe's (61 Soviet on Germany's from 2 December
+  1941, 16 German on the Soviet Union's, Ceylon's and Australia's on Japan's from July 1942, Hungary's and
+  Slovakia's in 1944). 30 are Soviet arrivals on land Germany had taken; 5 had war come to them where they stood
+  (Italy's on Germany's ground, October 1943); 39 walked onto it, 30 of them for one day.
+- The rule (ADR-1166, `setDownLeft` in `track.ts`): at a day's first hour, after the hour's events, each land
+  formation that stands, or waits on a march before an enemy's cell, on the ground of a foe its nation holds a
+  front with (no stage's days open between the two) is set down as a stage's cut-off formations are (R66c): the
+  nearest land of its own or an ally's within 40 cells, two to a cell. With none in reach it is taken off, its men
+  back to the pool. Left alone: a march that does not wait, one aboard, one kept for its stage, a hero with nowhere
+  to go. One rule asked each day, for every cause.
+- The look asks `holdsPlan`, which makes the hour's list of open stages before the hour's systems ask (R237, R238):
+  the track forgets the list after the look. Checked: the look alone, setting nothing down, leaves the replay on
+  HEAD's hash on 19 marked days to 30 December 1991. With the rule the course is the same to 28 September 1939 and
+  another from 1 October (the British divisions at the partition).
+- After, the same probe: 121 formation-days (102 episodes of 80 formations), the longest 5 days. Set down 195, taken
+  off 21 to 1991 (`TRACK_PROBE.onLeft`): the United States' on the NLF's ground 74 and none; the Soviet Union's on
+  Germany's 43 and none; Germany's on the Soviet Union's 29 and none; the United Kingdom's on Germany's 5 and 10;
+  Germany's on France's 8 and 2; Pakistan's on Bangladesh's 8 and none; Italy's on Germany's none and 6.
+- Tests: `trackLeft1938h.test.ts`, seven, each red on HEAD's `track.ts`: land ceded under Poland's formations by a
+  `transfer` at hour 0, 1 and 23; a stage's days and their end; an ally's land where it is nearest; none in reach
+  (the pool, against the same world with the look off); those left alone. Two corrected while writing: the pool was
+  first compared over a day of the economy (now against a twin world with `TRACK_PROBE.leftOff`), and the ally's
+  case had Czech land within reach of the Rhineland (two tests now).
+- The checker (ADR-804, `tests/helpers/historyTrack.ts`): `stand` without the exception R236 gave it
+  (`TrackRun.stranded` is gone), and `left`. `left` was first "on a held foe's ground at two days' first hours
+  running": red on the own seed on three days (1417, 2421, 2425) and warned on seeds 2, 3 and 5. Read hour by hour
+  for the last two (`.cache/r239/second.ts`): a Romanian and a German formation, guests on Finland's front in
+  August 1944, are set down on Finland's next cell at 00:00, the Soviet Union takes that cell by 08:00 (it fights
+  Finland freely from 9 June 1944, when the Finnish front's hold ends; the guests are held off from it by the
+  Eastern Front's), and the next morning finds them on its ground again, a cell further back. The rule did what it
+  says there, so `left`'s bar of two days is by the cell; and a second bar holds the item's AT for those guests: no
+  formation found on that foe's ground seven days running, in whatever cells. The six files on both bars: no line
+  on the own seed (its longest five days), no warning on seeds 1 to 4, one on seed 5 (a Romanian formation, seven
+  days running to 22 August 1944). That remainder is filed as R243. With the look off (`TRACK_PROBE.leftOff`, a
+  scratch test, not kept) the checker's first 790 days tell `left` on day 636 and `stand` on day 641, both of the
+  British by the Corridor.
+- The replay's ten-year tests (ten files) green; against R236's run: Paris Germany's from 14 June 1940 (10 June;
+  the bar the 22nd), 766 French cells on 22 June (1,009; the bar 500), 9,401 Soviet cells the Axis's after 1
+  December 1941 (11,020; the bar 6,000), the Soviet army of 1 November 1942 4,365k (4,005k). Five of the 44 map
+  lines move, all of control: 1 December 1941 right 96.1 → 95.5 % and astray 0.61 → 0.35 %; right up by 0.2 to 1.8
+  points on 1 July 1940, 1 November 1942, 5 June 1944 and 1 June 1945. The China front and the free worlds' days as
+  before.
+- The fronts' census (`tools/diag/trackFronts.ts 1938 1942-01-01 1945-06-01`): large land fronts with both sides
+  near 20 of 25 (21 of 24; the bar two thirds, ADR-969); both engaged at the stage's hour 11 (14; R66d's bar 9);
+  Uranus engaged at its hour (15 Soviet and 22 Axis formations); D-Day both engaged in 101 of 200 samples (81; the
+  bar a third, R77); the Sixth Army near Stalingrad's stage (14 formations, 161k; R76d). With the rule on the two
+  other seeds those items name: 37701 both near 21 of 24, both engaged 11, Uranus 4 and 4, D-Day 99 of 200; 38701
+  18 of 24, 11, 26 and 13, 91 of 200.
+- The tick (pairs at once on cores of their own, masks swapped): the replay 1938-45 1.78 → 1.90 ms; a free game
+  1.78 and 1.78 ms on the same hash (32ec3f7f after three years). The replay's rise is 1943 and 1944 (2.37 → 2.77
+  and 2.33 → 2.75 ms), and by `--profile` it is the combat system's time there (0.46 → 0.77 and 0.41 → 0.80 ms).
+  Not the look: timed in the run it is 0.04 to 0.06 ms a day, 0.002 ms a tick, 2.1 ms at the most; and the look
+  alone on HEAD's course is 1.75 → 1.78 ms, inside what the two cores differ by. What in the new course costs the
+  combat system that time is not read (the shots that hit: 265,514 → 365,988 in 1943, 189,539 → 191,311 in 1944).
+  The hour of the 1972 transfer (1 April 1972, 00:00), the longest tick of those days: 98.9 ms before, 81.9 ms
+  with the rule.
+- By hand: `arrowsHeld1938h`, `arrowReach1938h`, `replayYear1938h`, `scenario1938h` and `trackView1938h`, 15 of 15
+  on the new course. The arrows' spec prints 13 advances on 4 September 1939 as before, none on 5 April 1940, and
+  135 on 14 May (64), 126 of them in the West, Germany's 87 (16). Asked why (`.cache/r239/may40.ts`): the same
+  armies (161 German land formations both times), another day of the campaign: 18 German marches wait before a cell
+  for 3, 56 German formations fight for 19.
+- Before the push, asked. (1) "Both engaged" fell from 14 fronts to 11: is there a bar on it? R66d's, 9 on the own
+  seed, and R76d's and R77's on three seeds (Uranus, D-Day, the Sixth Army at Stalingrad): all read, all kept (the
+  census above). (2) Are the five specs run by hand every spec that steps the replay? `1938h` is in those five
+  files of `tests/e2e` and in no other. (3) `left` "in one cell" was drawn after its first run failed, as R236's
+  `stand` was (ADR-1164): the bar of a week in any cells was added, the six seeds run again, and the guests' hops
+  filed as R243 with seed 5's warning. SPEC's line on the checker (§7.7) names `stand` and `left`.
+- The gate, twice (the second for the checker's second bar): `tests/helpers/` changed, so the unit stage ran whole
+  (515 files, 2,682 tests), each test's saved world made again the first time (a sim input changed). One red in
+  each run, `snapshot-perf` past its 90 s under the load, green alone (a steady snapshot 0.73 ms at the median,
+  1.20 at the 95th; its budget 2). The pin of seed 99 is unchanged. No spec changed, so the browser stage was left
+  out: the five above by hand.

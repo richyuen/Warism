@@ -5,6 +5,129 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1166 · 2026-11-27 · accepted · A formation the timeline leaves on a held foe's ground is set down behind the line at the day's first hour (R239)
+
+- **The case** (found by R236: ADR-1163's decision 4, ADR-1164). Across a front the track holds nobody fights on land
+  and no land is taken (ADR-929), and a march waits before each cell an enemy holds (PLAN 1.14). A formation on the
+  held foe's own ground may walk on it (ADR-149), but each step to that foe's next cell waits for a front no one
+  moves: it stood with its order until the hold ended, or starved first. An `occupy` and a `withdraw` set down the
+  formations their own stage cuts off (R66c, ADR-968, ADR-973). Nothing did for the rest.
+- **Each pair's cause, read from a run** (the replay's own seed on R241's code to 1991, asked at every day's first
+  hour: 539 episodes of 447 formations, 75,055 formation-days, 68,628 of them waiting on a march and 6,393 with no
+  order). By how the first day found each:
+  - The ground changed under it, 366 episodes and 70,999 days. A `transfer` sets no formation down: the Easter
+    Offensive of 1 April 1972 under 330 American formations (68,179 days: 157 gone before the armistice of January
+    1973, 173 there until it), 3 South Korean, 3 of the Philippines and 1 of French Indochina; Poland's partition of
+    28 September 1939 under 7 British divisions (494 days, all gone by 20 January 1940); France freed on 15
+    September 1944 under 6 German; the NPFL's Liberia of 9 September 1990 under 2 Liberian; the Sinai of 8 June 1967
+    under 5 Egyptian; Manchukuo's land become China's under 6 Japanese. And an ally's land become the held foe's:
+    Finland's under 2 Hungarian (1944), Romania's under 1 German.
+  - The hold closed over it on ground already the foe's (a stage's days over, a hold declared), 99 episodes and
+    3,439 days: 61 Soviet on Germany's from 2 December 1941 (1,939 days) and 16 German on the Soviet Union's; 11 of
+    Ceylon's and 2 Australian on Japan's from 23 July 1942; 6 Hungarian and 1 Slovak on the Soviet Union's in the
+    autumn of 1944; 1 British on Germany's; 1 Japanese on the United States'.
+  - New there, 30 episodes and 330 days: Soviet formations arrived on land Germany had taken.
+  - War come to it where it stood, 5 episodes and 128 days: 4 Italian on Germany's ground from 14 October 1943 (the
+    Kingdom's war on Germany of the 13th), 1 Hungarian on Romania's.
+  - Walked onto it, 39 episodes and 159 days: 30 of them a day's coming and going (Japan's 18 on China's, China's 4
+    on Japan's, the Soviet Union's 3 on Finland's); the rest ground entered in a stage's days that then closed (2
+    German on France's 60 days, 4 Soviet on Germany's 48, 2 Sudanese on the SPLA's 11, 1 Khmer Rouge on Cambodia's
+    10).
+- **Decision.**
+  1. At a day's first hour, after the hour's events, the track looks at every land formation not aboard. One that
+     stands with no march, or waits on a march before an enemy's cell (`waitsForFront`), on the ground of a nation
+     its own is at war with and holds a front with, no stage's days open between the two (`World.holdsPlan`), is set
+     down as a stage's cut-off formations are (`setDownBehind`, R66c): on the nearest land of its own or of an
+     ally's in its war within `FALL_BACK_CELLS` (40) over land, `SET_DOWN_PER_CELL` (2) of a day's to a cell, its
+     march and its order ended.
+  2. With no such land in reach it is taken off, its men back to its nation's pool, as a `withdraw`'s with none in
+     reach (ADR-968). A hero stays where it is.
+  3. Left where they are: a formation on a march that does not wait (it goes by itself: a step taken back, a way
+     off that ground), one a `forces` event keeps for its stage (`kept`, ADR-976), and every one in the days of a
+     stage between the two nations (they may be fighting for that land, ADR-974).
+  4. One rule for every cause, asked once a day: no set-down written into `transfer`, `hold`, `war` and each other
+     event that can leave a formation there.
+  5. The look asks for the hour's open stages before the hour's systems do, so the track forgets the list after it
+     (`eventApplied`; R237, R238): the systems make their own, as on a day when nothing is found.
+  6. This replaces ADR-1163's decision 4 ("left as it was"); its decisions 1 to 3 stand. The checker's `stand` loses
+     the exception ADR-1164 names, and has a rule `left` beside it (below).
+- **Why set down, where ADR-1164 named a walk out too.** A walk out is a march across the held foe's ground, and it
+  waits before each of that foe's cells (PLAN 1.14): it would need the march home's leave to cross them (ADR-222),
+  given to every formation behind a held line for as many days as its way is long, through an army it may not
+  fight. And 21 formations of the run have no land of their side within 40 cells to walk to (10 British in Poland,
+  6 Italian on Germany's ground). The set-down is the rule the same case has at a stage (ADR-968, the user's
+  decision), with its reach, its two to a cell and its tests.
+- **Why the pool, with no land in reach.** A `withdraw` returns the men of a formation it cannot set down (ADR-968).
+  Before this rule those formations were lost where they stood: of the 8 British episodes every one ended with its
+  formation gone, of the 4 Italian 2.
+- **Consequences.**
+  - The same run with the rule: 102 episodes of 80 formations, 121 formation-days, the longest 5 (300 before). Set
+    down 195 and taken off 21 to 1991: the United States' on the National Liberation Front's ground 74 and none; the
+    Soviet Union's on Germany's 43 and none; Germany's on the Soviet Union's 29 and none; the United Kingdom's on
+    Germany's 5 and 10; Germany's on France's 8 and 2; Pakistan's on Bangladesh's 8 and none; Italy's on Germany's
+    none and 6; fourteen pairs more of 1 to 5, Hungary's on the Soviet Union's and Japan's on China's with 3 taken
+    off between them.
+  - What is left, 121 formation-days. Each formation found is there for one read (the look comes in the tick after
+    it). And guests on a front fought beside them are found again. From 9 June 1944 the Soviet Union fights Finland
+    with no hold between them (the Finnish front's ends that day) and takes its land cell by cell; German and
+    Romanian formations on that land are held off from the Soviet Union (the Eastern Front's hold, to May 1945), so
+    they neither fight for the cell nor leave it. The track sets such a guest down on Finland's next cell at the
+    day's first hour, and that cell is taken by 08:00 the same day: a cell further back each day, five days running
+    at the most on the own seed (a Finnish formation the same on Germany's land in November 1941), seven on seed 5
+    (a Romanian, to 22 August 1944). Not this rule's to mend: ROADMAP R243.
+  - The replay's course is the same to 28 September 1939 (the partition, the British divisions) and another from 1
+    October. The look alone, setting nothing down, leaves the course as it was on 19 marked days to 30 December 1991.
+  - Inside its bars (`historyMatch1938h`, against the same run on R236's code; R241 changed no rule of the sim):
+    Paris Germany's from 14 June 1940 (10 June; the bar the 22nd); 766 French cells Germany's on 22 June (1,009; the
+    bar 500); 9,401 Soviet cells the Axis's after 1 December 1941 (11,020; the bar 6,000); the Soviet army of 1
+    November 1942 4,365k (4,005k; the bar 2,000k). Of its 44 map lines 39 are the same and five of control move: on
+    1 December 1941 right 96.1 → 95.5 % (the bar 90) and astray 0.61 → 0.35 % (the bar 1); on the other four right
+    rises by 0.2 to 1.8 points (1 June 1945: 94.7 → 96.5 %). The China front (`chinaFront1938h`) and the ten free
+    worlds' days to a first war are as before.
+  - The checker (`tests/helpers/historyTrack.ts`, every day of the replay to 1991). `stand` judges a march waiting a
+    week at a held front from whatever ground it stands on (its exception counted 60,578 formation-days of the
+    United States' alone). `left` has two bars: no land formation stands, or waits on a march, in one cell of a held
+    foe's ground at two days' first hours running (the look did not take it); and none is found on that foe's ground
+    at seven days' first hours running, in whatever cells (set down each day and overrun again: the item's AT, for
+    a formation with no march too). On the own seed no line; on seeds 1 to 4 no warning; on seed 5 one, the
+    Romanian guest above (R243). With the look switched off (`TRACK_PROBE.leftOff`) the first 790 days tell both
+    rules, of the British by the Corridor (`left` on day 636, `stand` on day 641). How `left` came to its bars: it
+    was first "two days running on that ground" in any cell, and told the guests on the own seed (days 1417, 2421
+    and 2425) and on seeds 2, 3 and 5; narrowed to one cell, since what the rule promises is that a formation found
+    is set down that hour, it told nothing; the week in any cells was added before the push, so that a formation
+    set down and overrun day after day is still told.
+  - The fronts' census (`tools/diag/trackFronts.ts`, 1942 to mid-1945), the bars of the items it was made for. On
+    the own seed: of the large land fronts both sides near at 20 of 25 (21 of 24; ADR-969's bar two thirds); both
+    engaged at the stage's hour at 11 (14; R66d's bar 9); the Sixth Army near Stalingrad's stage, 14 formations and
+    161k (R76d); Uranus engaged at its hour, 15 Soviet and 22 Axis formations (62 and 6); D-Day both engaged in 101
+    of its 200 samples (81; R77's bar a third). On the two other seeds those items name, with the rule: 37701 both
+    near 21 of 24, both engaged 11, Uranus 4 and 4, D-Day 99 of 200; 38701 both near 18 of 24, both engaged 11,
+    Uranus 26 and 13, D-Day 91 of 200.
+  - The tick, by pairs run at once on cores of their own, the masks then swapped: the replay's first eight years
+    1.78 → 1.90 ms (1.84 and 1.72 against 1.85 and 1.95). Five sixths of it is 1943 and 1944 (2.37 → 2.77 and 2.33
+    → 2.75 ms), and there it is the land combat's time (0.46 → 0.77 and 0.41 → 0.80 ms a tick, by `--profile`):
+    the course's, not the look's (0.04 to 0.06 ms a day, 0.002 ms a tick, 2.1 ms at the most). What in the course
+    costs it is not read: the shots that hit are 265,514 → 365,988 in 1943 and 189,539 → 191,311 in 1944. A free
+    game has no track: seed 99 over three years ends on the same hash by both, at the same tick (1.78 and 1.78 ms),
+    and the pin is unmoved.
+  - The replay in the page, its five browser specs by hand on the new course (`arrowsHeld1938h`, `arrowReach1938h`,
+    `replayYear1938h`, `scenario1938h`, `trackView1938h`): 15 of 15. The arrows' spec prints 135 advances on 14 May
+    1940 where it printed 64, Germany's 87 for 16: that day of the campaign in this course (18 German marches wait
+    before a cell for 3, 56 German formations fight for 19).
+- **Stands on** (ADR-803), each with tests green before and after: ADR-968 and ADR-973 (R66c's set-down, the pool
+  for one with no land in reach, an ally's land: `trackLevers1938h.test.ts`); ADR-974 to ADR-977 (a stage's days,
+  the arrivals kept for their stage, no window for a taker far outnumbered: `trackFight1938h.test.ts`,
+  `trackTold1938h.test.ts`); ADR-1163's decisions 1 to 3 (`heldFrontMarch1938h.test.ts`); I4 on a world with a
+  track (R237, R238: `trackAsked1938h.test.ts`, `trackHourEvents1938h.test.ts`); R62j, only a command ends the
+  replay (`trackIntervention1938h.test.ts`); ADR-149 and ADR-222, closed ground walked on and the march home
+  (`movement.test.ts`), untouched; ADR-929 and ADR-968's bars (`chinaFront1938h`, `historyMatch1938h`).
+- **Read.** `trackLeft1938h.test.ts`, seven tests red before: land ceded under Poland's formations by a `transfer`
+  at hour 0, 1 and 23 (set down at the next day's first hour, none lost, two to a cell at the most, and they stay);
+  left where it stands in a stage's days and set down when they end; an ally's land where that is the nearest; with
+  no land of its side in reach taken off, its men in the pool (against the same world with the look off); left
+  alone, one kept for its stage and one on a march that does not wait. The checker's `stand` and `left`, on six
+  seeds.
+
 ## ADR-1165 · 2026-11-27 · accepted · An advance's arrow ends at the cell its march presses on, found by its route (R241, the user's report)
 
 - **The case** (the user, 2026-11-27, of the report R235 took up: "The issue was that the arrows in far zoom looked

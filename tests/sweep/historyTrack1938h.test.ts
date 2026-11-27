@@ -16,8 +16,6 @@ describe('the historical track checked to its end (ROADMAP R62k)', () => {
   it(`seed ${SEED_1938H} (the scenario's own): nothing passed over, no war or peace off the timeline, the diplomatic rules kept`, () => {
     const run = historyTrack(SEED_1938H);
     expect(run.sim.world.track!.ended).toBe(true);
-    // Not a bar (ROADMAP R239): the marches left waiting on a held foe's own land, formation-days by the pair.
-    process.stderr.write(`historyTrack seed ${SEED_1938H}: waiting on a held foe's own land past a week, formation-days: ${[...run.stranded].map(([k, n]) => `${k} ${n}`).join(', ') || 'none'}\n`);
     expect(run.lines).toEqual([]);
     expect(run.skipped).toEqual([]);
     // R69f (ADR-989): the arsenals of the track's end history's: no West German, none before its nation's bomb (China's
