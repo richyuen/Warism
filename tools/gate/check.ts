@@ -16,7 +16,9 @@
  * alike, a test red in the parallel run is run again alone (its file), and red is what fails both
  * times (ADR-423, ADR-427, as `npm run check:review` judges, ADR-297): the parallel run is its own
  * load (a change of `shared/` relates most of the files), and the timing tests of BLOCKERS fail in
- * it one or two at a time, a different one each run, and pass alone.
+ * it one or two at a time, a different one each run, and pass alone. A file whose worker was lost
+ * (out of memory, killed) is red in its run as a failed test is, and so is a browser test that did
+ * not run; a file red as a whole must pass alone as a whole (ROADMAP R230, ADR-1159: `review.ts`).
  *
  * Of the sweep stage (ADR-278, the user's decision): every 10-year test only when git cannot tell
  * what changed, or FULL is set; otherwise only the pinned state

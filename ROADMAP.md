@@ -69,7 +69,7 @@ on separate P-cores (a ratio, not an absolute figure).
     same 87,188, 104,891 and 14,119 records (ships' guns 656, torpedoes 319, a bombardment's 208 among them), the same
     hash of every number. `fireWanted1938.test.ts` (kept): with no reader no record is written and the state is the
     same; the worker asks for none at T0 and T1, for them at T2. The whole browser suite on the GPU, the gate's run:
-    550 of 551 (`relationsTap1938`'s boot under eight workers, green alone).
+    550 of 551 (`relationsTap1938`'s first test under eight workers, green alone: R232).
 - [x] R228 **On the S map a sailing fleet's water point is searched for each hour.** `World.seaPoint` asks the fine
   mask on every call (`waterPoint`, `farPoint`), 16 × 16 pixels a cell on S against 8 × 8 on M: S ticks slower than M
   (2.63 against 2.31 ms over three years of seed 99, `farPoint` 28 % of S's time). Kept by cell, as `cellPoint` keeps
@@ -94,15 +94,38 @@ on separate P-cores (a ratio, not an absolute figure).
   case 10 of 10 on the GPU; the whole browser suite green with it.
   - Done: `settleAtZoom` sends the view's own subscription again while the camera is at rest and the section's zoom is
     off (the worker answers with the section as it is). What the specs measure is unchanged. `fightSeen1938` both
-    cases × 5: 10 of 10. The whole browser suite, the gate's run: 550 of 551, `relationsTap1938`'s boot
-    timed out under eight workers and green alone (as at the release). No ADR (ADR-914: ADR-1156's helper mended).
-- [ ] R230 **The gate calls a unit run green when a test file's worker crashed** (found by R228's first gate run).
+    cases × 5: 10 of 10. The whole browser suite, the gate's run: 550 of 551, `relationsTap1938`'s first
+    test red under eight workers and green alone (R232; written here at first as its boot's timeout, which was the
+    run before). No ADR (ADR-914: ADR-1156's helper mended).
+- [x] R230 **The gate calls a unit run green when a test file's worker crashed** (found by R228's first gate run).
   `worldTemplate.test.ts`'s worker ran out of memory (R228's own slip, mended there); vitest reported "1 error" and
   434 of 436 files with no test of that file red, and `npm run check` ran the one red test it had a name for again
   alone and ended green: the file's five tests never ran. `gateReview.test.ts` holds "a file red with no test red"
   and "a run failed with no red named", not a run with a red named and a file lost beside it. AT: a unit run that
   loses a file (a fixture whose worker exits) is red unless that file, run again alone, passes; `gateReview.test.ts`
   holds the case, and the same for a browser spec's worker.
+  - Done (ADR-1159): vitest's report gives a lost file as passed, its tests 'pending' or none; the gate reads that as
+    the file red (`vitestRed`), runs it again alone, and holds every red of that run against it (`again` kept only an
+    id red in both runs: a lost file whose test fails alone would have ended green one step later). A run alone that
+    fails with nothing named clears nothing. The browser side: Playwright fails the test a dying worker was running
+    and runs the rest elsewhere; the gap was a worker that goes as it loads the file, whose later tests "did not run"
+    and read `ok`: red by name now (`playwrightRed`). Held by each stage run for real on a fixture whose workers kill
+    themselves, under the vitest and Playwright installed: five new tests, red on HEAD's reading (the unit stage
+    there names no red at all). No false alarm on the whole unit suite's report (510 files) or the whole browser
+    suite's (551 tests). One change the AT asked for: a run that lost a file and named nothing else was red as it
+    stood, and is now red only if the file fails alone too. The nightly run's unit stage reads with the same code.
+- [ ] R231 **The gate calls a unit run green when vitest caught an error outside the tests beside a red test** (found
+  by R230's fixtures). An unhandled rejection in a test file fails vitest's run ("Errors 1 error", exit 1) and leaves
+  no trace in the JSON report the gate reads (the fixture's: 7 of 7 tests passed). With no red named the run is the
+  stage's red; beside a test red by name that passes alone the gate ends green, as it did with R230's lost file. AT:
+  a unit run with such an error beside a red that passes alone is red (by the file vitest says it came from, where it
+  names one), unless that file's run alone is clean; `gateReview.test.ts` holds it with a fixture run for real.
+- [ ] R232 **`relationsTap1938`'s first test is red in three of five runs of the whole browser suite** (read in R230's
+  runs). "a phone: the first tap after a drag, and after a pinch, selects the nation tapped": after the pinch its
+  `node` finds no nation's circle inside the graph, and the tap has nothing to aim at (line 74, `n` null). So in the
+  gate's run of 2026-11-26 and both whole runs of 2026-11-27, under eight workers; green alone both times it was run so (14 of 14),
+  so the gate passes it. Where it passes in the suite it takes 40 to 45 s. AT: the cause named from the trace of a
+  red run; the test 20 of 20 with the suite running beside it, measuring what it measures now.
 
 ## Released
 

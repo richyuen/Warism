@@ -141,3 +141,34 @@
   records (the runner, the soak, the replay's build): checked again.
 - With it out: `aiSweep1` to `3` green, and the ten-year suite whole (`npm run test:sweep`): 23 files, 29 tests, on
   the batch's code. That suite had not been run on R225, R227 or R228 before (the gate's pin alone).
+
+## 2026-11-27 — R230: the gate counts a unit file whose worker was lost, and a browser test that did not run (ADR-1159)
+
+- Fixtures first (vitest 5.0.3, Playwright 1.63; a worker that aborts or kills itself in a test, in a hook, as the
+  file loads, in the setup file before it). vitest reports the lost file as passed, its tests 'pending' or none, and the error apart from every
+  file. Playwright fails the test that was running and runs the rest in another worker; only a worker that goes as it
+  loads the file leaves tests that "did not run", read `ok`. The gate reads both as red in their run and runs the file
+  again alone. A file red as a whole takes every red of that run: the old `again` kept only an id red in both runs,
+  so a lost file whose test fails alone would have ended green one step later.
+- `gateReview.test.ts`: five new tests, two of them the stages themselves on a fixture written under `.cache/gate`
+  (`unitRedTwice` and `e2eRedTwice`, given the fixture's config and report). On HEAD's reading all five are red, and
+  the unit stage on the fixture names no red at all, as on 2026-11-26; on the change the file is green (14 tests, 30 s
+  alone under the browser suite's load: nine runs of vitest and Playwright inside it).
+- False alarms were looked for on whole runs, since for this change the gate runs the gate's own tests only: the unit
+  suite's report before the change and on it (510 files, 2,644 and 2,649 tests: no test 'pending', no file without
+  tests; `snapshot-perf` red by name in each, as under the suite's load before) and the browser suite's on the GPU (551
+  tests: none skipped, none not run). In the whole unit suite the two fixture tests take 41 s each (300 s allowed).
+  The perf project's report and the pin's under the sweep config (one test each) read clean too; the other ten-year
+  tests' report, which `npm run check:review` reads with the same code, was not run for this.
+- Not seen yet: the fixture tests on Linux. The nightly run's unit stage is their first run there.
+- That browser run found a fault in the new test itself: 28 of its tests failed with their traces gone. A Playwright
+  config with no output folder takes `test-results` beside the nearest package.json, the suite's own, and empties it
+  as it starts; my fixture did so twice while the suite was writing there. The fixture has its own folder now and
+  the test checks that it was used. Run again with the test twice beside it: 550 of 551, `test-results` untouched.
+- The one red of that run is `relationsTap1938`'s first test, green alone (14 of 14): after its pinch no node is
+  found to tap. The same in the first run and in the gate's run of 2026-11-26, where R227's and R229's ticks called
+  it the boot's timeout (that was the by-hand run before; the ticks are corrected). Filed as R232.
+- One thing changes that was red before: a run that lost a file and named nothing else failed as it stood; it is now
+  judged by the file's run alone, as the AT asked. A file that runs out of memory by what it does fails alone too.
+- Found beside it and filed, not done (R231): an unhandled rejection that loses no file, beside a red test that passes
+  alone, still ends green. vitest's JSON report has no trace of it.

@@ -32,7 +32,8 @@ Frozen records, searched and never edited: `PLAN.md`, `docs/PLAN_DONE.md`, `docs
     changed (all when a helper or the config changed; when the pin of seed 99 moved, those that step
     the sim, ADR-825, ADR-1029), and the
     pinned hash of seed 99 when a sim input changed. A test red in a run is run again alone; red twice fails, unless it is on
-    `tools/gate/knownRed.json` (machine-only reds, each with a BLOCKERS entry).
+    `tools/gate/knownRed.json` (machine-only reds, each with a BLOCKERS entry). A unit file whose worker was lost and a
+    browser test that did not run are red in their run too (ADR-1159).
   - The browser suite draws on the GPU on Windows at 8 workers (`tools/gate/render.ts`, ADR-1029; the whole
     suite about 9 min); `E2E_RENDER=software` keeps SwiftShader. A test whose measure is SwiftShader's
     picture is tagged `@swiftshader` (its own project); the perf specs stay on SwiftShader.

@@ -7,7 +7,9 @@
  * suite runs as one step on the GPU (ADR-1029: 9 minutes), in chunks of `E2E_CHUNK` spec files on
  * SwiftShader (about 40 minutes a chunk), and the perf spec on its own project. A unit,
  * sweep or browser test that fails is run again alone (its file, one worker) once; red is what
- * fails both times. Each step's result is written to `.cache/gate/review.json` under the code key
+ * fails both times. A file whose worker was lost and a browser test that did not run are red in
+ * their run as a failed test is (ROADMAP R230, ADR-1159: `vitestRed`, `playwrightRed`, `again`).
+ * Each step's result is written to `.cache/gate/review.json` under the code key
  * as soon as it is done, so a run cut off goes on where it stopped (`npm run check:review` again).
  *
  * The code key (`codeTree`) is the tree a commit of the working tree would have without the
@@ -68,17 +70,32 @@ export function outOfKey(file: string): boolean {
   return file.endsWith('.md') || file.startsWith('docs/') || file.startsWith('critic/') || file === KNOWN;
 }
 
-/** A file red with no test of it red (it failed to load, or a hook threw): its id is `<file> › (the file)` (PLAN 5.8p). */
+/**
+ * A file red as a whole, with no test of it to name: its id is `<file> › (the file)`. It failed to load or a hook
+ * threw (PLAN 5.8p), or its worker was lost (ROADMAP R230).
+ */
 export const FILE_RED = '(the file)';
 
-/** The ids of the tests red in a vitest JSON report: `<file> › <full name>`; a file failed with no failed test, `<file> › (the file)`. */
+/**
+ * The ids of the tests red in a vitest JSON report: `<file> › <full name>`; a file red as a whole, `<file> › (the
+ * file)`: one that failed with no failed test, and one whose worker was lost (ROADMAP R230, ADR-1159).
+ *
+ * A lost file: its worker went (out of memory, killed) before its tests were done. vitest tells of it as an error of
+ * the run, apart from every file, and its report calls the file 'passed': its tests 'pending' when the worker went in
+ * a test or a hook (a test that failed before that is named beside), or with no test at all when it went as the file
+ * loaded, or before that in the suite's setup file. Neither is a file as it stands after a run: a test left out on
+ * purpose is 'skipped' or 'todo', and a file with no test in it is 'failed' by vitest. Read on vitest 5.0.3; `gateReview.test.ts` runs a fixture that loses its
+ * worker, so a vitest that tells it another way turns that test red.
+ */
 export function vitestRed(report: { testResults?: { name: string; status?: string; assertionResults?: { fullName: string; status: string }[] }[] }): string[] {
   const out: string[] = [];
   for (const f of report.testResults ?? []) {
     const file = path.relative(ROOT, f.name).split(path.sep).join('/');
+    const tests = f.assertionResults ?? [];
     const before = out.length;
-    for (const a of f.assertionResults ?? []) if (a.status === 'failed') out.push(`${file} › ${a.fullName}`);
-    if (out.length === before && f.status === 'failed') out.push(`${file} › ${FILE_RED}`);
+    for (const a of tests) if (a.status === 'failed') out.push(`${file} › ${a.fullName}`);
+    const lost = tests.length === 0 || tests.some((a) => a.status === 'pending');
+    if (lost || (out.length === before && f.status === 'failed')) out.push(`${file} › ${FILE_RED}`);
   }
   return out;
 }
@@ -87,25 +104,43 @@ interface PwSuite {
   title: string;
   file?: string;
   suites?: PwSuite[];
-  specs?: { title: string; ok: boolean; file: string }[];
+  specs?: { title: string; ok: boolean; file: string; tests?: PwTest[] }[];
 }
 
+/** A spec's test in one project, as the JSON report has it: its outcome, and what it was to be. */
+interface PwTest {
+  status?: string;
+  expectedStatus?: string;
+}
+
+/** The folder of the browser specs: what the id of a spec's file starts with. */
+export const E2E_DIR = 'tests/e2e';
+
 /**
- * The ids of the tests red in a Playwright JSON report: `tests/e2e/<file> › <describe › … › title>`;
- * an error of the run outside every test (a spec that fails to load), `tests/e2e/<file> › (the
- * file)` where it names its file, else `stage:playwright` (PLAN 5.8p).
+ * A test that did not run (ROADMAP R230): its worker went as it loaded the file, or the run stopped before it. The
+ * report calls it 'skipped', as a test left out on purpose (`test.skip`, `test.fixme`, in a declaration, a body or a
+ * hook), and `ok`; what tells them apart is what the test was to be, 'skipped' only for the one left out on purpose.
+ * Read on Playwright 1.63, and held by a fixture's run as `vitestRed`'s reading is.
  */
-export function playwrightRed(report: { suites?: PwSuite[]; errors?: { location?: { file?: string } }[] }): string[] {
+const notRun = (t: PwTest): boolean => t.status === 'skipped' && t.expectedStatus !== 'skipped';
+
+/**
+ * The ids of the tests red in a Playwright JSON report: `tests/e2e/<file> › <describe › … › title>`, a test that
+ * failed and one that did not run (`notRun`); an error of the run outside every test (a spec that fails to load),
+ * `tests/e2e/<file> › (the file)` where it names its file, else `stage:playwright` (PLAN 5.8p). `dir`: the folder
+ * of the specs, for a run of a fixture's.
+ */
+export function playwrightRed(report: { suites?: PwSuite[]; errors?: { location?: { file?: string } }[] }, dir = E2E_DIR): string[] {
   const out: string[] = [];
   const walk = (s: PwSuite, titles: string[]): void => {
-    for (const spec of s.specs ?? []) if (!spec.ok) out.push(`tests/e2e/${spec.file} › ${[...titles, spec.title].join(' › ')}`);
+    for (const spec of s.specs ?? []) if (!spec.ok || (spec.tests ?? []).some(notRun)) out.push(`${dir}/${spec.file} › ${[...titles, spec.title].join(' › ')}`);
     for (const c of s.suites ?? []) walk(c, [...titles, c.title]);
   };
   // A file's suite is titled by its path: not a title of the test.
   for (const f of report.suites ?? []) walk(f, []);
   for (const e of report.errors ?? []) {
     const at = e.location?.file;
-    const id = at ? `${path.relative(ROOT, path.resolve(ROOT, 'tests/e2e', at)).split(path.sep).join('/')} › ${FILE_RED}` : 'stage:playwright';
+    const id = at ? `${path.relative(ROOT, path.resolve(ROOT, dir, at)).split(path.sep).join('/')} › ${FILE_RED}` : 'stage:playwright';
     if (!out.includes(id)) out.push(id);
   }
   return out;
@@ -167,9 +202,27 @@ const specFiles = (): string[] =>
     .sort()
     .map((f) => `tests/e2e/${f}`);
 
-function run(command: string, env?: NodeJS.ProcessEnv): boolean {
-  console.log(`review: ${command}`);
-  return spawnSync(command, { cwd: ROOT, stdio: 'inherit', shell: true, env: { ...process.env, ...env } }).status === 0;
+/**
+ * Where a stage's runs are made, for a test of the stage itself (ROADMAP R230, `gateReview.test.ts`: a fixture whose
+ * worker goes, run by the stage as the gate runs it). The gate's own runs give none of it.
+ */
+export interface RunAt {
+  /** The runner's config as it takes one (`--config <file>`): a fixture's, in place of the repository's. */
+  config?: string;
+  /** The JSON report's file (a full path), in place of the gate's own under `.cache/gate`. */
+  out?: string;
+  /** The folder a Playwright report's files are in (the config's `testDir`, from the root), in place of `tests/e2e`. */
+  dir?: string;
+  /**
+   * The runner's output is dropped. A fixture that loses its worker prints "Unhandled Error", and the log of a gate
+   * that runs the test would read as if the gate's own run had.
+   */
+  quiet?: boolean;
+}
+
+function run(command: string, env?: NodeJS.ProcessEnv, quiet = false): boolean {
+  if (!quiet) console.log(`review: ${command}`);
+  return spawnSync(command, { cwd: ROOT, stdio: quiet ? 'ignore' : 'inherit', shell: true, env: { ...process.env, ...env } }).status === 0;
 }
 
 function readJson<T>(file: string): T | null {
@@ -180,38 +233,50 @@ function readJson<T>(file: string): T | null {
   }
 }
 
-/** A vitest run (`config` '' for the unit tests) of `files` (all when empty): its red ids, or null when it wrote no report. */
 /** The command of a vitest run with a JSON report to `out`: `verb` is `run`, or `related --run` (ADR-427). */
 export function vitestCommand(verb: string, config: string, out: string, files: string[]): string {
   return `npx vitest ${verb} ${config} --reporter=default --reporter=json --outputFile=${out} ${files.join(' ')}`;
 }
 
-function vitest(config: string, files: string[], stage: string, verb = 'run'): string[] | null {
-  const out = path.join(DIR, 'vitest.json');
-  mkdirSync(DIR, { recursive: true });
+/** A vitest run (`config` '' for the unit tests) of `files` (all when empty): its red ids, or null when it wrote no report. */
+function vitest(config: string, files: string[], stage: string, verb = 'run', at: RunAt = {}): string[] | null {
+  const out = at.out ?? path.join(DIR, 'vitest.json');
+  mkdirSync(path.dirname(out), { recursive: true });
   rmSync(out, { force: true });
-  const ok = run(vitestCommand(verb, config, out, files));
+  const ok = run(vitestCommand(verb, at.config === undefined ? config : `${config} ${at.config}`.trim(), out, files), undefined, at.quiet);
   const r = readJson<Parameters<typeof vitestRed>[0]>(out);
   return r === null ? null : runRed(vitestRed(r), ok, stage);
 }
 
 /** A Playwright run: its red ids, or null when it wrote no report. */
-function playwright(args: string, stage: string): string[] | null {
-  const out = path.join(DIR, 'playwright.json');
-  mkdirSync(DIR, { recursive: true });
+function playwright(args: string, stage: string, at: RunAt = {}): string[] | null {
+  const out = at.out ?? path.join(DIR, 'playwright.json');
+  mkdirSync(path.dirname(out), { recursive: true });
   rmSync(out, { force: true });
-  const ok = run(`npx playwright test ${args} --reporter=line,json`, { PLAYWRIGHT_JSON_OUTPUT_NAME: out });
+  const ok = run(`npx playwright test ${at.config === undefined ? '' : `${at.config} `}${args} --reporter=line,json`, { PLAYWRIGHT_JSON_OUTPUT_NAME: out }, at.quiet);
   const r = readJson<Parameters<typeof playwrightRed>[0]>(out);
-  return r === null ? null : runRed(playwrightRed(r), ok, stage);
+  return r === null ? null : runRed(playwrightRed(r, at.dir), ok, stage);
 }
 
-/** Red twice: the ids of `first` still red when each of their files is run again alone. */
+/**
+ * Red twice: the ids of `first` still red when each of their files is run again alone.
+ *
+ * A test red in the first run is red when its file's run alone fails it again (ADR-423). Two cases have no such
+ * second answer (ROADMAP R230, ADR-1159):
+ * - A file red as a whole in the first run (`FILE_RED`: it failed to load, a hook threw, its worker was lost) had no
+ *   run of its tests to hold the second against. Alone all of it is to pass: whatever its run alone names red is red.
+ * - A run alone that wrote no report, or failed with nothing of the file named (its own `stage:` id), has not passed
+ *   the file: what was red of it stays red.
+ */
 export function again(first: string[], rerun: (file: string) => string[] | null): string[] {
   // A run's own failure is no file's to run again: red as it stands.
   const red: string[] = first.filter((t) => t.startsWith('stage:'));
   for (const file of [...new Set(first.filter((t) => !t.startsWith('stage:')).map(fileOf))]) {
+    const mine = first.filter((t) => fileOf(t) === file);
     const second = rerun(file);
-    for (const id of first.filter((t) => fileOf(t) === file)) if (second === null || second.includes(id)) red.push(id);
+    if (second === null || second.some((t) => t.startsWith('stage:'))) red.push(...mine);
+    else if (mine.includes(`${file} › ${FILE_RED}`)) red.push(...second);
+    else red.push(...mine.filter((t) => second.includes(t)));
   }
   return red;
 }
@@ -219,11 +284,11 @@ export function again(first: string[], rerun: (file: string) => string[] | null)
 /**
  * The unit tests in full, or with `related` those whose imports reach these files (`vitest
  * related`), a test red in that run run again alone (its file): the ids red both times. The
- * ordinary gate's unit stage (ADR-423, ADR-427), as this run's.
+ * ordinary gate's unit stage (ADR-423, ADR-427), as this run's. `at`: for a test of the stage.
  */
-export function unitRedTwice(related?: string[]): string[] {
-  const first = related ? vitest('--passWithNoTests', related, 'test', 'related --run') : vitest('', [], 'test');
-  return first === null ? ['stage:test'] : again(first, (f) => vitest('', [f], 'test'));
+export function unitRedTwice(related?: string[], at: RunAt = {}): string[] {
+  const first = related ? vitest('--passWithNoTests', related, 'test', 'related --run', at) : vitest('', [], 'test', 'run', at);
+  return first === null ? ['stage:test'] : again(first, (f) => vitest('', [f], 'test', 'run', at));
 }
 
 /** A run of the browser suite: a project's specs (its arguments to `npx playwright test`). */
@@ -249,15 +314,15 @@ export function e2eRuns(specs: readonly string[]): E2eRun[] {
 /**
  * The ordinary gate's e2e stage (ADR-779, the user's decision), as this run judges a chunk: each
  * run, a chromium test red in it run again alone (its file, one worker); the ids red both times. A
- * perf test is red once (its timings are the test), as `e2e:perf` here.
+ * perf test is red once (its timings are the test), as `e2e:perf` here. `at`: for a test of the stage.
  */
-export function e2eRedTwice(runs: readonly E2eRun[]): string[] {
+export function e2eRedTwice(runs: readonly E2eRun[], at: RunAt = {}): string[] {
   const red: string[] = [];
   for (const r of runs) {
     const stage = r.project === 'perf' ? 'e2e:perf' : 'e2e';
-    const first = playwright(r.args, stage);
+    const first = playwright(r.args, stage, at);
     if (first === null) red.push(`stage:${stage}`);
-    else red.push(...(r.project === 'perf' ? first : again(first, (f) => playwright(`${SUITE} --workers=1 ${f}`, stage))));
+    else red.push(...(r.project === 'perf' ? first : again(first, (f) => playwright(`${SUITE} --workers=1 ${f}`, stage, at))));
   }
   return red;
 }

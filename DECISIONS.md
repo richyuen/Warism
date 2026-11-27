@@ -5,6 +5,53 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1159 · 2026-11-27 · accepted · What did not run is red: a unit file whose worker was lost, a browser test that did not run (R230)
+
+- **The case** (R228's first gate run, 2026-11-26). The worker of `worldTemplate.test.ts` ran out of memory. vitest
+  told of it as an error of the run, outside every file ("Worker exited unexpectedly"), and its JSON report gave the
+  file as passed; a timing test was red by name in the same run. The gate reads the report's failed tests and files
+  and takes a failed run for the stage's own red only when it names none (`runRed`): it ran the timing test's file
+  again alone and ended green, with a file whose five tests never ran. Read on fixtures whose workers kill themselves
+  (vitest 5.0.3, Playwright 1.63):
+  - vitest: a file whose worker goes in a test or a hook is 'passed' with every test 'pending' (a test that failed
+    before that and was told of is 'failed' beside them); one whose worker goes as the file loads, or before that in
+    the suite's setup file, is 'passed' with no test at all.
+  - Playwright fails the test a dying worker was running and runs the rest in another worker: nothing is lost. A
+    worker that goes as it loads the file fails the first test of its lot, and the rest "did not run": 'skipped' and
+    `ok` in the report, as a `test.skip` is, apart only by what the test was to be (`expectedStatus` 'passed').
+- **Decision.**
+  1. A unit file with a 'pending' test, or with no test at all, is red in its run as a whole (`<file> › (the file)`),
+     beside any test of it red by name (`vitestRed`).
+  2. A browser test that did not run ('skipped' while it was to be anything else) is red in its run by its own name
+     (`playwrightRed`).
+  3. A file red as a whole in the first run (lost; or, as before, it failed to load or a hook threw) is run again
+     alone as a red test's file is, and is red unless that run passes all of it: whatever the run alone names red is
+     red, since no test of the file had a first run to be green in (`again`).
+  4. A run alone that writes no report (as before) or fails with nothing of the file named has passed nothing: what
+     was red of the file stays red.
+  ADR-423's rule stands for a test red by its name: red is the test that fails again alone.
+- **Consequences.**
+  - A worker lost under the load of the parallel run, whose file passes alone, is not red, as a timing test is not
+    (R230's AT). Until now a run that lost a file and named no other red was red as it stood (`stage:test`), with no
+    second run; it is judged by the file's run alone. A file that runs out of memory by what it does, as R228's did,
+    does so alone too, and is red.
+  - (3) is stricter than before in one case: a file that failed to load in the run, and alone loads and fails a test,
+    was green (the two ids differ). (4) likewise: a test red by name whose run alone failed as a run (the browser
+    suite's server not started) was green.
+  - The same readers serve `npm run check:review`, its ten-year step, and the nightly run's unit stage
+    (`tools/ci/unit.ts`).
+  - Not covered: an error vitest catches outside the tests that loses no file (an unhandled rejection) beside a test
+    red by name. The JSON report has no trace of it. ROADMAP R231.
+- **Read.** `gateReview.test.ts`: the reports' shapes, `again`'s cases, and each stage run for real on a fixture
+  written under `.cache/gate` (`unitRedTwice` and `e2eRedTwice`, given the fixture's config and report: `RunAt`). The
+  unit fixture: a test red in the first run and green alone, a file lost once and green alone, a file lost each time
+  (red: the file), a file lost and then red by a test alone (red: that test). The browser fixture: a test that did not
+  run and is red alone, and a file whose worker goes each time (its second test red with its first). On HEAD's reading
+  those five tests are red, and the unit stage on the fixture names no red at all. False alarms: the whole unit suite's
+  report (510 files, 2,644 tests, one timing test red by name) names no file as a whole, with no test 'pending' and no
+  file without tests; the whole browser suite's report (551 tests on the GPU: 550 passed, one red by name, none skipped) names no test that
+  did not run; the perf project's and the pin's under the sweep config (one test each) are clean.
+
 ## ADR-1158 · 2026-11-26 · accepted · The sim makes a fire record only while a reader wants it (R227)
 
 - **The case** (the profile of 2026-11-26, Batch 60). Every shot of the land, the sea and a bombardment wrote a record

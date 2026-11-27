@@ -2391,6 +2391,11 @@ changed since HEAD [ADR-48, ADR-55]:
 - A test red in a run is run again alone; red twice fails, unless it is on
   `tools/gate/knownRed.json`: a failure of this machine, not of the code, each with why and its
   BLOCKERS entry. A test leaves the list when it passes here [ADR-297, ADR-779].
+- What did not run is red in its run as a failed test is [ADR-1159]: a unit file whose worker was lost
+  (out of memory, killed: vitest reports it passed, its tests pending or none), as the file; a browser
+  test that did not run (its worker went as it loaded the file: Playwright reports it skipped and ok),
+  by its name. A file red as a whole (lost, failed to load, a hook threw) is red unless its run alone
+  passes all of it; a run alone that fails with nothing named has passed nothing.
 
 `npm run check:full` runs every stage whatever changed. `npm run check:review` (`tools/gate/review.ts`)
 runs every stage on its own, the browser suite in chunks of 20 spec files, a failed test again alone,
