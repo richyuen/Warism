@@ -670,3 +670,108 @@
   "before". The copies of `track.ts` and the bundles made of them are deleted, so no arm of R239's is taken for
   HEAD: an arm is made anew (`git show <commit>:src/sim/track.ts` into a copy beside `bundle4.mjs`, then the
   bundle), and `r239_time.sh` and `r239_prof.sh` fail until their two bundles are built again.
+
+## 2026-11-28 — R243: a guest fights as its host does on its host's land, and is set down in the hour its cell is taken (ADR-1168)
+
+- The case (R239's remainder; ADR-1167, the user's "Yes try it"): a hold is between two nations wherever they stand,
+  so German and Romanian formations on Finland's front neither fought the Soviet Union nor left the cells it took in
+  the summer of 1944; R239's look set each a cell back each morning (29 set-downs of Germany's on the Soviet Union's
+  ground, seven mornings running on seed 5).
+- Read first, as ADR-1167 asked. (1) A cell still falls under a guest that defends it, and the guest's men count for
+  its host there already: territory sums the defence by the holder's side and the attack by `together`, hold or
+  none (`territory.ts`). (2) A host's own formation on a cell that is taken stays in it and fights on; the track does
+  not touch it (a constructed world: Germany against Poland and Czechoslovakia, Czechoslovakia held, a stack of ten
+  German divisions two cells off to take the cell by pressure). (3) The reach, by a probe of every pair in contact
+  at each day's first hour (`.cache/r243/reach.ts`, the hold asked of the nations and of the stand-ins): on R239's
+  course the two answers differ on 378 formation-days to 1991, 72 where a guest would fight (Germany's and Romania's
+  on Finland's in 1944, the United States' on British-held ground in September 1944) and 306 where it would not
+  (South Africa's and others' on Kenya's and the Sudan's held fronts in 1940 and 1941, Germany's on Finland's in the
+  autumn of 1941). The probe's hashes are R239's on six marked days: it asks and changes nothing.
+- Part one (`World.standsFor`, asked by `findBattles`): on the land of an ally in its war with the foe a formation is
+  held as that ally is. Screened alone before anything else was built: the history match and the own seed's checker
+  green, the course R239's to 1 January 1940, and the hop still there (26 set-downs of Germany's on the Soviet
+  Union's ground from 23 June 1944).
+- The lost cell, three attempts.
+  1. *It stays and fights*: on an enemy's ground, its own nation held off, a formation is of the front whose land
+     the look would set it down on (within 40 cells), and the look leaves it. Twin tests, a guest against a host's
+     own formation, the hour swept: the same. The whole proof ran on it: Paris from 13 June 1940, 861 French cells,
+     10,040 Soviet cells, the Soviet army 4,097k; the census's both engaged 9 on the own seed (on its bar), D-Day 88,
+     72 and 162 of 200; the look's set-downs of Germany's on the Soviet Union's ground 11, all onto Germany's own
+     land. A bar added to `left` for this attempt at the advisor's word ("not a week on that ground in no fight")
+     told a German formation on seeds 3 and 5: the fight gone on, it stood behind the foe's line, Finland's up to 22
+     cells behind (seed 3: 215 formation-days there in a fight, 208 in none).
+  2. *The same with its host's land beside it* (one cell). Screened on four seeds to day 2,500 before any long run
+     (the checker bundled, two minutes a seed): the same bar told a German formation on the own seed (day 2,445) and
+     on seeds 2 and 3. The bar was not redrawn. R239's log had said it (`second.ger.log`, formation 896 "waits"): the
+     planner gives a formation on a lost cell a march, a way from closed ground walks over it, and the next step is
+     a Soviet cell.
+  3. *Set down in the hour the cell falls*, by R239's own set-down, called by the territory system with the hour's
+     flips (`Track.groundTaken`). Screened on six seeds to day 2,500: no line.
+- Before the push, the review (the advisor's question, measured): the set-down, R239's look and the checker's `left`
+  all asked a stage's days by the two nations (`holdsPlan`), so while a stage of the pair was in its days anywhere
+  each passed over every formation of the two. The whole proof of attempt 3 was green on it, six seeds without a
+  warning, and German guests stood on cells Finland lost in the days of the Soviet stage of 31 August and of
+  Petsamo's transfer, not fighting: 37 formation-days on the own seed and 81 on seed 5, seven mornings running at
+  the most (`.cache/r243/window.ts`, to 1991). Now asked by the formation's own cell (`World.holdsAt`), in the
+  set-down at a flip, in the day's look (ADR-1166's decision 3, amended) and in `left`: none on the own seed, 2 and
+  3 formation-days on seeds 3 and 5, each a single morning. The commit of attempt 3 was not pushed; this entry is of
+  the code as pushed, proved again in full.
+- Tests: `trackGuest1938h.test.ts`, 36 on two seeds, 34 red before. The fight (19, eighteen red before): both ways;
+  the foe on its own land or on the host's; the guest alone or beside a host's formation; a stage's days on a frozen
+  front; a puppet host named by the hold alone; on its own land either way (green before). The lost cell (17,
+  sixteen red without the set-down of a flip): the cell taken at three hours of the day, alone or beside a host's
+  formation (it fought for the cell; in that hour it stands on its host's land a cell back; the host's formation
+  stays; the foe come on, it fights again); the line driven back twelve cells in eight days under an idle guest
+  (never on the foe's ground at an hour's end); three guests on a cell; no land of its side in reach (taken off in
+  that hour, its men in the pool); a stage's days open elsewhere (red by the two nations); left alone in that hour
+  (green before). `trackAsked1938h` asks the new question after every tick beside the old ones (I4).
+- The checker (ADR-804): `left` is its first wording again, found two mornings running on a held foe's ground in
+  whatever cells (R239 had narrowed it to one cell and a week because of these guests), a stage's days by the cell;
+  a rule `guest`, a formation that stands for another nation found two mornings running out of a fight that nation
+  fights there, or in one it is held off from. With R239's combat swapped in, `guest` tells both kinds within 2,500
+  days of the own seed. On the six seeds to 1991: no line on the own seed, no warning on seeds 1 to 5.
+- The hop, by the track's set-downs to 1991 on the own seed, told apart by cause: of Germany's on the Soviet Union's
+  ground the day's look 29 → 1 (23 August 1944, onto Germany's own land), Romania's 5 → none, Finland's 2 → none; in
+  the hour a cell fell 113, five German formations on Finland's front on 39 days from 21 June to 18 September 1944,
+  each onto Finland's land; no other pair has one.
+- The replay's ten-year tests (ten files) green; against R239's run: Paris from 14 June 1940 and 766 French cells on
+  22 June as before; 10,249 Soviet cells the Axis's after 1 December 1941 (9,401; the bar 6,000); the Soviet army of
+  1 November 1942 4,006k (4,365k). Four of the 44 map lines move, all of control: 1 June 1941 right 96.3 → 96.4 %; 1
+  December 1941 right 95.5 → 96.4 %, astray 0.35 → 0.48 %; 1 November 1942 right 96.3 → 96.9 %; 5 June 1944 astray
+  0.33 → 0.32 %. The China front as before; the free worlds' days to a first war the same but one (11 for 15). The
+  replay's hash is R239's on 1 January 1940 and another on 1 January 1941.
+- The fronts' census (`tools/diag/trackFronts.ts <seed> 1942-01-01 1945-06-01`), own seed, 37701, 38701: large land
+  fronts with both sides near 18 of 23, 20 of 23, 19 of 24 (R239: 20 of 25, 21 of 24, 18 of 24; the bar two thirds);
+  both engaged at the stage's hour 12, 12, 12 (11, 11, 11; R66d's bar 9 on the own seed); Uranus engaged at its hour,
+  Soviet and Axis formations 15 and 6, 76 and 12, 17 and 6; D-Day both engaged in 174, 133 and 126 of 200 samples
+  (101, 99, 91; the bar a third); the Sixth Army near Stalingrad's stage 14 formations and 161k on the own seed.
+- The tick (pairs at once on cores of their own, masks swapped): the replay 1938-45 1.90 → 1.79 ms (1.97 and 1.84
+  against 1.75 and 1.83): the course's. The set-down of a flip by itself, on one course (the replay to 1944, the
+  same hash with and without it): the territory system 0.298 ms a tick either way by `--profile` (0.2980 without it,
+  0.2985 with), inside what untouched systems differ by. A pre-filter by nation was written for it, read the same
+  (0.2967 and 0.3003) and was taken out again: nothing to gain; the code pushed is the code proved. A free game the same hash (32ec3f7f after three years) and the same tick by
+  core (1.95 and 1.73 against 1.94 and 1.74 ms).
+- By hand, on the code as pushed: `arrowsHeld1938h`, `arrowReach1938h`, `replayYear1938h`, `scenario1938h` and
+  `trackView1938h`, 15 of 15; their prints of 1939 and 1940 are R239's (the same course).
+- What the rule costs, said plainly. A guest set down at a flip does not do what its host's formation does there
+  (attempt 1 did, and stranded it): it is moved a cell back with the line. The frozen way: South Africa's, Southern
+  Rhodesia's, the Belgian Congo's, Palestine's and Transjordan's formations on Kenya's and the Sudan's held fronts
+  no longer fight Italy (1,739 formation-days in contact on its own course, 1940 to 1942). And the marches that wait
+  on an ally's frozen line, which `stand` does not see because it asks by the two nations, are 75 and 6,711
+  formation-days on this course for 72 and 2,524 on R239's: "no `stand` line" is true by the pair only. Filed as
+  R244.
+- Filed: R244 (those marches) and R245 (a stage's days open to one war's side: the Americans outside France's stage
+  of 15 September 1944, 33 formation-days on R239's course).
+- The gate, three times on code (attempts 1 and 3, and the code as pushed): `tests/helpers/` changed, so the unit
+  stage ran whole (516 files; 2,718 tests on the last). One red in each run, `snapshot-perf` past its 90 s in the
+  crowd (141 s), green alone (a steady snapshot 0.73 ms at the median, 1.22 at the 95th; its budget 2), as in
+  R239's. The pin of seed 99 unchanged. No spec changed: the five above by hand.
+- Scratch, ignored by git, for a later sitting: `.cache/r243/`. `reach.ts` (where the two answers differ, on HEAD's
+  code) and `reach2.ts` (on the rule's own course, with the marches of R244); `window.ts` (the formations a stage's
+  days elsewhere leave on a held foe's ground); `check.ts` with `run.mjs` (the checker on a seed for some days:
+  `SEED=3 DAYS=2500 node .cache/r243/run.mjs check.cell.mjs`, after `node .cache/r243/bundle4.mjs check cell`; run
+  by an import, because the bundle holds `tools/diag/historyMatch.ts`, whose own command line starts when the
+  bundle is node's entry); `marks.ts` and `left.ts` (the set-downs by pair, and one by one, by cause);
+  `r243_all.sh` (the ten files), `r243_time.sh` (the tick pairs). Logs: `*.fin.*` are the code as pushed, `*.d.*`
+  attempt 3 before the review, `r243_all.log.txt` and `*.rule.*` attempt 1, `check.r1.*` attempt 2, `*.base.*`
+  part one alone, `*.head.*` R239's code.

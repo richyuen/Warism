@@ -335,7 +335,7 @@ on separate P-cores (a ratio, not an absolute figure).
     200 samples) and, with the rule, on 37701 and 38701. Left, R243: guests on a front fought beside them (Germany's
     and Romania's on Finland's land in 1944) are set down a cell back each morning as the Soviet Union takes the
     cell they stood on: five days running at the most on the own seed, seven on seed 5.
-- [ ] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
+- [x] R243 **In the replay a guest on an ally's front that is fought falls back a cell a day, held off from the foe
   that takes it** (found by R239; to be done by the rule the user chose on 2026-11-27, "Yes try it", and first of
   the open items, "Yes, R243 first": ADR-1167). A hold is between two nations wherever they stand (ADR-929). The
   Finnish front's hold ends on 9 June 1944 and the Soviet Union fights Finland freely to the armistice of 19
@@ -362,6 +362,41 @@ on separate P-cores (a ratio, not an absolute figure).
   seeds 1938, 37701 and 38701 (both engaged at 9 large land fronts or more on the own seed, Uranus engaged at its
   hour, D-Day in a third of its samples, the Sixth Army near Stalingrad); the tick logged; the pin unchanged. If a
   bar is missed: a BLOCKERS entry, and the choice back to the user (park R243, or ADR-1167's full cure).
+  - Done (ADR-1168): in a fight a formation is taken for the holder of the ground it stands on, where that holder is
+    an ally in its war with the foe (`World.standsFor`, asked by combat's pairing): on an ally's fought front it
+    fights, on an ally's frozen front it does not. And in the hour a cell is taken by fighting, each formation on it
+    that is held off from its taker is set down as the day's look sets down (`Track.groundTaken`, R239's set-down
+    called by the territory system): a guest falls back with its host's line. Read first: a guest's men count for
+    its host in territory already, and the cell falls all the same; a host's own formation stays on a lost cell and
+    fights on; the ally's land alone left the hop (26 set-downs of Germany's on the Soviet Union's ground for 29).
+    The lost cell took three attempts. A guest of its host's front while that host's land was the nearest behind it
+    (40 cells) held every bar of the replay, and stood a week in no fight behind the foe's line on seeds 3 and 5 (up
+    to 22 cells behind; 208 formation-days on seed 3). With the host's land beside it, the same on the own seed and
+    seeds 2 and 3: its planner's march waits before a Soviet cell. Set down at the flip, no formation is on the
+    foe's ground after the hour its cell fell. Found by the review before the push: that set-down, R239's look and
+    the checker all passed a formation over while a stage's days were open for its two nations anywhere, so German
+    guests stood on cells Finland lost in the days of a Soviet stage a front away (37 formation-days on the own
+    seed, 81 on seed 5, seven mornings running at the most); a stage's days are now asked by the formation's own
+    cell (`World.holdsAt`), and those are none and 3 single mornings. After, on the own seed to 1991: the look's
+    set-downs of Germany's on the Soviet Union's ground 29 → 1; Romania's 5 → none, Finland's 2 → none; 113 in the
+    hour a cell fell, five German formations on Finland's front on 39 days from 21 June to 18 September 1944, each
+    onto Finland's land. The checker (`left` at its first wording again: found two mornings running on a held foe's
+    ground, in whatever cells; a rule `guest` for the fight both ways, red on R239's combat): no line on the own
+    seed, no warning on seeds 1 to 5. Held by `trackGuest1938h.test.ts`, 36 tests on two seeds, 34 red before (the
+    hour, the foe's side of the line, alone or beside a host's formation, one guest or three, a stage's days there
+    and elsewhere, a puppet host, no land in reach swept). The replay's
+    ten-year tests green (ten files): Paris from 14 June 1940 and 766 French cells on 22 June as before (the course
+    is R239's to 1940), 10,249 Soviet cells after 1 December 1941 (9,401; the bar 6,000), the Soviet army 4,006k
+    (4,365k); 40 of the 44 map lines the same, four of control inside their bars (1 December 1941 right 95.5 → 96.4
+    %, astray 0.35 → 0.48 %); the China front as before; one free world's first war on day 11 for 15. The census on
+    1938, 37701 and 38701: both near 18 of 23, 20 of 23 and 19 of 24 large land fronts; both engaged 12 on each (the
+    bar 9 on the own seed; 11 before); Uranus engaged at its hour on all three; D-Day 174, 133 and 126 of 200
+    samples (the bar 67); the Sixth Army near Stalingrad, 14 formations and 161k. The tick: the replay's first eight
+    years 1.90 → 1.79 ms, a free game the same on the same hash (pairs at once, masks swapped). The pin unchanged.
+    The replay's five browser specs by hand, 15 of 15. What the rule costs the other way: South Africa's and four
+    more nations' formations on Kenya's and the Sudan's held fronts no longer fight Italy (1,739 formation-days in
+    contact, 1940 to 1942), and marches waiting at such lines are 6,711 formation-days for 2,524 (R244). Filed:
+    R244, R245.
 - [ ] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
   all the same** (found by R236's review). A command applied while the replay runs ends it (R62j), and
   `moveFormation` counts as applied whether or not its order is given (a refused order is told by `MoveRejected`).
@@ -413,6 +448,38 @@ on separate P-cores (a ratio, not an absolute figure).
   14 May 1940 1 of 60 at 1,000 m/px, 1 of 31 at 400, 6 of 60 at 1,500, 2 of 60 at 2,500 (before R241: 2 of 71, 3 of
   48, 3 of 71, 3 of 71). AT: on those scenes at those zooms every advancing formation in view is in a bold arrow
   (one cut away joins the arrow that cuts it, its men in that arrow's width); the frame budgets kept.
+- [ ] R244 **In the replay a march of a nation free against a foe waits on an ally's frozen line** (found by R243's
+  probe; ADR-1168). A march waits before a cell an enemy holds until the territory system takes it (PLAN 1.14).
+  Land is taken by the cells' holders (`holdsLand`), so across an ally's held front none is, whoever stands there.
+  R236 closed a held foe's land to ways by the marcher's own nation (`passageOf`, `holdsPlan`), and a marcher whose
+  nation is free against that foe is still routed over it: it stands on its ally's land with its order for as long
+  as the hold lasts. The checker's `stand` asks by the two nations too and does not see it. Read on the replay's own
+  seed to 1991 (`.cache/r243/reach.ts`: marches of a week or more with one order on an ally's land before a foe's
+  cell, the ally's front held, the marcher's free): on R239's course 72 marches and 2,524 formation-days; on R243's
+  75 and 6,711, since its guests there no longer fight (ADR-1168). On R243's course: South Africa's on the Sudan's
+  land before Italy's 27 marches and 2,325 days, the longest 203; the Raj's there 11 and 1,185; the Belgian Congo's
+  11 and 916; Palestine's and Transjordan's 5 each, 638 and 636; South Africa's and Southern Rhodesia's on Kenya's
+  8 and 816; Germany's on Finland's before the Soviet Union's 3 and 92 (the autumn of 1941); Ceylon's on the Raj's
+  before Japan's 3 and 79; Finland's on Germany's 2 and 24 (August 1944). And `stand`, with the step R236 shuts,
+  still asks a stage's days by the two nations (`holdsPlan`), as `left` did before R243 (ADR-1168's decision 5): a
+  march outside the stage's area is passed over in those days and its count begins again; not measured yet. AT:
+  that measured; `stand` asked by where the march stands (the hold of the nation it stands for, `World.standsFor`)
+  tells them on R243's code and is clean on the six seeds after: such a march goes round by its side's land or its
+  order ends, as R236's do; a test red before; the replay's ten-year tests green, their figures named; the pin
+  unchanged.
+- [ ] R245 **In the replay a stage's days are open to one war's side alone: the Americans stand outside France's
+  stage of September 1944** (found by R243's probe; ADR-1168). A stage's days lift a hold for its taker's side and
+  their foes (`Track.fightOpen`, R66d), and its side is the taker or a nation on its side of one war's record
+  (`Wars.sameSide`). The United States' war with Germany is a record of its own (11 December 1941, ADR-934), with
+  neither France nor the United Kingdom in it; the two are on one side only by the war with Japan. So in the days of
+  a French stage (France freed, 15 September 1944: from the 8th) British formations in its area fight the Germans
+  and American ones beside them do not. Read at a day's first hour on the own seed: on R239's course 33
+  formation-days of American formations on British-held ground in contact with German ones, 8 to 15 September 1944;
+  since R243 those on British-held ground fight as the United Kingdom does (27 on its course), and those on their
+  own ground or France's still do not (not counted yet). AT: counted on the six seeds, no formation of a nation at
+  war with a stage's foe beside its taker (`Wars.together`) stands in the stage's area in its days in contact with
+  that foe and out of the fight; a test red before; the replay's ten-year tests green, D-Day's bar (a third of its
+  samples) on seeds 1938, 37701 and 38701; the pin unchanged.
 
 ## Released
 

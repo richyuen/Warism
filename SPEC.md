@@ -1105,7 +1105,8 @@ org loss, territory. `src/sim/systems/combat.ts` unless named.
 ### 5.1 Engagement
 - **Contact** (`findBattles`): formations of nations at war, on land, with elements and not on the
   retreat, are bucketed (`BUCKET_CELLS`, 2 cells, scaled); two at war whose centres are within
-  `CONTACT_CELLS` (1.5) are in contact, set `engaged`, and joined by union-find into battles. A battle is
+  `CONTACT_CELLS` (1.5) are in contact, set `engaged`, and joined by union-find into battles (in the
+  historical replay, not two that a hold of the timeline's keeps apart where they stand, §7.7). A battle is
   a derived list of formations, made again each hour; only Major Battles are records (§5.4). Air
   strikes and bombardment are their own systems (§6.2, §6.3) and are not members of a battle.
 - **In contact** a formation's march pauses (an enemy's ground is entered only once it flips, §4.3);
@@ -1870,7 +1871,11 @@ to 27 July 1953, then sets the world free.
   take land or plan attacks on each other until a date (with `air`, R74h, nor fly at each other: the Sino-Soviet
   border war of 1969), nor march over each other's land (R236, ADR-1163, `passageOf`: a way goes round by their own
   side's land, or the order is refused; a march under way is made again at the front, or halts there; but in the
-  days of a stage); Japan's gains in China by `occupy` stages; the Phoney War a
+  days of a stage). Who fights is asked by where a formation stands (R243, ADR-1168, `World.standsFor`): on the land
+  of an ally in its war with that foe it is held as that ally is, its front fought or frozen (a German division on
+  Finland's land fights the Soviet Union from 9 June 1944, the Eastern Front held to May 1945; South Africa's on
+  Kenya's held front does not fight Italy). Land, ways, plans and arrows are asked of the nations, as before.
+  Japan's gains in China by `occupy` stages; the Phoney War a
   hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an
   armistice) and `redeploy` (a front moved by rail). 1940-41 to Iran (R62g2, ADR-932): `withdraw` (an evacuation),
@@ -1879,9 +1884,13 @@ to 27 July 1953, then sets the world free.
   formations a stage leaves behind its line, of `withdraw` or `occupy`, set down on the nearest land of their own or
   an ally's in the war, two to a cell at most, the pool only for one with none within reach over land (R66c, ADR-968).
   So is any land formation that a day's first hour finds standing, or waiting on a march, on the ground of a foe its
-  nation holds a front with, no stage's days open between the two (R239, ADR-1166, `setDownLeft`: land ceded under
-  it by a `transfer`, a stage's days closed over it, a hold or a change of sides declared where it stood); not one
-  on a march that does not wait, nor one a `forces` event keeps for its stage.
+  nation holds a front with, outside the area of a stage whose days are open between the two (R239, ADR-1166,
+  `setDownLeft`: land ceded under it by a `transfer`, a stage's days closed over it, a hold or a change of sides
+  declared where it stood; by its own cell since R243, `World.holdsAt`: a stage's days lift the hold in the stage's
+  area alone); not one on a march that does not wait, nor one a `forces` event keeps for its stage. And in the hour
+  a cell is taken by fighting, each formation standing on it that is held off from its taker there, on a march or
+  not (R243, ADR-1168, `Track.groundTaken`: a guest on an ally's fought front falls back with that ally's line); not
+  one on the retreat.
   For FIGHT_DAYS (7) before an `occupy` stage, or its own `fightDays` (R77: the
   Normandy beachhead's 50, from the landing to 25 July), the hold is lifted in its
   area (its ring's box and 120 km) for its taker's side and their foes; land goes across it only to the taker's side and
@@ -1905,7 +1914,9 @@ to 27 July 1953, then sets the world free.
   end the world is the AI's: its wars resume at an ordinary game's opening pace (R62i5, ADR-944). Checked on any seed
   by `tests/helpers/historyTrack.ts` (R62k, ADR-947): no event passed over but by rule, no war or peace off the
   timeline, the diplomatic rules kept, no march waiting a week at a front the timeline holds (R236), no formation
-  left on a held foe's ground (R239: a second day in one cell, or a week of days in any). While it steers the invasion AI lands only within an objective of the lander's
+  left on a held foe's ground (R239, R243: found there a second day running, in whatever cells), no formation that
+  stands for another nation a second day out of a fight that nation fights there, or in one it is held off from
+  (`guest`, R243). While it steers the invasion AI lands only within an objective of the lander's
   (R62l, ADR-949), and the operational AI takes a front sector within one of its objectives as threatened, empty or not
   (R63, ADR-951).
 - **Matching history:** treaty borders are transfers and match by construction; land taken by fighting is

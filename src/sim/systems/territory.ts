@@ -421,4 +421,8 @@ export function territorySystem(world: World): void {
       }
     }
   }
+  // In the historical replay (ROADMAP R243): a formation on a cell taken this hour, held off from its taker by a
+  // hold of the timeline's, is set down behind the line now (`Track.groundTaken`), not left beside the foe until the
+  // day's first hour.
+  if (flips.length > 0 && world.steered) world.track!.groundTaken(world, flips.map(([c]) => c));
 }

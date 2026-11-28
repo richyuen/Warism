@@ -1526,6 +1526,27 @@ export class World {
     return this.holds(a, b) && !this.track!.fightOpen(this, a, b, ca, cb);
   }
 
+  /**
+   * The nation a land formation of `n` in cell `c` is taken for against foe `m` in a fight (ROADMAP R243, ADR-1168):
+   * on the land of an ally in its war with `m` (`Wars.together`: on one side, both at war with `m`), that ally; else
+   * `n`. Where a formation stands decides how the historical track holds it, not whose it is: a guest on an ally's
+   * front has that ally's front, fought or frozen.
+   */
+  standsFor(n: number, c: number, m: number): number {
+    const h = this.cells.controller[c]!;
+    return h !== 0 && h !== n && this.wars.together(n, h, m) ? h : n;
+  }
+
+  /**
+   * Whether a land formation of `a` in cell `ca` and one of `b` in `cb`, their nations at war, do not fight (R243):
+   * `holdsAt` asked of the nations the two stand for where they stand (`standsFor`). A German division on Finland's
+   * land fights the Soviet Union beside Finland once the Finnish front's hold has ended, the Eastern Front's still
+   * standing; one on Finland's frozen front does not, Germany's own front free.
+   */
+  holdsHere(a: number, b: number, ca: number, cb: number): boolean {
+    return this.steered && this.holdsAt(this.standsFor(a, ca, b), this.standsFor(b, cb, a), ca, cb);
+  }
+
   /** Whether `a` plans no attack on `b` (R62f2): a hold stands, no stage's window open between them (R66d). */
   holdsPlan(a: number, b: number): boolean {
     return this.holds(a, b) && !this.track!.pairOpen(this, a, b);

@@ -6,6 +6,7 @@ import { EventKind } from '../../src/shared/events';
 import { SIZE_1938 } from '../../src/sim/scenario1938';
 import { SEED_1938H, TAGS_1938H, TIMELINE_1938H } from '../../src/sim/scenario1938h';
 import { Sim } from '../../src/sim/sim';
+import { cellDist, CONTACT_CELLS, elementIndex } from '../../src/sim/systems/elements';
 import { waitsForFront } from '../../src/sim/systems/movement';
 import { Domain, PlayerOrderKind, type World } from '../../src/sim/world';
 import { matchColumns, referenceHolders, referenceOwners } from '../../tools/diag/historyMatch';
@@ -31,14 +32,20 @@ import { deltaE } from '../../src/shared/color';
 //           its next step onto the land of a foe it holds a front with, no stage's days open between the two. Land
 //           there is taken by no one: the march goes round by its own side's, or its order ends. From whatever
 //           ground it stands on, since ROADMAP R239.
-//   left    no land formation stands, or waits on a march, in one cell of the ground of a foe the timeline holds its
-//           front with at two days' first hours running (ROADMAP R239, ADR-1166), no stage's days open between the
-//           two: the track sets it down behind the line at a day's first hour, or takes it off. Not one on a march
-//           that does not wait (it goes by itself), nor one the timeline keeps where it arrived for its stage. In
-//           another cell it was set down and overrun again: a guest on an ally's land that the held foe takes from
-//           that ally cell by cell (a Finnish formation on Germany's in November 1941, a German and a Romanian on
-//           Finland's in August 1944) falls back with the line a day at a time. Nor is one found on that foe's
-//           ground at STAND_DAYS days' first hours running, in whatever cells: set down each day and never free.
+//   left    no land formation stands, or waits on a march, on the ground of a foe the timeline holds its front with
+//           at two days' first hours running, in whatever cells (ROADMAP R239, ADR-1166; R243, ADR-1168), outside
+//           the area of a stage whose days are open between the two (`World.holdsAt` of its own cell): the track
+//           sets it down behind the line at a day's first hour, and in the hour a cell is taken under it, or takes
+//           it off. Not one on a march that does not wait (it goes by itself), nor one the timeline keeps where it
+//           arrived for its stage. Before R243 the bar was two days in one cell, and a week in any (a guest on an
+//           ally's land that the held foe took cell by cell was set down each morning and overrun again the same
+//           day: a German and a Romanian on Finland's in August 1944), and a stage's days anywhere passed over
+//           every formation of its two nations.
+//   guest   in a fight a land formation is held as the nation it stands for where it stands (ROADMAP R243, ADR-1168,
+//           `World.standsFor`: on the land of an ally in its war with that foe, that ally). One that stands for
+//           another nation than its own is not found at two days' first hours running in contact with a foe's
+//           formation and out of the fight, the two not held off as they stand; nor in a fight, every foe's formation
+//           in its contact held off from it as they stand.
 
 /** The least ΔE of two land neighbours' colours on the world's map at the track's end (R84d; the critic's bar). */
 export const END_COLOUR_DE = 30;
@@ -101,32 +108,105 @@ function standing(w: World, days: Map<number, { target: number; n: number }>): s
 
 /**
  * The land formations found on a held foe's ground at this day's first hour (`left`, R239): standing, or waiting on a
- * march, no stage's days open between the two; asked once a day, those seen kept in `seen` (by formation: its cell,
- * the holder of its ground, the days running). One read may find a formation there: the track's own look comes in the
- * tick after it. Two running in one cell may not (the look did not take it), nor STAND_DAYS running on that foe's
- * ground in whatever cells (set down each day and overrun again).
+ * march, no stage's days open between the two; asked once a day, those seen kept in `seen` (by formation: the holder
+ * of its ground). One read may find a formation there: the track's own look comes in the tick after it. Two running
+ * may not, in whatever cells: the look did not take it, or it was set down and overrun again (R243).
  */
-function leftBehind(w: World, seen: Map<number, { cell: number; holder: number; days: number }>): string[] {
+function leftBehind(w: World, seen: Map<number, number>): string[] {
   const c = w.formations.cols;
   const W = w.cells.w;
   const out: string[] = [];
-  const now = new Map<number, { cell: number; holder: number; days: number }>();
+  const now = new Map<number, number>();
   w.formations.forEach((f) => {
     if (w.rules?.templates[c.template[f]!]?.domain !== Domain.land || w.offLand(f)) return;
     const nation = c.nation[f]!;
-    const holder = w.cells.controller[Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W]!;
-    if (holder === 0 || holder === nation || !w.wars.atWar(nation, holder) || !w.holdsPlan(nation, holder)) return;
+    const cell = Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W;
+    const holder = w.cells.controller[cell]!;
+    // Held off where it stands (`holdsAt` of its own cell): a stage's days lift the hold in the stage's area alone.
+    if (holder === 0 || holder === nation || !w.wars.atWar(nation, holder) || !w.holdsAt(nation, holder, cell, cell)) return;
     if (c.moving[f] === 1 && !waitsForFront(w, f)) return;
     if (w.playerOrders.get(f)?.kind === PlayerOrderKind.kept) return;
-    const cell = Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W;
-    const was = seen.get(f);
-    const days = was && was.holder === holder ? was.days + 1 : 1;
-    now.set(f, { cell, holder, days });
-    if (was?.cell === cell) out.push(`left: a formation of ${tag(nation)} stands a second day in one cell of the ground of ${tag(holder)}, whose front the timeline holds`);
-    if (days === STAND_DAYS) out.push(`left: a formation of ${tag(nation)} is found ${STAND_DAYS} days running on the ground of ${tag(holder)}, whose front the timeline holds`);
+    now.set(f, holder);
+    if (seen.get(f) === holder) out.push(`left: a formation of ${tag(nation)} is found a second day on the ground of ${tag(holder)}, whose front the timeline holds`);
   });
   seen.clear();
-  for (const [f, at] of now) seen.set(f, at);
+  for (const [f, holder] of now) seen.set(f, holder);
+  return out;
+}
+
+/**
+ * The land formations that are not held as the nation they stand for (`guest`, R243), at this day's first hour: each
+ * that stands for another nation than its own against a foe's formation in its contact (`World.standsFor`), and is
+ * out of the fight though one such pair is not held off as the two stand (`World.holdsHere`), or in a fight though
+ * every one is. Asked once a day, those found kept in `seen` (by formation: which of the two). One read may find a
+ * formation so (the hour's ground was taken, or its foe fell, after the hour's fight); two running may not.
+ */
+function guests(w: World, seen: Map<number, string>): string[] {
+  const c = w.formations.cols;
+  const W = w.cells.w;
+  const idx = elementIndex(w);
+  const contact = w.atSize(CONTACT_CELLS);
+  const side = Math.max(1, Math.ceil(contact));
+  const bw = Math.ceil(W / side);
+  const fighting = w.wars.nations();
+  const cellOf = (f: number): number => Math.floor(c.y[f]!) * W + ((Math.floor(c.x[f]!) % W) + W) % W;
+  // As `findBattles` takes them: land formations with men, of nations at war, not on the retreat.
+  const fighters: number[] = [];
+  const buckets = new Map<number, number[]>();
+  const away = new Set<number>();
+  w.formations.forEach((f) => {
+    if (w.rules?.templates[c.template[f]!]?.domain !== Domain.land || w.offLand(f) || c.retreat[f]! > 0 || !idx.has(f) || !fighting.has(c.nation[f]!)) return;
+    fighters.push(f);
+    const k = Math.floor(c.y[f]! / side) * bw + Math.floor(cellOf(f) % W / side);
+    let b = buckets.get(k);
+    if (!b) buckets.set(k, (b = []));
+    b.push(f);
+    if (w.cells.controller[cellOf(f)] !== c.nation[f]) away.add(f);
+  });
+  // By formation off its own land: whether it stands for another nation against a foe in contact, and whether a pair
+  // of its contact is not held off as the two stand.
+  const guest = new Map<number, number>();
+  const open = new Set<number>();
+  for (const a of fighters) {
+    const ma = c.nation[a]!;
+    const bx = Math.floor(cellOf(a) % W / side);
+    const by = Math.floor(c.y[a]! / side);
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        for (const b of buckets.get((by + dy) * bw + ((bx + dx + bw) % bw)) ?? []) {
+          if (b <= a || (!away.has(a) && !away.has(b))) continue;
+          const mb = c.nation[b]!;
+          if (!w.wars.atWar(ma, mb) || cellDist(w, c.x[a]!, c.y[a]!, c.x[b]!, c.y[b]!) > contact) continue;
+          const [ca, cb] = [cellOf(a), cellOf(b)];
+          if (!w.holdsHere(ma, mb, ca, cb)) {
+            open.add(a);
+            open.add(b);
+          }
+          const sa = w.standsFor(ma, ca, mb);
+          const sb = w.standsFor(mb, cb, ma);
+          if (sa !== ma && !guest.has(a)) guest.set(a, sa * 65536 + mb);
+          if (sb !== mb && !guest.has(b)) guest.set(b, sb * 65536 + ma);
+        }
+      }
+    }
+  }
+  const out: string[] = [];
+  const now = new Map<number, string>();
+  for (const [f, key] of guest) {
+    const fights = c.engaged[f] === 1;
+    const kind = open.has(f) && !fights ? 'idle' : !open.has(f) && fights ? 'fights' : '';
+    if (kind === '') continue;
+    now.set(f, kind);
+    if (seen.get(f) !== kind) continue;
+    const [host, foe] = [Math.floor(key / 65536), key % 65536];
+    out.push(
+      kind === 'idle'
+        ? `guest: a formation of ${tag(c.nation[f]!)} of the front of ${tag(host)} stands a second day in contact with ${tag(foe)}'s, out of the fight, the two not held off there`
+        : `guest: a formation of ${tag(c.nation[f]!)} of the front of ${tag(host)} is a second day in a fight, every foe in its contact held off from it there (${tag(foe)}'s)`,
+    );
+  }
+  seen.clear();
+  for (const [f, kind] of now) seen.set(f, kind);
   return out;
 }
 
@@ -160,7 +240,8 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
   breaks.add(`${label} day 0`, worldBreaks(sim.world).filter((l) => !l.startsWith('held')));
   let handover = new Map<string, string[]>();
   const waited = new Map<number, { target: number; n: number }>();
-  const behind = new Map<number, { cell: number; holder: number; days: number }>();
+  const behind = new Map<number, number>();
+  const hosted = new Map<number, string>();
   const heldAt = new Map(own ? HELD_BY.map((h) => [(dayOfIso(h[0]) - dayOfIso('1938-01-01')) * 24 + 12, h] as const) : []);
   while (!t.ended && sim.tick < hours) {
     meddle?.(sim.world);
@@ -183,7 +264,7 @@ export function historyTrack(seed: number = SEED_1938H, hours = Infinity, meddle
       }
       breaks.add(where, silentExits(w, before, bonds.overlord, ev));
       if (w.tick % 24 === 0) breaks.add(where, worldBreaks(w).filter((l) => !l.startsWith('held') || !heldByTimeline(w, l)));
-      if (w.tick % 24 === 0) breaks.add(where, [...standing(w, waited), ...leftBehind(w, behind)]);
+      if (w.tick % 24 === 0) breaks.add(where, [...standing(w, waited), ...leftBehind(w, behind), ...guests(w, hosted)]);
       const hb = heldAt.get(w.tick);
       if (hb) {
         const [date, by, lon, lat] = hb;

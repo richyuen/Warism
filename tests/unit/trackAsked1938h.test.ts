@@ -146,6 +146,8 @@ describe('a question asked of the historical track between two ticks changes not
           if (w.holdsAt(GER, POL, c, c)) held++;
           if (w.holdsPlan(GER, POL)) held++;
           if (w.holdsLand(GER, POL, c)) held++;
+          // And by where two formations stand (ROADMAP R243), as combat and the checker ask.
+          w.holdsHere(GER, POL, c, c);
         },
       );
       // The hold stood and was asked of (three questions an hour, each true outside the stage's days).

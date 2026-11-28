@@ -423,6 +423,17 @@ export class Track {
     return null;
   }
 
+  /**
+   * Cells have been taken by the hour's fighting (ROADMAP R243, the territory system's flips): a land formation
+   * standing on one, held off from the nation that now holds it, is set down behind the line in this hour
+   * (`setDownLeft`), as the day's first hour sets down those the timeline leaves so (R239). A guest that fights on an
+   * ally's front (`World.standsFor`) falls back with that ally's line as it is lost: on the lost cell it would be
+   * the foe's to stand beside and not to fight, until the next morning.
+   */
+  groundTaken(world: World, cells: readonly number[]): void {
+    if (!this.ended && cells.length > 0) setDownLeft(world, this, new Set(cells));
+  }
+
   /** The holds begun (their events applied) and not ended at `tick`, in their order (R72b). */
   private standing(tick: number): readonly Hold[] {
     const live = this.live;
@@ -1307,25 +1318,42 @@ export function runTrack(world: World): void {
  * change of sides declared where they stood, an arrival on land the foe had taken.
  *
  * Left where they are: one on a march that does not wait (it goes by itself: a step taken back, a way off that
- * ground); one aboard; one the timeline keeps where it arrived for its stage (`kept`, R66d); and all of them while a
- * stage's days are open between the two nations (`World.holdsPlan`: they may be fighting for that land).
+ * ground); one aboard; one the timeline keeps where it arrived for its stage (`kept`, R66d); and one in the area of
+ * a stage whose days are open between the two nations (`World.holdsAt` of its own cell: it may be fighting for that
+ * land; since R243 by the cell, before it by the two nations wherever the formation stood).
+ *
+ * And in the hour a cell is taken by fighting (ROADMAP R243, ADR-1168; `taken`: the hour's flips, by
+ * `Track.groundTaken`): each formation standing on such a cell, held off from the nation that has taken it, is set
+ * down the same way in that hour, on a march or not (its march was over ground that is the foe's now); not one on
+ * the retreat, which walks off that ground by itself. A guest fights on an ally's front as that ally does
+ * (`World.standsFor`), and on the cell the foe took from its host it was the pair's hold's again: it stood beside
+ * the foe until the next morning, was set down on its host's next cell and overrun there the same day (a cell back
+ * each morning, seven running on seed 5). It falls back with its host's line as the line is lost.
  */
-function setDownLeft(world: World, t: Track): void {
+function setDownLeft(world: World, t: Track, taken?: ReadonlySet<number>): void {
   if (TRACK_PROBE.leftOff) return;
   const f = world.formations.cols;
   const { w, controller } = world.cells;
   const left: [formation: number, holder: number][] = [];
   world.formations.forEach((i) => {
+    const cell = Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w;
+    // In the hour of a flip, those on the cells taken alone: asked first, of every formation.
+    if (taken !== undefined && !taken.has(cell)) return;
     if (world.rules?.templates[f.template[i]!]?.domain !== Domain.land || world.offLand(i)) return;
     const n = f.nation[i]!;
-    const holder = controller[Math.floor(f.y[i]!) * w + ((Math.floor(f.x[i]!) % w) + w) % w]!;
-    if (holder === 0 || holder === n || !world.wars.atWar(n, holder) || !world.holdsPlan(n, holder)) return;
-    if (f.moving[i] === 1 && !waitsForFront(world, i)) return;
+    const holder = controller[cell]!;
+    // Held off from the holder where it stands: by its own cell (`World.holdsAt`), not by the two nations
+    // (`holdsPlan`). A stage's days lift the hold in the stage's area alone, and by the nations they passed over
+    // every formation of the pair wherever it stood: German guests on cells Finland lost in the week of a Soviet
+    // stage a front away stood there, seven mornings running (R243).
+    if (holder === 0 || holder === n || !world.wars.atWar(n, holder) || !world.holdsAt(n, holder, cell, cell)) return;
+    if (taken !== undefined ? f.retreat[i]! > 0 : f.moving[i] === 1 && !waitsForFront(world, i)) return;
     if (world.playerOrders.get(i)?.kind === PlayerOrderKind.kept) return;
     left.push([i, holder]);
   });
-  // The asking made the hour's list of open stages before the hour's systems asked (R237, R238): theirs is their own.
-  t.eventApplied();
+  // The day's look made the hour's list of open stages before the hour's systems asked (R237, R238): theirs is their
+  // own. In the hour of a flip the systems have asked, or ask after this: the hour keeps one list.
+  if (taken === undefined) t.eventApplied();
   if (left.length === 0) return;
   const nowhere = new Set<number>();
   const placed = new Map<number, number>();

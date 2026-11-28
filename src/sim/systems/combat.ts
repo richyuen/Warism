@@ -129,6 +129,12 @@ function attackTable(units: readonly UnitRule[]): Float64Array {
 const scratch = { full: new Uint8Array(0), head: new Int32Array(0), next: new Int32Array(0), key: new Int32Array(0) };
 /** `findBattles`' nation pairs, kept between calls (not state; R72c): `highWater`² of them, 0 at a call's start. */
 let relations = new Uint8Array(0);
+/**
+ * By formation, the holder of the ground a fighter of this call stands on (not state; ROADMAP R243), in a world the
+ * historical track steers: one on its own nation's ground is itself, and no other is asked whom it stands for
+ * (`World.standsFor`).
+ */
+let ground = new Int32Array(0);
 const NOT_AT_WAR = 1;
 const FIGHT = 2;
 const HELD = 3;
@@ -144,12 +150,21 @@ export function findBattles(world: World): number[][] {
   const fighters: number[] = [];
   // Only formations of nations at war can make contact (review after PLAN 1.25).
   const atWar = world.wars.nations();
+  const cw = world.cells.w;
+  /** A formation's cell (the stage windows' areas, R66d; the ground it stands on, R243). */
+  const cellOf = (i: number): number => Math.floor(c.y[i]!) * cw + ((Math.floor(c.x[i]!) % cw) + cw) % cw;
+  // Under the historical track a fighter is held as the holder of its ground is (ROADMAP R243): read once a fighter.
+  const steered = world.steered;
+  if (steered && ground.length < c.nation.length) ground = new Int32Array(c.nation.length);
+  const stood = ground;
+  const holder = world.cells.controller;
   f.forEach((id) => {
     c.engaged[id] = 0;
     // One on the retreat is in no battle (PLAN 3.5a): it does not fire and is not fired on.
     // A fleet is in no battle of the land (PLAN 4.2b): the sea's are PLAN 4.3.
     if (c.retreat[id]! > 0 || !atWar.has(c.nation[id]!) || !idx.has(id) || world.offLand(id)) return;
     fighters.push(id);
+    if (steered) stood[id] = holder[cellOf(id)]!;
   });
   const slots = (bh + 2) * bw;
   if (scratch.full.length !== slots) {
@@ -195,9 +210,6 @@ export function findBattles(world: World): number[][] {
     }
     return r;
   };
-  const cw = world.cells.w;
-  /** A formation's cell (the stage windows' areas, R66d). */
-  const cellOf = (i: number): number => Math.floor(c.y[i]!) * cw + ((Math.floor(c.x[i]!) % cw) + cw) % cw;
   // R72c: what two nations are to each other in this call (it changes no war, hold or overlord), by nation pair: 0 not
   // yet asked, NOT_AT_WAR, FIGHT, or HELD (a hold stands: asked again by the cells, `holdsAt`). Was asked of each pair
   // of formations, most of a front's pairs of one nation or of allies.
@@ -220,7 +232,15 @@ export function findBattles(world: World): number[][] {
       rel[ma * hw + mb] = r;
       rel[mb * hw + ma] = r;
     }
-    if (r === NOT_AT_WAR || (r === HELD && world.holdsAt(ma, mb, cellOf(a), cellOf(b)))) return;
+    if (r === NOT_AT_WAR) return;
+    if (steered) {
+      // Each is held as the nation it stands for where it stands (ROADMAP R243, `World.standsFor`): a guest on an
+      // ally's front has that ally's front, fought or frozen. Two on their own ground, or on ground of no such ally,
+      // are held as their nations are (`r`, as before).
+      const sa = stood[a] === ma ? ma : world.standsFor(ma, cellOf(a), mb);
+      const sb = stood[b] === mb ? mb : world.standsFor(mb, cellOf(b), ma);
+      if (sa === ma && sb === mb ? r === HELD && world.holdsAt(ma, mb, cellOf(a), cellOf(b)) : world.holdsAt(sa, sb, cellOf(a), cellOf(b))) return;
+    }
     let dx = Math.abs(c.x[a]! - c.x[b]!);
     if (dx > w / 2 && looping) dx = w - dx;
     const dy = c.y[a]! - c.y[b]!;
