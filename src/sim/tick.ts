@@ -96,8 +96,16 @@ function whyNotNation(world: World, n: number): Refusal {
  * Carries out `cmd`, or says why not (PLAN 2.17a). A command that is refused leaves the state as
  * it was. The offers of a player (`offerPeace`, `proposeAlliance`), an order to march and an
  * order to build have events of their own for a "no" and count as carried out here.
+ *
+ * `intervene` (ROADMAP R240, ADR-1169): given for a command that ends the historical track if it is carried out
+ * (`applyPendingCommands`). An order (a march or a sailing, a wing's mission or rebase, a paradrop) counts as carried
+ * out whether or not it is given, so its command ends the track whatever becomes of it: it calls `intervene` once
+ * its own refusals are past and before the order is judged, which is then by the world the command sets free (the
+ * holds gone, the occupations the track excused given back, a war whose hold outlives the timeline at peace). Judged
+ * before, a march across a held front was refused as a way barred by nations outside its wars, and ended the replay
+ * all the same. The timeline's own orders (`redeploy`) give none: they keep the holds and end nothing.
  */
-export function applyCommand(world: World, cmd: Command): Refusal {
+export function applyCommand(world: World, cmd: Command, intervene?: () => void): Refusal {
   if (!finiteCommand(cmd)) return Refusal.NotANumber;
   if (!inRange(cmd, world.cells.w, world.cells.h)) return Refusal.OutOfRange;
   const done = (ok: boolean, why: Refusal = Refusal.NoEffect): Refusal => (ok ? Refusal.None : why);
@@ -144,12 +152,14 @@ export function applyCommand(world: World, cmd: Command): Refusal {
       return Refusal.None;
     case 'paradrop':
       if (cmd.nation !== undefined && (!world.formations.has(cmd.id) || world.formations.cols.nation[cmd.id] !== cmd.nation)) return Refusal.NoSuch;
+      intervene?.();
       orderParadrop(world, cmd.id, cmd.x, cmd.y);
       return Refusal.None;
     case 'wingMission':
     case 'wingRebase':
       // A player's order names its nation, as a march's (PLAN 2.16Rk).
       if (cmd.nation !== undefined && (!world.formations.has(cmd.id) || world.formations.cols.nation[cmd.id] !== cmd.nation)) return Refusal.NoSuch;
+      intervene?.();
       {
         const given = cmd.kind === 'wingMission' ? orderMission(world, cmd.id, cmd.mission, cmd.x, cmd.y) === 0 : orderRebase(world, cmd.id, cmd.x, cmd.y) === 0;
         // The player's (ADR-759): the AI leaves the wing alone, a mission for a day, a rebase until it lands.
@@ -161,6 +171,8 @@ export function applyCommand(world: World, cmd: Command): Refusal {
       if (cmd.nation !== undefined && (!world.formations.has(cmd.id) || world.formations.cols.nation[cmd.id] !== cmd.nation)) return Refusal.NoSuch;
       // On the retreat it takes no order (PLAN 3.7m, ADR-173): its march is held by no enemy's ground, and it is in no battle.
       if (world.formations.has(cmd.id) && world.formations.cols.retreat[cmd.id]! > 0) return Refusal.OnRetreat;
+      // The order of an intervention is judged by the world it sets free (ROADMAP R240): the track ends first.
+      intervene?.();
       // A player's order: over the sea from inland by way of a port with transports (PLAN 4.9b);
       // the player's (it names its nation) calls transports to its land's port when none wait
       // there (ROADMAP R17a). A fleet the editor placed holds its place until so ordered away (PLAN 7.22c).
@@ -509,11 +521,14 @@ export function applyPendingCommands(world: World): void {
     // The controllers before a command that may end the track: what it changes stays as the track's occupations go back
     // (R84a, ADR-1060).
     const kept = world.track && !world.track.ended && cmd.kind !== 'leaveTrack' ? world.cells.controller.slice() : undefined;
-    const why = applyCommand(world, cmd);
-    world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
     // The first intervention ends the historical track (R62j, SPEC §7.7): every command is a God Mode act, an editor
-    // edit or the taking of a nation (a player's own orders come only after that). One refused changed nothing.
-    if (why === Refusal.None && world.track && !world.track.ended) endTrack(world, TrackEnd.intervention, kept);
+    // edit or the taking of a nation (a player's own orders come only after that). One refused changed nothing. An
+    // order ends it before it is judged (ROADMAP R240, `applyCommand`'s `intervene`); any other command once it is
+    // carried out.
+    const end = kept ? (): void => endTrack(world, TrackEnd.intervention, kept) : undefined;
+    const why = applyCommand(world, cmd, end);
+    world.out.emit(world.tick, why === Refusal.None ? EventKind.CommandApplied : EventKind.CommandRefused, seq, why, NaN, NaN);
+    if (why === Refusal.None) end?.();
   }
   // A division taken off its transports while others stay with them is told (ROADMAP R27c).
   tellLandingsLeft(world);

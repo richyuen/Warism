@@ -34,6 +34,9 @@ const LISTED: Command[] = [
   { kind: 'collapseNation', nation: id('LUX') },
   { kind: 'editPaint', layer: 'nation', tool: 'brush', ...at(2.35, 48.86), x2: 0, y2: 0, r: 1, value: id('GER'), mask: null },
   { kind: 'spawnCity', ...at(20, 25), name: 'Testville', size: 1 },
+  // An order ends it whatever becomes of the order, and before it is judged (ROADMAP R240, `trackOrder1938h.test.ts`).
+  { kind: 'moveFormation', id: 7, ...at(13.4, 52.5) },
+  { kind: 'wingMission', id: 1252, mission: 'patrol', ...at(13.4, 52.5) },
 ];
 const HOURS = [6, 24, 30 * 24, 365 * 24];
 const AFTER = 4242;

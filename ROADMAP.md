@@ -397,7 +397,7 @@ on separate P-cores (a ratio, not an absolute figure).
     more nations' formations on Kenya's and the Sudan's held fronts no longer fight Italy (1,739 formation-days in
     contact, 1940 to 1942), and marches waiting at such lines are 6,711 formation-days for 2,524 (R244). Filed:
     R244, R245.
-- [ ] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
+- [x] R240 **In the replay a God Mode march across a held front is refused for the wrong reason, and ends the replay
   all the same** (found by R236's review). A command applied while the replay runs ends it (R62j), and
   `moveFormation` counts as applied whether or not its order is given (a refused order is told by `MoveRejected`).
   Before R236 a march ordered across a held front was given, and the replay it ended left it free to go. Since
@@ -409,6 +409,21 @@ on separate P-cores (a ratio, not an absolute figure).
   `TrackEnded`, the division on the march. AT: such an order is carried out by the world its command sets free, as
   before R236, or is refused with a reason that names the hold and leaves the replay running; a test sends the
   command across a held front, and across a nation outside the war, where today's reason is the right one.
+  - Done (ADR-1169), the first way: an order's command ends the track once its own refusals are past and before the
+    order is judged (`applyCommand`'s `intervene`), so it is judged by the world the end sets free: no hold, the
+    occupations the track excused given back, a war whose hold outlives the timeline at peace. Every order kind (a
+    march or a sailing, a wing's mission or rebase, a paradrop); a command refused ends nothing; the timeline's own
+    `redeploy` keeps the holds and ends nothing. Held by `trackOrder1938h.test.ts`, 15 tests, 13 red before: on two
+    fronts (Germany on Poland, seed 1938; Japan on China, seed 5) a march onto the held foe's land 1, 3 and 8 cells
+    past the front, 6 hours to 5 days in, standing and in the middle of a step, its nation named and not, by a tick
+    and by `applyNow` (84 and 108 cases): `TrackEnded`, then the order given over the foe's land; several in one hour;
+    across a nation outside the war `NoRoute`, the right reason there, after the end; a fleet's, a wing's and a
+    paradrop's refusals after it; the guards ending nothing; and on Germany and Poland a `redeploy` refused with the
+    track running on, a stage's days, a hold that outlives the timeline (refused by its white peace), ground given
+    back (a march, a rebase, a paradrop onto it refused at once). `trackIntervention1938h.test.ts` lists a march and a
+    wing's mission too. In the page an order is the played nation's, and taking a nation ends the track first: the
+    case is a command sent by the sim's API (the critic's probes, the tests). The replay's course the same (its hash
+    on 1 January 1939, 1940 and 1941 by both codes); the pin unchanged; nothing drawn changes, no browser spec.
 - [x] R241 **At a far zoom the arrows cross far into the enemy's land; close up they stay in their own** (the user,
   2026-11-27, of the report R235 took up: "The issue was that the arrows in far zoom looked like they crossed far
   into enemy territory, but at close zoom it looked like it was in held territory for the French divisions"). An

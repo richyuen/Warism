@@ -1828,7 +1828,10 @@ to 27 July 1953, then sets the world free.
   either side has the whole range, R86b) and its days, men,
   frontless days and peaks from the end, so a free start in 1942 or a God act in the replay keeps the Second World War. A nation dead at the end that no later event brings back (`born`) has no revival left:
   history ended it (R74c; Manchukuo, Tannu Tuva, Newfoundland). Built (R62j0, ADR-945): the first command applied while it runs ends it in that hour, before
-  the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. While it
+  the hour's events (`TrackEnd.intervention`); every command is an intervention, one refused is none. An order (a march
+  or a sailing, a wing's mission or rebase, a paradrop) counts as applied whether or not it is given, and ends it before
+  it is judged (R240, ADR-1169): it is judged by the world the end sets free, with no hold, the occupations given back,
+  a war whose hold outlives the timeline at peace. The timeline's own orders (`redeploy`) end nothing. While it
   runs, the scenario's form, Take control, the God Mode bar, the nation's God tab (at its head) and the editor say
   so (R64a, R65b; ADR-952, ADR-961); the end is told in the ticker.
 - **A start from a year** (R68, ADR-983): the world of 1 January of each year of the track, built at deploy
@@ -1871,10 +1874,11 @@ to 27 July 1953, then sets the world free.
   take land or plan attacks on each other until a date (with `air`, R74h, nor fly at each other: the Sino-Soviet
   border war of 1969), nor march over each other's land (R236, ADR-1163, `passageOf`: a way goes round by their own
   side's land, or the order is refused; a march under way is made again at the front, or halts there; but in the
-  days of a stage). Who fights is asked by where a formation stands (R243, ADR-1168, `World.standsFor`): on the land
-  of an ally in its war with that foe it is held as that ally is, its front fought or frozen (a German division on
-  Finland's land fights the Soviet Union from 9 June 1944, the Eastern Front held to May 1945; South Africa's on
-  Kenya's held front does not fight Italy). Land, ways, plans and arrows are asked of the nations, as before.
+  days of a stage; an order sent while the track runs ends it before it is judged, R240). Who fights is asked by
+  where a formation stands (R243, ADR-1168, `World.standsFor`): on the land of an ally in its war with that foe it is
+  held as that ally is, its front fought or frozen (a German division on Finland's land fights the Soviet Union from 9
+  June 1944, the Eastern Front held to May 1945; South Africa's on Kenya's held front does not fight Italy). Land,
+  ways, plans and arrows are asked of the nations, as before.
   Japan's gains in China by `occupy` stages; the Phoney War a
   hold; the maps' `occupied`, measured as control (R62g0, ADR-930). 1940 in the West (R62g1, ADR-931): a nation
   overrun is annexed at its capitulation (Denmark a puppet), Vichy born, the occupied zone held at peace; `leave` (an

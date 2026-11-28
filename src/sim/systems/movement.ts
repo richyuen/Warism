@@ -34,7 +34,9 @@
  * a third nation's is (`passageOf`, by `World.holdsPlan`: a hold, and no stage's days open between the two), and a
  * march under way whose next step is onto it is made again from the cell it stands on, or halts there. A formation
  * that stands on that foe's own ground walks on it as on any closed ground, and waits before its next cell: until the
- * day's first hour, when the track sets it down behind the line (ROADMAP R239, `setDownLeft` in `track.ts`).
+ * day's first hour, when the track sets it down behind the line (ROADMAP R239, `setDownLeft` in `track.ts`). An order
+ * sent while the track runs ends it before it is judged (ROADMAP R240, `applyCommand`'s `intervene`): no hold is left
+ * to close the way.
  *
  * A path outlives a change of the ground (PLAN 3.7k, ADR-171): a paint of terrain, a map import
  * and a change of `loopingMap` leave `world.paths` alone. A step that the ground of now does not

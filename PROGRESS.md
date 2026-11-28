@@ -775,3 +775,72 @@
   `r243_all.sh` (the ten files), `r243_time.sh` (the tick pairs). Logs: `*.fin.*` are the code as pushed, `*.d.*`
   attempt 3 before the review, `r243_all.log.txt` and `*.rule.*` attempt 1, `check.r1.*` attempt 2, `*.base.*`
   part one alone, `*.head.*` R239's code.
+
+## 2026-11-28 — R240: an order given while the historical track runs ends it before it is judged (ADR-1169)
+- The cause, read on HEAD by the item's own tests: a German march onto Poland's held land, sent while the track runs,
+  is told `MoveRejected` `NoRoute` ("no way that keeps off the ground of nations outside its wars"), then
+  `CommandApplied`, then `TrackEnded` by intervention, the division standing; the same order sent again is given. The
+  order was judged before the end, by the holds its own command ended (`passageOf` asks `holdsPlan`, ADR-1163).
+- The AT's first way: the order is carried out by the world its command sets free. Not the second (a refusal that
+  names the hold and leaves the replay running): every command is an intervention (ADR-945), an order refused across
+  a third nation would still end the replay, and the timeline's `redeploy` counts its orders by the command's answer.
+- The rule (`tick.ts` alone): `applyCommand` takes `intervene`, which `applyPendingCommands` gives while the track
+  runs; the order's case calls it once its own refusals are past (another nation's formation named, one on the
+  retreat), so the track ends and the order is judged after: no hold, the occupations given back (`returnHeld`), a
+  war whose hold outlives the timeline at peace. A march, a sailing, a wing's mission and rebase, a paradrop alike;
+  any other command ends the track once carried out, as before; the timeline's own orders give no `intervene`.
+- Siblings checked for what the track decides in their judgment: of the orders only the march's way reads a hold
+  (`passageOf`). A fleet's (`orderSail`, its passages by the banks' holders), a wing's (`orderMission`,
+  `orderRebase`: its side's airbases by holder), a paradrop's (`paradropPlan`: the cell's holder), a landing's
+  (`tryLanding`, `neutralLanding`) and the hour's landing orders (`landingOrders`, `bestWayHours`: no passage) read
+  the ground and the wars, which the end changes (land given back, a white peace): judged after it now, each tested
+  on ground given back (the rebase to Warsaw's airbase `NoBase`, the paradrop on Poznań `NoRoute`). The other kinds
+  `applyCommand` counts as carried out whatever the answer: the order to build (`queueFormation`) reads nothing of
+  the track; `offerPeace` and `proposeAlliance` neither (`peaceVerdict` by the war's score and weariness), and both
+  are the played nation's, after the end. No order's judgment draws chance (none in `movement`, `sail`, `air`,
+  `airLift`, `amphibious`, `landings`, `production`), so the streams the end draws anew from the second seed change
+  none.
+- Where it is met: in the page every order is the played nation's (`Player.click`), and taking a nation (`setPlayer`)
+  ends the track first. The case is a command sent while the track runs through the sim's API, `window.__warsim`:
+  the critic's probes and the tests.
+- Tests: `trackOrder1938h.test.ts`, 15, 13 red before (the two green before and after: a `redeploy` across the held
+  front refused with the track running on, and a stage's days). On two fronts, Germany on Poland (seed 1938) and
+  Japan on China (seed 5: two seeds of one front are the same marches in their first five days, nothing left to
+  chance under a hold): a march onto the held foe's land 1, 3 and 8 cells past the front, 6 hours, 1, 2, 3 and 5 days
+  in, of a formation standing and of one in the middle of a step, its nation named and not, by a tick and by
+  `applyNow`, 120 combinations a front: 84 and 108 with a formation to order (Germany's: 30 standing, 48 in a step,
+  6 a player's march that met the enemy in its hour, given and told `Contact`, ADR-759; Japan's: 60 and 48). Several
+  marches in one hour (three, and every one found). Each kind refused for its own reason after `TrackEnded`: across
+  a nation outside the war (`NoRoute`, the right reason there, the formation standing), a fleet sent inland, a strike
+  and a rebase half a world away, a paradrop from no airbase. The guards refused and ending nothing (another
+  nation's formation named for a march, a paradrop, a mission, a rebase; no number; off the map; on the retreat),
+  the first order taken then ending it. On Germany and Poland: a march to its own land beyond Poland's, with a way
+  round and with none (given over Poland's land); a hold that outlives the timeline (the white peace before the
+  order, which it refuses); ground the track gave Germany at peace (a march, a rebase, a paradrop refused at once, no
+  barred step the hours after). `trackIntervention1938h.test.ts`: a march and a wing's mission added to its 13
+  kinds, green before too.
+- The checker (ADR-804): the track's own (`historyTrack1938h`) sends no command, so it cannot see this rule. The
+  war-and-peace checker's lines of the world (`worldBreaks`: `held`, `realm`) are asked after the order in three of
+  the tests (several marches in one hour, on both fronts; the white peace; ground given back): none. On ground given
+  back, the track's own occupation is read before the order (`held: GER on POL`) and none after.
+- On the replay itself, by a probe not kept (1 July 1940 06:00, China's front held and France's occupied zone held by
+  Germany at peace with Vichy, the checker's `held` lines 5): a Japanese march three cells onto China's land ends the
+  track and is given, over 4 Chinese cells, with no refusal three hours on; a German march from a cell of the zone to
+  another ends it, the zone is Vichy's again (`held` lines 0), and the march is given by ADR-149 (who stands on closed
+  ground walks on it, as after any peace: Vichy's ground is foreign to Germany, `foreignTo`).
+- Green before and after (ADR-803): `trackIntervention1938h` (ADR-945), `trackEndHeld1938h` (ADR-1060),
+  `trackEndHolds1938h` (ADR-1063, ADR-1067), `heldFrontMarch1938h` (ADR-1163), `leaveTrack1938h`, `trackRunner1938h`
+  (ADR-924), `trackAsked1938h` (I4 with a track), `paradrop1938`, `serverAirOrderNews`: 36 tests in 9 files.
+- The replay's course: a run with no command never enters the change, and the timeline's events give no
+  `intervene`. Its own seed on both codes, 1 January 1939, 1940 and 1941: 5a620a81, 151ef136, 1469d966 (past 1940's
+  `redeploy` events). Its ten-year tests stand on that course and were not run again. The pin of seed 99 by the gate.
+- The tick: nothing in its path changes; the replay's three years 1.38 and 1.37 ms a tick by the two codes, one run
+  each on cores of their own (not a pair).
+- No browser spec: nothing drawn or told changes, and none sends an order into a running track. Of the 629 files of
+  `tests/e2e`, `tests/sweep`, `tools` and `critic/scripts` that send a march, a paradrop or a wing's order, none
+  names the historical world (`1938h`, the replay), read file by file: the stages the gate left out (the browser
+  specs, every sweep test but the pin) cannot meet the change.
+- The gate, twice on the code (the second after SPEC.md's lines were wrapped again): the unit tests related to the
+  change, 441 files and 2,068 tests. One red in each run, `snapshot-perf` past its 90 s in the crowd (137 s and
+  141 s), green alone (a steady snapshot 0.70 and 0.73 ms at the median; its budget 2), as in R239's and R243's
+  gates. The pin of seed 99 unchanged; the build green.

@@ -5,6 +5,70 @@ from AoC are tagged **[AoC-DEVIATION]**.
 
 ---
 
+## ADR-1169 · 2026-11-28 · accepted · An order given while the historical track runs ends it before it is judged, and is judged by the world the end sets free (R240)
+
+- **The case** (found by R236's review). The first command applied while the track runs ends it in that hour (ADR-945),
+  and an order (a march or a sailing, a wing's mission or rebase, a paradrop) counts as applied whether or not it is
+  given: its "no" is a `MoveRejected` of its own. The order was judged first and the track ended after it, so it was
+  judged by the world the track steers, by rules its own command was about to end. Since R236 the land of a foe whose
+  front the track holds is closed to a nation's ways (ADR-1163, `passageOf`): a march across such a front was refused
+  as `NoRoute` ("there is no way by land that keeps off the ground of nations outside its wars", which the held foe is
+  not), the formation stood, the replay ended all the same, and the same order sent again was carried out. Before
+  R236 it was given, and went as the free world has it.
+- **Where it is met.** In the page a march, a wing's order and a paradrop are the played nation's (`Player.click`), and
+  the taking of a nation is an intervention itself (`setPlayer`): the track has ended before such an order is judged.
+  The case is a command sent while the track runs, by the sim's own API (`window.__warsim.sim.command`): the critic's
+  probes and the tests, of each order kind, its nation named or not.
+- **Decision.**
+  1. An order's command ends the track once its own refusals are past (another nation's formation named, one on the
+     retreat; a place that is no number or off the map refused before any kind) and before the order is judged
+     (`applyCommand`'s `intervene`, given by `applyPendingCommands`). A command refused so ends nothing, as before.
+  2. The order is judged by the world the end sets free: no hold (the march over the held foe's land is given, and
+     waits at the front as in any war, PLAN 1.14), the occupations the track excused given back (ADR-1060: a march, a
+     rebase or a paradrop onto that ground is refused at once), a war whose hold outlives the timeline at peace
+     (ADR-1063: a march onto the former foe's land refused by that peace).
+  3. Any other command ends the track once it is carried out, as before (a cell it changed stays as it made it,
+     ADR-1060).
+  4. The timeline's own orders (`redeploy`, ADR-931) are no intervention: they keep the holds and end nothing, refused
+     across a held front as R236 made them.
+- **Why the end first.** Not judged with the holds alone lifted and ended after: the end changes more than the holds,
+  the ground it gives back (`returnHeld`) and the peace of a hold that outlives the timeline, and an order judged
+  before them would be given onto ground that goes back to its owner in the same hour, and barred at its first step
+  onto it. Not a refusal that names the hold and leaves the replay running (the AT's other way): every command is an
+  intervention (ADR-945), an order refused across a third nation's land would end the replay while one refused across
+  a hold did not, and the answer the timeline's `redeploy` counts its orders by would change with it.
+- **Consequences.**
+  - An order's rows in its hour: `TrackEnded` and the end's own (a peace, land given back), then the order's
+    (`MoveRejected`, `FormationLanded`), then `CommandApplied`. Before, the order's came first.
+  - The replay's course is the same: a run with no command never enters the change (`applyPendingCommands` returns at
+    an empty queue) and the timeline's events call `applyCommand` with no `intervene`. On its own seed the same hash on
+    1 January 1939, 1940 and 1941 by both codes (5a620a81, 151ef136, 1469d966), past 1940's `redeploy` events; its
+    ten-year tests stand on that course and were not run again. A free game has no track: the pin of seed 99 unmoved.
+  - The tick: nothing in its path changes (the replay's three years 1.38 and 1.37 ms, one run of each code on cores of
+    its own, not a pair).
+- **The decisions it stands on (ADR-803)**, each with its test green before and after: ADR-945, the end at the first
+  intervention and a refused command none (`trackIntervention1938h.test.ts`, a march and a wing's mission added to its
+  13 kinds: green before too, as an order counted as applied); ADR-1060, the occupations given back and a cell the
+  command changed kept (`trackEndHeld1938h.test.ts`); ADR-1063 and ADR-1067, a held war at the end
+  (`trackEndHolds1938h.test.ts`); ADR-924 and ADR-931, the runner and `redeploy` (the new test of a `redeploy` across a
+  held front, and the replay's hash); ADR-1163, no way over a held foe's land (`heldFrontMarch1938h.test.ts`); ADR-173,
+  no order on the retreat, and ADR-759, a player's march that meets the enemy (the new tests). It amends ADR-1163's
+  decision 1 ("a God Mode order while the replay runs: that one with the reason of a way barred by nations outside the
+  war, and it ends the replay as any command does") and ADR-945's rule (an order ends it before it is judged). SPEC
+  §7.7 says so.
+- **Read.** `trackOrder1938h.test.ts`, 15 tests, 13 red before. On two fronts (Germany on Poland, seed 1938; Japan on
+  China, seed 5): a march onto the held foe's land 1, 3 and 8 cells past the front, 6 hours, 1, 2, 3 and 5 days in, of
+  a formation standing and of one in the middle of a step, its nation named and not, by a tick and by `applyNow` (of
+  the 120 a front, 84 and 108 with a formation to order; 6 of Germany's a player's march that met the enemy in its
+  hour, given and told `Contact`); several marches in one hour; each kind of order refused for its own reason, after
+  the end (across a nation outside the war `NoRoute`, the right reason there); the guards, ending nothing. On Germany
+  and Poland: a march to its own land beyond the foe's, with a way round and with none; a `redeploy` refused, the track
+  running on; a stage's days; a hold that outlives the timeline; ground given back (a march, a rebase to Warsaw's
+  airbase, a paradrop on Poznań, each refused at once).
+- **The checker (ADR-804).** The track's checker sends no command, so it cannot see the rule. The war-and-peace
+  checker's lines of the world (`worldBreaks`: `held`, `realm`) are asked after the order in three of the tests: none,
+  the track's own occupation read before it on ground given back and gone after.
+
 ## ADR-1168 · 2026-11-28 · accepted · In a fight a formation is held as its host is on its host's land; a cell taken under it, it is set down in that hour (R243, the rule the user chose: ADR-1167)
 
 - **The case** (found by R239; ADR-1167, the user's "Yes try it"). A hold is between two nations wherever they stand
